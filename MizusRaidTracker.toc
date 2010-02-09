@@ -5,3 +5,4 @@
 ## Author: Mizukichan@EU-Thrall
 localization.lua
 localization_deDE.lua
+MizusRaidTracker.xml
