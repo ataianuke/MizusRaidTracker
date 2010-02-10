@@ -3,6 +3,12 @@
 ## Version: 0.1
 ## Notes: Tracks raid, loot and attendance
 ## Author: Mizukichan@EU-Thrall
-localization.lua
-localization_deDE.lua
+## LoadOnDemand: 0
+## DefaultState: enabled
+## SavedVariables: MRT_Options, MRT_Raids
+## X-Website: <ENTER URL HERE>
+localization_en.lua
+localization_de.lua
 MizusRaidTracker.xml
+MizusRaidTracker_Options.xml
+MizusRaidTracker_Options.lua
