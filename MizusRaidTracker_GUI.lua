@@ -1,7 +1,7 @@
-﻿-- ********************************************************
--- **        Mizus Raid Tracker - enGB/enUS Local        **
+﻿-- *********************************************************
+-- **              Mizus Raid Tracker - GUI               **
 -- **            <ENTER URL HERE>            **
--- ********************************************************
+-- *********************************************************
 --
 -- This addon is written and copyrighted by:
 --    * Mizukichan @ EU-Thrall
@@ -23,24 +23,8 @@
 --    * Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
 --
 
-
------------------------------
---  Create Tablestructure  --
------------------------------
-MRT_L = {};
-MRT_L["Options"] = {};
-
------------------------------------
---  Local for the Optionspanels  --
------------------------------------
--- MainPanel - Text
-MRT_L.Options["MP_Description"] = "Tracks raids, loot and attendance";
--- MainPanel - Checkboxes
-MRT_L.Options["MP_Enabled"] = "Enabled";
-MRT_L.Options["MP_Debug"] = "Debugmessages";
-
--- TrackingPanel - Title
-MRT_L.Options["TP_Title"] = "Tracking";
-
--- AttendancePanel - Title
-MRT_L.Options["AP_Title"] = "Attendance";
+------------------------------------------------------
+--  Register panels, parse values and localization  --
+------------------------------------------------------
+function MRT_GUIFrame_OnLoad(panel) 
+end

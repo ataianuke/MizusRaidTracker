@@ -29,6 +29,7 @@
 -------------------------------
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
+MRT_Options = {};
 
 local MRT_Defaults = {
 	["Options"] = {
@@ -50,21 +51,22 @@ local MRT_Defaults = {
 --------------
 --  Locals  --
 --------------
+local mainFrame = CreateFrame("Frame");
 
+
+-------------------
+--  Initilazing  --
+-------------------
+mainFrame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
+mainFrame:RegisterEvent("CHAT_MSG_LOOT");
+mainFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+mainFrame:RegisterEvent("GUILD_ROSTER_UPDATE");
+mainFrame:SetScript("OnEvent", MRT_EventHandler);
 
 
 ---------------------------------
 --  General (local) functions  --
 ---------------------------------
--- Called by Frame after Creation
-function MRT_OnLoad()
-	this:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-	this:RegisterEvent("CHAT_MSG_LOOT");
-	this:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
-	this:RegisterEvent("GUILD_ROSTER_UPDATE");
-end
-
 -- Eventhandler
-function MRT_OnEvent(event, ...)
+local function MRT_OnEvent(self, event, ...)
 end
-

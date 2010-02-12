@@ -67,4 +67,9 @@
       <OnLoad>MRT_Options_TrackingPanel_OnLoad(self);</OnLoad>
     </Scripts>
   </Frame>
+  <Frame name="MRT_Options_AttendancePanel">
+    <Scripts>
+      <OnLoad>MRT_Options_AttendancePanel_OnLoad(self);</OnLoad>
+    </Scripts>
+  </Frame>
 </Ui>

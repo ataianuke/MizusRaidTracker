@@ -29,14 +29,19 @@
 function MRT_Options_MainPanel_OnLoad(panel)
 	panel.name = "MizusRaidTracker";
 	MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
-	MRT_Options_MainPanel_Description:SetText("Tracks raids, loot and attendance (HARDCODED - FIXME!)");
-	MRT_Options_MainPanel_Enabled_CB_Text:SetText("Enabled (HARDCODED - FIXME!)");
+	MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
+	MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
 	InterfaceOptions_AddCategory(panel);
 end
 
 function MRT_Options_TrackingPanel_OnLoad(panel)
-	panel.name = "Tracking";
+	panel.name = MRT_L.Options["TP_Title"];
 	panel.parent = "MizusRaidTracker";
 	InterfaceOptions_AddCategory(panel);
 end
 
+function MRT_Options_AttendancePanel_OnLoad(panel)
+	panel.name = MRT_L.Options["AP_Title"];
+	panel.parent = "MizusRaidTracker";
+	InterfaceOptions_AddCategory(panel);
+end
