@@ -30,6 +30,7 @@
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 MRT_Options = {};
+MRT_RaidLog = {};
 
 local MRT_Defaults = {
 	["Options"] = {
@@ -51,22 +52,79 @@ local MRT_Defaults = {
 --------------
 --  Locals  --
 --------------
-local mainFrame = CreateFrame("Frame");
 
 
 -------------------
 --  Initilazing  --
 -------------------
-mainFrame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-mainFrame:RegisterEvent("CHAT_MSG_LOOT");
-mainFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
-mainFrame:RegisterEvent("GUILD_ROSTER_UPDATE");
-mainFrame:SetScript("OnEvent", MRT_EventHandler);
+function MRT_MainFrame_OnLoad(mainFrame)
+	mainFrame:RegisterEvent("ADDON_LOADED");
+	mainFrame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
+	mainFrame:RegisterEvent("CHAT_MSG_LOOT");
+	mainFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+	mainFrame:RegisterEvent("GUILD_ROSTER_UPDATE");
+	mainFrame:RegisterEvent("VARIABLES_LOADED");
+
+--	DEFAULT_CHAT_FRAME:AddMessage("MRT Loaded!");
+end
 
 
 ---------------------------------
---  General (local) functions  --
+--  Handler functions  --
 ---------------------------------
 -- Eventhandler
-local function MRT_OnEvent(self, event, ...)
+function MRT_OnEvent(self, event, ...)
+	if (event == "ADDON_LOADED") then
+		self:UnregisterEvent("ADDON_LOADED");
+		MRT_Options_ParseValues();
+	end
+	if (event == "COMBAT_LOG_EVENT_UNFILTERED") then
+		MRT_CombatLogHandler(...)
+	end
+	if (event == "VARIABLES_LOADED") then
+		MRT_UpdateSavedOptions();
+	end
 end
+
+-- Combatloghandler
+function MRT_CombatLogHandler(...)
+	local _, combatEvent, _, _, _, destGUID, destName = ...;
+	if (combatEvent == "UNIT_DIED") then
+		local NPCID = MRT_GetNPCID(destGUID);
+		if (MRT_BossIDList[NPCID]) then
+			MRT_Debug("NPC from Bosslist died. - NPCName was "..destName.." and NPCID was "..NPCID);
+		end
+	end
+end
+
+
+----------------------
+--  Apply Defaults  --
+----------------------
+-- Check variables - if missing, load defaults
+function MRT_UpdateSavedOptions()
+	for key, value in pairs(MRT_Defaults["Options"]) do
+		if (MRT_Options[key] == nil) then
+			MRT_Options[key] = value;
+		end
+	end
+end
+
+
+function MRT_Debug(text)
+	if (MRT_Options["General_DebugEnabled"]) then
+		DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
+	end
+end
+
+
+function MRT_GetNPCID(GUID)
+	local first3 = tonumber("0x"..strsub(GUID, 3, 5));
+	local unitType = bit.band(first3,0x007);
+	if (unitType == 0x003) then
+		return tonumber("0x"..strsub(GUID,9,12));
+	else
+		return nil;
+	end
+end
+

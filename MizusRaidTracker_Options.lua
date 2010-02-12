@@ -28,9 +28,8 @@
 ------------------------------------------------------
 function MRT_Options_MainPanel_OnLoad(panel)
 	panel.name = "MizusRaidTracker";
-	MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
-	MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
-	MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
+	panel.okay = MRT_Options_OnOkay(panel);
+	panel.cancel = MRT_Options_OnCancel(panel);	
 	InterfaceOptions_AddCategory(panel);
 end
 
@@ -44,4 +43,32 @@ function MRT_Options_AttendancePanel_OnLoad(panel)
 	panel.name = MRT_L.Options["AP_Title"];
 	panel.parent = "MizusRaidTracker";
 	InterfaceOptions_AddCategory(panel);
+end
+
+
+---------------------------------------------------
+--  parse values and localization on first show  --
+---------------------------------------------------
+function MRT_Options_ParseValues()
+	MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
+	MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
+	MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
+	MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
+	MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
+end
+
+
+--------------------
+--  Save changes  --
+--------------------
+function MRT_Options_OnOkay(panel)
+	MRT_Debug("InterfaceOptions - OkayButton ack");
+end
+
+
+----------------------
+--  Revert changes  --
+----------------------
+function MRT_Options_OnCancel(panel)
+	MRT_Debug("InterfaceOptions - CancelButton ack");
 end

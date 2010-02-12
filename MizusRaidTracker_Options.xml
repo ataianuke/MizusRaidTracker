@@ -21,7 +21,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <CheckButton name="$parent_Enabled_CB" inherits="UICheckButtonTemplate">
+      <CheckButton name="$parent_Enabled_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT">
             <Offset y="-20"></Offset>
@@ -39,7 +39,7 @@
           </Layer>
         </Layers>
       </CheckButton>
-      <CheckButton name="$parent_Debug_CB" inherits="UICheckButtonTemplate">
+      <CheckButton name="$parent_Debug_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOP" relativeTo="$parent_Enabled_CB" relativePoint="BOTTOM">
             <Offset y="-5"></Offset>

@@ -7,8 +7,9 @@
 ## DefaultState: enabled
 ## SavedVariables: MRT_Options, MRT_RaidLog
 ## X-Website: <ENTER URL HERE>
+MizusRaidTracker_Constants.lua
 localization_en.lua
 localization_de.lua
-MizusRaidTracker.lua
+MizusRaidTracker.xml
 MizusRaidTracker_Options.xml
 MizusRaidTracker_GUI.xml

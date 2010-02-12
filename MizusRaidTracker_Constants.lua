@@ -1,7 +1,7 @@
-﻿-- ********************************************************
--- **        Mizus Raid Tracker - enGB/enUS Local        **
+﻿-- *********************************************************
+-- **           Mizus Raid Tracker - Constants            **
 -- **            <ENTER URL HERE>            **
--- ********************************************************
+-- *********************************************************
 --
 -- This addon is written and copyrighted by:
 --    * Mizukichan @ EU-Thrall
@@ -23,26 +23,29 @@
 --    * Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
 --
 
-
------------------------------
---  Create Tablestructure  --
------------------------------
-MRT_L = {};
-MRT_L["Options"] = {};
-MRT_L["Bossyells"] = {};
-
----------------------------
---  Optionspanels local  --
----------------------------
--- MainPanel - Text
-MRT_L.Options["MP_Description"] = "Tracks raids, loot and attendance";
--- MainPanel - Checkboxes
-MRT_L.Options["MP_Enabled"] = "Enabled";
-MRT_L.Options["MP_Debug"] = "Debugmessages";
-
--- TrackingPanel - Title
-MRT_L.Options["TP_Title"] = "Tracking";
-
--- AttendancePanel - Title
-MRT_L.Options["AP_Title"] = "Attendance";
-
+-----------------------------------
+--  ID-List of trackable Bosses  --
+-----------------------------------
+MRT_BossIDList = {
+	------------------------------------
+	--  Dalaran - Added for Debuging  --
+	------------------------------------
+	[721] = "Rabbit",
+	[32428] = "Underbelly Rat",
+	
+	------------------------
+	--  Icecrown Citadel  --
+	------------------------
+	[36612] = "Lord Marrowgar",
+	[36855] = "Lady Deathwhisper",
+		-- Gunship Battle will need Bossyell
+	[37813] = "Deathbringer Saurfang",
+	[36626] = "Festergut",
+	[36627] = "Rotface",
+	[36678] = "Professor Putricide",
+		-- Blood Prince Council will need Bossyell
+	[37955] = "Blood-Queen Lana'thel",
+		-- Dreamwalker will need Bossyell
+	[37755] = "Sindragosa",
+	[29983] = "The Lich King",
+}
