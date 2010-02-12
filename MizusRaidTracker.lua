@@ -18,7 +18,7 @@
 --    * to Share - to copy, distribute, display, and perform the work
 --    * to Remix - to make derivative works
 --  Under the following conditions:
---    * Attribution. You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work). (A link to http://www.deadlybossmods.com is sufficient)
+--    * Attribution. You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).
 --    * Noncommercial. You may not use this work for commercial purposes.
 --    * Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
 --
@@ -64,8 +64,6 @@ function MRT_MainFrame_OnLoad(mainFrame)
 	mainFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 	mainFrame:RegisterEvent("GUILD_ROSTER_UPDATE");
 	mainFrame:RegisterEvent("VARIABLES_LOADED");
-
---	DEFAULT_CHAT_FRAME:AddMessage("MRT Loaded!");
 end
 
 
@@ -77,6 +75,13 @@ function MRT_OnEvent(self, event, ...)
 	if (event == "ADDON_LOADED") then
 		self:UnregisterEvent("ADDON_LOADED");
 		MRT_Options_ParseValues();
+		MRT_Debug("Addon loaded.");
+	end
+	if (event == "CHAT_MSG_MONSTER_YELL") then
+		local monsteryell, sourceName = ...;
+		if (MRT_L.Bossyells[monsteryell]) then
+			MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
+		end
 	end
 	if (event == "COMBAT_LOG_EVENT_UNFILTERED") then
 		MRT_CombatLogHandler(...)

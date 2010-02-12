@@ -18,7 +18,7 @@
 --    * to Share - to copy, distribute, display, and perform the work
 --    * to Remix - to make derivative works
 --  Under the following conditions:
---    * Attribution. You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work). (A link to http://www.deadlybossmods.com is sufficient)
+--    * Attribution. You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).
 --    * Noncommercial. You may not use this work for commercial purposes.
 --    * Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
 --
@@ -30,6 +30,21 @@
 MRT_L = {};
 MRT_L["Options"] = {};
 MRT_L["Bossyells"] = {};
+
+
+-----------------
+--  Bossyells  --
+-----------------
+-- Trial of the Crusader
+MRT_L.Bossyells["The Scourge cannot be stopped..."] = "Twin Val'kyr";
+MRT_L.Bossyells["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Faction Champions";
+	
+-- Icecrown Citadel
+MRT_L.Bossyells["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Icecrown Gunship Battle"; -- Muradin
+MRT_L.Bossyells["Damage control! Put those fires out! You haven't seen the last of the horde!"] = "Icecrown Gunship Battle"; -- Saurfang
+MRT_L.Bossyells["My queen, they... come."] = "Blood Prince Council"; -- Prince Keleseth
+MRT_L.Bossyells["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker"; -- Dreamwalker
+
 
 ---------------------------
 --  Optionspanels local  --
