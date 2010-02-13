@@ -3,26 +3,6 @@
 -- **            <ENTER URL HERE>            **
 -- *******************************************************
 --
--- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall
---
--- The localizations are written by:
---    * enGB/enUS: Mizukichan
---	  * deDE: Mizukichan
---
--- The code of this addon is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 License. (see license.txt)
--- All included textures and sounds are copyrighted by their respective owners, license information for these media files can be found in the modules that make use of them.
---
---
---  You are free:
---    * to Share - to copy, distribute, display, and perform the work
---    * to Remix - to make derivative works
---  Under the following conditions:
---    * Attribution. You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).
---    * Noncommercial. You may not use this work for commercial purposes.
---    * Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
---
-
 
 ----------------------
 --  Are you local?  --
@@ -30,12 +10,35 @@
 if GetLocale() ~= "deDE" then return end
 
 
+-----------------
+--  RaidZones  --
+-----------------
+MRT_L.Raidzones = {
+    -- Wrath of the Lich King
+    ["Das Auge der Ewigkeit"] = "The Eye of Eternity",
+    ["Das Obsidiansanktum"] = "The Obsidian Sanctum",
+    ["Archavons Kammer"] = "Vault of Archavon",
+    ["Naxxramas"] = "Naxxramas",
+    ["Ulduar"] = "Ulduar",
+    ["Pr\195\188fung des Kreuzfahrers"] = "Trial of the Crusader",
+    ["Pr\195\188fung des Obersten Kreuzfahrers"] = "Trial of the Grand Crusader",
+    ["Onyxias Hort"] = "Onyxia's Lair",
+    ["Eiskronenzitadelle"] = "Icecrown Citadel",   
+};
 
 
 -----------------
 --  Bossyells  --
 -----------------
--- MRT_L.Bossyells[""] = "Dreamwalker";
+-- Trial of the Crusader
+MRT_L.Bossyells["Die Gei\195\159el kann nicht aufgehalten werden..."] = "Twin Val'kyr";
+MRT_L.Bossyells["Ein tragischer Sieg. Wir wurden schw\195\164cher durch die heutigen Verluste. Wer au\195\159er dem Lichk\195\182nig profitiert von solchen Torheiten? Gro\195\159e Krieger gaben ihr Leben. Und wof\195\188r? Die wahre Bedrohung erwartet uns noch - der Lichk\195\182nig erwartet uns alle im Tod."] = "Faction Champions";
+    
+-- Icecrown Citadel
+MRT_L.Bossyells["Sagt nicht, ich h\195\164tte Euch nicht gewarnt, Ihr Schurken! Vorw\195\164rts, Br\195\188der und Schwestern!"] = "Icecrown Gunship Battle"; -- Muradin
+MRT_L.Bossyells["Die Allianz wankt. Vorw\195\164rts zum Lichk\195\182nig!"] = "Icecrown Gunship Battle"; -- Saurfang
+MRT_L.Bossyells["Meine K\195\182nigin, sie... kommen."] = "Blood Prince Council"; -- Prince Keleseth
+MRT_L.Bossyells["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Dreamwalker"; -- Dreamwalker
 
 
 -----------------------------------

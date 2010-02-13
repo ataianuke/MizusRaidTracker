@@ -8,7 +8,7 @@
 --
 -- The localizations are written by:
 --    * enGB/enUS: Mizukichan
---	  * deDE: Mizukichan
+--    * deDE: Mizukichan
 --
 -- The code of this addon is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 License. (see license.txt)
 -- All included textures and sounds are copyrighted by their respective owners, license information for these media files can be found in the modules that make use of them.
@@ -33,73 +33,101 @@ MRT_Options = {};
 MRT_RaidLog = {};
 
 local MRT_Defaults = {
-	["Options"] = {
-		["General_MasterEnable"] = true,											-- AddonEnable: true/false
-		["General_Version"] = GetAddOnMetadata("MizusRaidTracker", "Version"),		-- 
-		["General_DebugEnabled"] = true,
-		["Attendance_GuildAttendanceCheckEnabled"] = true,							-- 
-		["Attendance_GuildAttendanceCheckDuration"] = 3,							-- in minutes - 0..5
-		["Tracking_AutoCreateRaid"] = true,
-		["Tracking_Log10MenRaids"] = false,
-		["Tracking_AskForDKPValue"] = true,											-- 
-		["Tracking_MinItemQualityToLog"] = 3,										-- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
-		["Tracking_MinItemQualityToGetDKPValue"] = 4,								-- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
-		["Tracking_OnlyTrackInRaidDungeons"] = true,
-		["Tracking_UseDefaultItemIgnoreList"] = true,								-- 
-	},
+    ["Options"] = {
+        ["General_MasterEnable"] = true,                                            -- AddonEnable: true/false
+        ["General_Version"] = GetAddOnMetadata("MizusRaidTracker", "Version"),      -- 
+        ["General_DebugEnabled"] = true,                                            --
+        ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- 
+        ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
+        ["Tracking_AutoCreateRaid"] = true,                                         --
+        ["Tracking_Log10MenRaids"] = false,                                         --
+        ["Tracking_AskForDKPValue"] = true,                                         -- 
+        ["Tracking_MinItemQualityToLog"] = 3,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
+        ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
+        ["Tracking_OnlyTrackInRaidDungeons"] = true,                                -- Currently not used
+        ["Tracking_UseDefaultItemIgnoreList"] = true,                               -- Currently not used
+    },
 };
 
 --------------
 --  Locals  --
 --------------
+local MRT_GuildRoster = {};
+local MRT_GuildRosterInitialUpdateDone = nil;
+local MRT_GuildRosterUpdating = nil;
+local MRT_NumberOfCurrentRaid = nil;
 
 
 -------------------
 --  Initilazing  --
 -------------------
-function MRT_MainFrame_OnLoad(mainFrame)
-	mainFrame:RegisterEvent("ADDON_LOADED");
-	mainFrame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-	mainFrame:RegisterEvent("CHAT_MSG_LOOT");
-	mainFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
-	mainFrame:RegisterEvent("GUILD_ROSTER_UPDATE");
-	mainFrame:RegisterEvent("VARIABLES_LOADED");
+function MRT_MainFrame_OnLoad(frame)
+    frame:RegisterEvent("ADDON_LOADED");
+    frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
+    frame:RegisterEvent("CHAT_MSG_LOOT");
+    frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    frame:RegisterEvent("GUILD_ROSTER_UPDATE");
+    frame:RegisterEvent("RAID_INSTANCE_WELCOME");
+    frame:RegisterEvent("RAID_ROSTER_UPDATE");
+    frame:RegisterEvent("VARIABLES_LOADED");
 end
 
 
----------------------------------
+-------------------------
 --  Handler functions  --
----------------------------------
+-------------------------
 -- Eventhandler
-function MRT_OnEvent(self, event, ...)
-	if (event == "ADDON_LOADED") then
-		self:UnregisterEvent("ADDON_LOADED");
-		MRT_Options_ParseValues();
-		MRT_Debug("Addon loaded.");
-	end
-	if (event == "CHAT_MSG_MONSTER_YELL") then
-		local monsteryell, sourceName = ...;
-		if (MRT_L.Bossyells[monsteryell]) then
-			MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
-		end
-	end
-	if (event == "COMBAT_LOG_EVENT_UNFILTERED") then
-		MRT_CombatLogHandler(...)
-	end
-	if (event == "VARIABLES_LOADED") then
-		MRT_UpdateSavedOptions();
-	end
+function MRT_OnEvent(frame, event, ...)
+    if (event == "ADDON_LOADED") then
+        frame:UnregisterEvent("ADDON_LOADED");
+        MRT_Options_ParseValues();
+        GuildRoster();
+        MRT_Debug("Addon loaded.");
+    end
+    
+    if (event == "CHAT_MSG_MONSTER_YELL") then
+        local monsteryell, sourceName = ...;
+        if (MRT_L.Bossyells[monsteryell]) then
+            MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
+        end
+    end
+    
+    if (event == "COMBAT_LOG_EVENT_UNFILTERED") then MRT_CombatLogHandler(...); end
+    
+    if (event == "GUILD_ROSTER_UPDATE") then MRT_GuildRosterUpdate(frame, event, ...); end
+    
+    if (event == "RAID_INSTANCE_WELCOME") then
+        -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
+        local instanceName, resetTimer = ...;
+        local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+        MRT_Debug("RAID_INSTANCE_WELCOME recieved. Instancename is "..instanceName.." and the resettimer is "..tostring(resetTimer));
+        MRT_Debug("GetInstanceInfo() returns '"..instanceInfoName.."' as name, '"..instanceInfoType.."' as type and '"..MRT_InstanceDifficultyTable[instanceInfoDifficulty].."' as difficulty");
+        -- End of debugcode
+        -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
+        --  I) If no active raid and 10 player tracking enabled
+        --  if 10 player tracking disabled, check for 25 player
+        --  II) If changed from 10 men to 25 men
+        --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
+        if (MRT_L.Raidzones[instanceInfoName]) then
+            MRT_Debug("Match in MRT_L.Raidzones from GetInstanceInfo() fround.");
+            if (not MRT_NumberOfCurrentRaid and MRT.Options["Tracking_Log10MenRaids"]) then 
+                MRT_CreateNewRaid();
+            end
+        end
+    end
+    
+    if (event == "VARIABLES_LOADED") then MRT_UpdateSavedOptions(); end
 end
 
 -- Combatloghandler
 function MRT_CombatLogHandler(...)
-	local _, combatEvent, _, _, _, destGUID, destName = ...;
-	if (combatEvent == "UNIT_DIED") then
-		local NPCID = MRT_GetNPCID(destGUID);
-		if (MRT_BossIDList[NPCID]) then
-			MRT_Debug("NPC from Bosslist died. - NPCName was "..destName.." and NPCID was "..NPCID);
-		end
-	end
+    local _, combatEvent, _, _, _, destGUID, destName = ...;
+    if (combatEvent == "UNIT_DIED") then
+        local NPCID = MRT_GetNPCID(destGUID);
+        if (MRT_BossIDList[NPCID]) then
+            MRT_Debug("NPC from Bosslist died. - NPCName was "..destName.." and NPCID was "..NPCID);
+        end
+    end
 end
 
 
@@ -108,28 +136,79 @@ end
 ----------------------
 -- Check variables - if missing, load defaults
 function MRT_UpdateSavedOptions()
-	for key, value in pairs(MRT_Defaults["Options"]) do
-		if (MRT_Options[key] == nil) then
-			MRT_Options[key] = value;
-		end
-	end
+    for key, value in pairs(MRT_Defaults["Options"]) do
+        if (MRT_Options[key] == nil) then
+            MRT_Options[key] = value;
+        end
+    end
 end
 
 
 function MRT_Debug(text)
-	if (MRT_Options["General_DebugEnabled"]) then
-		DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
-	end
+    if (MRT_Options["General_DebugEnabled"]) then
+        DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
+    end
 end
 
 
+--------------------------
+--  Tracking functions  --
+--------------------------
+function MRT_CreateNewRaid()
+    if (MRT_NumberOfCurrentRaid) then MRT_EndActiveRaid(); end
+end
+
+
+function MRT_RaidRosterUpdate()
+    if (not MRT_NumberOfCurrentRaid) then return; end
+end
+
+
+function MRT_EndActiveRaid()
+end
+
+
+----------------------------
+--  Attendance functions  --
+----------------------------
+function MRT_GuildRosterUpdate(frame, event, ...)
+    local GuildRosterChanged = ...;
+    if (MRT_GuildRosterInitialUpdateDone and not GuildRosterChanged) then return end;
+    if (MRT_GuildRosterUpdating) then return end;
+    MRT_GuildRosterInitialUpdateDone = true;
+    MRT_GuildRosterUpdating = true;
+    MRT_Debug("Processing GuildRoster...");
+    if (frame:IsEventRegistered("GUILD_ROSTER_UPDATE")) then
+        frame:UnregisterEvent("GUILD_ROSTER_UPDATE");
+    end
+    local guildRosterOfflineFilter = GetGuildRosterShowOffline();
+    local guildRosterSelection = GetGuildRosterSelection();
+    SetGuildRosterShowOffline(true);
+    local numGuildMembers = GetNumGuildMembers();
+    for i = 1, numGuildMembers do
+        local charName = GetGuildRosterInfo(i);
+        if (charName) then
+            MRT_GuildRoster[string.lower(charName)] = charName;
+        end
+    end
+    SetGuildRosterShowOffline(guildRosterOfflineFilter);
+    SetGuildRosterSelection(guildRosterSelection);
+    MRT_GuildRosterUpdating = nil;
+    frame:RegisterEvent("GUILD_ROSTER_UPDATE");
+end
+
+
+------------------------
+--  Helper functions  --
+------------------------
+-- GetNPCID - returns the NPCID or nil, if GUID was no NPC
 function MRT_GetNPCID(GUID)
-	local first3 = tonumber("0x"..strsub(GUID, 3, 5));
-	local unitType = bit.band(first3,0x007);
-	if (unitType == 0x003) then
-		return tonumber("0x"..strsub(GUID,9,12));
-	else
-		return nil;
-	end
+    local first3 = tonumber("0x"..strsub(GUID, 3, 5));
+    local unitType = bit.band(first3, 0x007);
+    if (unitType == 0x003) then
+        return tonumber("0x"..strsub(GUID, 9, 12));
+    else
+        return nil;
+    end
 end
 

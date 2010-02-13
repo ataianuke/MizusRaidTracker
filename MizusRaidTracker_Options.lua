@@ -8,7 +8,7 @@
 --
 -- The localizations are written by:
 --    * enGB/enUS: Mizukichan
---	  * deDE: Mizukichan
+--      * deDE: Mizukichan
 --
 -- The code of this addon is licensed under a Creative Commons Attribution-Noncommercial-Share Alike 3.0 License. (see license.txt)
 -- All included textures and sounds are copyrighted by their respective owners, license information for these media files can be found in the modules that make use of them.
@@ -27,22 +27,22 @@
 --  Register panels, parse values and localization  --
 ------------------------------------------------------
 function MRT_Options_MainPanel_OnLoad(panel)
-	panel.name = "MizusRaidTracker";
-	panel.okay = MRT_Options_OnOkay(panel);
-	panel.cancel = MRT_Options_OnCancel(panel);	
-	InterfaceOptions_AddCategory(panel);
+    panel.name = "MizusRaidTracker";
+    panel.okay = MRT_Options_OnOkay(panel);
+    panel.cancel = MRT_Options_OnCancel(panel);    
+    InterfaceOptions_AddCategory(panel);
 end
 
 function MRT_Options_TrackingPanel_OnLoad(panel)
-	panel.name = MRT_L.Options["TP_Title"];
-	panel.parent = "MizusRaidTracker";
-	InterfaceOptions_AddCategory(panel);
+    panel.name = MRT_L.Options["TP_Title"];
+    panel.parent = "MizusRaidTracker";
+    InterfaceOptions_AddCategory(panel);
 end
 
 function MRT_Options_AttendancePanel_OnLoad(panel)
-	panel.name = MRT_L.Options["AP_Title"];
-	panel.parent = "MizusRaidTracker";
-	InterfaceOptions_AddCategory(panel);
+    panel.name = MRT_L.Options["AP_Title"];
+    panel.parent = "MizusRaidTracker";
+    InterfaceOptions_AddCategory(panel);
 end
 
 
@@ -50,11 +50,11 @@ end
 --  parse values and localization on first show  --
 ---------------------------------------------------
 function MRT_Options_ParseValues()
-	MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
-	MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
-	MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
-	MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
-	MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
+    MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
+    MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
+    MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
+    MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
+    MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
 end
 
 
@@ -62,7 +62,7 @@ end
 --  Save changes  --
 --------------------
 function MRT_Options_OnOkay(panel)
-	MRT_Debug("InterfaceOptions - OkayButton ack");
+    MRT_Debug("InterfaceOptions - OkayButton ack");
 end
 
 
@@ -70,5 +70,5 @@ end
 --  Revert changes  --
 ----------------------
 function MRT_Options_OnCancel(panel)
-	MRT_Debug("InterfaceOptions - CancelButton ack");
+    MRT_Debug("InterfaceOptions - CancelButton ack");
 end
