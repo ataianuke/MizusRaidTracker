@@ -50,6 +50,14 @@ MRT_BossIDList = {
     -----------------------
     [28859] = "Malygos",
     
+    --------------------------
+    --  Archavon's Chamber  --
+    --------------------------
+    [31125] = "Archavon the Stone Watcher",
+    [33993] = "Emalon the Storm Watcher",
+    [35013] = "Koralon the Flame Watcher",
+    [38433] = "Toravon the Ice Watcher",
+    
     --------------
     --  Ulduar  --
     --------------
