@@ -110,7 +110,7 @@ function MRT_OnEvent(frame, event, ...)
         --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
         if (MRT_L.Raidzones[instanceInfoName]) then
             MRT_Debug("Match in MRT_L.Raidzones from GetInstanceInfo() fround.");
-            if (not MRT_NumberOfCurrentRaid and MRT.Options["Tracking_Log10MenRaids"]) then 
+            if (not MRT_NumberOfCurrentRaid and MRT_Options["Tracking_Log10MenRaids"]) then 
                 MRT_CreateNewRaid();
             end
         end
