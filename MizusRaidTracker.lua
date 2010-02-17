@@ -1,4 +1,4 @@
-﻿-- *********************************************************
+-- *********************************************************
 -- **              Mizus Raid Tracker - Core              **
 -- **            <ENTER URL HERE>            **
 -- *********************************************************
@@ -22,7 +22,6 @@
 --    * Noncommercial. You may not use this work for commercial purposes.
 --    * Share Alike. If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
 --
-
 
 -------------------------------
 --  Globals/Default Options  --
@@ -48,6 +47,7 @@ local MRT_Defaults = {
         ["Tracking_UseDefaultItemIgnoreList"] = true,                               -- Currently not used
     },
 };
+
 
 --------------
 --  Locals  --
@@ -97,66 +97,15 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "GUILD_ROSTER_UPDATE") then MRT_GuildRosterUpdate(frame, event, ...); end
     
     if (event == "RAID_INSTANCE_WELCOME") then
+        -- if (not UnitInRaid("player")) then return end // This doesn't work!
+        if (not MRT_Options["General_MasterEnable"]) then return end
         -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
         local instanceName, resetTimer = ...;
         local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
         MRT_Debug("RAID_INSTANCE_WELCOME recieved. Instancename is "..instanceName.." and the resettimer is "..tostring(resetTimer));
         MRT_Debug("GetInstanceInfo() returns '"..instanceInfoName.."' as name, '"..instanceInfoType.."' as type and '"..MRT_InstanceDifficultyTable[instanceInfoDifficulty].."' as difficulty");
-        -- End of debugcode
-        -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
-        --  I) If no active raid and 10 player tracking enabled
-        --  if 10 player tracking disabled, check for 25 player
-        --  II) If changed from 10 men to 25 men
-        --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
-        --  IV) If RaidZone changed
-        if (MRT_L.Raidzones[instanceInfoName] and MRT_Options["General_MasterEnable"]) then
-            MRT_Debug("Match in MRT_L.Raidzones from GetInstanceInfo() fround.");
-            -- Case: No active raidtracking:
-            if (not MRT_NumOfCurrentRaid) then
-                if (MRT_Options["Tracking_Log10MenRaids"] and (instanceInfoDifficulty == 1 or instanceInfoDifficulty == 3)) then 
-                    MRT_Debug("Start tracking a new 10 player raid...");
-                    MRT_CreateNewRaid(instanceInfoName, 10);
-                elseif (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then
-                    MRT_Debug("Start tracking a new 25 player raid...");
-                    MRT_CreateNewRaid(instanceInfoName, 25);
-                end
-            -- Case: There is an active raid - no zone change
-            elseif (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"] == instanceInfoName) then
-                MRT_Debug("Active raid in same zone found...");
-                -- Case: Active Raid is a 10 player raid -> 10 player raids tracking enabled
-                if (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) then
-                    -- Case: same size as active raid
-                    if (instanceInfoDifficulty == 1 or instanceInfoDifficulty == 3) then 
-                        MRT_Debug("Nothing changed... CurrentRaid == ActiveRaid");
-                        return;
-                    -- Case: different size as active raid
-                    else
-                        MRT_Debug("Raidsize changed to 25 - creating new raid...");
-                        MRT_CreateNewRaid(instanceInfoName, 25);
-                    end
-                -- Case: Active Raid is a 25 player raid
-                elseif (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 25) then
-                    -- Case: same size as active raid
-                    if (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then 
-                        MRT_Debug("Nothing changed... CurrentRaid == ActiveRaid");
-                        return;
-                    -- Case: different size as active raid
-                    elseif (MRT_Options["Tracking_Log10MenRaids"]) then 
-                        MRT_Debug("Raidsize changed to 10 - creating new raid...");
-                        MRT_CreateNewRaid(instanceInfoName, 10);
-                    else
-                        MRT_Debug("Raidsize changed to 10, but 10 player tracking disabled - ending active raid...")
-                        MRT_EndActiveRaid();
-                    end
-                end
-            -- Case: There is an active raid and a zone change
-            else
-                MRT_Debug("Active raid in different zone found...");
-                if (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then MRT_CreateNewRaid(instanceInfoName, 25);
-                elseif (MRT_Options["Tracking_Log10MenRaids"]) then MRT_CreateNewRaid(instanceInfoName, 10);
-                else MRT_EndActiveRaid();
-                end
-            end
+        if (MRT_L.Raidzones[instanceInfoName]) then
+            MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
         end
     end
     
@@ -191,7 +140,6 @@ function MRT_UpdateSavedOptions()
     end
 end
 
-
 function MRT_Debug(text)
     if (MRT_Options["General_DebugEnabled"]) then
         DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
@@ -204,13 +152,16 @@ end
 --------------------------
 function MRT_CreateNewRaid(zoneName, raidSize)
     if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+    local numRaidMembers = GetNumRaidMembers();
+    if (not numRaidMembers) then return end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
     local MRT_RaidInfo = {["Players"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
-    local numRaidMembers = GetNumRaidMembers();
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
+    -- FIXME - there may be "holes", so processing from 1...40 is inevitable / check for nil-names before UnitID-stuff and adding to raidlog
+    -- Note: CT_RaidTracker uses GetNumRaidMembers() as max_index... - so, should work!?... will revert...
     for i = 1, numRaidMembers do
-        local UnitID = "raid"..tostring(i);
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        local UnitID = "raid"..tostring(i);
         local playerRaceL, playerRace = UnitRace(UnitID);
         local playerSex = UnitSex(UnitID);
         MRT_RaidInfo["Players"][playerName] = {
@@ -229,12 +180,66 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     MRT_NumOfCurrentRaid = #MRT_RaidLog;
 end
 
-
 function MRT_RaidRosterUpdate()
     if (not MRT_NumOfCurrentRaid) then return; end
     if (not UnitInRaid("player")) then MRT_EndActiveRaid(); end
 end
 
+function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
+    -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
+    --  I) If no active raid and 10 player tracking enabled
+    --  if 10 player tracking disabled, check for 25 player
+    --  II) If changed from 10 men to 25 men
+    --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
+    --  IV) If RaidZone changed
+    MRT_Debug("Match in MRT_L.Raidzones from GetInstanceInfo() fround.");
+    -- Case: No active raidtracking:
+    if (not MRT_NumOfCurrentRaid) then
+        if (MRT_Options["Tracking_Log10MenRaids"] and (instanceInfoDifficulty == 1 or instanceInfoDifficulty == 3)) then 
+            MRT_Debug("Start tracking a new 10 player raid...");
+            MRT_CreateNewRaid(instanceInfoName, 10);
+        elseif (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then
+            MRT_Debug("Start tracking a new 25 player raid...");
+            MRT_CreateNewRaid(instanceInfoName, 25);
+        end
+    -- Case: There is an active raid - no zone change
+    elseif (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"] == instanceInfoName) then
+        MRT_Debug("Active raid in same zone found...");
+        -- Case: Active Raid is a 10 player raid -> 10 player raids tracking enabled
+        if (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) then
+            -- Case: same size as active raid
+            if (instanceInfoDifficulty == 1 or instanceInfoDifficulty == 3) then 
+                MRT_Debug("Nothing changed... CurrentRaid == ActiveRaid");
+                return;
+            -- Case: different size as active raid
+            else
+                MRT_Debug("Raidsize changed to 25 - creating new raid...");
+                MRT_CreateNewRaid(instanceInfoName, 25);
+            end
+        -- Case: Active Raid is a 25 player raid
+        elseif (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 25) then
+            -- Case: same size as active raid
+            if (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then 
+                MRT_Debug("Nothing changed... CurrentRaid == ActiveRaid");
+                return;
+            -- Case: different size as active raid
+            elseif (MRT_Options["Tracking_Log10MenRaids"]) then 
+                MRT_Debug("Raidsize changed to 10 - creating new raid...");
+                MRT_CreateNewRaid(instanceInfoName, 10);
+            else
+                MRT_Debug("Raidsize changed to 10, but 10 player tracking disabled - ending active raid...")
+                MRT_EndActiveRaid();
+            end
+        end
+    -- Case: There is an active raid and a zone change
+    else
+        MRT_Debug("Active raid in different zone found...");
+        if (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then MRT_CreateNewRaid(instanceInfoName, 25);
+        elseif (MRT_Options["Tracking_Log10MenRaids"]) then MRT_CreateNewRaid(instanceInfoName, 10);
+        else MRT_EndActiveRaid();
+        end
+    end
+end
 
 function MRT_EndActiveRaid()
     if (not MRT_NumOfCurrentRaid) then return; end

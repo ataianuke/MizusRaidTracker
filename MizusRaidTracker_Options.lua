@@ -1,4 +1,4 @@
-﻿-- ********************************************************
+-- ********************************************************
 -- **            Mizus Raid Tracker - Options            **
 -- **            <ENTER URL HERE>            **
 -- ********************************************************
@@ -28,8 +28,8 @@
 ------------------------------------------------------
 function MRT_Options_MainPanel_OnLoad(panel)
     panel.name = "MizusRaidTracker";
-    panel.okay = MRT_Options_OnOkay(panel);
-    panel.cancel = MRT_Options_OnCancel(panel);    
+    panel.okay = function(self) MRT_Options_OnOkay(self); end;
+    panel.cancel = function(self) MRT_Options_OnCancel(self); end;
     InterfaceOptions_AddCategory(panel);
 end
 
@@ -62,7 +62,7 @@ end
 --  Save changes  --
 --------------------
 function MRT_Options_OnOkay(panel)
-    MRT_Debug("InterfaceOptions - OkayButton ack");
+    MRT_Debug("InterfaceOptions - OkayButton pressed");
 end
 
 
@@ -70,5 +70,5 @@ end
 --  Revert changes  --
 ----------------------
 function MRT_Options_OnCancel(panel)
-    MRT_Debug("InterfaceOptions - CancelButton ack");
+    MRT_Debug("InterfaceOptions - CancelButton pressed");
 end

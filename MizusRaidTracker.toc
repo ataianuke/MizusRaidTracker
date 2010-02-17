@@ -1,4 +1,4 @@
-﻿## Interface: 30300
+## Interface: 30300
 ## Title: MizusRaidTracker
 ## Version: 0.1
 ## Notes: Tracks raid, loot and attendance
