@@ -41,7 +41,7 @@ local MRT_Defaults = {
         ["Tracking_AutoCreateRaid"] = true,                                         --
         ["Tracking_Log10MenRaids"] = true,                                          --
         ["Tracking_AskForDKPValue"] = true,                                         -- 
-        ["Tracking_MinItemQualityToLog"] = 3,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
+        ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_OnlyTrackInRaidDungeons"] = true,                                -- Currently not used
         ["Tracking_UseDefaultItemIgnoreList"] = true,                               -- Currently not used
@@ -52,6 +52,8 @@ local MRT_Defaults = {
 --------------
 --  Locals  --
 --------------
+local deformat = LibStub("LibDeformat-3.0");
+
 local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
@@ -64,8 +66,8 @@ local MRT_NumOfLastBoss = nil;
 -------------------
 function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
-    frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("CHAT_MSG_LOOT");
+    frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("GUILD_ROSTER_UPDATE");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
@@ -84,6 +86,12 @@ function MRT_OnEvent(frame, event, ...)
         MRT_Options_ParseValues();
         GuildRoster();
         MRT_Debug("Addon loaded.");
+    end
+    
+    if (event == "CHAT_MSG_LOOT") then 
+        if (MRT_NumOfCurrentRaid) then
+            MRT_AutoAddLoot(...);
+        end
     end
     
     if (event == "CHAT_MSG_MONSTER_YELL") then
@@ -113,7 +121,7 @@ function MRT_OnEvent(frame, event, ...)
     end
     
     if (event == "RAID_ROSTER_UPDATE") then
-        MRT_RaidRosterUpdate();
+        MRT_RaidRosterUpdate(frame);
     end
     
     if (event == "VARIABLES_LOADED") then MRT_UpdateSavedOptions(); end
@@ -146,16 +154,10 @@ function MRT_UpdateSavedOptions()
     end
 end
 
-function MRT_Debug(text)
-    if (MRT_Options["General_DebugEnabled"]) then
-        DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
-    end
-end
 
-
---------------------------------
---  basic tracking functions  --
---------------------------------
+-------------------------------------
+--  basic raid tracking functions  --
+-------------------------------------
 function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
     --  I) If no active raid and 10 player tracking enabled
@@ -215,7 +217,7 @@ end
 function MRT_CreateNewRaid(zoneName, raidSize)
     if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
     local numRaidMembers = GetNumRaidMembers();
-    if (not numRaidMembers) then return end
+    if (numRaidMembers == 0) then return end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
     local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
@@ -238,22 +240,23 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["Sex"] = playerSex,
         }
     end
-    table.insert(MRT_RaidLog, MRT_RaidInfo);
+    tinsert(MRT_RaidLog, MRT_RaidInfo);
     MRT_NumOfCurrentRaid = #MRT_RaidLog;
 end
 
-function MRT_RaidRosterUpdate()
+function MRT_RaidRosterUpdate(frame)
     if (not MRT_NumOfCurrentRaid) then return; end
-    local numRaidMembers = GetNumRaidMembers();
-    if (not numRaidMembers) then 
+    MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
+    if (GetNumRaidMembers() == 0) then 
         MRT_EndActiveRaid();
         return;
     end
     MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
+    local numRaidMembers = GetNumRaidMembers();
     local activePlayerList = {};
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        table.insert(activePlayerList, playerName);
+        tinsert(activePlayerList, playerName);
         if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName]) then
             MRT_Debug("New player found: "..playerName);
             local UnitID = "raid"..tostring(i);
@@ -283,8 +286,10 @@ function MRT_RaidRosterUpdate()
             end
         end
         if (not matchFound) then
-            MRT_Debug("Leaving player found: "..savedPlayer);
-            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][savedPlayer]["Leave"] = time();
+            if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][savedPlayer]["Leave"]) then
+                MRT_Debug("Leaving player found: "..savedPlayer);
+                MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][savedPlayer]["Leave"] = time();
+            end
         end
     end
 end
@@ -293,11 +298,11 @@ function MRT_AddBosskill(bossname)
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
     local _, _, instanceInfoDifficulty = GetInstanceInfo();
-    local tackedPlayers = {};
+    local trackedPlayers = {};
     local numRaidMembers = GetNumRaidMembers();
     for i = 1, numRaidMembers do
         local playerName, _, playerSubGroup, _, _, _, _, playerOnline = GetRaidRosterInfo(i);
-        table.insert(trackedPlayers, playerName);
+        tinsert(trackedPlayers, playerName);
     end
     local MRT_BossKillInfo = {
         ["Loot"] = {},
@@ -306,7 +311,7 @@ function MRT_AddBosskill(bossname)
         ["Date"] = time(),
         ["Difficulty"] = MRT_InstanceDifficultyTable[instanceInfoDifficulty],
     }
-    table.insert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
+    tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
     MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
 end
 
@@ -314,15 +319,24 @@ function MRT_EndActiveRaid()
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Ending active raid...");
     for key, value in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
-        MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
+        if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"]) then
+            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
+        end
     end
     MRT_NumOfCurrentRaid = nil;
     MRT_NumOfLastBoss = nil;
 end
 
 
+-------------------------------
+--  loot tracking functions  --
+-------------------------------
+function MRT_AutoAddLoot(chatmsg)
+end
+
+
 ----------------------------
---  Attendance functions  --
+--  attendance functions  --
 ----------------------------
 function MRT_GuildRosterUpdate(frame, event, ...)
     local GuildRosterChanged = ...;
@@ -352,8 +366,14 @@ end
 
 
 ------------------------
---  Helper functions  --
+--  helper functions  --
 ------------------------
+function MRT_Debug(text)
+    if (MRT_Options["General_DebugEnabled"]) then
+        DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
+    end
+end
+
 -- GetNPCID - returns the NPCID or nil, if GUID was no NPC
 function MRT_GetNPCID(GUID)
     local first3 = tonumber("0x"..strsub(GUID, 3, 5));
