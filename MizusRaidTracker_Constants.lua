@@ -103,3 +103,9 @@ MRT_BossIDList = {
     [37755] = "Sindragosa",
     [29983] = "The Lich King",
 }
+
+--------------------------------
+--  ID-List of ignored Items  --
+--------------------------------
+MRT_IgnoredItemIDList = {
+}

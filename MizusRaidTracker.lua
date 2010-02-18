@@ -56,6 +56,7 @@ local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
 local MRT_NumOfCurrentRaid = nil;
+local MRT_NumOfLastBoss = nil;
 
 
 -------------------
@@ -89,6 +90,9 @@ function MRT_OnEvent(frame, event, ...)
         local monsteryell, sourceName = ...;
         if (MRT_L.Bossyells[monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
+            if (MRT_NumOfCurrentRaid) then
+                MRT_AddBosskill(MRT_L.Bossyells[monsteryell]);
+            end
         end
     end
     
@@ -97,7 +101,6 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "GUILD_ROSTER_UPDATE") then MRT_GuildRosterUpdate(frame, event, ...); end
     
     if (event == "RAID_INSTANCE_WELCOME") then
-        -- if (not UnitInRaid("player")) then return end // This doesn't work!
         if (not MRT_Options["General_MasterEnable"]) then return end
         -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
         local instanceName, resetTimer = ...;
@@ -123,6 +126,9 @@ function MRT_CombatLogHandler(...)
         local NPCID = MRT_GetNPCID(destGUID);
         if (MRT_BossIDList[NPCID]) then
             MRT_Debug("NPC from Bosslist died. - NPCName was "..destName.." and NPCID was "..NPCID);
+            if (MRT_NumOfCurrentRaid) then
+                MRT_AddBosskill(destName);
+            end
         end
     end
 end
@@ -147,44 +153,9 @@ function MRT_Debug(text)
 end
 
 
---------------------------
---  Tracking functions  --
---------------------------
-function MRT_CreateNewRaid(zoneName, raidSize)
-    if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
-    local numRaidMembers = GetNumRaidMembers();
-    if (not numRaidMembers) then return end
-    MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
-    local MRT_RaidInfo = {["Players"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
-    MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
-    -- FIXME - there may be "holes", so processing from 1...40 is inevitable / check for nil-names before UnitID-stuff and adding to raidlog
-    -- Note: CT_RaidTracker uses GetNumRaidMembers() as max_index... - so, should work!?... will revert...
-    for i = 1, numRaidMembers do
-        local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        local UnitID = "raid"..tostring(i);
-        local playerRaceL, playerRace = UnitRace(UnitID);
-        local playerSex = UnitSex(UnitID);
-        MRT_RaidInfo["Players"][playerName] = {
-            ["Name"] = playerName,
-            ["Join"] = time(),
-            ["Leave"] = nil,
-            ["Race"] = playerRace,
-            ["RaceL"] = playerRaceL,
-            ["Class"] = playerClass,
-            ["ClassL"] = playerClassL,
-            ["Level"] = playerLvl,
-            ["Sex"] = playerSex,
-        }
-    end
-    table.insert(MRT_RaidLog, MRT_RaidInfo);
-    MRT_NumOfCurrentRaid = #MRT_RaidLog;
-end
-
-function MRT_RaidRosterUpdate()
-    if (not MRT_NumOfCurrentRaid) then return; end
-    if (not UnitInRaid("player")) then MRT_EndActiveRaid(); end
-end
-
+--------------------------------
+--  basic tracking functions  --
+--------------------------------
 function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
     --  I) If no active raid and 10 player tracking enabled
@@ -241,10 +212,112 @@ function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     end
 end
 
+function MRT_CreateNewRaid(zoneName, raidSize)
+    if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+    local numRaidMembers = GetNumRaidMembers();
+    if (not numRaidMembers) then return end
+    MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
+    local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
+    MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
+    -- FIXME - there may be "holes", so processing from 1...40 is inevitable / check for nil-names before UnitID-stuff and adding to raidlog
+    -- Note: CT_RaidTracker uses GetNumRaidMembers() as max_index... - so, should work!?... will revert...
+    for i = 1, numRaidMembers do
+        local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        local UnitID = "raid"..tostring(i);
+        local playerRaceL, playerRace = UnitRace(UnitID);
+        local playerSex = UnitSex(UnitID);
+        MRT_RaidInfo["Players"][playerName] = {
+            ["Name"] = playerName,
+            ["Join"] = time(),
+            ["Leave"] = nil,
+            ["Race"] = playerRace,
+            ["RaceL"] = playerRaceL,
+            ["Class"] = playerClass,
+            ["ClassL"] = playerClassL,
+            ["Level"] = playerLvl,
+            ["Sex"] = playerSex,
+        }
+    end
+    table.insert(MRT_RaidLog, MRT_RaidInfo);
+    MRT_NumOfCurrentRaid = #MRT_RaidLog;
+end
+
+function MRT_RaidRosterUpdate()
+    if (not MRT_NumOfCurrentRaid) then return; end
+    local numRaidMembers = GetNumRaidMembers();
+    if (not numRaidMembers) then 
+        MRT_EndActiveRaid();
+        return;
+    end
+    MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
+    local activePlayerList = {};
+    for i = 1, numRaidMembers do
+        local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        table.insert(activePlayerList, playerName);
+        if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName]) then
+            MRT_Debug("New player found: "..playerName);
+            local UnitID = "raid"..tostring(i);
+            local playerRaceL, playerRace = UnitRace(UnitID);
+            local playerSex = UnitSex(UnitID);
+            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName] = {
+                ["Name"] = playerName,
+                ["Join"] = time(),
+                ["Leave"] = nil,
+                ["Race"] = playerRace,
+                ["RaceL"] = playerRaceL,
+                ["Class"] = playerClass,
+                ["ClassL"] = playerClassL,
+                ["Level"] = playerLvl,
+                ["Sex"] = playerSex,
+            };
+        else
+            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName]["Leave"] = nil;
+        end    
+    end
+    MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
+    for savedPlayer, values in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+        local matchFound = nil;
+        for index, activePlayer in ipairs (activePlayerList) do
+            if (savedPlayer == activePlayer) then 
+                matchFound = true; 
+            end
+        end
+        if (not matchFound) then
+            MRT_Debug("Leaving player found: "..savedPlayer);
+            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][savedPlayer]["Leave"] = time();
+        end
+    end
+end
+
+function MRT_AddBosskill(bossname)
+    if (not MRT_NumOfCurrentRaid) then return; end
+    MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
+    local _, _, instanceInfoDifficulty = GetInstanceInfo();
+    local tackedPlayers = {};
+    local numRaidMembers = GetNumRaidMembers();
+    for i = 1, numRaidMembers do
+        local playerName, _, playerSubGroup, _, _, _, _, playerOnline = GetRaidRosterInfo(i);
+        table.insert(trackedPlayers, playerName);
+    end
+    local MRT_BossKillInfo = {
+        ["Loot"] = {},
+        ["Players"] = trackedPlayers,
+        ["Name"] = bossname,
+        ["Date"] = time(),
+        ["Difficulty"] = MRT_InstanceDifficultyTable[instanceInfoDifficulty],
+    }
+    table.insert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
+    MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
+end
+
 function MRT_EndActiveRaid()
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Ending active raid...");
+    for key, value in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+        MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
+    end
     MRT_NumOfCurrentRaid = nil;
+    MRT_NumOfLastBoss = nil;
 end
 
 
