@@ -31,6 +31,9 @@ MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 MRT_Options = {};
 MRT_RaidLog = {};
 
+SLASH_MIZUSRAIDTRACKER1 = "/mrt";
+SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
+
 local MRT_Defaults = {
     ["Options"] = {
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true/false
@@ -38,8 +41,8 @@ local MRT_Defaults = {
         ["General_DebugEnabled"] = true,                                            --
         ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- 
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
-        ["Tracking_AutoCreateRaid"] = true,                                         --
-        ["Tracking_Log10MenRaids"] = true,                                          --
+        ["Tracking_AutoCreateRaid"] = true,                                         -- Currently not used
+        ["Tracking_Log10MenRaids"] = true,                                          -- in use
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
@@ -53,6 +56,7 @@ local MRT_Defaults = {
 --  Locals  --
 --------------
 local deformat = LibStub("LibDeformat-3.0");
+local tinsert = tinsert;
 
 local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
@@ -79,7 +83,7 @@ end
 -------------------------
 --  Handler functions  --
 -------------------------
--- Eventhandler
+-- Event handler
 function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
         frame:UnregisterEvent("ADDON_LOADED");
@@ -111,10 +115,10 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "RAID_INSTANCE_WELCOME") then
         if (not MRT_Options["General_MasterEnable"]) then return end
         -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
-        local instanceName, resetTimer = ...;
+        -- local instanceName, resetTimer = ...;
         local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
-        MRT_Debug("RAID_INSTANCE_WELCOME recieved. Instancename is "..instanceName.." and the resettimer is "..tostring(resetTimer));
-        MRT_Debug("GetInstanceInfo() returns '"..instanceInfoName.."' as name, '"..instanceInfoType.."' as type and '"..MRT_InstanceDifficultyTable[instanceInfoDifficulty].."' as difficulty");
+        -- MRT_Debug("RAID_INSTANCE_WELCOME recieved. Instancename is "..instanceName.." and the resettimer is "..tostring(resetTimer));
+        -- MRT_Debug("GetInstanceInfo() returns '"..instanceInfoName.."' as name, '"..instanceInfoType.."' as type and '"..MRT_InstanceDifficultyTable[instanceInfoDifficulty].."' as difficulty");
         if (MRT_L.Raidzones[instanceInfoName]) then
             MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
         end
@@ -127,7 +131,7 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "VARIABLES_LOADED") then MRT_UpdateSavedOptions(); end
 end
 
--- Combatloghandler
+-- Combatlog handler
 function MRT_CombatLogHandler(...)
     local _, combatEvent, _, _, _, destGUID, destName = ...;
     if (combatEvent == "UNIT_DIED") then
@@ -141,6 +145,9 @@ function MRT_CombatLogHandler(...)
     end
 end
 
+-- Slashcommand handler
+function MRT_SlashCmdHandler(msg)
+end
 
 ----------------------
 --  Apply Defaults  --
@@ -219,7 +226,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     local numRaidMembers = GetNumRaidMembers();
     if (numRaidMembers == 0) then return end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
-    local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
+    local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
     -- FIXME - there may be "holes", so processing from 1...40 is inevitable / check for nil-names before UnitID-stuff and adding to raidlog
     -- Note: CT_RaidTracker uses GetNumRaidMembers() as max_index... - so, should work!?... will revert...
@@ -246,14 +253,14 @@ end
 
 function MRT_RaidRosterUpdate(frame)
     if (not MRT_NumOfCurrentRaid) then return; end
-    MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     if (GetNumRaidMembers() == 0) then 
         MRT_EndActiveRaid();
         return;
     end
-    MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
     local numRaidMembers = GetNumRaidMembers();
     local activePlayerList = {};
+    --MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
+    --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
         tinsert(activePlayerList, playerName);
@@ -277,7 +284,7 @@ function MRT_RaidRosterUpdate(frame)
             MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName]["Leave"] = nil;
         end    
     end
-    MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
+    -- MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
     for savedPlayer, values in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
         local matchFound = nil;
         for index, activePlayer in ipairs (activePlayerList) do
@@ -305,11 +312,10 @@ function MRT_AddBosskill(bossname)
         tinsert(trackedPlayers, playerName);
     end
     local MRT_BossKillInfo = {
-        ["Loot"] = {},
         ["Players"] = trackedPlayers,
         ["Name"] = bossname,
         ["Date"] = time(),
-        ["Difficulty"] = MRT_InstanceDifficultyTable[instanceInfoDifficulty],
+        ["Difficulty"] = instanceInfoDifficulty,
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
     MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
@@ -331,7 +337,68 @@ end
 -------------------------------
 --  loot tracking functions  --
 -------------------------------
+-- track loot based on chatmessage recognized by event CHAT_MSG_LOOT
 function MRT_AutoAddLoot(chatmsg)
+    -- MRT_Debug("Lootevent recieved. Processing...");
+    -- patten LOOT_ITEM / LOOT_ITEM_SELF are also valid for LOOT_ITEM_MULTIPLE / LOOT_ITEM_SELF_MULTIPLE - but not the other way around - try these first
+    -- first try: somebody else recieved multiple loot (most parameters)
+    local playerName, itemLink, itemCount = deformat(chatmsg, LOOT_ITEM_MULTIPLE);
+    -- next try: somebody else recieved single loot
+    if (playerName == nil) then
+        itemCount = 1;
+        playerName, itemLink = deformat(chatmsg, LOOT_ITEM);
+    end
+    -- if player == nil, then next try: player recieved multiple loot
+    if (playerName == nil) then
+        playerName = UnitName("player");
+        itemLink, itemCount = deformat(chatmsg, LOOT_ITEM_SELF_MULTIPLE);
+    end
+    -- if itemLink == nil, then last try: player recieved single loot
+    if (itemLink == nil) then
+        itemCount = 1;
+        itemLink = deformat(chatmsg, LOOT_ITEM_SELF);
+    end
+    -- if itemLink == nil, then there was neither a LOOT_ITEM, nor a LOOT_ITEM_SELF message
+    if (itemLink == nil) then 
+        -- MRT_Debug("No valid lootevent recieved."); 
+        return; 
+    end
+    -- if code reach this point, we should have a valid looter and a valid itemLink
+    MRT_Debug("Item looted - Looter is "..playerName.." and loot is "..itemLink);
+    -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
+    -- strip the itemlink into its parts / may change to use deformat with easier pattern ("|c%s|H%s|h[%s]|h|r")
+    local _, _, itemString = string.find(itemLink, "^|c%x+|H(.+)|h%[.*%]");
+    local _, _, itemColor, _, itemId, _, _, _, _, _, _, _, _, itemName = string.find(itemLink, "|?c?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
+    -- if major fuckup in first strip:
+    if (itemString == nil) then MRT_Debug("ItemLink corrupted - no ItemString found."); return; end
+    -- if major fuckup in second strip:
+    if (itemId == nil) then MRT_Debug("ItemLink corrupted - no ItemId found."); return; end
+    -- check options, if this item should be tracked
+    if (MRT_Options["Tracking_MinItemQualityToLog"] > MRT_ItemColorValues[itemColor]) then MRT_Debug("Item not tracked - quality is too low."); return; end
+    -- Quick&Dirty for Trashdrops
+    if (MRT_NumOfLastBoss == nil) then 
+        MRT_AddBosskill("_TrashMobLoot_");
+    end
+    -- if code reach this point, we should have valid item information, an active raid and at least one bosskill entry - make a table!
+    -- Note: If a CT-Raidtracker-compatible export need more iteminfo, check GetItemInfo() for more data
+    local MRT_LootInfo = {
+        ["ItemLink"] = itemLink,
+        ["ItemString"] = itemString,
+        ["ItemId"] = itemId,
+        ["ItemName"] = itemName,
+        ["ItemColor"] = itemColor,
+        ["ItemCount"] = itemCount,
+        ["Looter"] = playerName,
+        ["DKPValue"] = 0,
+        ["BossNumber"] = MRT_NumOfLastBoss,
+    }
+    tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
+    if (not MRT_Options["Tracking_AskForDKPValue"]) then return; end
+    -- FIXME! Dialog to ask for DKP
+end
+
+-- track loot based on slashcommand (maybe via GUI dialog in future release) 
+function MRT_ManuallyAddLoot(itemLink, playerName, dkpValue)
 end
 
 
@@ -385,3 +452,9 @@ function MRT_GetNPCID(GUID)
     end
 end
 
+
+------------------------
+--  export functions  --
+------------------------
+function MRT_CreateCTRTExport(raidNumber, bossNumber)
+end

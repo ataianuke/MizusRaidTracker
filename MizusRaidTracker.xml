@@ -7,4 +7,10 @@
       <OnEvent>MRT_OnEvent(self, event, ...);</OnEvent>
     </Scripts>
   </Frame>
+  <Frame name="MRT_GetDKPValueFrame" toplevel="true" frameStrata="DIALOG">
+    <Size x="500" y="150"/>
+    <Anchors>
+      <Anchor point="CENTER"></Anchor>
+    </Anchors>
+  </Frame>
 </Ui>

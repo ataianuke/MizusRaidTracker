@@ -11,6 +11,16 @@ MRT_InstanceDifficultyTable = {
     [4] = "25 Heroic",
 }
 
+MRT_ItemColorValues = {
+    ["ff9d9d9d"] = 0,  -- poor
+    ["ffffffff"] = 1,  -- common
+    ["ff1eff00"] = 2,  -- uncommon
+    ["ff0070dd"] = 3,  -- rare
+    ["ffa335ee"] = 4,  -- epic
+    ["ffff8000"] = 5,  -- legendary
+    ["ffe6cc80"] = 6,  -- artifact / heirloom
+}
+
 -----------------------------------
 --  ID-List of trackable Bosses  --
 -----------------------------------
@@ -40,9 +50,9 @@ MRT_BossIDList = {
     [15989] = "Sapphiron",
     [15990] = "Kel'Thuzad",
     
-    ------------------------
-    --  Obsidian Sanctum  --
-    ------------------------
+    ----------------------------
+    --  The Obsidian Sanctum  --
+    ----------------------------
     [28860] = "Sartharion",
     
     -----------------------
@@ -102,10 +112,32 @@ MRT_BossIDList = {
         -- Dreamwalker will need bossyell
     [37755] = "Sindragosa",
     [29983] = "The Lich King",
+    
+    ------------------------
+    --  The Ruby Sanctum  --
+    ------------------------
 }
 
 --------------------------------
 --  ID-List of ignored Items  --
 --------------------------------
 MRT_IgnoredItemIDList = {
+    ---------------------
+    --  Emblems of...  --
+    ---------------------
+    [40752] = true,  -- ...Heroism
+    [40753] = true,  -- ...Valor
+    [45624] = true,  -- ...Conquest
+    [47241] = true,  -- ...Triumph
+    [49426] = true,  -- ...Frost
+    
+    ------------
+    --  Gems  --
+    ------------
+    [36931] = true,  -- Ametrine
+    [36919] = true,  -- Cardinal Ruby
+    [36928] = true,  -- Dreadstone
+    [36934] = true,  -- Eye of Zul
+    [36922] = true,  -- King's Amber
+    [36925] = true,  -- Majestic Zircon
 }
