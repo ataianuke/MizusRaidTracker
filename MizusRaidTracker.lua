@@ -134,13 +134,12 @@ end
 -- Combatlog handler
 function MRT_CombatLogHandler(...)
     local _, combatEvent, _, _, _, destGUID, destName = ...;
+    if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
         local NPCID = MRT_GetNPCID(destGUID);
+        -- MRT_Debug("NPC died. - NPCName was "..destName.." and NPCID was "..NPCID);
         if (MRT_BossIDList[NPCID]) then
-            MRT_Debug("NPC from Bosslist died. - NPCName was "..destName.." and NPCID was "..NPCID);
-            if (MRT_NumOfCurrentRaid) then
-                MRT_AddBosskill(destName);
-            end
+            MRT_AddBosskill(destName);
         end
     end
 end

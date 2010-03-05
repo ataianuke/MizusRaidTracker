@@ -110,8 +110,8 @@ MRT_BossIDList = {
         -- Blood Prince Council will need bossyell for "correct" naming - Prince Keleseth alone is trackable
     [37955] = "Blood-Queen Lana'thel",
         -- Dreamwalker will need bossyell
-    [37755] = "Sindragosa",
-    [29983] = "The Lich King",
+    [36853] = "Sindragosa",
+    [36597] = "The Lich King",
     
     ------------------------
     --  The Ruby Sanctum  --
