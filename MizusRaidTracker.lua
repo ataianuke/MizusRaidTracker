@@ -63,7 +63,8 @@ local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
 local MRT_NumOfCurrentRaid = nil;
 local MRT_NumOfLastBoss = nil;
-local MRT_EnterCostQueue = {};
+local MRT_AskCostQueue = {};
+local MRT_AskCostQueueRunning = nil;
 
 
 -------------------
@@ -402,38 +403,93 @@ function MRT_AutoAddLoot(chatmsg)
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
     if (not MRT_Options["Tracking_AskForDKPValue"]) then return; end
-    -- FIXME! Dialog to ask for DKP
+    if (MRT_Options["Tracking_MinItemQualityToGetDKPValue"] > MRT_ItemColorValues[itemColor]) then return; end
+    MRT_DKPFrame_AddToItemCostQueue(MRT_NumOfCurrentRaid, #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"]);
 end
 
 -- track loot based on slashcommand (maybe via GUI dialog in future release) 
-function MRT_ManuallyAddLoot(itemLink, playerName, dkpValue)
+function MRT_ManuallyAddLoot(playerName, dkpValue, itemLink)
 end
 
 
 ---------------------------
 --  loot cost functions  --
 ---------------------------
-function MRT_DKPFrame_AskItemCost()
+-- basic idea: add looted items to a little queue and ask cost for each item in the queue - this should avoid missing dialogs for fast lootet items
+-- note: standard dkpvalue is already 0
+function MRT_DKPFrame_AddToItemCostQueue(raidnum, itemnum)
+    local MRT_DKPCostQueueItem = {
+        ["RaidNum"] = raidnum,
+        ["ItemNum"] = itemnum,
+    }
+    tinsert(MRT_AskCostQueue, MRT_DKPCostQueueItem);
+    if (MRT_AskCostQueueRunning) then return; end
+    MRT_AskCostQueueRunning = true;
+    MRT_DKPFrame_AskCost();
 end
 
+-- process first queue entry
+function MRT_DKPFrame_AskCost()
+    -- if there are no entries in the queue, then return
+    if (not #MRT_AskCostQueue) then
+        MRT_AskCostQueueRunning = nil;
+        return; 
+    end
+    -- else format text and show "Enter Cost" frame
+    MRT_GetDKPValueFrame_Text:SetText(string.format(MRT_L.Core["DKP_Frame_Text"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["ItemLink"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
+    MRT_GetDKPValueFrame_EB:SetText("");
+    MRT_GetDKPValueFrame:Show();
+end
+
+-- Case Ok: Save DKP-Value
 function MRT_DKPFrame_Ok()
     MRT_Debug("DKPFrame: OK pressed");
+    local dkpValue = tonumber(MRT_GetDKPValueFrame_EB:GetText(), 10);
+    if (not dkpValue) then return; end
+    MRT_GetDKPValueFrame:Hide();
+    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["DKPValue"] = dkpValue;
+    MRT_DKPFrame_PostAskQueue();
 end
 
+-- Case Cancel: Set DKP-Value = 0
 function MRT_DKPFrame_Cancel()
     MRT_Debug("DKPFrame: Cancel pressed");
+    MRT_GetDKPValueFrame:Hide();
+    MRT_DKPFrame_PostAskQueue();
 end
 
+-- Case Delete: Set DKP-Value = 0, set Looter = _deleted_
 function MRT_DKPFrame_Delete()
     MRT_Debug("DKPFrame: Delete pressed");
+    MRT_GetDKPValueFrame:Hide();
+    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_deleted_";
+    MRT_DKPFrame_PostAskQueue();
 end
 
+-- Case Bank: Set DKP-Value = 0, set Looter = _bank_
 function MRT_DKPFrame_Bank()
     MRT_Debug("DKPFrame: Bank pressed");
+    MRT_GetDKPValueFrame:Hide();
+    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_bank_";
+    MRT_DKPFrame_PostAskQueue();
 end
 
+-- Case Disenchanted: Set DKP-Value = 0, set Looter = _disenchanted_
 function MRT_DKPFrame_Disenchanted()
     MRT_Debug("DKPFrame: Disenchanted pressed");
+    MRT_GetDKPValueFrame:Hide();
+    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_disenchanted_";
+    MRT_DKPFrame_PostAskQueue();
+end
+
+-- delete processed entry - if there are still items in the queue, process the next item
+function MRT_DKPFrame_PostAskQueue()
+    table.remove(MRT_AskCostQueue, 1);
+    if (#MRT_AskCostQueue) then
+        MRT_DKPFrame_AskCost();
+    else
+        MRT_AskCostQueueRunning = nil;
+    end    
 end
 
 
