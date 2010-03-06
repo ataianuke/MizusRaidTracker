@@ -63,6 +63,7 @@ local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
 local MRT_NumOfCurrentRaid = nil;
 local MRT_NumOfLastBoss = nil;
+local MRT_EnterCostQueue = {};
 
 
 -------------------
@@ -88,6 +89,7 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
         frame:UnregisterEvent("ADDON_LOADED");
         MRT_Options_ParseValues();
+        MRT_Core_Frames_ParseLocal();
         GuildRoster();
         MRT_Debug("Addon loaded.");
     end
@@ -146,6 +148,13 @@ end
 
 -- Slashcommand handler
 function MRT_SlashCmdHandler(msg)
+    if (msg == 'dkpframe') then
+        if (MRT_GetDKPValueFrame:IsShown()) then
+            MRT_GetDKPValueFrame:Hide()
+        else
+            MRT_GetDKPValueFrame:Show()
+        end
+    end
 end
 
 ----------------------
@@ -401,6 +410,33 @@ function MRT_ManuallyAddLoot(itemLink, playerName, dkpValue)
 end
 
 
+---------------------------
+--  loot cost functions  --
+---------------------------
+function MRT_DKPFrame_AskItemCost()
+end
+
+function MRT_DKPFrame_Ok()
+    MRT_Debug("DKPFrame: OK pressed");
+end
+
+function MRT_DKPFrame_Cancel()
+    MRT_Debug("DKPFrame: Cancel pressed");
+end
+
+function MRT_DKPFrame_Delete()
+    MRT_Debug("DKPFrame: Delete pressed");
+end
+
+function MRT_DKPFrame_Bank()
+    MRT_Debug("DKPFrame: Bank pressed");
+end
+
+function MRT_DKPFrame_Disenchanted()
+    MRT_Debug("DKPFrame: Disenchanted pressed");
+end
+
+
 ----------------------------
 --  attendance functions  --
 ----------------------------
@@ -438,6 +474,17 @@ function MRT_Debug(text)
     if (MRT_Options["General_DebugEnabled"]) then
         DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
     end
+end
+
+-- Parse local, static strings
+function MRT_Core_Frames_ParseLocal()
+    MRT_GetDKPValueFrame_Title:SetText(MRT_L.Core["DKP_Frame_Title"]);
+    MRT_GetDKPValueFrame_Text:SetText(MRT_L.Core["DKP_Frame_Text"]);
+    MRT_GetDKPValueFrame_OKButton:SetText(MRT_L.Core["DKP_Frame_OK_Button"]);
+    MRT_GetDKPValueFrame_CancelButton:SetText(MRT_L.Core["DKP_Frame_Cancel_Button"]);
+    MRT_GetDKPValueFrame_DeleteButton:SetText(MRT_L.Core["DKP_Frame_Delete_Button"]);
+    MRT_GetDKPValueFrame_BankButton:SetText(MRT_L.Core["DKP_Frame_Bank_Button"]);
+    MRT_GetDKPValueFrame_DisenchantedButton:SetText(MRT_L.Core["DKP_Frame_Disenchanted_Button"]);
 end
 
 -- GetNPCID - returns the NPCID or nil, if GUID was no NPC

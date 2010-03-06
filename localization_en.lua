@@ -7,7 +7,7 @@
 -----------------------------
 --  Create Tablestructure  --
 -----------------------------
-MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Options"] = {}};
+MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}};
 
 
 -----------------
@@ -37,7 +37,7 @@ MRT_L.Bossyells["I grow tired of these games. Proceed, and I will banish your so
 -- Ulduar
 MRT_L.Bossyells["You rush headlong into the maw of madness!"] = "Iron Council";  -- Normalmode - Stormcaller Brundir last
 MRT_L.Bossyells["What have you gained from my defeat? You are no less doomed, mortals!"] = "Iron Council";  -- Semi-Hardmode - Runemaster Molgeim last
--- MRT_L.Bossyells["Impossible..."] = "Iron Council";  -- Hardmode - Steelbreaker last  // Yelled by Lich King - damn
+-- MRT_L.Bossyells["Impossible..."] = "Iron Council";  -- Hardmode - Steelbreaker last  // Yelled also by Lich King - damn
 MRT_L.Bossyells["I... I am released from his grasp... at last."] = "Hodir";
 MRT_L.Bossyells["Stay your arms! I yield!"] = "Thorim";
 MRT_L.Bossyells["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya";
@@ -55,9 +55,22 @@ MRT_L.Bossyells["My queen, they... come."] = "Blood Prince Council"; -- Prince K
 MRT_L.Bossyells["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker";
 
 
----------------------------
---  Optionspanels local  --
----------------------------
+---------------------------------
+--  Core frames local strings  --
+---------------------------------
+-- Enter DKP cost frame
+MRT_L.Core["DKP_Frame_Title"] = "Enter cost";
+MRT_L.Core["DKP_Frame_Text"] = "Enter cost for %s\nlooted by |cFFFFFFFF%s|r.";
+MRT_L.Core["DKP_Frame_OK_Button"] = "Ok";
+MRT_L.Core["DKP_Frame_Cancel_Button"] = "Cancel";
+MRT_L.Core["DKP_Frame_Delete_Button"] = "Delete";
+MRT_L.Core["DKP_Frame_Bank_Button"] = "Bank";
+MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Disenchanted";
+
+
+-----------------------------------
+--  Option panels local strings  --
+-----------------------------------
 -- MainPanel - Text
 MRT_L.Options["MP_Description"] = "Tracks raids, loot and attendance";
 -- MainPanel - Checkboxes
