@@ -404,6 +404,7 @@ function MRT_AutoAddLoot(chatmsg)
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
     if (not MRT_Options["Tracking_AskForDKPValue"]) then return; end
     if (MRT_Options["Tracking_MinItemQualityToGetDKPValue"] > MRT_ItemColorValues[itemColor]) then return; end
+    if (MRT_IgnoredItemIDList[itemId]) then return; end
     MRT_DKPFrame_AddToItemCostQueue(MRT_NumOfCurrentRaid, #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"]);
 end
 
@@ -431,7 +432,7 @@ end
 -- process first queue entry
 function MRT_DKPFrame_AskCost()
     -- if there are no entries in the queue, then return
-    if (not #MRT_AskCostQueue) then
+    if (#MRT_AskCostQueue == 0) then
         MRT_AskCostQueueRunning = nil;
         return; 
     end
@@ -441,11 +442,16 @@ function MRT_DKPFrame_AskCost()
     MRT_GetDKPValueFrame:Show();
 end
 
--- Case Ok: Save DKP-Value
+-- Case Ok: Save DKP-Value - Treat no input as zero
 function MRT_DKPFrame_Ok()
     MRT_Debug("DKPFrame: OK pressed");
-    local dkpValue = tonumber(MRT_GetDKPValueFrame_EB:GetText(), 10);
-    if (not dkpValue) then return; end
+    local dkpValue = nil;
+    if (MRT_GetDKPValueFrame_EB:GetText() == "") then
+        dkpValue = 0;
+    else
+        dkpValue = tonumber(MRT_GetDKPValueFrame_EB:GetText(), 10);
+    end
+    if (dkpValue == nil) then return; end
     MRT_GetDKPValueFrame:Hide();
     MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["DKPValue"] = dkpValue;
     MRT_DKPFrame_PostAskQueue();
@@ -485,10 +491,10 @@ end
 -- delete processed entry - if there are still items in the queue, process the next item
 function MRT_DKPFrame_PostAskQueue()
     table.remove(MRT_AskCostQueue, 1);
-    if (#MRT_AskCostQueue) then
-        MRT_DKPFrame_AskCost();
-    else
+    if (#MRT_AskCostQueue == 0) then
         MRT_AskCostQueueRunning = nil;
+    else
+        MRT_DKPFrame_AskCost();
     end    
 end
 
