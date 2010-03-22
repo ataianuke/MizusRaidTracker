@@ -390,6 +390,7 @@ function MRT_AutoAddLoot(chatmsg)
     end
     -- if code reach this point, we should have valid item information, an active raid and at least one bosskill entry - make a table!
     -- Note: If a CT-Raidtracker-compatible export need more iteminfo, check GetItemInfo() for more data
+    if (MRT_IgnoredItemIDList[itemId]) then return; end
     local MRT_LootInfo = {
         ["ItemLink"] = itemLink,
         ["ItemString"] = itemString,
@@ -404,7 +405,6 @@ function MRT_AutoAddLoot(chatmsg)
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
     if (not MRT_Options["Tracking_AskForDKPValue"]) then return; end
     if (MRT_Options["Tracking_MinItemQualityToGetDKPValue"] > MRT_ItemColorValues[itemColor]) then return; end
-    if (MRT_IgnoredItemIDList[itemId]) then return; end
     MRT_DKPFrame_AddToItemCostQueue(MRT_NumOfCurrentRaid, #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"]);
 end
 

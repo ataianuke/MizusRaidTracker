@@ -140,4 +140,8 @@ MRT_IgnoredItemIDList = {
     [36934] = true,  -- Eye of Zul
     [36922] = true,  -- King's Amber
     [36925] = true,  -- Majestic Zircon
+    
+    --------------
+    --  Shards  --
+    --------------
 }
