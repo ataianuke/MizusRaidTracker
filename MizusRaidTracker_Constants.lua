@@ -144,4 +144,5 @@ MRT_IgnoredItemIDList = {
     --------------
     --  Shards  --
     --------------
+    [34057] = true,  -- Abyss Crystal
 }

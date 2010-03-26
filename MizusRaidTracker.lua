@@ -378,19 +378,21 @@ function MRT_AutoAddLoot(chatmsg)
     -- strip the itemlink into its parts / may change to use deformat with easier pattern ("|c%s|H%s|h[%s]|h|r")
     local _, _, itemString = string.find(itemLink, "^|c%x+|H(.+)|h%[.*%]");
     local _, _, itemColor, _, itemId, _, _, _, _, _, _, _, _, itemName = string.find(itemLink, "|?c?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
+    -- make the string a number
+    itemId = tonumber(itemId);
     -- if major fuckup in first strip:
     if (itemString == nil) then MRT_Debug("ItemLink corrupted - no ItemString found."); return; end
     -- if major fuckup in second strip:
     if (itemId == nil) then MRT_Debug("ItemLink corrupted - no ItemId found."); return; end
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > MRT_ItemColorValues[itemColor]) then MRT_Debug("Item not tracked - quality is too low."); return; end
+    if (MRT_IgnoredItemIDList[itemId]) then return; end
     -- Quick&Dirty for Trashdrops
     if (MRT_NumOfLastBoss == nil) then 
         MRT_AddBosskill("_TrashMobLoot_");
     end
     -- if code reach this point, we should have valid item information, an active raid and at least one bosskill entry - make a table!
     -- Note: If a CT-Raidtracker-compatible export need more iteminfo, check GetItemInfo() for more data
-    if (MRT_IgnoredItemIDList[itemId]) then return; end
     local MRT_LootInfo = {
         ["ItemLink"] = itemLink,
         ["ItemString"] = itemString,
@@ -502,6 +504,7 @@ end
 ----------------------------
 --  attendance functions  --
 ----------------------------
+-- Create a table with names of guild members
 function MRT_GuildRosterUpdate(frame, event, ...)
     local GuildRosterChanged = ...;
     if (MRT_GuildRosterInitialUpdateDone and not GuildRosterChanged) then return end;
