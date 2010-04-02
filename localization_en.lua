@@ -3,6 +3,9 @@
 -- **            <ENTER URL HERE>            **
 -- ********************************************************
 --
+-- Note: 
+--  MRT requires a correct localization of RaidZones and Bossyells for working
+--
 
 -----------------------------
 --  Create Tablestructure  --
@@ -76,12 +79,17 @@ MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Disenchanted";
 -- MainPanel - Text
 MRT_L.Options["MP_Description"] = "Tracks raids, loot and attendance";
 -- MainPanel - Checkboxes
-MRT_L.Options["MP_Enabled"] = "Enabled";
-MRT_L.Options["MP_Debug"] = "Debugmessages";
+MRT_L.Options["MP_Enabled"] = "Enable MRT";
+MRT_L.Options["MP_Debug"] = "Enable debug messages";
 
 -- TrackingPanel - Title
 MRT_L.Options["TP_Title"] = "Tracking";
+MRT_L.Options["TP_TitleText"] = "MRT - Tracking options";
+MRT_L.Options["TP_Log10MenRaids"] = "Track 10 player raids";
+MRT_L.Options["TP_LogAVRaids"] = "Track Archavons Vault";
+MRT_L.Options["TP_AskForDKPValue"] = "Ask for item cost";
 
 -- AttendancePanel - Title
 MRT_L.Options["AP_Title"] = "Attendance";
+MRT_L.Options["AP_TitleText"] = "MRT - Attendance options";
 

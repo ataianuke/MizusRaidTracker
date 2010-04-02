@@ -42,18 +42,16 @@ SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
 
 local MRT_Defaults = {
     ["Options"] = {
-        ["General_MasterEnable"] = true,                                            -- AddonEnable: true/false
+        ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
         ["General_Version"] = GetAddOnMetadata("MizusRaidTracker", "Version"),      -- 
-        ["General_DebugEnabled"] = true,                                            --
-        ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- 
+        ["General_DebugEnabled"] = nil,                                             --
+        ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- NYI!
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
-        ["Tracking_AutoCreateRaid"] = true,                                         -- Currently not used
         ["Tracking_Log10MenRaids"] = true,                                          -- in use
+        ["Tracking_LogAVRaids"] = nil,                                              -- NYI! Track Archavons Vault
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
-        ["Tracking_OnlyTrackInRaidDungeons"] = true,                                -- Currently not used
-        ["Tracking_UseDefaultItemIgnoreList"] = true,                               -- Currently not used
     },
 };
 
@@ -549,7 +547,7 @@ end
 
 -- Parse local, static strings
 function MRT_Core_Frames_ParseLocal()
-    MRT_GetDKPValueFrame_Title:SetText(MRT_L.Core["DKP_Frame_Title"]);
+    MRT_GetDKPValueFrame_Title:SetText("MRT - "..MRT_L.Core["DKP_Frame_Title"]);
     MRT_GetDKPValueFrame_Text:SetText(MRT_L.Core["DKP_Frame_Text"]);
     MRT_GetDKPValueFrame_OKButton:SetText(MRT_L.Core["DKP_Frame_OK_Button"]);
     MRT_GetDKPValueFrame_CancelButton:SetText(MRT_L.Core["DKP_Frame_Cancel_Button"]);

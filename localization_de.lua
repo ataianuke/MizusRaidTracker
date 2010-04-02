@@ -3,6 +3,9 @@
 -- **            <ENTER URL HERE>            **
 -- *******************************************************
 --
+-- Note: 
+--  MRT requires a correct localization of RaidZones and Bossyells for working
+--
 
 ----------------------
 --  Are you local?  --
@@ -13,6 +16,8 @@ if GetLocale() ~= "deDE" then return end
 -----------------
 --  RaidZones  --
 -----------------
+-- @Locals: Only change the zone names of the keys - NOT the values!
+-- 'keys' = text in squared brackets
 MRT_L.Raidzones = {
     -- Wrath of the Lich King
     ["Das Auge der Ewigkeit"] = "The Eye of Eternity",
@@ -23,7 +28,8 @@ MRT_L.Raidzones = {
     ["Pr\195\188fung des Kreuzfahrers"] = "Trial of the Crusader",
     ["Pr\195\188fung des Obersten Kreuzfahrers"] = "Trial of the Grand Crusader",
     ["Onyxias Hort"] = "Onyxia's Lair",
-    ["Eiskronenzitadelle"] = "Icecrown Citadel",   
+    ["Eiskronenzitadelle"] = "Icecrown Citadel",
+    ["The Ruby Sanctum"] = "The Ruby Sanctum",    -- FIXME!
 };
 
 
@@ -60,5 +66,5 @@ MRT_L.Bossyells["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreatur
 -- MainPanel - Text
 MRT_L.Options["MP_Description"] = "Trackt Raids, Loot und Teilnehmer";
 -- MainPanel - Checkboxes
-MRT_L.Options["MP_Enabled"] = "Aktiviert";
-MRT_L.Options["MP_Debug"] = "Debugausgaben";
+MRT_L.Options["MP_Enabled"] = "Aktiviere MRT";
+MRT_L.Options["MP_Debug"] = "Aktiviere Debugnachrichten";

@@ -27,9 +27,9 @@
 --    along with Mizus Raid Tracker.  
 --    If not, see <http://www.gnu.org/licenses/>.
 
-------------------------------------------------------
---  Register panels, parse values and localization  --
-------------------------------------------------------
+-----------------------
+--  Register panels  --
+-----------------------
 function MRT_Options_MainPanel_OnLoad(panel)
     panel.name = "MizusRaidTracker";
     panel.okay = function(self) MRT_Options_OnOkay(self); end;
@@ -50,23 +50,50 @@ function MRT_Options_AttendancePanel_OnLoad(panel)
 end
 
 
----------------------------------------------------
---  parse values and localization on first show  --
----------------------------------------------------
+--------------------------------------------------------
+--  parse values and localization after ADDON_LOADED  --
+--------------------------------------------------------
 function MRT_Options_ParseValues()
+    -- MainPanel
     MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
     MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
     MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
     MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
     MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
+    MRT_Options_MainPanel_Debug_CB_Text:SetText(MRT_L.Options["MP_Debug"]);
+    -- TrackingPanel
+    MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
+    MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
+    MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
+    MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
+    MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"].." - NYI! - will always track AV");
+    MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
+    MRT_Options_TrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);
+    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderText:SetText("SliderText");
+    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("SliderValue");
+    -- AttendancePanel
+    MRT_Options_AttendancePanel_Title:SetText(MRT_L.Options["AP_TitleText"]);
 end
 
 
---------------------
---  Save changes  --
---------------------
+--------------------------------------------------------------
+--  Save changes - if required, change actual trackerstate  --
+--------------------------------------------------------------
 function MRT_Options_OnOkay(panel)
     MRT_Debug("InterfaceOptions - OkayButton pressed");
+    -- MainPanel
+    MRT_Options["General_MasterEnable"] = MRT_Options_MainPanel_Enabled_CB:GetChecked();
+    MRT_Options["General_DebugEnabled"] = MRT_Options_MainPanel_Debug_CB:GetChecked();
+    -- TrackingPanel
+    -- AttendancePanel
+    if (not MRT_Options["General_MasterEnable"]) then 
+        MRT_EndActiveRaid();
+    else 
+        local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+        if (MRT_L.Raidzones[instanceInfoName]) then
+            MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
+        end
+    end
 end
 
 
@@ -75,4 +102,9 @@ end
 ----------------------
 function MRT_Options_OnCancel(panel)
     MRT_Debug("InterfaceOptions - CancelButton pressed");
+    -- MainPanel
+    MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
+    MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
+    -- TrackingPanel
+    -- AttendancePanel
 end
