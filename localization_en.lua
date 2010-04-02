@@ -13,6 +13,8 @@ MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {
 -----------------
 --  RaidZones  --
 -----------------
+-- @Locals: Only change the zone names of the keys - NOT the values!
+-- 'keys' = text in squared brackets
 MRT_L.Raidzones = {
     -- Wrath of the Lich King
 	["The Eye of Eternity"] = "The Eye of Eternity",
