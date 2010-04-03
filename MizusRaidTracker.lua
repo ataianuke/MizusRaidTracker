@@ -160,6 +160,11 @@ function MRT_SlashCmdHandler(msg)
             MRT_GetDKPValueFrame:Show()
         end
     end
+    if (msg == 'extest') then
+        URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil);
+        URLFrameEditBox:HighlightText();
+        URLFrame:Show();
+    end
 end
 
 ----------------------
@@ -239,7 +244,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     local numRaidMembers = GetNumRaidMembers();
     if (numRaidMembers == 0) then return end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
-    local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
+    local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = time()};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
@@ -566,9 +571,148 @@ function MRT_GetNPCID(GUID)
     end
 end
 
+function MRT_MakeEQDKP_Time(timestamp)
+end
+
 
 ------------------------
 --  export functions  --
 ------------------------
-function MRT_CreateEQDKPExport(raidNumber, bossNumber)
+-- create CTRT-like DKP-String for the EQDKP CTRT-Import-Plugin
+-- arg usage: (int, nil, nil) = export complete raid
+--            (int, int, nil) = export one boss
+--            (int, nil, <H, N>) = export all hard-/normalmode events
+--            (int, int, <H, N>) = -> will be treated as (int, int, nil)
+function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
+    -- basic "catch bad args" routines
+    -- check if bad raidID
+    if (MRT_RaidLog[raidID] == nil) then return end;
+    -- check if bad bossID
+    if (bossID ~= nil) then
+        if (MRT_RaidLog[raidID]["Bosskills"][bossID] == nil) then return end;
+    end
+    -- check if bad difficulty-setting
+    if ((difficulty ~= nil) and (difficulty ~= "H") and (difficulty ~= "N")) then return end;
+    -- start creating xml-data!
+    local index = 1;
+    local xml = "<RaidInfo>";
+    xml = xml.."<key>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</key>";
+    if (MRT_RaidLog[raidID]["Realm"]) then
+        xml = xml.."<realm>"..MRT_RaidLog[raidID]["Realm"].."</realm>";
+    end
+    xml = xml.."<start>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</start>";
+    if (MRT_RaidLog[raidID]["StopTime"]) then
+        xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"]).."</end>";
+    end
+    xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    xml = xml.."<PlayerInfos>";
+    index = 1;
+    for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+        xml = xml.."<key"..index..">";
+        xml = xml.."<name>"..key.."</name>";
+        xml = xml.."<race>"..MRT_RaidLog[raidID]["Players"][key]["Race"].."</race>";
+        xml = xml.."<sex>"..MRT_RaidLog[raidID]["Players"][key]["Sex"].."</sex>";
+        xml = xml.."<class>"..MRT_RaidLog[raidID]["Players"][key]["Class"].."</class>";
+        xml = xml.."<level>"..MRT_RaidLog[raidID]["Players"][key]["Level"].."</level>";
+        xml = xml.."</key"..index..">";
+        index = index + 1;
+    end
+    if (MRT_RaidLog[raidID]["Bosskills"]) then
+        if ((bossID == nil) and (difficulty == nil)) then
+            xml = xml.."<BossKills>";
+            for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                xml = xml.."<key"..idx..">";
+                xml = xml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][idx]["Name"].."</name>";
+                xml = xml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][idx]["Difficulty"].."</difficulty>";
+                xml = xml.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][idx]["Date"]).."</time>";
+                xml = xml.."<attendees>";
+                for idx2, val2 in pairs(MRT_RaidLog[raidID]["Bosskills"][idx]["Players"]) do
+                    xml = xml.."<key"..idx2.."><name>"..val2.."</name></key"..idx2..">";
+                end
+                xml = xml.."</attendees>";
+                xml = xml.."</key"..idx..">";
+            end
+            xml = xml.."</BossKills>";
+        elseif (bossID) then
+            xml = xml.."<BossKills><key1>";
+            xml = xml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
+            xml = xml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
+            xml = xml.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]).."</time>";
+            xml = xml.."<attendees>";
+            for idx, val in pairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
+                xml = xml.."<key"..idx.."><name>"..val.."</name></key"..idx..">";
+            end
+            xml = xml.."</attendees></key1></BossKills>";
+        else
+            -- FIXME! Do stuff for export of a specific difficulty
+        end
+    end
+    index = 1;
+    xml = xml.."<Join>";
+    for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+        xml = xml.."<key"..index..">";
+        xml = xml.."<player>"..key.."</player>";
+        xml = xml.."<race>"..MRT_RaidLog[raidID]["Players"][key]["Race"].."</race>";
+        xml = xml.."<class>"..MRT_RaidLog[raidID]["Players"][key]["Class"].."</class>";
+        xml = xml.."<sex>"..MRT_RaidLog[raidID]["Players"][key]["Sex"].."</sex>";
+        xml = xml.."<level>"..MRT_RaidLog[raidID]["Players"][key]["Level"].."</level>";
+        xml = xml.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Players"][key]["Join"]).."</time>";
+        xml = xml.."</key"..index..">";
+        index = index + 1;
+    end
+    xml = xml.."</Join>";
+    xml = xml.."<Leave>";
+    index = 1;
+    for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+        xml = xml.."<key"..index..">";
+        xml = xml.."<player>"..key.."</player>";
+        xml = xml.."<time>"..MRT_MakeEQDKP_Time(val["Leave"]).."</time>";
+        xml = xml.."</key"..index..">";
+        index = index + 1;
+    end
+    xml = xml.."</Leave>";
+    xml = xml.."<Loot>";
+    index = 1;
+    for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
+        if ((bossID == nil) or (val["BossNumber"] == bossID)) then
+            xml = xml.."<key"..index..">";
+            xml = xml.."<ItemName>"..val["ItemName"].."</ItemName>";
+            local itemIdLong = deformat(val["ItemString"], "item:%s");
+            xml = xml.."<ItemID>"..itemIdLong.."</ItemID>";
+            xml = xml.."<Color>"..val["ItemColor"].."</Color>";
+            xml = xml.."<Count>1</Count>";
+            xml = xml.."<Player>"..val["Looter"].."</Player>";
+            xml = xml.."<Costs>"..val["DKPValue"].."</Costs>";
+            xml = xml.."<Time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Date"]).."</Time>";
+            xml = xml.."<Difficulty>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"].."</Difficulty>";
+            xml = xml.."<Boss>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].."</Boss>";
+            xml = xml.."</key"..index..">";
+            index = index + 1;
+        end
+    end
+    xml = xml.."</Loot>";
+    xml = xml.."</RaidInfo>";
+    return xml;
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
