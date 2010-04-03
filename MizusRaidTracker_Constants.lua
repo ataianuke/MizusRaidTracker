@@ -132,18 +132,14 @@ MRT_BossIDList = {
 --  ID-List of ignored Items  --
 --------------------------------
 MRT_IgnoredItemIDList = {
-    ---------------------
-    --  Emblems of...  --
-    ---------------------
+    -- Emblems of...
     [40752] = true,  -- ...Heroism
     [40753] = true,  -- ...Valor
     [45624] = true,  -- ...Conquest
     [47241] = true,  -- ...Triumph
     [49426] = true,  -- ...Frost
     
-    ------------
-    --  Gems  --
-    ------------
+    -- Gems
     [36931] = true,  -- Ametrine
     [36919] = true,  -- Cardinal Ruby
     [36928] = true,  -- Dreadstone
@@ -151,8 +147,6 @@ MRT_IgnoredItemIDList = {
     [36922] = true,  -- King's Amber
     [36925] = true,  -- Majestic Zircon
     
-    --------------
-    --  Shards  --
-    --------------
+    -- Shards
     [34057] = true,  -- Abyss Crystal
 }

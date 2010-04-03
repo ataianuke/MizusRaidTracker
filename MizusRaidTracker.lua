@@ -4,7 +4,7 @@
 -- *********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall
+--    * Mizukichan @ EU-Thrall (2010)
 --
 -- The localizations are written by:
 --    * enGB/enUS: Mizukichan
@@ -47,7 +47,7 @@ local MRT_Defaults = {
         ["General_DebugEnabled"] = nil,                                             --
         ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- NYI!
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
-        ["Tracking_Log10MenRaids"] = true,                                          -- in use
+        ["Tracking_Log10MenRaids"] = nil,                                           -- in use
         ["Tracking_LogAVRaids"] = nil,                                              -- NYI! Track Archavons Vault
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
@@ -241,8 +241,6 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
     local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["StartTime"] = time()};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
-    -- FIXME - there may be "holes", so processing from 1...40 is inevitable / check for nil-names before UnitID-stuff and adding to raidlog
-    -- Note: CT_RaidTracker uses GetNumRaidMembers() as max_index... - so, should work!?... will revert...
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
         local UnitID = "raid"..tostring(i);
@@ -385,9 +383,9 @@ function MRT_AutoAddLoot(chatmsg)
     -- make the string a number
     itemId = tonumber(itemId);
     -- if major fuckup in first strip:
-    if (itemString == nil) then MRT_Debug("ItemLink corrupted - no ItemString found."); return; end
+    -- if (itemString == nil) then MRT_Debug("ItemLink corrupted - no ItemString found."); return; end
     -- if major fuckup in second strip:
-    if (itemId == nil) then MRT_Debug("ItemLink corrupted - no ItemId found."); return; end
+    -- if (itemId == nil) then MRT_Debug("ItemLink corrupted - no ItemId found."); return; end
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > MRT_ItemColorValues[itemColor]) then MRT_Debug("Item not tracked - quality is too low."); return; end
     if (MRT_IgnoredItemIDList[itemId]) then return; end
@@ -422,7 +420,8 @@ end
 ---------------------------
 --  loot cost functions  --
 ---------------------------
--- basic idea: add looted items to a little queue and ask cost for each item in the queue - this should avoid missing dialogs for fast lootet items
+-- basic idea: add looted items to a little queue and ask cost for each item in the queue 
+--             this should avoid missing dialogs for fast looted items
 -- note: standard dkpvalue is already 0
 function MRT_DKPFrame_AddToItemCostQueue(raidnum, itemnum)
     local MRT_DKPCostQueueItem = {
@@ -545,7 +544,7 @@ function MRT_Debug(text)
     end
 end
 
--- Parse local, static strings
+-- Parse static local strings
 function MRT_Core_Frames_ParseLocal()
     MRT_GetDKPValueFrame_Title:SetText("MRT - "..MRT_L.Core["DKP_Frame_Title"]);
     MRT_GetDKPValueFrame_Text:SetText(MRT_L.Core["DKP_Frame_Text"]);
@@ -571,5 +570,5 @@ end
 ------------------------
 --  export functions  --
 ------------------------
-function MRT_CreateCTRTExport(raidNumber, bossNumber)
+function MRT_CreateEQDKPExport(raidNumber, bossNumber)
 end

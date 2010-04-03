@@ -118,9 +118,53 @@
           </Layer>
         </Layers>
       </CheckButton>
+      <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
+        <Size x="200" y="20"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_LogAVRaids_CB" relativePoint="BOTTOMLEFT">
+            <Offset y="-20"/>
+          </Anchor>
+        </Anchors>
+        <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+          <EdgeSize>
+            <AbsValue val="8"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="8"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="6" bottom="6"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentText" inherits="GameFontWhite">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT"/>
+              </Anchors>
+            </FontString>
+            <FontString name="$parentValue" inherits="GameFontWhite">
+              <Anchors>
+                <Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+                  <Offset x="10"/>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToLog_Slider(); end)</OnMouseDown>
+          <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
+        </Scripts>
+        <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
+          <Size>
+            <AbsDimension x="32" y="32" />
+          </Size>
+        </ThumbTexture>
+      </Slider>
       <CheckButton name="$parent_AskForDKPValue_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOP" relativeTo="$parent_LogAVRaids_CB" relativePoint="BOTTOM">
+          <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToLog_Slider" relativePoint="BOTTOMLEFT">
             <Offset y="-5"></Offset>
           </Anchor>
         </Anchors>
@@ -136,8 +180,8 @@
           </Layer>
         </Layers>
       </CheckButton>
-      <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
-        <Size x="144" y="20"/>
+      <Slider name="$parent_MinItemQualityToGetCost_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
+        <Size x="200" y="20"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValue_CB" relativePoint="BOTTOMLEFT">
             <Offset y="-20"/>
@@ -158,7 +202,7 @@
           <Layer level="ARTWORK">
             <FontString name="$parentText" inherits="GameFontWhite">
               <Anchors>
-                <Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP"/>
+                <Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT"/>
               </Anchors>
             </FontString>
             <FontString name="$parentValue" inherits="GameFontWhite">
@@ -171,7 +215,7 @@
           </Layer>
         </Layers>
         <Scripts>
-          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToLog_Slider(); end)</OnMouseDown>
+          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToGetCost_Slider(); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>
         <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">

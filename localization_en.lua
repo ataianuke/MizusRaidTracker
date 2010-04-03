@@ -10,7 +10,7 @@
 -----------------------------
 --  Create Tablestructure  --
 -----------------------------
-MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}};
+MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["ItemValues"] = {} };
 
 
 -----------------
@@ -57,7 +57,7 @@ MRT_L.Bossyells["The Scourge cannot be stopped..."] = "Val'kyr Twins";
 MRT_L.Bossyells["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Gunship Battle"; -- Muradin
 MRT_L.Bossyells["Damage control! Put those fires out! You haven't seen the last of the horde!"] = "Gunship Battle"; -- Saurfang
 MRT_L.Bossyells["My queen, they... come."] = "Blood Prince Council"; -- Prince Keleseth
-MRT_L.Bossyells["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker";
+MRT_L.Bossyells["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker"; -- Dreamwalker
 
 
 ---------------------------------
@@ -90,8 +90,18 @@ MRT_L.Options["TP_Log10MenRaids"] = "Track 10 player raids";
 MRT_L.Options["TP_LogAVRaids"] = "Track Archavons Vault";
 MRT_L.Options["TP_AskForDKPValue"] = "Ask for item cost";
 -- TrackingPanel - Slider
-MRT_L.Options["TP_MinItemQualityToLog_Desc"] = "MinItemQualityToLog";
-MRT_L.Options["TP_MinItemQualityToLog_Values"] = {
+MRT_L.Options["TP_MinItemQualityToLog_Desc"] = "Min item quality to log";
+MRT_L.Options["TP_MinItemQualityToGetCost_Desc"] = "Min item quality to ask cost for";
+
+-- AttendancePanel - Title
+MRT_L.Options["AP_Title"] = "Attendance";
+MRT_L.Options["AP_TitleText"] = "MRT - Attendance options";
+
+
+------------
+--  Misc  --
+------------
+MRT_L.ItemValues = {
     [1] = "Poor",
     [2] = "Common",
     [3] = "Uncommon",
@@ -100,8 +110,3 @@ MRT_L.Options["TP_MinItemQualityToLog_Values"] = {
     [6] = "Legendary",
     [7] = "Artifact", 
 }
-
--- AttendancePanel - Title
-MRT_L.Options["AP_Title"] = "Attendance";
-MRT_L.Options["AP_TitleText"] = "MRT - Attendance options";
-

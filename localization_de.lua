@@ -60,8 +60,21 @@ MRT_L.Bossyells["Meine K\195\182nigin, sie... kommen."] = "Blood Prince Council"
 MRT_L.Bossyells["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Dreamwalker";
 
 
+---------------------------------
+--  Core frames local strings  --
+---------------------------------
+-- Enter DKP cost frame
+MRT_L.Core["DKP_Frame_Title"] = "Enter cost";
+MRT_L.Core["DKP_Frame_Text"] = "Enter cost for %s\nlooted by |cFFFFFFFF%s|r.";
+MRT_L.Core["DKP_Frame_OK_Button"] = "Ok";
+MRT_L.Core["DKP_Frame_Cancel_Button"] = "Abbruch";
+MRT_L.Core["DKP_Frame_Delete_Button"] = "L\195\182schen";
+MRT_L.Core["DKP_Frame_Bank_Button"] = "Bank";
+MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Entzaubert";
+
+
 -----------------------------------
---  Local for the Optionspanels  --
+--  Option panels local strings  --
 -----------------------------------
 -- MainPanel - Text
 MRT_L.Options["MP_Description"] = "Trackt Raids, Loot und Teilnehmer";

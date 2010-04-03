@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall
+--    * Mizukichan @ EU-Thrall (2010)
 --
 -- The localizations are written by:
 --    * enGB/enUS: Mizukichan
@@ -67,11 +67,14 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"].." - NYI! - will always track AV");
-    MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
-    MRT_Options_TrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderText:SetText("SliderText");
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_L.Options["TP_MinItemQualityToLog_Values"][MRT_Options["Tracking_MinItemQualityToLog"]+1]);
+    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToLog_Desc"]);
+    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
+    MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
+    MRT_Options_TrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);    
+    MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
+    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
+    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
     -- AttendancePanel
     MRT_Options_AttendancePanel_Title:SetText(MRT_L.Options["AP_TitleText"]);
     MRT_Options_AttendancePanel_Description:SetText("Not yet implemented");
@@ -87,6 +90,11 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["General_MasterEnable"] = MRT_Options_MainPanel_Enabled_CB:GetChecked();
     MRT_Options["General_DebugEnabled"] = MRT_Options_MainPanel_Debug_CB:GetChecked();
     -- TrackingPanel
+    MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
+    MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
+    MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_TrackingPanel_AskForDKPValue_CB:GetChecked();
+    MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     -- AttendancePanel
     -- Check tracking status and adjust to new settings
     if (not MRT_Options["General_MasterEnable"]) then 
@@ -109,6 +117,13 @@ function MRT_Options_OnCancel(panel)
     MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
     MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
     -- TrackingPanel
+    MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
+    MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
+    MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
+    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
+    MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
+    MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
+    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
     -- AttendancePanel
 end
 
@@ -118,6 +133,12 @@ end
 ------------------------
 function MRT_Options_TP_MinItemQualityToLog_Slider()
     local sliderValue = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
-    local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_L.Options["TP_MinItemQualityToLog_Values"][sliderValue+1];
+    local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_L.ItemValues[sliderValue+1];
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText(sliderText);
+end
+
+function MRT_Options_TP_MinItemQualityToGetCost_Slider()
+    local sliderValue = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
+    local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_L.ItemValues[sliderValue+1];
+    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText(sliderText);
 end
