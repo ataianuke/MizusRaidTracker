@@ -161,7 +161,7 @@ function MRT_SlashCmdHandler(msg)
         end
     end
     if (msg == 'extest') then
-        URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil);
+        URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil));
         URLFrameEditBox:HighlightText();
         URLFrame:Show();
     end
@@ -572,6 +572,7 @@ function MRT_GetNPCID(GUID)
 end
 
 function MRT_MakeEQDKP_Time(timestamp)
+    return date("%c", timestamp)
 end
 
 
@@ -617,6 +618,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
         xml = xml.."</key"..index..">";
         index = index + 1;
     end
+    xml = xml.."</PlayerInfos>";
     if (MRT_RaidLog[raidID]["Bosskills"]) then
         if ((bossID == nil) and (difficulty == nil)) then
             xml = xml.."<BossKills>";
@@ -647,6 +649,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
             -- FIXME! Do stuff for export of a specific difficulty
         end
     end
+    xml = xml.."<note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].."]]></note>";
     index = 1;
     xml = xml.."<Join>";
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
@@ -686,6 +689,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
             xml = xml.."<Time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Date"]).."</Time>";
             xml = xml.."<Difficulty>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"].."</Difficulty>";
             xml = xml.."<Boss>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].."</Boss>";
+            xml = xml.."<Note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].." - "..val["DKPValue"].." DKP]]></Note>";
             xml = xml.."</key"..index..">";
             index = index + 1;
         end
