@@ -85,9 +85,21 @@ MRT_L.Options["MP_Debug"] = "Enable debug messages";
 -- TrackingPanel - Title
 MRT_L.Options["TP_Title"] = "Tracking";
 MRT_L.Options["TP_TitleText"] = "MRT - Tracking options";
+-- TrackingPanel - Checkboxes
 MRT_L.Options["TP_Log10MenRaids"] = "Track 10 player raids";
 MRT_L.Options["TP_LogAVRaids"] = "Track Archavons Vault";
 MRT_L.Options["TP_AskForDKPValue"] = "Ask for item cost";
+-- TrackingPanel - Slider
+MRT_L.Options["TP_MinItemQualityToLog_Desc"] = "MinItemQualityToLog";
+MRT_L.Options["TP_MinItemQualityToLog_Values"] = {
+    [1] = "Poor",
+    [2] = "Common",
+    [3] = "Uncommon",
+    [4] = "Rare",
+    [5] = "Epic",
+    [6] = "Legendary",
+    [7] = "Artifact", 
+}
 
 -- AttendancePanel - Title
 MRT_L.Options["AP_Title"] = "Attendance";

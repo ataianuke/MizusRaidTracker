@@ -21,6 +21,16 @@ MRT_ItemColorValues = {
     ["ffe6cc80"] = 6,  -- artifact / heirloom
 }
 
+MRT_ItemColors = {
+    [1] = "ff9d9d9d",  -- poor
+    [2] = "ffffffff",  -- common
+    [3] = "ff1eff00",  -- uncommon
+    [4] = "ff0070dd",  -- rare
+    [5] = "ffa335ee",  -- epic
+    [6] = "ffff8000",  -- legendary
+    [7] = "ffe6cc80",  -- artifact / heirloom
+}
+
 -----------------------------------
 --  ID-List of trackable Bosses  --
 -----------------------------------

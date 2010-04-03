@@ -68,3 +68,5 @@ MRT_L.Options["MP_Description"] = "Trackt Raids, Loot und Teilnehmer";
 -- MainPanel - Checkboxes
 MRT_L.Options["MP_Enabled"] = "Aktiviere MRT";
 MRT_L.Options["MP_Debug"] = "Aktiviere Debugnachrichten";
+-- TrackingPanel - Text
+

@@ -170,6 +170,10 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToLog_Slider(); end)</OnMouseDown>
+          <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
+        </Scripts>
         <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
           <Size>
             <AbsDimension x="32" y="32" />
