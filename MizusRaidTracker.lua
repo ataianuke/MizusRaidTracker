@@ -160,6 +160,7 @@ function MRT_SlashCmdHandler(msg)
             MRT_GetDKPValueFrame:Show()
         end
     end
+    -- FIXME - shamelessly borrowing the Export-Frame of CTRT for testing
     if (msg == 'extest') then
         URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil));
         URLFrameEditBox:HighlightText();
@@ -698,25 +699,3 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     xml = xml.."</RaidInfo>";
     return xml;
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

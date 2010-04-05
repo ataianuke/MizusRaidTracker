@@ -64,8 +64,8 @@ MRT_L.Bossyells["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreatur
 --  Core frames local strings  --
 ---------------------------------
 -- Enter DKP cost frame
-MRT_L.Core["DKP_Frame_Title"] = "Enter cost";
-MRT_L.Core["DKP_Frame_Text"] = "Enter cost for %s\nlooted by |cFFFFFFFF%s|r.";
+MRT_L.Core["DKP_Frame_Title"] = "Kosten eingeben";
+MRT_L.Core["DKP_Frame_Text"] = "Gib die Kosten für %s\nerbeutet von |cFFFFFFFF%s|r ein.";
 MRT_L.Core["DKP_Frame_OK_Button"] = "Ok";
 MRT_L.Core["DKP_Frame_Cancel_Button"] = "Abbruch";
 MRT_L.Core["DKP_Frame_Delete_Button"] = "L\195\182schen";
@@ -81,5 +81,32 @@ MRT_L.Options["MP_Description"] = "Trackt Raids, Loot und Teilnehmer";
 -- MainPanel - Checkboxes
 MRT_L.Options["MP_Enabled"] = "Aktiviere MRT";
 MRT_L.Options["MP_Debug"] = "Aktiviere Debugnachrichten";
--- TrackingPanel - Text
 
+-- TrackingPanel - Title
+MRT_L.Options["TP_Title"] = "Raidlog";
+MRT_L.Options["TP_TitleText"] = "MRT - Raidlog-Optionen";
+-- TrackingPanel - Checkboxes
+MRT_L.Options["TP_Log10MenRaids"] = "Logge 10 Spieler Raids";
+MRT_L.Options["TP_LogAVRaids"] = "Logge Archavons Kammer";
+MRT_L.Options["TP_AskForDKPValue"] = "Frage nach Gegenstandskosten";
+-- TrackingPanel - Slider
+MRT_L.Options["TP_MinItemQualityToLog_Desc"] = "Min item quality to log";
+MRT_L.Options["TP_MinItemQualityToGetCost_Desc"] = "Min item quality to ask cost for";
+
+-- AttendancePanel - Title
+MRT_L.Options["AP_Title"] = "Teilnehmerlog";
+MRT_L.Options["AP_TitleText"] = "MRT - Teilnehmerlog-Optionen";
+
+
+------------
+--  Misc  --
+------------
+MRT_L.ItemValues = {
+    [1] = "Schlecht",
+    [2] = "Verbreitet",
+    [3] = "Selten",
+    [4] = "Rar",
+    [5] = "Episch",
+    [6] = "Legendär",
+    [7] = "Artefakt", 
+}
