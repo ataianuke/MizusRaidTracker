@@ -99,11 +99,13 @@ function MRT_Options_OnOkay(panel)
     -- Check tracking status and adjust to new settings
     if (not MRT_Options["General_MasterEnable"]) then 
         MRT_EndActiveRaid();
-    else 
+    elseif (not MRT_NumOfCurrentRaid) then
         local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
         if (MRT_L.Raidzones[instanceInfoName]) then
             MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
         end
+    elseif ((MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) and not MRT_Options["Tracking_Log10MenRaids"]) then
+        MRT_EndActiveRaid();
     end
 end
 
