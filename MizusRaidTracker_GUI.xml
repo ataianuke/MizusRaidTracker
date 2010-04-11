@@ -1,9 +1,62 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
  http://wowprogramming.com/FrameXML/UI.xsd">
   <Script file="MizusRaidTracker_GUI.lua"/>
-  <Frame name="MRT_GUIFrame">
+  <Frame name="MRT_GUIFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">
+    <Size x="800" y="600"/>
+    <Anchors>
+      <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
+      <TileSize val="32"/>
+      <EdgeSize val="32"/>
+    </Backdrop>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+          <Size x="300" y="64"/>
+          <Anchors>
+            <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+              <Offset x="0" y="12"/>
+            </Anchor>
+          </Anchors>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Title" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+              <Offset x="0" y="-2"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_RaidLogTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+              <Offset x="20" y="-30"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_RaidAttendeesTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_RaidLogTitle">
+              <Offset x="275" y="0"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_RaidBosskillsTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_RaidAttendeesTitle">
+              <Offset x="230" y="0"/>
+            </Anchor>
+          </Anchors>          
+        </FontString>
+      </Layer>
+    </Layers>
     <Scripts>
-      <OnLoad>MRT_GUIFrame_OnLoad(self);</OnLoad>
+      <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
+      <OnDragStart>self:StartMoving();</OnDragStart>
+      <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
 </Ui>

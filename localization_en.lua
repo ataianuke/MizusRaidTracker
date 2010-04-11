@@ -10,7 +10,7 @@
 -----------------------------
 --  Create Tablestructure  --
 -----------------------------
-MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["ItemValues"] = {} };
+MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {}, ["ItemValues"] = {} };
 
 
 -----------------
@@ -63,7 +63,7 @@ MRT_L.Bossyells["I AM RENEWED! Ysera grant me the favor to lay these foul creatu
 ---------------------------------
 --  Core frames local strings  --
 ---------------------------------
--- Enter DKP cost frame
+-- Enter cost frame
 MRT_L.Core["DKP_Frame_Title"] = "Enter cost";
 MRT_L.Core["DKP_Frame_Text"] = "Enter cost for %s\nlooted by |cFFFFFFFF%s|r.";
 MRT_L.Core["DKP_Frame_OK_Button"] = "Ok";
@@ -96,6 +96,15 @@ MRT_L.Options["TP_MinItemQualityToGetCost_Desc"] = "Min item quality to ask cost
 -- AttendancePanel - Title
 MRT_L.Options["AP_Title"] = "Attendance";
 MRT_L.Options["AP_TitleText"] = "MRT - Attendance options";
+
+
+-------------------
+--  GUI strings  --
+-------------------
+MRT_L.GUI["Header_Title"] = "MRT - Raidlog";
+MRT_L.GUI["Tables_RaidLogTitle"] = "Raid list";
+MRT_L.GUI["Tables_RaidAttendeesTitle"] = "Raid attendees";
+MRT_L.GUI["Tables_RaidBosskillsTitle"] = "Raid bosskills";
 
 
 ------------

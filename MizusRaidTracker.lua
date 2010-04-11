@@ -94,6 +94,7 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
         frame:UnregisterEvent("ADDON_LOADED");
         MRT_Options_ParseValues();
+        MRT_GUI_ParseValues();
         MRT_Core_Frames_ParseLocal();
         GuildRoster();
         MRT_Debug("Addon loaded.");
@@ -155,9 +156,9 @@ end
 function MRT_SlashCmdHandler(msg)
     if (msg == 'dkpframe') then
         if (MRT_GetDKPValueFrame:IsShown()) then
-            MRT_GetDKPValueFrame:Hide()
+            MRT_GetDKPValueFrame:Hide();
         else
-            MRT_GetDKPValueFrame:Show()
+            MRT_GetDKPValueFrame:Show();
         end
     end
     -- FIXME - shamelessly borrowing the Export-Frame of CTRT for testing
@@ -165,6 +166,13 @@ function MRT_SlashCmdHandler(msg)
         URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil));
         URLFrameEditBox:HighlightText();
         URLFrame:Show();
+    end
+    if (msg == '') then
+        if (MRT_GUIFrame:IsShown()) then
+            MRT_GUIFrame:Hide();
+        else
+            MRT_GUIFrame:Show();
+        end
     end
 end
 
