@@ -105,6 +105,23 @@ MRT_L.GUI["Header_Title"] = "MRT - Raidlog";
 MRT_L.GUI["Tables_RaidLogTitle"] = "Raid list";
 MRT_L.GUI["Tables_RaidAttendeesTitle"] = "Raid attendees";
 MRT_L.GUI["Tables_RaidBosskillsTitle"] = "Raid bosskills";
+MRT_L.GUI["Tables_BossLootTitle"] = "Boss Loot";
+MRT_L.GUI["Tables_BossAttendeesTitle"] = "Boss attendees";
+-- table col names
+MRT_L.GUI["Col_Num"] = "#";
+MRT_L.GUI["Col_Date"] = "Date";
+MRT_L.GUI["Col_Zone"] = "Zone";
+MRT_L.GUI["Col_Size"] = "Size";
+MRT_L.GUI["Col_Name"] = "Name";
+MRT_L.GUI["Col_Join"] = "Join";
+MRT_L.GUI["Col_Leave"] = "Leave";
+MRT_L.GUI["Col_Time"] = "Time";
+MRT_L.GUI["Col_Difficulty"] = "Mode";
+MRT_L.GUI["Col_Looter"] = "Looter";
+MRT_L.GUI["Col_Cost"] = "Cost";
+-- table entry local
+MRT_L.GUI["Cell_Normal"] = "Normal";
+MRT_L.GUI["Cell_Hard"] = "Hard";
 
 
 ------------

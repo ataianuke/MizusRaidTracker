@@ -47,9 +47,23 @@
         <FontString name="$parent_RaidBosskillsTitle" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_RaidAttendeesTitle">
-              <Offset x="230" y="0"/>
+              <Offset x="215" y="0"/>
             </Anchor>
           </Anchors>          
+        </FontString>
+        <FontString name="$parent_BossLootTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_RaidAttendeesTitle">
+              <Offset x="0" y="-275"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_BossAttendeesTitle" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_BossLootTitle">
+              <Offset x="305" y="0"/>
+            </Anchor>
+          </Anchors>
         </FontString>
       </Layer>
     </Layers>

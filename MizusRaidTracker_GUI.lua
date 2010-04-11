@@ -32,23 +32,35 @@
 --  Locals  --
 --------------
 local ScrollingTable = LibStub("ScrollingTable");
+
+local MRT_GUI_RaidLogTableSelection = nil;
+local MRT_GUI_RaidBosskillsTableSelection = nil;
+
 -- table definitions
 local MRT_RaidLogTableColDef = { 
-    {["name"] = "#", ["width"] = 25, ["defaultsort"] = "dsc"}, 
-    {["name"] = "Date", ["width"] = 75}, 
-    {["name"] = "Zone", ["width"] = 100},
-    {["name"] = "Size", ["width"] = 25},
+    {["name"] = MRT_L.GUI["Col_Num"], ["width"] = 25, ["defaultsort"] = "dsc"}, 
+    {["name"] = MRT_L.GUI["Col_Date"], ["width"] = 75}, 
+    {["name"] = MRT_L.GUI["Col_Zone"], ["width"] = 100},
+    {["name"] = MRT_L.GUI["Col_Size"], ["width"] = 25},
 };
 local MRT_RaidAttendeesTableColDef = {
-    {["name"] = "Player", ["width"] = 100},
-    {["name"] = "Join", ["width"] = 40},
-    {["name"] = "Leave", ["width"] = 40},
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 85},
+    {["name"] = MRT_L.GUI["Col_Join"], ["width"] = 40},
+    {["name"] = MRT_L.GUI["Col_Leave"], ["width"] = 40},
 };
 local MRT_RaidBosskillsTableColDef = {
-    {["name"] = "#", ["width"] = 25, ["defaultsort"] = "dsc"},
-    {["name"] = "Time", ["width"] = 40},
-    {["name"] = "Name", ["width"] = 100},
-    {["name"] = "Difficulty", ["width"] = 50},
+    {["name"] = MRT_L.GUI["Col_Num"], ["width"] = 25, ["defaultsort"] = "dsc"},
+    {["name"] = MRT_L.GUI["Col_Time"], ["width"] = 40},
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 100},
+    {["name"] = MRT_L.GUI["Col_Difficulty"], ["width"] = 50},
+};
+local MRT_BossLootTableColDef = {
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 140},
+    {["name"] = MRT_L.GUI["Col_Looter"], ["width"] = 85},
+    {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
+};
+local MRT_BossAttendeesTableColDef = {
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 85}
 };
 
 
@@ -61,19 +73,21 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_RaidLogTitle:SetText(MRT_L.GUI["Tables_RaidLogTitle"]);
     MRT_GUIFrame_RaidAttendeesTitle:SetText(MRT_L.GUI["Tables_RaidAttendeesTitle"]);
     MRT_GUIFrame_RaidBosskillsTitle:SetText(MRT_L.GUI["Tables_RaidBosskillsTitle"]);
+    MRT_GUIFrame_BossLootTitle:SetText(MRT_L.GUI["Tables_BossLootTitle"]);
+    MRT_GUIFrame_BossAttendeesTitle:SetText(MRT_L.GUI["Tables_BossAttendeesTitle"]);
     -- Create and anchor tables
-    MRT_GUI_RaidLogTable = ScrollingTable:CreateST(MRT_RaidLogTableColDef, 14, nil, nil, MRT_GUIFrame);
+    MRT_GUI_RaidLogTable = ScrollingTable:CreateST(MRT_RaidLogTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_RaidLogTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_RaidLogTitle, "BOTTOMLEFT", 0, -15);
     MRT_GUI_RaidLogTable:EnableSelection(true);
-    MRT_GUI_RaidLogTable:RegisterEvents( {["OnClick"] = function(rowFrame, cellFrame, data, cols, row, realrow, column, scrollingTable, ...)
-                                                            local raidnum = data[realrow][1];
-                                                            MRT_GUI_RaidLogTableOnClick(raidnum);
-                                                        end,} );
-    MRT_GUI_RaidAttendeesTable = ScrollingTable:CreateST(MRT_RaidAttendeesTableColDef, 14, nil, nil, MRT_GUIFrame);
+    MRT_GUI_RaidAttendeesTable = ScrollingTable:CreateST(MRT_RaidAttendeesTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_RaidAttendeesTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_RaidAttendeesTitle, "BOTTOMLEFT", 0, -15);
-    MRT_GUI_RaidBosskillsTable = ScrollingTable:CreateST(MRT_RaidBosskillsTableColDef, 14, nil, nil, MRT_GUIFrame);
+    MRT_GUI_RaidBosskillsTable = ScrollingTable:CreateST(MRT_RaidBosskillsTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_RaidBosskillsTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_RaidBosskillsTitle, "BOTTOMLEFT", 0, -15);
     MRT_GUI_RaidBosskillsTable:EnableSelection(true);
+    MRT_GUI_BossLootTable = ScrollingTable:CreateST(MRT_BossLootTableColDef, 12, nil, nil, MRT_GUIFrame);
+    MRT_GUI_BossLootTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_BossLootTitle, "BOTTOMLEFT", 0, -15);
+    MRT_GUI_BossAttendeesTable = ScrollingTable:CreateST(MRT_BossAttendeesTableColDef, 12, nil, nil, MRT_GUIFrame);
+    MRT_GUI_BossAttendeesTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_BossAttendeesTitle, "BOTTOMLEFT", 0, -15);
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
 end
@@ -83,11 +97,13 @@ end
 --  Show/Hide GUI  --
 ---------------------
 function MRT_GUI_Toggle()
-    if (MRT_GUIFrame:IsShown()) then
-        MRT_GUIFrame:Hide();
-        
-    else
+    if (not MRT_GUIFrame:IsShown()) then
         MRT_GUIFrame:Show();
+        MRT_GUIFrame:SetScript("OnUpdate", function() MRT_GUI_OnUpdateHandler(); end);
+        MRT_GUI_CompleteTableUpdate();
+    else
+        MRT_GUIFrame:Hide();
+        MRT_GUIFrame:SetScript("OnUpdate", nil);
     end
 end
 
@@ -95,8 +111,26 @@ end
 ------------------------
 --  OnUpdate handler  --
 ------------------------
-function MRT_GUI_RaidLogTableOnClick(raidnum)
-    MRT_GUI_RaidDetailsTableUpdate(raidnum);
+-- Is there a better way to handle OnClick-Events from each table without overwriting the sort functions?
+function MRT_GUI_OnUpdateHandler()
+    local raidnum = MRT_GUI_RaidLogTable:GetSelection();
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (raidnum ~= MRT_GUI_RaidLogTableSelection) then
+        MRT_GUI_RaidLogTableSelection = raidnum;
+        if (raidnum) then
+            MRT_GUI_RaidDetailsTableUpdate(MRT_GUI_RaidLogTable:GetCell(raidnum, 1));
+        else
+            MRT_GUI_RaidDetailsTableUpdate(nil);
+        end
+    end
+    if (bossnum ~= MRT_GUI_RaidBosskillsTableSelection) then
+        MRT_GUI_RaidBosskillsTableSelection = bossnum;
+        if (bossnum) then
+            MRT_GUI_BossDetailsTableUpdate(MRT_GUI_RaidBosskillsTable:GetCell(bossnum, 1))
+        else
+            MRT_GUI_BossDetailsTableUpdate(nil);
+        end
+    end
 end
 
 
@@ -107,11 +141,20 @@ end
 function MRT_GUI_CompleteTableUpdate()
     MRT_GUI_RaidLogTableUpdate();
     MRT_GUI_RaidDetailsTableUpdate(nil);
+    MRT_GUI_BossDetailsTableUpdate(nil);
 end
 
 -- update raid details tables
 function MRT_GUI_RaidDetailsTableUpdate(raidnum)
     MRT_GUI_RaidAttendeesTableUpdate(raidnum);
+    MRT_GUI_RaidBosskillsTableUpdate(raidnum);
+    MRT_GUI_BossDetailsTableUpdate(nil);
+end
+
+-- update boss details tables
+function MRT_GUI_BossDetailsTableUpdate(bossnum)
+    MRT_GUI_BossLootTableUpdate(bossnum);
+    MRT_GUI_BossAttendeesTableUpdate(bossnum);
 end
 
 -- update raid list table
@@ -120,22 +163,93 @@ function MRT_GUI_RaidLogTableUpdate()
     local MRT_RaidLogSize = #MRT_RaidLog;
     -- insert reverse order
     for i, v in ipairs(MRT_RaidLog) do
+        --MRT_GUI_RaidLogTableData[i] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
         MRT_GUI_RaidLogTableData[(MRT_RaidLogSize-i+1)] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
     end
+    MRT_GUI_RaidLogTable:ClearSelection();
     MRT_GUI_RaidLogTable:SetData(MRT_GUI_RaidLogTableData, true);
-    MRT_GUI_RaidLogTable:SortData();
 end
 
 -- update raid attendees table
 function MRT_GUI_RaidAttendeesTableUpdate(raidnum)
     local MRT_GUI_RaidAttendeesTableData = {};
-    if(raidnum) then
+    if (raidnum) then
         local index = 1;
         for k, v in pairs(MRT_RaidLog[raidnum]["Players"]) do
-            MRT_GUI_RaidAttendeesTableData[index] = {k, date("%H:%M", v["Join"]), date("%H:%M", v["Leave"])};
+            if (v["Leave"]) then
+                MRT_GUI_RaidAttendeesTableData[index] = {k, date("%H:%M", v["Join"]), date("%H:%M", v["Leave"])};
+            else
+                MRT_GUI_RaidAttendeesTableData[index] = {k, date("%H:%M", v["Join"]), nil};
+            end
             index = index + 1;
         end
     end
     MRT_GUI_RaidAttendeesTable:SetData(MRT_GUI_RaidAttendeesTableData, true);
-    MRT_GUI_RaidAttendeesTable:SortData();
+    MRT_GUI_SetInitialSort(MRT_GUI_RaidAttendeesTable, "asc");
 end
+
+-- update bosskill table
+function MRT_GUI_RaidBosskillsTableUpdate(raidnum)
+    local MRT_GUI_RaidBosskillsTableData = {};
+    local MRT_BosskillsCount = nil;
+    if (raidnum) then MRT_BosskillsCount = #MRT_RaidLog[raidnum]["Bosskills"]; end;
+    if (raidnum and MRT_BosskillsCount) then
+        for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
+            if (v["Difficulty"] > 2) then
+                --MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
+                MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
+            else
+                --MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
+                MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
+            end
+        end
+    end
+    MRT_GUI_RaidBosskillsTable:ClearSelection();
+    MRT_GUI_RaidBosskillsTable:SetData(MRT_GUI_RaidBosskillsTableData, true);
+end
+
+-- update bossloot table
+function MRT_GUI_BossLootTableUpdate(bossnum)
+    local MRT_GUI_BossLootTableData = {};
+    if (bossnum) then
+        local index = 1
+        local raidnum = MRT_GUI_RaidLogTable:GetCell(MRT_GUI_RaidLogTableSelection, 1);
+        for i, v in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
+            if (v["BossNumber"] == bossnum) then
+                --MRT_GUI_BossLootTableData[index] = {v["ItemLink"], v["Looter"], v["DKPValue"]};
+                MRT_GUI_BossLootTableData[index] = {"|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
+                index = index + 1;
+            end
+        end
+    end
+    MRT_GUI_BossLootTable:SetData(MRT_GUI_BossLootTableData, true);
+end
+
+-- update bossattendee table
+function MRT_GUI_BossAttendeesTableUpdate(bossnum)
+    local MRT_GUI_BossAttendeesTableData = {};
+    if (bossnum) then
+        local raidnum = MRT_GUI_RaidLogTable:GetCell(MRT_GUI_RaidLogTableSelection, 1);
+        for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"]) do
+            MRT_GUI_BossAttendeesTableData[i] = {v};
+        end
+    MRT_GUI_BossAttendeesTable:SetData(MRT_GUI_BossAttendeesTableData, true);
+    MRT_GUI_SetInitialSort(MRT_GUI_BossAttendeesTable, "asc");
+    end
+end
+
+-- inital sort helper
+function MRT_GUI_SetInitialSort(st, order)
+    local sortorder;
+    if (order == "asc") then
+        sortorder = "dsc"
+    else
+        sortorder = "asc"
+    end
+    for i, col in ipairs(st.cols) do 
+        st.cols[i].sort = nil;
+    end
+    st.cols[1].sort = sortorder;
+    st:SortData();
+end
+

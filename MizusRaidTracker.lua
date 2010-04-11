@@ -168,11 +168,7 @@ function MRT_SlashCmdHandler(msg)
         URLFrame:Show();
     end
     if (msg == '') then
-        if (MRT_GUIFrame:IsShown()) then
-            MRT_GUIFrame:Hide();
-        else
-            MRT_GUIFrame:Show();
-        end
+        MRT_GUI_Toggle();
     end
 end
 
@@ -329,7 +325,7 @@ end
 function MRT_AddBosskill(bossname)
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
-    local _, _, instanceInfoDifficulty = GetInstanceInfo();
+    local instanceDifficulty = GetInstanceDifficulty();
     local trackedPlayers = {};
     local numRaidMembers = GetNumRaidMembers();
     for i = 1, numRaidMembers do
@@ -340,7 +336,7 @@ function MRT_AddBosskill(bossname)
         ["Players"] = trackedPlayers,
         ["Name"] = bossname,
         ["Date"] = time(),
-        ["Difficulty"] = instanceInfoDifficulty,
+        ["Difficulty"] = instanceDifficulty,
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
     MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
@@ -573,7 +569,7 @@ end
 function MRT_GetNPCID(GUID)
     local first3 = tonumber("0x"..strsub(GUID, 3, 5));
     local unitType = bit.band(first3, 0x007);
-    if (unitType == 0x003) then
+    if ((unitType == 0x003) or (unitType == 0x005)) then
         return tonumber("0x"..strsub(GUID, 9, 12));
     else
         return nil;
