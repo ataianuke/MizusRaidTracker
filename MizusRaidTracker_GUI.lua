@@ -233,9 +233,9 @@ function MRT_GUI_BossAttendeesTableUpdate(bossnum)
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"]) do
             MRT_GUI_BossAttendeesTableData[i] = {v};
         end
+    end
     MRT_GUI_BossAttendeesTable:SetData(MRT_GUI_BossAttendeesTableData, true);
     MRT_GUI_SetInitialSort(MRT_GUI_BossAttendeesTable, "asc");
-    end
 end
 
 -- inital sort helper

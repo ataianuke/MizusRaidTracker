@@ -325,7 +325,8 @@ end
 function MRT_AddBosskill(bossname)
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
-    local instanceDifficulty = GetInstanceDifficulty();
+    local _, _, instanceDifficulty, _, _, dynDiff, isDyn = GetInstanceInfo();
+    if (isDyn) then instanceDifficulty = instanceDifficulty + (2 * dynDiff); end;
     local trackedPlayers = {};
     local numRaidMembers = GetNumRaidMembers();
     for i = 1, numRaidMembers do
