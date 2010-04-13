@@ -621,10 +621,10 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
         xml = xml.."<key"..index..">";
         xml = xml.."<name>"..key.."</name>";
-        xml = xml.."<race>"..MRT_RaidLog[raidID]["Players"][key]["Race"].."</race>";
-        xml = xml.."<sex>"..MRT_RaidLog[raidID]["Players"][key]["Sex"].."</sex>";
-        xml = xml.."<class>"..MRT_RaidLog[raidID]["Players"][key]["Class"].."</class>";
-        xml = xml.."<level>"..MRT_RaidLog[raidID]["Players"][key]["Level"].."</level>";
+        xml = xml.."<race>"..val["Race"].."</race>";
+        xml = xml.."<sex>"..val["Sex"].."</sex>";
+        xml = xml.."<class>"..val["Class"].."</class>";
+        xml = xml.."<level>"..val["Level"].."</level>";
         xml = xml.."</key"..index..">";
         index = index + 1;
     end
@@ -634,11 +634,11 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
             xml = xml.."<BossKills>";
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                 xml = xml.."<key"..idx..">";
-                xml = xml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][idx]["Name"].."</name>";
-                xml = xml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][idx]["Difficulty"].."</difficulty>";
-                xml = xml.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][idx]["Date"]).."</time>";
+                xml = xml.."<name>"..val["Name"].."</name>";
+                xml = xml.."<difficulty>"..val["Difficulty"].."</difficulty>";
+                xml = xml.."<time>"..MRT_MakeEQDKP_Time(val["Date"]).."</time>";
                 xml = xml.."<attendees>";
-                for idx2, val2 in pairs(MRT_RaidLog[raidID]["Bosskills"][idx]["Players"]) do
+                for idx2, val2 in pairs(val["Players"]) do
                     xml = xml.."<key"..idx2.."><name>"..val2.."</name></key"..idx2..">";
                 end
                 xml = xml.."</attendees>";
@@ -665,11 +665,11 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
         xml = xml.."<key"..index..">";
         xml = xml.."<player>"..key.."</player>";
-        xml = xml.."<race>"..MRT_RaidLog[raidID]["Players"][key]["Race"].."</race>";
-        xml = xml.."<class>"..MRT_RaidLog[raidID]["Players"][key]["Class"].."</class>";
-        xml = xml.."<sex>"..MRT_RaidLog[raidID]["Players"][key]["Sex"].."</sex>";
-        xml = xml.."<level>"..MRT_RaidLog[raidID]["Players"][key]["Level"].."</level>";
-        xml = xml.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Players"][key]["Join"]).."</time>";
+        xml = xml.."<race>"..val["Race"].."</race>";
+        xml = xml.."<class>"..val["Class"].."</class>";
+        xml = xml.."<sex>"..val["Sex"].."</sex>";
+        xml = xml.."<level>"..val["Level"].."</level>";
+        xml = xml.."<time>"..MRT_MakeEQDKP_Time(val["Join"]).."</time>";
         xml = xml.."</key"..index..">";
         index = index + 1;
     end
