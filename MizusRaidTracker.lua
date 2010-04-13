@@ -1,7 +1,7 @@
--- *********************************************************
--- **              Mizus Raid Tracker - Core              **
+-- ********************************************************
+-- **              Mizus RaidTracker - Core              **
 -- **            <ENTER URL HERE>            **
--- *********************************************************
+-- ********************************************************
 --
 -- This addon is written and copyrighted by:
 --    * Mizukichan @ EU-Thrall (2010)
@@ -11,20 +11,20 @@
 --    * deDE: Mizukichan
 --
 --
---    This file is part of Mizus Raid Tracker.
+--    This file is part of Mizus RaidTracker.
 --
---    Mizus Raid Tracker is free software: you can redistribute it and/or 
+--    Mizus RaidTracker is free software: you can redistribute it and/or 
 --    modify it under the terms of the GNU General Public License as 
 --    published by the Free Software Foundation, either version 3 of the 
 --    License, or (at your option) any later version.
 --
---    Mizus Raid Tracker is distributed in the hope that it will be useful,
+--    Mizus RaidTracker is distributed in the hope that it will be useful,
 --    but WITHOUT ANY WARRANTY; without even the implied warranty of
 --    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 --    GNU General Public License for more details.
 --
 --    You should have received a copy of the GNU General Public License
---    along with Mizus Raid Tracker.  
+--    along with Mizus RaidTracker.  
 --    If not, see <http://www.gnu.org/licenses/>.
 
 
@@ -553,6 +553,10 @@ function MRT_Debug(text)
     if (MRT_Options["General_DebugEnabled"]) then
         DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
     end
+end
+
+function MRT_Print(text)
+    DEFAULT_CHAT_FRAME:AddMessage("MRT: "..text, 1, 0.5, 0);
 end
 
 -- Parse static local strings
