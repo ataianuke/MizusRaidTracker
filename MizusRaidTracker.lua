@@ -121,13 +121,15 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "GUILD_ROSTER_UPDATE") then MRT_GuildRosterUpdate(frame, event, ...); end
     
     if (event == "RAID_INSTANCE_WELCOME") then
-        if (not MRT_Options["General_MasterEnable"]) then return end
+        if (not MRT_Options["General_MasterEnable"]) then return end;
         -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
         -- local instanceName, resetTimer = ...;
         local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
         -- MRT_Debug("RAID_INSTANCE_WELCOME recieved. Instancename is "..instanceName.." and the resettimer is "..tostring(resetTimer));
         -- MRT_Debug("GetInstanceInfo() returns '"..instanceInfoName.."' as name, '"..instanceInfoType.."' as type and '"..MRT_InstanceDifficultyTable[instanceInfoDifficulty].."' as difficulty");
         if (MRT_L.Raidzones[instanceInfoName]) then
+            -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
+            if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then return end;
             MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
         end
     end

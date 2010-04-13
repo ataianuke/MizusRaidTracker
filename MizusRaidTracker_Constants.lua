@@ -31,6 +31,10 @@ MRT_ItemColors = {
     [7] = "ffe6cc80",  -- artifact / heirloom
 }
 
+MRT_PvPRaids = {
+    ["Vault of Archavon"] = true;
+}
+
 -----------------------------------
 --  ID-List of trackable Bosses  --
 -----------------------------------

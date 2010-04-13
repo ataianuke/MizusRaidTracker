@@ -66,7 +66,7 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
-    MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"].." - NYI! - will always track AV");
+    MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToLog_Desc"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
@@ -97,6 +97,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     -- AttendancePanel
     -- Check tracking status and adjust to new settings
+    local currentRaidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
+    local currentRaidZoneEN = MRT_L.Raidzones[MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"]];
     if (not MRT_Options["General_MasterEnable"]) then 
         MRT_EndActiveRaid();
     elseif (not MRT_NumOfCurrentRaid) then
@@ -104,7 +106,9 @@ function MRT_Options_OnOkay(panel)
         if (MRT_L.Raidzones[instanceInfoName]) then
             MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
         end
-    elseif ((MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) and not MRT_Options["Tracking_Log10MenRaids"]) then
+    elseif ((currentRaidSize == 10) and not MRT_Options["Tracking_Log10MenRaids"]) then
+        MRT_EndActiveRaid();
+    elseif (MRT_PvPRaids[currentRaidZoneEN] and not MRT_Options["Tracking_LogAVRaids"]) then
         MRT_EndActiveRaid();
     end
 end
