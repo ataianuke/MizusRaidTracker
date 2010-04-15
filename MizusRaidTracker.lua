@@ -1,6 +1,6 @@
 -- ********************************************************
 -- **              Mizus RaidTracker - Core              **
--- **            <ENTER URL HERE>            **
+-- **           <http://nanaki.affenfelsen.de>           **
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
@@ -46,7 +46,7 @@ local MRT_Defaults = {
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
         ["General_Version"] = GetAddOnMetadata("MizusRaidTracker", "Version"),      -- 
         ["General_DebugEnabled"] = nil,                                             --
-        ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- NYI!
+        ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- 
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
         ["Tracking_Log10MenRaids"] = nil,                                           -- Track 19 player raids: true / nil
         ["Tracking_LogAVRaids"] = nil,                                              -- Track Archavons Vault: true / nil
@@ -73,9 +73,9 @@ local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
 
 
--------------------
---  Initilazing  --
--------------------
+----------------------
+--  RegisterEvents  --
+----------------------
 function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
     frame:RegisterEvent("CHAT_MSG_LOOT");
@@ -83,6 +83,7 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("CHAT_MSG_WHISPER");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("GUILD_ROSTER_UPDATE");
+    frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
     frame:RegisterEvent("VARIABLES_LOADED");
@@ -100,17 +101,14 @@ function MRT_OnEvent(frame, event, ...)
         MRT_GUI_ParseValues();
         MRT_Core_Frames_ParseLocal();
         GuildRoster();
-        if (MRT_NumOfCurrentRaid) then MRT_CheckRaidStatusAfterLogin(); end
         MRT_Debug("Addon loaded.");
-    end
     
-    if (event == "CHAT_MSG_LOOT") then 
+    elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
             MRT_AutoAddLoot(...);
         end
-    end
     
-    if (event == "CHAT_MSG_MONSTER_YELL") then
+    elseif (event == "CHAT_MSG_MONSTER_YELL") then
         local monsteryell, sourceName = ...;
         if (MRT_L.Bossyells[monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
@@ -118,38 +116,40 @@ function MRT_OnEvent(frame, event, ...)
                 MRT_AddBosskill(MRT_L.Bossyells[monsteryell]);
             end
         end
-    end
     
-    if (event == "CHAT_MSG_WHISPER") then
+    elseif (event == "CHAT_MSG_WHISPER") then
         if (MRT_TimerFrame.GARunning) then
             local msg, source = ...;
             MRT_GuildAttendanceWhisper(msg, source);
         end
-    end
     
-    if (event == "COMBAT_LOG_EVENT_UNFILTERED") then MRT_CombatLogHandler(...); end
+    elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then 
+        MRT_CombatLogHandler(...);
     
-    if (event == "GUILD_ROSTER_UPDATE") then MRT_GuildRosterUpdate(frame, event, ...); end
+    elseif (event == "GUILD_ROSTER_UPDATE") then 
+        MRT_GuildRosterUpdate(frame, event, ...);
+        
+    elseif (event == "PLAYER_ENTERING_WORLD") then
+        frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
+        if (MRT_NumOfCurrentRaid) then MRT_CheckRaidStatusAfterLogin(); end
     
-    if (event == "RAID_INSTANCE_WELCOME") then
+    elseif (event == "RAID_INSTANCE_WELCOME") then
         if (not MRT_Options["General_MasterEnable"]) then return end;
         -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
-        -- local instanceName, resetTimer = ...;
         local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
-        -- MRT_Debug("RAID_INSTANCE_WELCOME recieved. Instancename is "..instanceName.." and the resettimer is "..tostring(resetTimer));
-        -- MRT_Debug("GetInstanceInfo() returns '"..instanceInfoName.."' as name, '"..instanceInfoType.."' as type and '"..MRT_InstanceDifficultyTable[instanceInfoDifficulty].."' as difficulty");
         if (MRT_L.Raidzones[instanceInfoName]) then
             -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
             if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then return end;
             MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
         end
-    end
     
-    if (event == "RAID_ROSTER_UPDATE") then
+    elseif (event == "RAID_ROSTER_UPDATE") then
         MRT_RaidRosterUpdate(frame);
-    end
     
-    if (event == "VARIABLES_LOADED") then MRT_UpdateSavedOptions(); end
+    elseif (event == "VARIABLES_LOADED") then 
+        MRT_UpdateSavedOptions(); 
+    
+    end
 end
 
 -- Combatlog handler
@@ -158,7 +158,6 @@ function MRT_CombatLogHandler(...)
     if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
         local NPCID = MRT_GetNPCID(destGUID);
-        -- MRT_Debug("NPC died. - NPCName was "..destName.." and NPCID was "..NPCID);
         if (MRT_BossIDList[NPCID]) then
             MRT_AddBosskill(destName);
         end
@@ -167,24 +166,25 @@ end
 
 -- Slashcommand handler
 function MRT_SlashCmdHandler(msg)
-    if (msg == 'options') then
+    if (msg == 'options' or msg == 'o') then
         InterfaceOptionsFrame_OpenToCategory("MizusRaidTracker");
-    end
-    if (msg == '') then
+    elseif (msg == 'dkpcheck') then
+        MRT_StartGuildAttendanceCheck("_attendancecheck_");
+    elseif (msg == '') then
         MRT_GUI_Toggle();
-    end
-    if (msg == 'dkpframe') then
+    elseif (msg == 'dkpframe') then
         if (MRT_GetDKPValueFrame:IsShown()) then
             MRT_GetDKPValueFrame:Hide();
         else
             MRT_GetDKPValueFrame:Show();
         end
-    end
     -- FIXME - shamelessly borrowing the Export-Frame of CTRT for testing
-    if (msg == 'extest') then
+    elseif (msg == 'extest') then
         URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil));
         URLFrameEditBox:HighlightText();
         URLFrame:Show();
+    else
+        -- FIXME: print commands
     end
 end
 
@@ -385,6 +385,10 @@ function MRT_EndActiveRaid()
 end
 
 function MRT_CheckRaidStatusAfterLogin()
+    if (GetNumRaidMembers() == 0) then
+        MRT_EndActiveRaid();
+        return;
+    end
 end
 
 
@@ -521,19 +525,19 @@ function MRT_DKPFrame_Delete()
     MRT_DKPFrame_PostAskQueue();
 end
 
--- Case Bank: Set DKP-Value = 0, set Looter = _bank_
+-- Case Bank: Set DKP-Value = 0, set Looter = bank
 function MRT_DKPFrame_Bank()
     MRT_Debug("DKPFrame: Bank pressed");
     MRT_GetDKPValueFrame:Hide();
-    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_bank_";
+    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "bank";
     MRT_DKPFrame_PostAskQueue();
 end
 
--- Case Disenchanted: Set DKP-Value = 0, set Looter = _disenchanted_
+-- Case Disenchanted: Set DKP-Value = 0, set Looter = disenchanted
 function MRT_DKPFrame_Disenchanted()
     MRT_Debug("DKPFrame: Disenchanted pressed");
     MRT_GetDKPValueFrame:Hide();
-    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_disenchanted_";
+    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "disenchanted";
     MRT_DKPFrame_PostAskQueue();
 end
 
@@ -627,7 +631,7 @@ end
 
 function MRT_GuildAttendanceWhisper(msg, source)
     if (MRT_NumOfCurrentRaid and MRT_GuildRoster[string.lower(charName)]) then
-        local player = [MRT_GuildRoster[string.lower(charName)]];
+        local player = MRT_GuildRoster[string.lower(charName)];
         if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player]) then
             MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player] = {
                 ["Name"] = player,
@@ -652,7 +656,7 @@ function MRT_Debug(text)
 end
 
 function MRT_Print(text)
-    DEFAULT_CHAT_FRAME:AddMessage("MRT: "..text, 1, 0.5, 0);
+    DEFAULT_CHAT_FRAME:AddMessage("MRT: "..text, 1, 1, 0);
 end
 
 -- Parse static local strings

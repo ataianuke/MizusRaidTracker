@@ -1,6 +1,6 @@
 -- ********************************************************
 -- **              Mizus RaidTracker - GUI               **
--- **            <ENTER URL HERE>            **
+-- **           <http://nanaki.affenfelsen.de>           **
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
@@ -184,8 +184,8 @@ function MRT_GUI_RaidAttendeesTableUpdate(raidnum)
             index = index + 1;
         end
     end
+    table.sort(MRT_GUI_RaidAttendeesTableData, function(a, b) return (a[1] < b[1]); end);
     MRT_GUI_RaidAttendeesTable:SetData(MRT_GUI_RaidAttendeesTableData, true);
-    MRT_GUI_SetInitialSort(MRT_GUI_RaidAttendeesTable, "asc");
 end
 
 -- update bosskill table
@@ -222,6 +222,7 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
             end
         end
     end
+    table.sort(MRT_GUI_BossLootTableData, function(a, b) return (a[1] < b[1]); end);
     MRT_GUI_BossLootTable:SetData(MRT_GUI_BossLootTableData, true);
 end
 
@@ -234,22 +235,7 @@ function MRT_GUI_BossAttendeesTableUpdate(bossnum)
             MRT_GUI_BossAttendeesTableData[i] = {v};
         end
     end
+    table.sort(MRT_GUI_BossAttendeesTableData, function(a, b) return (a[1] < b[1]); end);
     MRT_GUI_BossAttendeesTable:SetData(MRT_GUI_BossAttendeesTableData, true);
-    MRT_GUI_SetInitialSort(MRT_GUI_BossAttendeesTable, "asc");
-end
-
--- inital sort helper
-function MRT_GUI_SetInitialSort(st, order)
-    local sortorder;
-    if (order == "asc") then
-        sortorder = "dsc"
-    else
-        sortorder = "asc"
-    end
-    for i, col in ipairs(st.cols) do 
-        st.cols[i].sort = nil;
-    end
-    st.cols[1].sort = sortorder;
-    st:SortData();
 end
 

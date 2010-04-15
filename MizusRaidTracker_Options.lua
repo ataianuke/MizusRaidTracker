@@ -1,6 +1,6 @@
 -- *******************************************************
 -- **            Mizus RaidTracker - Options            **
--- **            <ENTER URL HERE>            **
+-- **           <http://nanaki.affenfelsen.de>          **
 -- *******************************************************
 --
 -- This addon is written and copyrighted by:
