@@ -34,6 +34,7 @@
 -------------------------------
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
+MRT_NumOfCurrentRaid = nil;
 MRT_Options = {};
 MRT_RaidLog = {};
 
@@ -47,8 +48,8 @@ local MRT_Defaults = {
         ["General_DebugEnabled"] = nil,                                             --
         ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- NYI!
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
-        ["Tracking_Log10MenRaids"] = nil,                                           -- in use
-        ["Tracking_LogAVRaids"] = nil,                                              -- NYI! Track Archavons Vault
+        ["Tracking_Log10MenRaids"] = nil,                                           -- Track 19 player raids: true / nil
+        ["Tracking_LogAVRaids"] = nil,                                              -- Track Archavons Vault: true / nil
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
@@ -62,13 +63,16 @@ local MRT_Defaults = {
 local deformat = LibStub("LibDeformat-3.0");
 local tinsert = tinsert;
 
+local MRT_TimerFrame = CreateFrame("Frame");
+
 local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
-local MRT_NumOfCurrentRaid = nil;
 local MRT_NumOfLastBoss = nil;
 local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
+local MRT_MsgBoxQueue = {};
+local MRT_MsgBoxQueueRunning = nil;
 
 
 -------------------
@@ -97,6 +101,7 @@ function MRT_OnEvent(frame, event, ...)
         MRT_GUI_ParseValues();
         MRT_Core_Frames_ParseLocal();
         GuildRoster();
+        if (MRT_NumOfCurrentRaid) then MRT_CheckRaidStatusAfterLogin(); end
         MRT_Debug("Addon loaded.");
     end
     
@@ -343,6 +348,19 @@ function MRT_AddBosskill(bossname)
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
     MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
+    if (bossname ~= MRT_L.Core["GuildAttendanceBossEntry"] and MRT_Options["Attendance_GuildAttendanceCheckEnabled"]) then
+        StaticPopupDialogs["MRT_GA_MSGBOX"] = {
+            text = string.format(MRT_L.Core["GuildAttendanceMsgBox"], bossname),
+            button1 = MRT_L.Core["MB_Ok"],
+            button2 = MRT_L.Core["MB_Cancel"],
+            OnAccept = function() MRT_StartGuildAttendanceCheck(bossname); end,
+            timeout = 0,
+            whileDead = true,
+            hideOnEscape = false,
+        }
+        local msgbox = StaticPopup_Show("MRT_GA_MSGBOX");
+        msgbox.bossname = bossname;
+    end
 end
 
 function MRT_EndActiveRaid()
@@ -355,6 +373,9 @@ function MRT_EndActiveRaid()
     end
     MRT_NumOfCurrentRaid = nil;
     MRT_NumOfLastBoss = nil;
+end
+
+function MRT_CheckRaidStatusAfterLogin()
 end
 
 
@@ -418,6 +439,7 @@ function MRT_AutoAddLoot(chatmsg)
         ["Looter"] = playerName,
         ["DKPValue"] = 0,
         ["BossNumber"] = MRT_NumOfLastBoss,
+        ["Time"] = time(),
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
     if (not MRT_Options["Tracking_AskForDKPValue"]) then return; end
@@ -547,6 +569,53 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     frame:RegisterEvent("GUILD_ROSTER_UPDATE");
 end
 
+-- start guild attendance announcement
+function MRT_StartGuildAttendanceCheck(bosskilled)
+    if (not MRT_NumOfCurrentRaid) then return end;
+    if (MRT_TimerFrame.GARunning) then return end;
+    MRT_TimerFrame.GARunning = true;
+    -- MRT_TimerFrame.GAStart = time();
+    MRT_TimerFrame.GALastMsg = time();
+    MRT_TimerFrame.GADuration = MRT_Options["Attendance_GuildAttendanceCheckDuration"];
+    local bosskilltext = nil;
+    if (bosskilled == "_attendancecheck_") then
+        MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
+        bosskilltext = "MRT: "..MRT_L.Core["GuildAttendanceAnnounceText"];
+    else
+        bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled)..MRT_L.Core["GuildAttendanceAnnounceText"];
+    end
+    SendChatMessage("********************", "GUILD");
+    SendChatMessage(bosskilltext, "GUILD");
+    SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
+    SendChatMessage("********************", "GUILD");
+    MRT_TimerFrame.GABossKillText = bosskilltext;
+    MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
+    MRT_TimerFrame:SetScript("OnUpdate", function() MRT_GuildAttendanceCheckUpdate(); end);
+end
+
+function MRT_GuildAttendanceCheckUpdate()
+    if (MRT_TimerFrame.GARunning) then
+        -- is last message one minute ago?
+        if ((time() - MRT_TimerFrame.GALastMsg) >= 60) then
+            MRT_TimerFrame.GALastMsg = time();
+            -- is GACheck duration up?
+            if (MRT_TimerFrame.GADuration == 0) then
+                SendChatMessage("MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"], "GUILD");
+                MRT_TimerFrame.GARunning = nil;
+            else
+                SendChatMessage("********************", "GUILD");
+                SendChatMessage(MRT_TimerFrame.GABossKillText, "GUILD");
+                SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
+                SendChatMessage("********************", "GUILD");
+                MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
+            end
+        end
+    end
+    if (not MRT_TimerFrame.GARunning) then
+        MRT_TimerFrame:SetScript("OnUpdate", nil);
+    end
+end
+
 
 ------------------------
 --  helper functions  --
@@ -559,6 +628,55 @@ end
 
 function MRT_Print(text)
     DEFAULT_CHAT_FRAME:AddMessage("MRT: "..text, 1, 0.5, 0);
+end
+
+-- MsgBox Handling (via queue)
+function MRT_AddMsgBox(msg, onaccept, oncancel, data)
+    local MRT_MsgBoxQueueItem = {
+        ["msg"] = msg,
+        ["OnAccept"] = onaccept,
+        ["OnCancel"] = oncancel,
+        ["data"] = data,
+    }
+    tinsert(MRT_MsgBoxQueue, MRT_MsgBoxQueueItem);
+    -- add new MsgBox to queue
+    -- if not running, start queue handler
+    if (MRT_MsgBoxQueueRunning) return; end;
+    MRT_MsgBoxQueueRunning = true;
+    MRT_ShowMsgBox();
+end
+
+function MRT_ShowMsgBox()
+    -- if there are no entries in the queue, then return
+    if (#MRT_MsgBoxQueue == 0) then
+        MRT_MsgBoxQueueRunning = nil;
+        return;
+    end
+    -- else format text and show MsgBox frame
+    StaticPopupDialogs["MRT_MSGBOX"] = {
+        text = MRT_MsgBoxQueue[1]["msg"],
+        button1 = MRT_L.Core["MB_Ok"],
+        button2 = MRT_L.Core["MB_Cancel"],
+        OnAccept = function() MRT_ProcessMsgBox(data, doonaccept); end,
+        OnCancel = function() MRT_ProcessMsgBox(data, dooncancel); end,
+        timeout = 0,
+        whileDead = true,
+        hideOnEscape = false,
+    }
+    local msgbox = StaticPopup_Show("MRT_MSGBOX");
+    msgbox.data = MRT_MsgBoxQueue[1]["data"];
+    msgbox.doonaccept = MRT_MsgBoxQueue[1]["OnAccept"];
+    msgbox.dooncancel = MRT_MsgBoxQueue[1]["OnCancel"];
+    table.remove(MRT_MsgBoxQueue, 1);
+end
+
+function MRT_ProcessMsgBox(data, todo)
+    if (todo and data) then 
+        todo(data); 
+    elseif (todo) then
+        todo();
+    end
+    MRT_ShowMsgBox();
 end
 
 -- Parse static local strings
