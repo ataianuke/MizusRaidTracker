@@ -82,6 +82,7 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
     frame:RegisterEvent("CHAT_MSG_LOOT");
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
+    frame:RegisterEvent("CHAT_MSG_WHISPER");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("GUILD_ROSTER_UPDATE");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
@@ -118,6 +119,13 @@ function MRT_OnEvent(frame, event, ...)
             if (MRT_NumOfCurrentRaid) then
                 MRT_AddBosskill(MRT_L.Bossyells[monsteryell]);
             end
+        end
+    end
+    
+    if (event == "CHAT_MSG_WHISPER") then
+        if (MRT_TimerFrame.GARunning) then
+            local msg, source = ...;
+            MRT_GuildAttendanceWhisper(msg, source);
         end
     end
     
@@ -613,6 +621,22 @@ function MRT_GuildAttendanceCheckUpdate()
     end
     if (not MRT_TimerFrame.GARunning) then
         MRT_TimerFrame:SetScript("OnUpdate", nil);
+    end
+end
+
+function MRT_GuildAttendanceWhisper(msg, source)
+    if (MRT_NumOfCurrentRaid and MRT_GuildRoster[string.lower(charName)]) then
+        local player = [MRT_GuildRoster[string.lower(charName)]];
+        if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player]) then
+            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player] = {
+                ["Name"] = player,
+                ["Join"] = time(),
+            }
+        end
+        if (MRT_NumOfLastBoss) then
+            tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"], player); 
+        end
+        SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceReply"], player), "WHISPER", nil, source);
     end
 end
 
