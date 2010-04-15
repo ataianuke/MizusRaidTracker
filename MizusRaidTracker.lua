@@ -71,8 +71,6 @@ local MRT_GuildRosterUpdating = nil;
 local MRT_NumOfLastBoss = nil;
 local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
-local MRT_MsgBoxQueue = {};
-local MRT_MsgBoxQueueRunning = nil;
 
 
 -------------------
@@ -169,6 +167,12 @@ end
 
 -- Slashcommand handler
 function MRT_SlashCmdHandler(msg)
+    if (msg == 'options') then
+        InterfaceOptionsFrame_OpenToCategory("MizusRaidTracker");
+    end
+    if (msg == '') then
+        MRT_GUI_Toggle();
+    end
     if (msg == 'dkpframe') then
         if (MRT_GetDKPValueFrame:IsShown()) then
             MRT_GetDKPValueFrame:Hide();
@@ -181,9 +185,6 @@ function MRT_SlashCmdHandler(msg)
         URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil));
         URLFrameEditBox:HighlightText();
         URLFrame:Show();
-    end
-    if (msg == '') then
-        MRT_GUI_Toggle();
     end
 end
 
@@ -652,55 +653,6 @@ end
 
 function MRT_Print(text)
     DEFAULT_CHAT_FRAME:AddMessage("MRT: "..text, 1, 0.5, 0);
-end
-
--- MsgBox Handling (via queue)
-function MRT_AddMsgBox(msg, onaccept, oncancel, data)
-    local MRT_MsgBoxQueueItem = {
-        ["msg"] = msg,
-        ["OnAccept"] = onaccept,
-        ["OnCancel"] = oncancel,
-        ["data"] = data,
-    }
-    tinsert(MRT_MsgBoxQueue, MRT_MsgBoxQueueItem);
-    -- add new MsgBox to queue
-    -- if not running, start queue handler
-    if (MRT_MsgBoxQueueRunning) return; end;
-    MRT_MsgBoxQueueRunning = true;
-    MRT_ShowMsgBox();
-end
-
-function MRT_ShowMsgBox()
-    -- if there are no entries in the queue, then return
-    if (#MRT_MsgBoxQueue == 0) then
-        MRT_MsgBoxQueueRunning = nil;
-        return;
-    end
-    -- else format text and show MsgBox frame
-    StaticPopupDialogs["MRT_MSGBOX"] = {
-        text = MRT_MsgBoxQueue[1]["msg"],
-        button1 = MRT_L.Core["MB_Ok"],
-        button2 = MRT_L.Core["MB_Cancel"],
-        OnAccept = function() MRT_ProcessMsgBox(data, doonaccept); end,
-        OnCancel = function() MRT_ProcessMsgBox(data, dooncancel); end,
-        timeout = 0,
-        whileDead = true,
-        hideOnEscape = false,
-    }
-    local msgbox = StaticPopup_Show("MRT_MSGBOX");
-    msgbox.data = MRT_MsgBoxQueue[1]["data"];
-    msgbox.doonaccept = MRT_MsgBoxQueue[1]["OnAccept"];
-    msgbox.dooncancel = MRT_MsgBoxQueue[1]["OnCancel"];
-    table.remove(MRT_MsgBoxQueue, 1);
-end
-
-function MRT_ProcessMsgBox(data, todo)
-    if (todo and data) then 
-        todo(data); 
-    elseif (todo) then
-        todo();
-    end
-    MRT_ShowMsgBox();
 end
 
 -- Parse static local strings

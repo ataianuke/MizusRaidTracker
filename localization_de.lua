@@ -71,6 +71,17 @@ MRT_L.Core["DKP_Frame_Cancel_Button"] = "Abbruch";
 MRT_L.Core["DKP_Frame_Delete_Button"] = "L\195\182schen";
 MRT_L.Core["DKP_Frame_Bank_Button"] = "Bank";
 MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Entzaubert";
+-- guild attendance
+MRT_L.Core["GuildAttendanceBossDownText"] = "%s down!";
+MRT_L.Core["GuildAttendanceAnnounceText"] = "Whisper me your mains name to be added to the DKP list.";
+MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d minutes remaining.";
+MRT_L.Core["GuildAttendanceTimeUpText"] = "Wer mich jetzt noch nicht angeflüster hat, ist zu spät!";
+MRT_L.Core["GuildAttendanceBossEntry"] = "Attendance check";
+MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Make attendance check now?"
+MRT_L.Core["GuildAttendanceReply"] = "%s zur DKP-Liste hinzugefügt."
+-- MsgBox
+MRT_L.Core["MB_Ok"] = "Ok";
+MRT_L.Core["MB_Cancel"] = "Abbruch";
 
 
 -----------------------------------
