@@ -48,7 +48,7 @@ local MRT_Defaults = {
         ["General_DebugEnabled"] = nil,                                             --
         ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- 
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
-        ["Tracking_Log10MenRaids"] = nil,                                           -- Track 19 player raids: true / nil
+        ["Tracking_Log10MenRaids"] = nil,                                           -- Track 10 player raids: true / nil
         ["Tracking_LogAVRaids"] = nil,                                              -- Track Archavons Vault: true / nil
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
@@ -63,7 +63,8 @@ local MRT_Defaults = {
 local deformat = LibStub("LibDeformat-3.0");
 local tinsert = tinsert;
 
-local MRT_TimerFrame = CreateFrame("Frame");
+local MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks
+local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
 
 local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
@@ -131,7 +132,13 @@ function MRT_OnEvent(frame, event, ...)
         
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
-        if (MRT_NumOfCurrentRaid) then MRT_CheckRaidStatusAfterLogin(); end
+        MRT_LoginTimer.loginTime = time()
+        MRT_LoginTimer:SetScript("OnUpdate", function (self)
+            if ((time() - self.loginTime) > 15) then
+                self:SetScript("OnUpdate", nil);
+                MRT_CheckRaidStatusAfterLogin();
+            end
+        end);
     
     elseif (event == "RAID_INSTANCE_WELCOME") then
         if (not MRT_Options["General_MasterEnable"]) then return end;
@@ -359,7 +366,7 @@ function MRT_AddBosskill(bossname)
     MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
     if (bossname ~= MRT_L.Core["GuildAttendanceBossEntry"] and MRT_Options["Attendance_GuildAttendanceCheckEnabled"]) then
         StaticPopupDialogs["MRT_GA_MSGBOX"] = {
-            text = string.format(MRT_L.Core["GuildAttendanceMsgBox"], bossname),
+            text = string.format("MRT: "..MRT_L.Core["GuildAttendanceMsgBox"], bossname),
             button1 = MRT_L.Core["MB_Ok"],
             button2 = MRT_L.Core["MB_Cancel"],
             OnAccept = function() MRT_StartGuildAttendanceCheck(bossname); end,
@@ -582,7 +589,7 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     frame:RegisterEvent("GUILD_ROSTER_UPDATE");
 end
 
--- start guild attendance announcement
+-- start guild attendance announcement - FIXME: Activate Messages
 function MRT_StartGuildAttendanceCheck(bosskilled)
     if (not MRT_NumOfCurrentRaid) then return end;
     if (MRT_TimerFrame.GARunning) then return end;
@@ -595,12 +602,12 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
         MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
         bosskilltext = "MRT: "..MRT_L.Core["GuildAttendanceAnnounceText"];
     else
-        bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled)..MRT_L.Core["GuildAttendanceAnnounceText"];
+        bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled).." "..MRT_L.Core["GuildAttendanceAnnounceText"];
     end
-    SendChatMessage("********************", "GUILD");
-    SendChatMessage(bosskilltext, "GUILD");
+    --SendChatMessage("********************", "GUILD");
+    --SendChatMessage(bosskilltext, "GUILD");
     SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
-    SendChatMessage("********************", "GUILD");
+    --SendChatMessage("********************", "GUILD");
     MRT_TimerFrame.GABossKillText = bosskilltext;
     MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
     MRT_TimerFrame:SetScript("OnUpdate", function() MRT_GuildAttendanceCheckUpdate(); end);
@@ -616,10 +623,10 @@ function MRT_GuildAttendanceCheckUpdate()
                 SendChatMessage("MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"], "GUILD");
                 MRT_TimerFrame.GARunning = nil;
             else
-                SendChatMessage("********************", "GUILD");
-                SendChatMessage(MRT_TimerFrame.GABossKillText, "GUILD");
+                --SendChatMessage("********************", "GUILD");
+                --SendChatMessage(MRT_TimerFrame.GABossKillText, "GUILD");
                 SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
-                SendChatMessage("********************", "GUILD");
+                --SendChatMessage("********************", "GUILD");
                 MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
             end
         end
@@ -630,8 +637,8 @@ function MRT_GuildAttendanceCheckUpdate()
 end
 
 function MRT_GuildAttendanceWhisper(msg, source)
-    if (MRT_NumOfCurrentRaid and MRT_GuildRoster[string.lower(charName)]) then
-        local player = MRT_GuildRoster[string.lower(charName)];
+    if ((MRT_NumOfCurrentRaid ~= nil) and (MRT_GuildRoster[string.lower(msg)] ~= nil)) then
+        local player = MRT_GuildRoster[string.lower(msg)];
         if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player]) then
             MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player] = {
                 ["Name"] = player,
