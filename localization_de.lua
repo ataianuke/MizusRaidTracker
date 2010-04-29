@@ -79,6 +79,7 @@ MRT_L.Core["GuildAttendanceTimeUpText"] = "Wer mich jetzt noch nicht angeflüste
 MRT_L.Core["GuildAttendanceBossEntry"] = "Attendance check";
 MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Make attendance check now?"
 MRT_L.Core["GuildAttendanceReply"] = "%s zur DKP-Liste hinzugefügt."
+MRT_L.Core["GuildAttendanceReplyFail"] = "%s befindet sich bereits in der DKP-Liste.";
 -- MsgBox
 MRT_L.Core["MB_Ok"] = "Ok";
 MRT_L.Core["MB_Cancel"] = "Abbruch";

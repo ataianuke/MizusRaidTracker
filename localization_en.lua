@@ -77,11 +77,14 @@ MRT_L.Core["GuildAttendanceAnnounceText"] = "Whisper me your mains name to be ad
 MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d minutes remaining.";
 MRT_L.Core["GuildAttendanceTimeUpText"] = "If you haven't whispered me by now, you're too late.";
 MRT_L.Core["GuildAttendanceBossEntry"] = "Attendance check";
-MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Make attendance check now?"
-MRT_L.Core["GuildAttendanceReply"] = "Added %s to DKP list."
+MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Make attendance check now?";
+MRT_L.Core["GuildAttendanceReply"] = "Added %s to DKP list.";
+MRT_L.Core["GuildAttendanceReplyFail"] = "%s is already in DKP list.";
 -- MsgBox
 MRT_L.Core["MB_Ok"] = "Ok";
 MRT_L.Core["MB_Cancel"] = "Cancel";
+-- ExportFrame
+MRT_L.Core["Export_Frame_Title"] = "Data export"
 
 
 -----------------------------------

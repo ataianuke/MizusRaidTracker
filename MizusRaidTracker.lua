@@ -185,11 +185,8 @@ function MRT_SlashCmdHandler(msg)
         else
             MRT_GetDKPValueFrame:Show();
         end
-    -- FIXME - shamelessly borrowing the Export-Frame of CTRT for testing
     elseif (msg == 'extest') then
-        URLFrameEditBox:SetText(MRT_CreateCtrtDkpString(27, nil, nil));
-        URLFrameEditBox:HighlightText();
-        URLFrame:Show();
+        MRT_ExportFrame_Show(MRT_CreateCtrtDkpString(27, nil, nil));
     else
         -- FIXME: print commands
     end
@@ -576,13 +573,17 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     local guildRosterOfflineFilter = GetGuildRosterShowOffline();
     local guildRosterSelection = GetGuildRosterSelection();
     SetGuildRosterShowOffline(true);
+    -- Workaround for buggy guildinfos
+    SortGuildRoster("name");
     local numGuildMembers = GetNumGuildMembers();
+    local guildRoster = {};
     for i = 1, numGuildMembers do
         local charName = GetGuildRosterInfo(i);
         if (charName) then
-            MRT_GuildRoster[string.lower(charName)] = charName;
+            guildRoster[string.lower(charName)] = charName;
         end
     end
+    MRT_GuildRoster = guildRoster;
     SetGuildRosterShowOffline(guildRosterOfflineFilter);
     SetGuildRosterSelection(guildRosterSelection);
     MRT_GuildRosterUpdating = nil;
@@ -639,6 +640,7 @@ end
 function MRT_GuildAttendanceWhisper(msg, source)
     if ((MRT_NumOfCurrentRaid ~= nil) and (MRT_GuildRoster[string.lower(msg)] ~= nil)) then
         local player = MRT_GuildRoster[string.lower(msg)];
+        local player_exist = nil
         if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player]) then
             MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player] = {
                 ["Name"] = player,
@@ -646,9 +648,16 @@ function MRT_GuildAttendanceWhisper(msg, source)
             }
         end
         if (MRT_NumOfLastBoss) then
-            tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"], player); 
+            for i, v in ipairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"]) do
+                if (v == player) then player_exist == true;
+            end
+            if (not player_exist) then tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"], player); end;
         end
-        SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceReply"], player), "WHISPER", nil, source);
+        if (player_exist) then
+            SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceReplyFail"], player), "WHISPER", nil, source);
+        else
+            SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceReply"], player), "WHISPER", nil, source);
+        end
     end
 end
 
@@ -675,6 +684,8 @@ function MRT_Core_Frames_ParseLocal()
     MRT_GetDKPValueFrame_DeleteButton:SetText(MRT_L.Core["DKP_Frame_Delete_Button"]);
     MRT_GetDKPValueFrame_BankButton:SetText(MRT_L.Core["DKP_Frame_Bank_Button"]);
     MRT_GetDKPValueFrame_DisenchantedButton:SetText(MRT_L.Core["DKP_Frame_Disenchanted_Button"]);
+    MRT_ExportFrame_Title:SetText("MRT - "..MRT_L.Core["Export_Frame_Title"]);
+    MRT_ExportFrame_OKButton:SetText(MRT_L.Core["DKP_Frame_OK_Button"]);
 end
 
 -- GetNPCID - returns the NPCID or nil, if GUID was no NPC
@@ -690,6 +701,20 @@ end
 
 function MRT_MakeEQDKP_Time(timestamp)
     return date("%c", timestamp)
+end
+
+
+------------------------------
+--  export frame functions  --
+------------------------------
+function MRT_ExportFrame_Show(export)
+    MRT_ExportFrame_EB:SetText(export)
+    MRT_ExportFrame_EB:HighlightText();
+    MRT_ExportFrame:Show();
+end
+
+function MRT_ExportFrame_Hide()
+    MRT_ExportFrame:Hide();
 end
 
 
