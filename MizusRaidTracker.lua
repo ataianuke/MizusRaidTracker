@@ -649,7 +649,7 @@ function MRT_GuildAttendanceWhisper(msg, source)
         end
         if (MRT_NumOfLastBoss) then
             for i, v in ipairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"]) do
-                if (v == player) then player_exist == true;
+                if (v == player) then player_exist = true; end;
             end
             if (not player_exist) then tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"], player); end;
         end

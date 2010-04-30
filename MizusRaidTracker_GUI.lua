@@ -239,3 +239,10 @@ function MRT_GUI_BossAttendeesTableUpdate(bossnum)
     MRT_GUI_BossAttendeesTable:SetData(MRT_GUI_BossAttendeesTableData, true);
 end
 
+
+--------------------------------------
+--  functions for the dialog boxes  --
+--------------------------------------
+function MRT_GUI_HideDialogs()
+    MRT_GUI_OneRowDialog:Hide()
+end
