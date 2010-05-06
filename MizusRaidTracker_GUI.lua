@@ -55,7 +55,7 @@ local MRT_RaidBosskillsTableColDef = {
     {["name"] = MRT_L.GUI["Col_Difficulty"], ["width"] = 50},
 };
 local MRT_BossLootTableColDef = {
-    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 140},
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 180},
     {["name"] = MRT_L.GUI["Col_Looter"], ["width"] = 85},
     {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
 };
@@ -68,7 +68,7 @@ local MRT_BossAttendeesTableColDef = {
 --  parse localization and set up tables after ADDON_LOADED  --
 ---------------------------------------------------------------
 function MRT_GUI_ParseValues()
-    -- Parse strings
+    -- Parse title strings
     MRT_GUIFrame_Title:SetText(MRT_L.GUI["Header_Title"]);
     MRT_GUIFrame_RaidLogTitle:SetText(MRT_L.GUI["Tables_RaidLogTitle"]);
     MRT_GUIFrame_RaidAttendeesTitle:SetText(MRT_L.GUI["Tables_RaidAttendeesTitle"]);
@@ -88,6 +88,23 @@ function MRT_GUI_ParseValues()
     MRT_GUI_BossLootTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_BossLootTitle, "BOTTOMLEFT", 0, -15);
     MRT_GUI_BossAttendeesTable = ScrollingTable:CreateST(MRT_BossAttendeesTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_BossAttendeesTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_BossAttendeesTitle, "BOTTOMLEFT", 0, -15);
+    -- parse button local / anchor buttons relative to tables
+    MRT_GUI_RaidLog_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
+    MRT_GUI_RaidLog_Delete_Button:SetPoint("TOPLEFT", MRT_GUI_RaidLogTable.frame, "BOTTOMLEFT", 0, -10);
+    MRT_GUI_RaidBosskills_Add_Button:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_RaidBosskills_Add_Button:SetPoint("TOPLEFT", MRT_GUI_RaidBosskillsTable.frame, "BOTTOMLEFT", 0, -10);
+    MRT_GUI_RaidBosskills_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
+    MRT_GUI_RaidBosskills_Delete_Button:SetPoint("LEFT", MRT_GUI_RaidBosskills_Add_Button, "RIGHT", 10, 0);
+    MRT_GUI_RaidAttendees_Add_Button:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_RaidAttendees_Add_Button:("TOPLEFT", MRT_GUI_RaidAttendeesTable.frame, "BOTTOMLEFT", 0, -10);
+    MRT_GUI_RaidAttendees_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
+    MRT_GUI_RaidAttendees_Delete_Button:SetPoint("LEFT", MRT_GUI_RaidAttendees_Add_Button, "RIGHT", 10, 0);
+    MRT_GUI_BossLoot_Add_Button:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_BossLoot_Add_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "BOTTOMLEFT", 0, -10);
+    MRT_GUI_BossLoot_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
+    MRT_GUI_BossLoot_Delete_Button:SetPoint("LEFT", MRT_GUI_BossLoot_Add_Button, "RIGHT", 10, 0);
+    MRT_GUI_BossAttendees_Add_Button:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_BossAttendees_Add_Button:SetPoint("TOPLEFT", MRT_GUI_BossAttendeesTable.frame, "BOTTOMLEFT", 0, -10);
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
 end

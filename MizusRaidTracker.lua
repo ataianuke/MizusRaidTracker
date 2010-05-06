@@ -63,10 +63,10 @@ local MRT_Defaults = {
 local deformat = LibStub("LibDeformat-3.0");
 local tinsert = tinsert;
 
-local MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks
+MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks FIXME: Make local after testing
 local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
 
-local MRT_GuildRoster = {};
+MRT_GuildRoster = {}; -- FIXME: Make local after testing
 local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
 local MRT_NumOfLastBoss = nil;

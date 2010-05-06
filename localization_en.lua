@@ -136,6 +136,9 @@ MRT_L.GUI["Col_Cost"] = "Cost";
 -- table entry local
 MRT_L.GUI["Cell_Normal"] = "Normal";
 MRT_L.GUI["Cell_Hard"] = "Hard";
+-- buttons
+MRT_L.GUI["Button_Add"] = "Add";
+MRT_L.GUI["Button_Delete"] = "Delete";
 
 
 ------------

@@ -36,7 +36,7 @@
     <FontString inherits="ChatFontNormal"/>
   </EditBox>
   <Button name="MRT_GUI_Button_Template" virtual="true" hidden="false" inherits="GameMenuButtonTemplate">
-    <Size x="95" y="22"/>
+    <Size x="85" y="22"/>
   </Button>
   <Frame name="MRT_GUI_Dialog_Template" virtual="true" hidden="true" toplevel="true" enableMouse="true" movable="true" parent="UIParent">
     <Size x="366" y="150"/>
@@ -144,27 +144,27 @@
         <FontString name="$parent_RaidLogTitle" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-              <Offset x="20" y="-30"/>
+              <Offset x="40" y="-30"/>
             </Anchor>
           </Anchors>
         </FontString>
-        <FontString name="$parent_RaidAttendeesTitle" inherits="GameFontNormal">
+        <FontString name="$parent_RaidBosskillsTitle" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_RaidLogTitle">
               <Offset x="275" y="0"/>
             </Anchor>
           </Anchors>
         </FontString>
-        <FontString name="$parent_RaidBosskillsTitle" inherits="GameFontNormal">
+        <FontString name="$parent_RaidAttendeesTitle" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_RaidAttendeesTitle">
-              <Offset x="215" y="0"/>
+              <Offset x="265" y="0"/>
             </Anchor>
-          </Anchors>          
+          </Anchors>
         </FontString>
         <FontString name="$parent_BossLootTitle" inherits="GameFontNormal">
           <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_RaidAttendeesTitle">
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_RaidBosskillsTitle">
               <Offset x="0" y="-275"/>
             </Anchor>
           </Anchors>
@@ -178,6 +178,16 @@
         </FontString>
       </Layer>
     </Layers>
+    <Frames>
+      <Button name="$parent_RaidLog_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidBosskills_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidBosskills_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidAttendees_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_BossLoot_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_BossAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>   
+    </Frames>
     <Scripts>
       <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
       <OnDragStart>self:StartMoving();</OnDragStart>
