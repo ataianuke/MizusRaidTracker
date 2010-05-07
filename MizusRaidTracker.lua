@@ -66,7 +66,7 @@ local tinsert = tinsert;
 MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks FIXME: Make local after testing
 local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
 
-MRT_GuildRoster = {}; -- FIXME: Make local after testing
+local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
 local MRT_NumOfLastBoss = nil;
@@ -137,6 +137,8 @@ function MRT_OnEvent(frame, event, ...)
             if ((time() - self.loginTime) > 15) then
                 self:SetScript("OnUpdate", nil);
                 MRT_CheckRaidStatusAfterLogin();
+                MRT_GuildRosterUpdate(frame, nil, true)
+                MRT_GuildRosterInitialUpdateDone = true;
             end
         end);
     
@@ -564,7 +566,6 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     local GuildRosterChanged = ...;
     if (MRT_GuildRosterInitialUpdateDone and not GuildRosterChanged) then return end;
     if (MRT_GuildRosterUpdating) then return end;
-    MRT_GuildRosterInitialUpdateDone = true;
     MRT_GuildRosterUpdating = true;
     MRT_Debug("Processing GuildRoster...");
     if (frame:IsEventRegistered("GUILD_ROSTER_UPDATE")) then

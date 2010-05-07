@@ -83,6 +83,8 @@ MRT_L.Core["GuildAttendanceReplyFail"] = "%s is already in DKP list.";
 -- MsgBox
 MRT_L.Core["MB_Ok"] = "Ok";
 MRT_L.Core["MB_Cancel"] = "Cancel";
+MRT_L.Core["MB_Yes"] = "Yes";
+MRT_L.Core["MB_No"] = "No";
 -- ExportFrame
 MRT_L.Core["Export_Frame_Title"] = "Data export"
 

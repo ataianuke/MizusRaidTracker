@@ -144,7 +144,7 @@
         <FontString name="$parent_RaidLogTitle" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-              <Offset x="40" y="-30"/>
+              <Offset x="30" y="-30"/>
             </Anchor>
           </Anchors>
         </FontString>
@@ -157,7 +157,7 @@
         </FontString>
         <FontString name="$parent_RaidAttendeesTitle" inherits="GameFontNormal">
           <Anchors>
-            <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_RaidAttendeesTitle">
+            <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_RaidBosskillsTitle">
               <Offset x="265" y="0"/>
             </Anchor>
           </Anchors>
@@ -172,7 +172,7 @@
         <FontString name="$parent_BossAttendeesTitle" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="LEFT" relativePoint="LEFT" relativeTo="$parent_BossLootTitle">
-              <Offset x="305" y="0"/>
+              <Offset x="345" y="0"/>
             </Anchor>
           </Anchors>
         </FontString>
