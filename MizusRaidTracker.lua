@@ -132,7 +132,8 @@ function MRT_OnEvent(frame, event, ...)
         
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
-        MRT_LoginTimer.loginTime = time()
+        MRT_LoginTimer.loginTime = time();
+        -- Delay data gathering a bit to make sure, that data is avaiable
         MRT_LoginTimer:SetScript("OnUpdate", function (self)
             if ((time() - self.loginTime) > 15) then
                 self:SetScript("OnUpdate", nil);
