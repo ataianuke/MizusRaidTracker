@@ -141,6 +141,12 @@ MRT_L.GUI["Cell_Hard"] = "Hard";
 -- buttons
 MRT_L.GUI["Button_Add"] = "Add";
 MRT_L.GUI["Button_Delete"] = "Delete";
+MRT_L.GUI["Button_Export"] = "Export";
+MRT_L.GUI["Button_ExportNormal"] = "Export N";
+MRT_L.GUI["Button_ExportHeroic"] = "Export H";
+-- status messages
+MRT_L.GUI["No boss selected"] = "Error: No boss selected.";
+MRT_L.GUI["No raid selected"] = "Error: No raid selected.";
 
 
 ------------

@@ -179,11 +179,11 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="$parent_EB" historyLines="0" enableKeyboard="true" letters="100">
+      <EditBox name="$parent_EB" historyLines="0" enableKeyboard="true" letters="65000">
         <Size x="250" y="32"/>
         <Anchors>
           <Anchor point="CENTER" relativePoint="TOP" relativeTo="$parent">
-            <Offset x="0" y="-32"/>
+            <Offset x="0" y="-44"/>
           </Anchor>
         </Anchors>
         <Layers>
@@ -221,8 +221,8 @@
       <Button name="$parent_OKButton" hidden="false" inherits="GameMenuButtonTemplate">
         <Size x="95" y="22"/>
         <Anchors>
-          <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_EB">
-            <Offset x="0" y="-32"/>
+          <Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="$parent_EB">
+            <Offset x="0" y="-16"/>
           </Anchor>
         </Anchors>
         <Scripts>

@@ -179,9 +179,21 @@
       </Layer>
     </Layers>
     <Frames>
+      <Button name="$parent_RaidLog_Export_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_RaidExportComplete();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_RaidLog_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidLog_ExportNormal_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidLog_ExportHeroic_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidBosskills_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidBosskills_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidBosskills_Export_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_BossExport();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_RaidAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidAttendees_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template"></Button>

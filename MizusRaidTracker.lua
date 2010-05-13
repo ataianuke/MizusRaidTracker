@@ -135,7 +135,7 @@ function MRT_OnEvent(frame, event, ...)
         MRT_LoginTimer.loginTime = time();
         -- Delay data gathering a bit to make sure, that data is avaiable
         MRT_LoginTimer:SetScript("OnUpdate", function (self)
-            if ((time() - self.loginTime) > 15) then
+            if ((time() - self.loginTime) > 4) then
                 self:SetScript("OnUpdate", nil);
                 MRT_CheckRaidStatusAfterLogin();
                 MRT_GuildRosterUpdate(frame, nil, true)
@@ -577,6 +577,7 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     SetGuildRosterShowOffline(true);
     -- Workaround for buggy guildinfos
     SortGuildRoster("name");
+    SortGuildRoster("name");
     local numGuildMembers = GetNumGuildMembers();
     local guildRoster = {};
     for i = 1, numGuildMembers do
@@ -717,6 +718,15 @@ end
 
 function MRT_ExportFrame_Hide()
     MRT_ExportFrame:Hide();
+end
+
+-- arg usage: (int, nil, nil) = export complete raid
+--            (int, int, nil) = export one boss
+--            (int, nil, <H, N>) = export all hard-/normalmode events
+--            (int, int, <H, N>) = -> will be treated as (int, int, nil)
+function MRT_CreateRaidExport(raidID, bossID, difficulty)
+    local dkpstring = MRT_CreateCtrtDkpString(raidID, bossID, difficulty);
+    MRT_ExportFrame_Show(dkpstring);
 end
 
 
