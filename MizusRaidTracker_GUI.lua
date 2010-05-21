@@ -109,21 +109,25 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_RaidAttendees_Delete_Button:SetPoint("LEFT", MRT_GUIFrame_RaidAttendees_Add_Button, "RIGHT", 10, 0);
     MRT_GUIFrame_BossLoot_Add_Button:SetText(MRT_L.GUI["Button_Add"]);
     MRT_GUIFrame_BossLoot_Add_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "BOTTOMLEFT", 0, -5);
+    MRT_GUIFrame_BossLoot_Modify_Button:SetText(MRT_L.GUI["Button_Modify"]);
+    MRT_GUIFrame_BossLoot_Modify_Button:SetPoint("LEFT", MRT_GUIFrame_BossLoot_Add_Button, "RIGHT", 10, 0);
     MRT_GUIFrame_BossLoot_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
-    MRT_GUIFrame_BossLoot_Delete_Button:SetPoint("LEFT", MRT_GUIFrame_BossLoot_Add_Button, "RIGHT", 10, 0);
+    MRT_GUIFrame_BossLoot_Delete_Button:SetPoint("LEFT", MRT_GUIFrame_BossLoot_Modify_Button, "RIGHT", 10, 0);
     MRT_GUIFrame_BossAttendees_Add_Button:SetText(MRT_L.GUI["Button_Add"]);
     MRT_GUIFrame_BossAttendees_Add_Button:SetPoint("TOPLEFT", MRT_GUI_BossAttendeesTable.frame, "BOTTOMLEFT", 0, -5);
-    -- diable buttons, if function is NYI
+    MRT_GUIFrame_BossAttendees_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
+    MRT_GUIFrame_BossAttendees_Delete_Button:SetPoint("TOP", MRT_GUIFrame_BossAttendees_Add_Button, "BOTTOM", 0, -5);
+    -- disable buttons, if function is NYI
     MRT_GUIFrame_RaidLog_Delete_Button:Disable();
     MRT_GUIFrame_RaidBosskills_Add_Button:Disable();
     MRT_GUIFrame_RaidBosskills_Delete_Button:Disable();
-    MRT_GUIFrame_RaidLog_ExportNormal_Button:Disable();
-    MRT_GUIFrame_RaidLog_ExportHeroic_Button:Disable();
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     MRT_GUIFrame_RaidAttendees_Delete_Button:Disable();
     MRT_GUIFrame_BossLoot_Add_Button:Disable();
+    MRT_GUIFrame_BossLoot_Modify_Button:Disable();
     MRT_GUIFrame_BossLoot_Delete_Button:Disable();
     MRT_GUIFrame_BossAttendees_Add_Button:Disable();
+    MRT_GUIFrame_BossAttendees_Delete_Button:Disable();
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
 end
@@ -155,6 +159,26 @@ function MRT_GUI_RaidExportComplete()
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     MRT_CreateRaidExport(raidnum, nil, nil);
+end
+
+function MRT_GUI_RaidExportNormal()
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then 
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    MRT_CreateRaidExport(raidnum, nil, "N");
+end
+
+function MRT_GUI_RaidExportHard()
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then 
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    MRT_CreateRaidExport(raidnum, nil, "H");
 end
 
 function MRT_GUI_BossExport()
@@ -309,5 +333,6 @@ end
 --  functions for the dialog boxes  --
 --------------------------------------
 function MRT_GUI_HideDialogs()
-    MRT_GUI_OneRowDialog:Hide()
+    MRT_GUI_OneRowDialog:Hide();
+    MRT_GUI_TwoRowDialog:Hide();
 end

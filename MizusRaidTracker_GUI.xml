@@ -112,6 +112,36 @@
       </EditBox>
     </Frames>
   </Frame>
+  <Frame name="MRT_GUI_TwoRowDialog" inherits="MRT_GUI_Dialog_Template">
+    <Size y="184"/>
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_EB1_Text" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+              <Offset x="58" y="-32"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <EditBox name="$parent_EB1" inherits="MRT_GUI_Editbox_Template">
+        <Anchors>
+          <Anchor point="LEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+            <Offset x="58" y="-64"/>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+      <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EB2">
+            <Offset x="0" y="-32"/>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+    </Frames>
+  </Frame>
   <Frame name="MRT_GUIFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">
     <Size x="800" y="600"/>
     <Anchors>
@@ -185,8 +215,16 @@
         </Scripts>
       </Button>
       <Button name="$parent_RaidLog_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
-      <Button name="$parent_RaidLog_ExportNormal_Button" inherits="MRT_GUI_Button_Template"></Button>
-      <Button name="$parent_RaidLog_ExportHeroic_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidLog_ExportNormal_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_RaidExportNormal();</OnClick>
+        </Scripts>
+      </Button>
+      <Button name="$parent_RaidLog_ExportHeroic_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_RaidExportHard();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_RaidBosskills_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidBosskills_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidBosskills_Export_Button" inherits="MRT_GUI_Button_Template">
@@ -197,8 +235,10 @@
       <Button name="$parent_RaidAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidAttendees_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_BossLoot_Modify_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossLoot_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
-      <Button name="$parent_BossAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>   
+      <Button name="$parent_BossAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_BossAttendees_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
     </Frames>
     <Scripts>
       <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>

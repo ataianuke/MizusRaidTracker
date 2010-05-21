@@ -1,5 +1,5 @@
 -- ********************************************************
--- **        Mizus Raid Tracker - enGB/enUS Local        **
+-- **        Mizus RaidTracker - enGB/enUS Local        **
 -- **           <http://nanaki.affenfelsen.de>           **
 -- ********************************************************
 --
@@ -144,6 +144,7 @@ MRT_L.GUI["Button_Delete"] = "Delete";
 MRT_L.GUI["Button_Export"] = "Export";
 MRT_L.GUI["Button_ExportNormal"] = "Export N";
 MRT_L.GUI["Button_ExportHeroic"] = "Export H";
+MRT_L.GUI["Button_Modify"] = "Modify";
 -- status messages
 MRT_L.GUI["No boss selected"] = "Error: No boss selected.";
 MRT_L.GUI["No raid selected"] = "Error: No raid selected.";

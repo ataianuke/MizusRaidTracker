@@ -1,5 +1,5 @@
 -- *******************************************************
--- **          Mizus Raid Tracker - deDE Local          **
+-- **          Mizus RaidTracker - deDE Local          **
 -- **          <http://nanaki.affenfelsen.de>           **
 -- *******************************************************
 --

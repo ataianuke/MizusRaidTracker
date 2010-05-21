@@ -720,6 +720,15 @@ function MRT_ExportFrame_Hide()
     MRT_ExportFrame:Hide();
 end
 
+
+------------------------
+--  export functions  --
+------------------------
+-- MRT-Export:
+-- - this function should work like a hub for all exports
+-- - if additional export functions are added, implement an option to the option panel
+--   to choose the export format
+-- - this function shall then call the correct export function
 -- arg usage: (int, nil, nil) = export complete raid
 --            (int, int, nil) = export one boss
 --            (int, nil, <H, N>) = export all hard-/normalmode events
@@ -729,15 +738,7 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     MRT_ExportFrame_Show(dkpstring);
 end
 
-
-------------------------
---  export functions  --
-------------------------
 -- create CTRT-like DKP-String for the EQDKP CTRT-Import-Plugin
--- arg usage: (int, nil, nil) = export complete raid
---            (int, int, nil) = export one boss
---            (int, nil, <H, N>) = export all hard-/normalmode events
---            (int, int, <H, N>) = -> will be treated as (int, int, nil)
 function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     -- basic "catch bad args" routines
     -- check if bad raidID
@@ -800,7 +801,31 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
             end
             xml = xml.."</attendees></key1></BossKills>";
         else
-            -- FIXME! Do stuff for export of a specific difficulty
+            -- difficulties on functionside are "H" and "N"
+            local first_boss = true;
+            local index = 1;
+            for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                if ((val["Difficulty"] == 1 or val["Difficulty"] == 2) and difficulty == "N") or ((val["Difficulty"] == 3 or val["Difficulty"] == 4) and difficulty == "H") then
+                    if (first_boss) then
+                        xml = xml.."<BossKills>";
+                        first_boss = false;
+                    end
+                    xml = xml.."<key"..index..">";
+                    xml = xml.."<name>"..val["Name"].."</name>";
+                    xml = xml.."<difficulty>"..val["Difficulty"].."</difficulty>";
+                    xml = xml.."<time>"..MRT_MakeEQDKP_Time(val["Date"]).."</time>";
+                    xml = xml.."<attendees>";
+                    for idx2, val2 in pairs(val["Players"]) do
+                        xml = xml.."<key"..idx2.."><name>"..val2.."</name></key"..idx2..">";
+                    end
+                    xml = xml.."</attendees>";
+                    xml = xml.."</key"..index..">";
+                    index = index + 1;
+                end
+            end
+            if (first_boss == false) then
+                xml = xml.."</BossKills>";
+            end
         end
     end
     xml = xml.."<note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].."]]></note>";
@@ -831,7 +856,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     xml = xml.."<Loot>";
     index = 1;
     for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
-        if ((bossID == nil) or (val["BossNumber"] == bossID)) then
+        if ((bossID == nil and difficulty == nil) or (val["BossNumber"] == bossID) or (MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"] < 3 and difficulty == "N") or (MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"] > 2 and difficulty == "H")) then
             xml = xml.."<key"..index..">";
             xml = xml.."<ItemName>"..val["ItemName"].."</ItemName>";
             local itemIdLong = deformat(val["ItemString"], "item:%s");
