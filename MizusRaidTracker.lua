@@ -63,7 +63,7 @@ local MRT_Defaults = {
 local deformat = LibStub("LibDeformat-3.0");
 local tinsert = tinsert;
 
-MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks FIXME: Make local after testing
+MRT_TimerFrame = CreateFrame("Frame");              -- Timer for Guild-Attendance-Checks FIXME: Make local after testing
 local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
 
 local MRT_GuildRoster = {};
@@ -133,7 +133,8 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
         MRT_LoginTimer.loginTime = time();
-        -- Delay data gathering a bit to make sure, that data is avaiable
+        -- Delay data gathering a bit to make sure, that data is avaiable after login
+        -- aka: Dalaran latency fix
         MRT_LoginTimer:SetScript("OnUpdate", function (self)
             if ((time() - self.loginTime) > 4) then
                 self:SetScript("OnUpdate", nil);
@@ -405,7 +406,7 @@ end
 -- track loot based on chatmessage recognized by event CHAT_MSG_LOOT
 function MRT_AutoAddLoot(chatmsg)
     -- MRT_Debug("Lootevent recieved. Processing...");
-    -- patten LOOT_ITEM / LOOT_ITEM_SELF are also valid for LOOT_ITEM_MULTIPLE / LOOT_ITEM_SELF_MULTIPLE - but not the other way around - try these first
+    -- patterns LOOT_ITEM / LOOT_ITEM_SELF are also valid for LOOT_ITEM_MULTIPLE / LOOT_ITEM_SELF_MULTIPLE - but not the other way around - try these first
     -- first try: somebody else recieved multiple loot (most parameters)
     local playerName, itemLink, itemCount = deformat(chatmsg, LOOT_ITEM_MULTIPLE);
     -- next try: somebody else recieved single loot
@@ -746,6 +747,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     -- check if bad bossID
     if (bossID ~= nil) then
         if (MRT_RaidLog[raidID]["Bosskills"][bossID] == nil) then return end;
+        difficulty = nil;
     end
     -- check if bad difficulty-setting
     if ((difficulty ~= nil) and (difficulty ~= "H") and (difficulty ~= "N")) then return end;
