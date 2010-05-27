@@ -337,3 +337,29 @@ function MRT_GUI_HideDialogs()
     MRT_GUI_TwoRowDialog:Hide();
     MRT_GUI_ThreeRowDialog:Hide();
 end
+
+-- enable shift-click-enter of itemlinks
+function MRT_GUI_Hook_ChatEdit_InsertLink(link)
+    if MRT_GUI_OneRowDialog:IsVisible() then
+        if MRT_GUI_OneRowDialog_EB1:HasFocus() then 
+            MRT_GUI_OneRowDialog_EB1:SetText(link); 
+        end
+    end
+    if MRT_GUI_TwoRowDialog:IsVisible() then
+        if MRT_GUI_TwoRowDialog_EB1:HasFocus() then 
+            MRT_GUI_TwoRowDialog_EB1:SetText(link);
+        elseif MRT_GUI_TwoRowDialog_EB2:HasFocus() then 
+            MRT_GUI_TwoRowDialog_EB2:SetText(link);
+        end
+    end
+    if MRT_GUI_ThreeRowDialog:IsVisible() then
+        if MRT_GUI_ThreeRowDialog_EB1:HasFocus() then 
+            MRT_GUI_ThreeRowDialog_EB1:SetText(link); 
+        elseif MRT_GUI_ThreeRowDialog_EB2:HasFocus() then 
+            MRT_GUI_ThreeRowDialog_EB2:SetText(link);
+        elseif MRT_GUI_ThreeRowDialog_EB3:HasFocus() then 
+            MRT_GUI_ThreeRowDialog_EB3:SetText(link);
+        end
+    end
+end
+hooksecurefunc("ChatEdit_InsertLink", MRT_GUI_Hook_ChatEdit_InsertLink);
