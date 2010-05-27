@@ -335,4 +335,5 @@ end
 function MRT_GUI_HideDialogs()
     MRT_GUI_OneRowDialog:Hide();
     MRT_GUI_TwoRowDialog:Hide();
+    MRT_GUI_ThreeRowDialog:Hide();
 end

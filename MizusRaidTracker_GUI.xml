@@ -1,7 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
  http://wowprogramming.com/FrameXML/UI.xsd">
   <Script file="MizusRaidTracker_GUI.lua"/>
-  <EditBox name="MRT_GUI_Editbox_Template" virtual="true" historyLines="0" enableKeyboard="true" letters="200">
+  <EditBox name="MRT_GUI_Editbox_Template" virtual="true" historyLines="0" enableKeyboard="true" letters="400">
     <Size x="250" y="32"/>
     <Layers>
       <Layer level="BACKGROUND">
@@ -32,10 +32,19 @@
           <TexCoords left="0.45" right="1.0" top="0" bottom="1.0"></TexCoords>
         </Texture>
       </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Text" inherits="ChatFontNormal" text="FIXME!">
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+              <Offset x="-8" y="0"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
     </Layers>
     <FontString inherits="ChatFontNormal"/>
   </EditBox>
-  <Button name="MRT_GUI_Button_Template" virtual="true" hidden="false" inherits="GameMenuButtonTemplate">
+  <Button name="MRT_GUI_Button_Template" inherits="GameMenuButtonTemplate" virtual="true" hidden="false" text="FIXME!">
     <Size x="85" y="22"/>
   </Button>
   <Frame name="MRT_GUI_Dialog_Template" virtual="true" hidden="true" toplevel="true" enableMouse="true" movable="true" parent="UIParent">
@@ -89,54 +98,201 @@
       </Button>
     </Frames>
   </Frame>
-  <Frame name="MRT_GUI_OneRowDialog" inherits="MRT_GUI_Dialog_Template">
-    <Size y="120"/>
+  <Frame name="MRT_GUI_OneRowDialog" toplevel="true" hidden="true" enableMouse="true" movable="true" parent="UIParent">
+    <Size x="366" y="154"/>
+    <Anchors>
+      <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <TileSize val="32"/>
+      <EdgeSize val="32"/>
+      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
+    </Backdrop>
     <Layers>
-      <Layer level="OVERLAY">
-        <FontString name="$parent_EB1_Text" inherits="GameFontNormal">
+      <Layer level="ARTWORK">
+        <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+          <Size x="300" y="64"/>
           <Anchors>
-            <Anchor point="LEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-              <Offset x="58" y="-32"/>
-            </Anchor>            
+            <Anchor point="TOP">
+              <Offset x="0" y="12"/>
+            </Anchor>
           </Anchors>
-        </FontString>
+        </Texture>
       </Layer>
-    </Layers>
-    <Frames>
-      <EditBox name="$parent_EB1" inherits="MRT_GUI_Editbox_Template">
-        <Anchors>
-          <Anchor point="LEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-            <Offset x="58" y="-64"/>
-          </Anchor>
-        </Anchors>
-      </EditBox>
-    </Frames>
-  </Frame>
-  <Frame name="MRT_GUI_TwoRowDialog" inherits="MRT_GUI_Dialog_Template">
-    <Size y="184"/>
-    <Layers>
       <Layer level="OVERLAY">
-        <FontString name="$parent_EB1_Text" inherits="GameFontNormal">
+        <FontString name="$parent_Title" inherits="GameFontNormal" text="FIXME!">
           <Anchors>
-            <Anchor point="LEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-              <Offset x="58" y="-32"/>
+            <Anchor point="TOP">
+              <Offset x="0" y="-2"/>
             </Anchor>
           </Anchors>
         </FontString>
       </Layer>
     </Layers>
     <Frames>
+      <Button name="$parent_OKButton" inherits="MRT_GUI_Button_Template">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent">
+            <Offset x="66" y="32"/>
+          </Anchor>
+        </Anchors>
+      </Button>
+      <Button name="$parent_CancelButton" inherits="MRT_GUI_Button_Template">
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
+            <Offset x="-66" y="32"/>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_GUI_HideDialogs();</OnClick>
+        </Scripts>
+      </Button>
       <EditBox name="$parent_EB1" inherits="MRT_GUI_Editbox_Template">
         <Anchors>
-          <Anchor point="LEFT" relativePoint="TOPLEFT" relativeTo="$parent">
-            <Offset x="58" y="-64"/>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+            <Offset x="0" y="-52"/>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+    </Frames>
+  </Frame>
+  <Frame name="MRT_GUI_TwoRowDialog" toplevel="true" hidden="true" enableMouse="true" movable="true" parent="UIParent">
+    <Size x="366" y="218"/>
+    <Anchors>
+      <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <TileSize val="32"/>
+      <EdgeSize val="32"/>
+      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
+    </Backdrop>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+          <Size x="300" y="64"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="12"/>
+            </Anchor>
+          </Anchors>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Title" inherits="GameFontNormal" text="FIXME!">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-2"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_OKButton" inherits="MRT_GUI_Button_Template">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent">
+            <Offset x="66" y="32"/>
+          </Anchor>
+        </Anchors>
+      </Button>
+      <Button name="$parent_CancelButton" inherits="MRT_GUI_Button_Template">
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
+            <Offset x="-66" y="32"/>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_GUI_HideDialogs();</OnClick>
+        </Scripts>
+      </Button>
+      <EditBox name="$parent_EB1" inherits="MRT_GUI_Editbox_Template">
+        <Anchors>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+            <Offset x="0" y="-52"/>
           </Anchor>
         </Anchors>
       </EditBox>
       <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EB2">
-            <Offset x="0" y="-32"/>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent_EB1">
+            <Offset x="0" y="-64"/>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+    </Frames>
+  </Frame>
+  <Frame name="MRT_GUI_ThreeRowDialog" toplevel="true" enableMouse="true" movable="true" parent="UIParent">
+    <Size x="366" y="282"/>
+    <Anchors>
+      <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
+    </Anchors>
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <TileSize val="32"/>
+      <EdgeSize val="32"/>
+      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
+    </Backdrop>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+          <Size x="300" y="64"/>
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="12"/>
+            </Anchor>
+          </Anchors>
+        </Texture>
+      </Layer>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Title" inherits="GameFontNormal" text="FIXME!">
+          <Anchors>
+            <Anchor point="TOP">
+              <Offset x="0" y="-2"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button name="$parent_OKButton" inherits="MRT_GUI_Button_Template">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent">
+            <Offset x="66" y="32"/>
+          </Anchor>
+        </Anchors>
+      </Button>
+      <Button name="$parent_CancelButton" inherits="MRT_GUI_Button_Template">
+        <Anchors>
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" relativeTo="$parent">
+            <Offset x="-66" y="32"/>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_GUI_HideDialogs();</OnClick>
+        </Scripts>
+      </Button>
+      <EditBox name="$parent_EB1" inherits="MRT_GUI_Editbox_Template">
+        <Anchors>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+            <Offset x="0" y="-52"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            
+          </Layer>
+        </Layers>
+      </EditBox>
+      <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
+        <Anchors>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent_EB1">
+            <Offset x="0" y="-64"/>
+          </Anchor>
+        </Anchors>
+      </EditBox>
+      <EditBox name="$parent_EB3" inherits="MRT_GUI_Editbox_Template">
+        <Anchors>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent_EB2">
+            <Offset x="0" y="-64"/>
           </Anchor>
         </Anchors>
       </EditBox>
