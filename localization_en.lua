@@ -145,9 +145,17 @@ MRT_L.GUI["Button_Export"] = "Export";
 MRT_L.GUI["Button_ExportNormal"] = "Export N";
 MRT_L.GUI["Button_ExportHeroic"] = "Export H";
 MRT_L.GUI["Button_Modify"] = "Modify";
--- status messages
+-- status/error messages
+MRT_L.GUI["Can not delete current raid"] = "Error: Can't delete current raid.";
 MRT_L.GUI["No boss selected"] = "Error: No boss selected.";
 MRT_L.GUI["No raid selected"] = "Error: No raid selected.";
+MRT_L.GUI["No raid attendee selected"] = "Error: No raid attendee selected.";
+-- dialog messages
+MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?";
+MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?";
+MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
+MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from the loot list?";
+MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
 
 
 ------------

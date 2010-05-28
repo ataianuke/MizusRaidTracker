@@ -170,7 +170,7 @@
       </EditBox>
     </Frames>
   </Frame>
-  <Frame name="MRT_GUI_ThreeRowDialog" toplevel="true" enableMouse="true" movable="true" enableKeyboard="true" parent="UIParent">
+  <Frame name="MRT_GUI_ThreeRowDialog" toplevel="true" hidden="true" enableMouse="true" movable="true" enableKeyboard="true" parent="UIParent">
     <Size x="366" y="282"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
@@ -225,11 +225,6 @@
             <Offset x="0" y="-52"/>
           </Anchor>
         </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            
-          </Layer>
-        </Layers>
       </EditBox>
       <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
         <Anchors>
@@ -319,7 +314,11 @@
           <OnClick>MRT_GUI_RaidExportComplete();</OnClick>
         </Scripts>
       </Button>
-      <Button name="$parent_RaidLog_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidLog_Delete_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_RaidDelete();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_RaidLog_ExportNormal_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_RaidExportNormal();</OnClick>
@@ -331,19 +330,32 @@
         </Scripts>
       </Button>
       <Button name="$parent_RaidBosskills_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
-      <Button name="$parent_RaidBosskills_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidBosskills_Delete_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_BossDelete();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_RaidBosskills_Export_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_BossExport();</OnClick>
         </Scripts>
       </Button>
       <Button name="$parent_RaidAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
-      <Button name="$parent_RaidAttendees_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidAttendees_Delete_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_RaidAttendeeDelete();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossLoot_Modify_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossLoot_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossAttendees_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_CloseButton" inherits="UIPanelCloseButton">
+        <Anchors>
+          <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$parent"></Anchor>
+        </Anchors>
+      </Button>
     </Frames>
     <Scripts>
       <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>

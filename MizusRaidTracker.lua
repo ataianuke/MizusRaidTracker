@@ -35,6 +35,7 @@
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 MRT_NumOfCurrentRaid = nil;
+MRT_NumOfLastBoss = nil;
 MRT_Options = {};
 MRT_RaidLog = {};
 
@@ -69,7 +70,6 @@ local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 
 local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
-local MRT_NumOfLastBoss = nil;
 local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
 

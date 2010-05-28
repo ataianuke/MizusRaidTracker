@@ -36,6 +36,8 @@ local ScrollingTable = LibStub("ScrollingTable");
 local MRT_GUI_RaidLogTableSelection = nil;
 local MRT_GUI_RaidBosskillsTableSelection = nil;
 
+local msgbox;
+
 -- table definitions
 local MRT_RaidLogTableColDef = { 
     {["name"] = MRT_L.GUI["Col_Num"], ["width"] = 25, ["defaultsort"] = "dsc"}, 
@@ -81,13 +83,16 @@ function MRT_GUI_ParseValues()
     MRT_GUI_RaidLogTable:EnableSelection(true);
     MRT_GUI_RaidAttendeesTable = ScrollingTable:CreateST(MRT_RaidAttendeesTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_RaidAttendeesTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_RaidAttendeesTitle, "BOTTOMLEFT", 0, -15);
+    MRT_GUI_RaidAttendeesTable:EnableSelection(true);
     MRT_GUI_RaidBosskillsTable = ScrollingTable:CreateST(MRT_RaidBosskillsTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_RaidBosskillsTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_RaidBosskillsTitle, "BOTTOMLEFT", 0, -15);
     MRT_GUI_RaidBosskillsTable:EnableSelection(true);
     MRT_GUI_BossLootTable = ScrollingTable:CreateST(MRT_BossLootTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_BossLootTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_BossLootTitle, "BOTTOMLEFT", 0, -15);
+    MRT_GUI_BossLootTable:EnableSelection(true);
     MRT_GUI_BossAttendeesTable = ScrollingTable:CreateST(MRT_BossAttendeesTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_BossAttendeesTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_BossAttendeesTitle, "BOTTOMLEFT", 0, -15);
+    MRT_GUI_BossAttendeesTable:EnableSelection(true);
     -- parse button local / anchor buttons relative to tables
     MRT_GUIFrame_RaidLog_Export_Button:SetText(MRT_L.GUI["Button_Export"]);
     MRT_GUIFrame_RaidLog_Export_Button:SetPoint("TOPLEFT", MRT_GUI_RaidLogTable.frame, "BOTTOMLEFT", 0, -5);
@@ -118,11 +123,8 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_BossAttendees_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
     MRT_GUIFrame_BossAttendees_Delete_Button:SetPoint("TOP", MRT_GUIFrame_BossAttendees_Add_Button, "BOTTOM", 0, -5);
     -- disable buttons, if function is NYI
-    MRT_GUIFrame_RaidLog_Delete_Button:Disable();
     MRT_GUIFrame_RaidBosskills_Add_Button:Disable();
-    MRT_GUIFrame_RaidBosskills_Delete_Button:Disable();
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
-    MRT_GUIFrame_RaidAttendees_Delete_Button:Disable();
     MRT_GUIFrame_BossLoot_Add_Button:Disable();
     MRT_GUIFrame_BossLoot_Modify_Button:Disable();
     MRT_GUIFrame_BossLoot_Delete_Button:Disable();
@@ -152,6 +154,7 @@ end
 --  Button handler  --
 ----------------------
 function MRT_GUI_RaidExportComplete()
+    MRT_GUI_HideDialogs();
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then 
         MRT_Print(MRT_L.GUI["No raid selected"]);
@@ -162,6 +165,7 @@ function MRT_GUI_RaidExportComplete()
 end
 
 function MRT_GUI_RaidExportNormal()
+    MRT_GUI_HideDialogs();
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then 
         MRT_Print(MRT_L.GUI["No raid selected"]);
@@ -172,6 +176,7 @@ function MRT_GUI_RaidExportNormal()
 end
 
 function MRT_GUI_RaidExportHard()
+    MRT_GUI_HideDialogs();
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then 
         MRT_Print(MRT_L.GUI["No raid selected"]);
@@ -181,7 +186,70 @@ function MRT_GUI_RaidExportHard()
     MRT_CreateRaidExport(raidnum, nil, "H");
 end
 
+function MRT_GUI_RaidDelete()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    if (raid_select == MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.GUI["Can not delete current raid"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm raid entry deletion"], raidnum);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_RaidDeleteAccept(raidnum); end
+    StaticPopup_Show("MRT_GUI_ZeroRowDialog");
+end
+
+function MRT_GUI_RaidDeleteAccept(raidnum)
+    table.remove(MRT_RaidLog, raidnum);
+    -- Modify MRT_NumOfCurrentRaid if there is an active raid
+    if (MRT_NumOfCurrentRaid ~= nil) then
+        MRT_NumOfCurrentRaid = #MRT_RaidLog;
+    end
+    -- Do a table update
+    MRT_GUI_CompleteTableUpdate();
+end
+
+function MRT_GUI_BossDelete()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    local bossname = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 3);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm boss entry deletion"], bossnum, bossname);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_BossDeleteAccept(raidnum, bossnum); end
+    StaticPopup_Show("MRT_GUI_ZeroRowDialog");
+end
+
+function MRT_GUI_BossDeleteAccept(raidnum, bossnum)
+    table.remove(MRT_RaidLog[raidnum]["Bosskills"], bossnum);
+    -- Modify MRT_NumOfLastBoss if active raid was modified
+    if (MRT_NumOfCurrentRaid == raidnum) then
+        MRT_NumOfLastBoss = #MRT_RaidLog[raidnum]["Bosskills"];
+    end
+    -- Do a table update, if the displayed raid was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (raidnum_selected == raidnum) then
+        MRT_GUI_RaidDetailsTableUpdate(raidnum);
+    end
+end
+
 function MRT_GUI_BossExport()
+    MRT_GUI_HideDialogs();
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then
         MRT_Print(MRT_L.GUI["No raid selected"]);
@@ -196,6 +264,37 @@ function MRT_GUI_BossExport()
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     MRT_CreateRaidExport(raidnum, bossnum, nil);
 end
+
+function MRT_GUI_RaidAttendeeDelete()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local attendee_select = MRT_GUI_RaidAttendeesTable:GetSelection();
+    if (attendee_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid attendee selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local attendee = MRT_GUI_RaidAttendeesTable:GetCell(attendee_select, 1);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm raid attendee entry deletion"], attendee);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee); end
+    StaticPopup_Show("MRT_GUI_ZeroRowDialog");
+end
+
+function MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee)
+    MRT_RaidLog[raidnum]["Players"][attendee] = nil;
+    -- Do a table update, if the displayed raid was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (raidnum_selected == raidnum) then
+        MRT_GUI_RaidAttendeesTableUpdate(raidnum);
+    end
+end
+
 
 ------------------------
 --  OnUpdate handler  --
@@ -333,12 +432,14 @@ end
 --  functions for the dialog boxes  --
 --------------------------------------
 function MRT_GUI_HideDialogs()
+    StaticPopup_Hide("MRT_GUI_ZeroRowDialog");
     MRT_GUI_OneRowDialog:Hide();
     MRT_GUI_TwoRowDialog:Hide();
     MRT_GUI_ThreeRowDialog:Hide();
+    MRT_ExportFrame_Hide();
 end
 
--- enable shift-click-enter of itemlinks
+-- enable shift-click-parsing of item links
 function MRT_GUI_Hook_ChatEdit_InsertLink(link)
     if MRT_GUI_OneRowDialog:IsVisible() then
         if MRT_GUI_OneRowDialog_EB1:HasFocus() then 
@@ -363,3 +464,19 @@ function MRT_GUI_Hook_ChatEdit_InsertLink(link)
     end
 end
 hooksecurefunc("ChatEdit_InsertLink", MRT_GUI_Hook_ChatEdit_InsertLink);
+
+
+-------------------------------------
+--  ZeroRowDialog as static popup  --
+-------------------------------------
+-- To show/hide this dialog: StaticPopup_Show("Popup name") / StaticPopup_Hide("Popup name")
+StaticPopupDialogs["MRT_GUI_ZeroRowDialog"] = {
+    text = "FIXME!",
+    button1 = MRT_L.Core["MB_Yes"],
+    button2 = MRT_L.Core["MB_No"],
+    OnAccept = nil,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = true,
+}
+
