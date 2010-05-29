@@ -46,7 +46,7 @@ local MRT_RaidLogTableColDef = {
     {["name"] = MRT_L.GUI["Col_Size"], ["width"] = 25},
 };
 local MRT_RaidAttendeesTableColDef = {
-    {["name"] = "", ["width"] = 1},                           -- invisible coloumn for storing the loot number index from the raidlog-table
+    {["name"] = "", ["width"] = 1},                           -- invisible coloumn for storing the player number index from the raidlog-table
     {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 84},
     {["name"] = MRT_L.GUI["Col_Join"], ["width"] = 40},
     {["name"] = MRT_L.GUI["Col_Leave"], ["width"] = 40},
@@ -318,7 +318,7 @@ function MRT_GUI_LootModify()
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
     MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Modify loot data"]);
     MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
-    MRT_GUI_ThreeRowDialog_EB1:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 2));
+    MRT_GUI_ThreeRowDialog_EB1:SetText(MRT_RaidLog[raidnum]["Loot"][lootnum]["ItemLink"]);
     MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
     MRT_GUI_ThreeRowDialog_EB2:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 3));
     MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
@@ -330,7 +330,9 @@ function MRT_GUI_LootModify()
 end
 
 function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
+    -- sanity-check values here
     MRT_GUI_HideDialogs();
+    -- insert new values here / if (lootnum == nil) then treat as a newly added item
 end
 
 
@@ -442,8 +444,9 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
         local raidnum = MRT_GUI_RaidLogTable:GetCell(MRT_GUI_RaidLogTableSelection, 1);
         for i, v in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
             if (v["BossNumber"] == bossnum) then
-                MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], v["Looter"], v["DKPValue"]};
-                --MRT_GUI_BossLootTableData[index] = {i, "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
+                --MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], v["Looter"], v["DKPValue"]};
+                MRT_GUI_BossLootTableData[index] = {i, "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
+                --MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
                 index = index + 1;
             end
         end
