@@ -150,12 +150,17 @@ MRT_L.GUI["Can not delete current raid"] = "Error: Can't delete current raid.";
 MRT_L.GUI["No boss selected"] = "Error: No boss selected.";
 MRT_L.GUI["No raid selected"] = "Error: No raid selected.";
 MRT_L.GUI["No raid attendee selected"] = "Error: No raid attendee selected.";
+MRT_L.GUI["No loot selected"] = "Error: No item selected.";
 -- dialog messages
 MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?";
 MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?";
 MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
 MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from the loot list?";
 MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
+MRT_L.GUI["Modify loot data"] = "Modify loot data";
+MRT_L.GUI["Itemlink"] = "Itemlink";
+MRT_L.GUI["Looter"] = "Looter";
+MRT_L.GUI["Value"] = "Value";
 
 
 ------------

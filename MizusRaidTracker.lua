@@ -280,7 +280,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
         local UnitID = "raid"..tostring(i);
         local playerRaceL, playerRace = UnitRace(UnitID);
         local playerSex = UnitSex(UnitID);
-        MRT_RaidInfo["Players"][playerName] = {
+        local playerInfo = {
             ["Name"] = playerName,
             ["Join"] = time(),
             ["Leave"] = nil,
@@ -291,6 +291,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["Level"] = playerLvl,
             ["Sex"] = playerSex,
         }
+        tinsert(MRT_RaidInfo["Players"], playerInfo);
     end
     tinsert(MRT_RaidLog, MRT_RaidInfo);
     MRT_NumOfCurrentRaid = #MRT_RaidLog;
@@ -309,12 +310,18 @@ function MRT_RaidRosterUpdate(frame)
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
         tinsert(activePlayerList, playerName);
-        if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName]) then
+        local playerInRaid = nil;
+        for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+            if (val["Name"] == playerName) then
+                if(val["Leave"] == nil then playerInRaid = true; end
+            end
+        end
+        if (playerInRaid == nil) then
             MRT_Debug("New player found: "..playerName);
             local UnitID = "raid"..tostring(i);
             local playerRaceL, playerRace = UnitRace(UnitID);
             local playerSex = UnitSex(UnitID);
-            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName] = {
+            local playerInfo = {
                 ["Name"] = playerName,
                 ["Join"] = time(),
                 ["Leave"] = nil,
@@ -325,22 +332,21 @@ function MRT_RaidRosterUpdate(frame)
                 ["Level"] = playerLvl,
                 ["Sex"] = playerSex,
             };
-        else
-            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][playerName]["Leave"] = nil;
+            tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
         end    
     end
     -- MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
-    for savedPlayer, values in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+    for key, val in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
         local matchFound = nil;
         for index, activePlayer in ipairs (activePlayerList) do
-            if (savedPlayer == activePlayer) then 
+            if (val["Name"] == activePlayer) then 
                 matchFound = true; 
             end
         end
         if (not matchFound) then
-            if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][savedPlayer]["Leave"]) then
-                MRT_Debug("Leaving player found: "..savedPlayer);
-                MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][savedPlayer]["Leave"] = time();
+            if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"]) then
+                MRT_Debug("Leaving player found: "..val["Name"]);
+                MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
             end
         end
     end
@@ -599,7 +605,7 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     if (not MRT_NumOfCurrentRaid) then return end;
     if (MRT_TimerFrame.GARunning) then return end;
     MRT_TimerFrame.GARunning = true;
-    -- MRT_TimerFrame.GAStart = time();
+    MRT_TimerFrame.GAStart = time();
     MRT_TimerFrame.GALastMsg = time();
     MRT_TimerFrame.GADuration = MRT_Options["Attendance_GuildAttendanceCheckDuration"];
     local bosskilltext = nil;
@@ -644,12 +650,19 @@ end
 function MRT_GuildAttendanceWhisper(msg, source)
     if ((MRT_NumOfCurrentRaid ~= nil) and (MRT_GuildRoster[string.lower(msg)] ~= nil)) then
         local player = MRT_GuildRoster[string.lower(msg)];
-        local player_exist = nil
-        if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player]) then
-            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][player] = {
+        local player_exist = nil;
+        for key, value in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+            if (val["Name"] == player) then
+                if (not val["Leave"]) then player_exist = true; end
+            end
+        end
+        if (player_exist == nil) then
+            local playerInfo = {
                 ["Name"] = player,
-                ["Join"] = time(),
+                ["Join"] = MRT_TimerFrame.GAStart,
+                ["Leave"] = time(),
             }
+            tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
         end
         if (MRT_NumOfLastBoss) then
             for i, v in ipairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"]) do
@@ -767,7 +780,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     index = 1;
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
         xml = xml.."<key"..index..">";
-        xml = xml.."<name>"..key.."</name>";
+        xml = xml.."<name>"..val["Name"].."</name>";
         xml = xml.."<race>"..val["Race"].."</race>";
         xml = xml.."<sex>"..val["Sex"].."</sex>";
         xml = xml.."<class>"..val["Class"].."</class>";
@@ -835,7 +848,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     xml = xml.."<Join>";
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
         xml = xml.."<key"..index..">";
-        xml = xml.."<player>"..key.."</player>";
+        xml = xml.."<player>"..val["Name"].."</player>";
         xml = xml.."<race>"..val["Race"].."</race>";
         xml = xml.."<class>"..val["Class"].."</class>";
         xml = xml.."<sex>"..val["Sex"].."</sex>";
@@ -849,7 +862,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     index = 1;
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
         xml = xml.."<key"..index..">";
-        xml = xml.."<player>"..key.."</player>";
+        xml = xml.."<player>"..val["Name"].."</player>";
         xml = xml.."<time>"..MRT_MakeEQDKP_Time(val["Leave"]).."</time>";
         xml = xml.."</key"..index..">";
         index = index + 1;

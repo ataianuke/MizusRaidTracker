@@ -57,7 +57,8 @@ local MRT_RaidBosskillsTableColDef = {
     {["name"] = MRT_L.GUI["Col_Difficulty"], ["width"] = 40},
 };
 local MRT_BossLootTableColDef = {
-    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 180},
+    {["name"] = "", ["width"] = 1,},                            -- invisible coloumn for storing the loot number index from the raidlog-table
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 179},
     {["name"] = MRT_L.GUI["Col_Looter"], ["width"] = 85},
     {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
 };
@@ -126,7 +127,6 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_RaidBosskills_Add_Button:Disable();
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     MRT_GUIFrame_BossLoot_Add_Button:Disable();
-    MRT_GUIFrame_BossLoot_Modify_Button:Disable();
     MRT_GUIFrame_BossLoot_Delete_Button:Disable();
     MRT_GUIFrame_BossAttendees_Add_Button:Disable();
     MRT_GUIFrame_BossAttendees_Delete_Button:Disable();
@@ -295,6 +295,43 @@ function MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee)
     end
 end
 
+function MRT_GUI_LootModify()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss selected"]);
+        return;
+    end
+    local loot_select = MRT_GUI_BossLootTable:GetSelection();
+    if (loot_select == nil) then
+        MRT_Print(MRT_L.GUI["No loot selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
+    MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Modify loot data"]);
+    MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
+    MRT_GUI_ThreeRowDialog_EB1:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 2));
+    MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
+    MRT_GUI_ThreeRowDialog_EB2:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 3));
+    MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
+    MRT_GUI_ThreeRowDialog_EB3:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 4));
+    MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Modify"]);
+    MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum); end);
+    MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_ThreeRowDialog:Show();
+end
+
+function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
+    MRT_GUI_HideDialogs();
+end
+
 
 ------------------------
 --  OnUpdate handler  --
@@ -404,8 +441,8 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
         local raidnum = MRT_GUI_RaidLogTable:GetCell(MRT_GUI_RaidLogTableSelection, 1);
         for i, v in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
             if (v["BossNumber"] == bossnum) then
-                --MRT_GUI_BossLootTableData[index] = {v["ItemLink"], v["Looter"], v["DKPValue"]};
-                MRT_GUI_BossLootTableData[index] = {"|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
+                MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], v["Looter"], v["DKPValue"]};
+                --MRT_GUI_BossLootTableData[index] = {i, "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
                 index = index + 1;
             end
         end

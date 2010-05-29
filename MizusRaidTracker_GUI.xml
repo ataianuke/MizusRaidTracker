@@ -347,7 +347,11 @@
         </Scripts>
       </Button>
       <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
-      <Button name="$parent_BossLoot_Modify_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_BossLoot_Modify_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_LootModify();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_BossLoot_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_BossAttendees_Delete_Button" inherits="MRT_GUI_Button_Template"></Button>
