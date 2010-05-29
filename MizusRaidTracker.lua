@@ -313,7 +313,7 @@ function MRT_RaidRosterUpdate(frame)
         local playerInRaid = nil;
         for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
             if (val["Name"] == playerName) then
-                if(val["Leave"] == nil then playerInRaid = true; end
+                if(val["Leave"] == nil) then playerInRaid = true; end
             end
         end
         if (playerInRaid == nil) then
@@ -659,7 +659,7 @@ function MRT_GuildAttendanceWhisper(msg, source)
         if (player_exist == nil) then
             local playerInfo = {
                 ["Name"] = player,
-                ["Join"] = MRT_TimerFrame.GAStart,
+                ["Join"] = (MRT_TimerFrame.GAStart - 1),
                 ["Leave"] = time(),
             }
             tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);

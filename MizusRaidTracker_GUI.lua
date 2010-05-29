@@ -46,7 +46,8 @@ local MRT_RaidLogTableColDef = {
     {["name"] = MRT_L.GUI["Col_Size"], ["width"] = 25},
 };
 local MRT_RaidAttendeesTableColDef = {
-    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 85},
+    {["name"] = "", ["width"] = 1},                           -- invisible coloumn for storing the loot number index from the raidlog-table
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 84},
     {["name"] = MRT_L.GUI["Col_Join"], ["width"] = 40},
     {["name"] = MRT_L.GUI["Col_Leave"], ["width"] = 40},
 };
@@ -57,7 +58,7 @@ local MRT_RaidBosskillsTableColDef = {
     {["name"] = MRT_L.GUI["Col_Difficulty"], ["width"] = 40},
 };
 local MRT_BossLootTableColDef = {
-    {["name"] = "", ["width"] = 1,},                            -- invisible coloumn for storing the loot number index from the raidlog-table
+    {["name"] = "", ["width"] = 1},                            -- invisible coloumn for storing the loot number index from the raidlog-table
     {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 179},
     {["name"] = MRT_L.GUI["Col_Looter"], ["width"] = 85},
     {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
@@ -402,14 +403,14 @@ function MRT_GUI_RaidAttendeesTableUpdate(raidnum)
         local index = 1;
         for k, v in pairs(MRT_RaidLog[raidnum]["Players"]) do
             if (v["Leave"]) then
-                MRT_GUI_RaidAttendeesTableData[index] = {k, date("%H:%M", v["Join"]), date("%H:%M", v["Leave"])};
+                MRT_GUI_RaidAttendeesTableData[index] = {k, v["Name"], date("%H:%M", v["Join"]), date("%H:%M", v["Leave"])};
             else
-                MRT_GUI_RaidAttendeesTableData[index] = {k, date("%H:%M", v["Join"]), nil};
+                MRT_GUI_RaidAttendeesTableData[index] = {k, v["Name"], date("%H:%M", v["Join"]), nil};
             end
             index = index + 1;
         end
     end
-    table.sort(MRT_GUI_RaidAttendeesTableData, function(a, b) return (a[1] < b[1]); end);
+    table.sort(MRT_GUI_RaidAttendeesTableData, function(a, b) return (a[2] < b[2]); end);
     MRT_GUI_RaidAttendeesTable:SetData(MRT_GUI_RaidAttendeesTableData, true);
 end
 
@@ -447,7 +448,7 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
             end
         end
     end
-    table.sort(MRT_GUI_BossLootTableData, function(a, b) return (a[1] < b[1]); end);
+    table.sort(MRT_GUI_BossLootTableData, function(a, b) return (a[2] < b[2]); end);
     MRT_GUI_BossLootTable:SetData(MRT_GUI_BossLootTableData, true);
 end
 
