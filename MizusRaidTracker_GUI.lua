@@ -330,9 +330,47 @@ function MRT_GUI_LootModify()
 end
 
 function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
-    -- sanity-check values here
+    local itemLink = MRT_GUI_ThreeRowDialog_EB1:GetText();
+    local looter = MRT_GUI_ThreeRowDialog_EB2:GetText();
+    local cost = MRT_GUI_ThreeRowDialog_EB3:GetText();
+    if (cost == "") then cost = 0; end
+    cost = tonumber(cost);
+    -- sanity-check values here - especially the itemlink / looter is free text / cost has to be a number
+    -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
+    -- strip the itemlink into its parts / may change to use deformat with easier pattern ("|c%s|H%s|h[%s]|h|r")
+    local _, _, itemString = string.find(itemLink, "^|c%x+|H(.+)|h%[.*%]");
+    local _, _, itemColor, _, itemId, _, _, _, _, _, _, _, _, itemName = string.find(itemLink, "|?c?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
+    if (not itemString or not itemColor or not itemId or not itemName) then
+        MRT_Print(MRT_L.GUI["No itemLink found"]);
+        return;
+    end
+    if (not cost) then
+        MRT_Print(MRT_L.GUI["Item cost invalid"]);
+        return;
+    end
+    itemId = tonumber(itemId);
     MRT_GUI_HideDialogs();
     -- insert new values here / if (lootnum == nil) then treat as a newly added item
+    local MRT_LootInfo = {
+        ["ItemLink"] = itemLink,
+        ["ItemString"] = itemString,
+        ["ItemId"] = itemId,
+        ["ItemName"] = itemName,
+        ["ItemColor"] = itemColor,
+        ["BossNumber"] = bossnum,
+        ["Looter"] = looter,
+        ["DKPValue"] = cost,
+    }
+    if (lootnum) then
+        oldLootDB = MRT_RaidLog[raidnum]["Loot"][lootnum];
+        MRT_LootInfo["ItemCount"] = oldLootDB["ItemCount"];
+        MRT_LootInfo["Time"] = oldLootDB["Time"];
+        MRT_RaidLog[raidnum]["Loot"][lootnum] = MRT_LootInfo;
+    else
+        MRT_LootInfo["ItemCount"] = 1;
+        MRT_LootInfo["Time"] = time();
+        tinsert(MRT_RaidLog[raidnum]["Loot"], MRT_LootInfo);
+    end
 end
 
 

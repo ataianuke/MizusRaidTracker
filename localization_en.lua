@@ -151,6 +151,8 @@ MRT_L.GUI["No boss selected"] = "Error: No boss selected.";
 MRT_L.GUI["No raid selected"] = "Error: No raid selected.";
 MRT_L.GUI["No raid attendee selected"] = "Error: No raid attendee selected.";
 MRT_L.GUI["No loot selected"] = "Error: No item selected.";
+MRT_L.GUI["No itemLink found"] = "Error: Itemlink is not valid.";
+MRT_L.GUI["Item cost invalid"] = "Error: Item cost is not a number.";
 -- dialog messages
 MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?";
 MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?";
