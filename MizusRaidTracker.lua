@@ -748,7 +748,8 @@ end
 --            (int, nil, <H, N>) = export all hard-/normalmode events
 --            (int, int, <H, N>) = -> will be treated as (int, int, nil)
 function MRT_CreateRaidExport(raidID, bossID, difficulty)
-    local dkpstring = MRT_CreateCtrtDkpString(raidID, bossID, difficulty);
+    --local dkpstring = MRT_CreateCtrtDkpString(raidID, bossID, difficulty);
+    local dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
     MRT_ExportFrame_Show(dkpstring);
 end
 

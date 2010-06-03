@@ -127,7 +127,6 @@ function MRT_GUI_ParseValues()
     -- disable buttons, if function is NYI
     MRT_GUIFrame_RaidBosskills_Add_Button:Disable();
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
-    MRT_GUIFrame_BossLoot_Add_Button:Disable();
     MRT_GUIFrame_BossLoot_Delete_Button:Disable();
     MRT_GUIFrame_BossAttendees_Add_Button:Disable();
     MRT_GUIFrame_BossAttendees_Delete_Button:Disable();
@@ -296,6 +295,33 @@ function MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee)
     end
 end
 
+function MRT_GUI_LootAdd()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Add loot data"]);
+    MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
+    MRT_GUI_ThreeRowDialog_EB1:SetText("");
+    MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
+    MRT_GUI_ThreeRowDialog_EB2:SetText("");
+    MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
+    MRT_GUI_ThreeRowDialog_EB3:SetText("");
+    MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, nil); end);
+    MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_ThreeRowDialog:Show();
+end
+
 function MRT_GUI_LootModify()
     MRT_GUI_HideDialogs();
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
@@ -371,6 +397,32 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         MRT_LootInfo["Time"] = time();
         tinsert(MRT_RaidLog[raidnum]["Loot"], MRT_LootInfo);
     end
+end
+
+function MRT_GUI_BossAttendeeAdd(raidnum, bossnum)
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    MRT_GUI_OneRowDialog_Title:SetText(MRT_L.GUI["Add boss attendee"]);
+    MRT_GUI_OneRowDialog_EB1_Text:SetText(MRT_L.GUI["Col_Name"]);
+    MRT_GUI_OneRowDialog_EB1:SetText("");
+    MRT_GUI_OneRowDialog_OKButton:SetText(MRT_L.GUI["Add"]);
+    MRT_GUI_OneRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_BossAttendeeAddAccept(raidnum, bossnum); end);
+    MRT_GUI_OneRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_OneRowDialog:Show();
+end
+
+function() MRT_GUI_BossAttendeeAddAccept(raidnum, bossnum)
 end
 
 
@@ -542,6 +594,7 @@ function MRT_GUI_Hook_ChatEdit_InsertLink(link)
         end
     end
 end
+-- Hook on ChatEdit_InsertLink - execute own parsing after standard WoW parsing
 hooksecurefunc("ChatEdit_InsertLink", MRT_GUI_Hook_ChatEdit_InsertLink);
 
 

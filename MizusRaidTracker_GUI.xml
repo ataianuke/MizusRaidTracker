@@ -346,7 +346,11 @@
           <OnClick>MRT_GUI_RaidAttendeeDelete();</OnClick>
         </Scripts>
       </Button>
-      <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_LootAdd();</OnClick>
+        </Scripts>
+      </Button>
       <Button name="$parent_BossLoot_Modify_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_LootModify();</OnClick>
