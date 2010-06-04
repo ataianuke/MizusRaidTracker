@@ -397,6 +397,15 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         MRT_LootInfo["Time"] = time();
         tinsert(MRT_RaidLog[raidnum]["Loot"], MRT_LootInfo);
     end
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then return; end
+    local bossnum_selected = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    if (raidnum_selected == raidnum and bossnum_selected == bossnum) then
+        MRT_GUI_BossLootTableUpdate(bossnum);
+    end
 end
 
 function MRT_GUI_BossAttendeeAdd(raidnum, bossnum)
@@ -422,7 +431,7 @@ function MRT_GUI_BossAttendeeAdd(raidnum, bossnum)
     MRT_GUI_OneRowDialog:Show();
 end
 
-function() MRT_GUI_BossAttendeeAddAccept(raidnum, bossnum)
+function MRT_GUI_BossAttendeeAddAccept(raidnum, bossnum)
 end
 
 

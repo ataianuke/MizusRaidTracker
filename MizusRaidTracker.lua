@@ -1020,8 +1020,8 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         local raidattendees = {};
         -- collect attendee-data (this requires, that there are no double entrys for each bosskill-attendee)
         for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
-            if (val["Date"] < firstbosstime or firstbosstime == nil) then firstbosstime = val["Date"]; end
-            if (val["Date"] > lastbosstime or lastbosstime == nil) then lastbosstime = val["Date"]; end
+            if (firstbosstime == nil or val["Date"] < firstbosstime) then firstbosstime = val["Date"]; end
+            if (lastbosstime == nil or val["Date"] > lastbosstime) then lastbosstime = val["Date"]; end
             for idx2, val2 in ipairs(val["Players"]) do
                 if (raidattendees[val2]) then
                     raidattendees[val2] = raidattendees[val2] + 1;
