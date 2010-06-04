@@ -279,7 +279,8 @@ function MRT_GUI_RaidAttendeeDelete()
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local attendee = MRT_GUI_RaidAttendeesTable:GetCell(attendee_select, 1);
-    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm raid attendee entry deletion"], attendee);
+    local attendeeName = MRT_GUI_RaidAttendeesTable:GetCell(attendee_select, 2);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm raid attendee entry deletion"], attendeeName);
     StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee); end
     StaticPopup_Show("MRT_GUI_ZeroRowDialog");
 end
@@ -397,6 +398,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         MRT_LootInfo["Time"] = time();
         tinsert(MRT_RaidLog[raidnum]["Loot"], MRT_LootInfo);
     end
+    -- do table update, if selected loot table was modified
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then return; end
     local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
