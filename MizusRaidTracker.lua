@@ -910,7 +910,7 @@ function MRT_CreateCtrtDkpString(raidID, bossID, difficulty)
     return xml;
 end
 
--- create CTRT-compatible DKP-String for the EQDKP CTRT-Import-Plugin / Use boss attendee data for creating join/leave-time
+-- create CTRT-compatible DKP-String for the EQDKP CTRT-Import-Plugin / Use boss attendee data for creating join/leave-timestamps
 function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     -- basic "catch bad args" routines
     -- check if bad raidID
