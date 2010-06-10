@@ -64,7 +64,8 @@ local MRT_BossLootTableColDef = {
     {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
 };
 local MRT_BossAttendeesTableColDef = {
-    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 85}
+    {["name"] = "", ["width"] = 1},                            -- invisible coloumn for storing the attendee number index from the raidlog-table
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 85},
 };
 
 
@@ -127,9 +128,6 @@ function MRT_GUI_ParseValues()
     -- disable buttons, if function is NYI
     MRT_GUIFrame_RaidBosskills_Add_Button:Disable();
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
-    MRT_GUIFrame_BossLoot_Delete_Button:Disable();
-    MRT_GUIFrame_BossAttendees_Add_Button:Disable();
-    MRT_GUIFrame_BossAttendees_Delete_Button:Disable();
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
 end
@@ -378,6 +376,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
     itemId = tonumber(itemId);
     MRT_GUI_HideDialogs();
     -- insert new values here / if (lootnum == nil) then treat as a newly added item
+    if (looter == "") then looter = "disenchanted"; end
     local MRT_LootInfo = {
         ["ItemLink"] = itemLink,
         ["ItemString"] = itemString,
@@ -410,7 +409,47 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
     end
 end
 
-function MRT_GUI_BossAttendeeAdd(raidnum, bossnum)
+function MRT_GUI_LootDelete()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss selected"]);
+        return;
+    end
+    local loot_select = MRT_GUI_BossLootTable:GetSelection();
+    if (loot_select == nil) then
+        MRT_Print(MRT_L.GUI["No loot selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
+    local lootName = MRT_GUI_BossLootTable:GetCell(loot_select, 2);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm loot entry deletion"], lootName);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_LootDeleteAccept(raidnum, bossnum, lootnum); end
+    StaticPopup_Show("MRT_GUI_ZeroRowDialog");
+end
+
+function MRT_GUI_LootDeleteAccept(raidnum, bossnum, lootnum)
+    tremove(MRT_RaidLog[raidnum]["Loot"], lootnum);
+    -- do table update, if selected loot table was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then return; end
+    local bossnum_selected = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    if (raidnum_selected == raidnum and bossnum_selected == bossnum) then
+        MRT_GUI_BossLootTableUpdate(bossnum);
+    end
+end
+
+function MRT_GUI_BossAttendeeAdd()
     MRT_GUI_HideDialogs();
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then
@@ -434,6 +473,59 @@ function MRT_GUI_BossAttendeeAdd(raidnum, bossnum)
 end
 
 function MRT_GUI_BossAttendeeAddAccept(raidnum, bossnum)
+    local attendee = MRT_GUI_OneRowDialog_EB1:GetText();
+    tinsert(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"], attendee);
+    -- do table update, if selected attendee table was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then return; end
+    local bossnum_selected = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    if (raidnum_selected == raidnum and bossnum_selected == bossnum) then
+        MRT_GUI_BossAttendeesTableUpdate(bossnum);
+    end
+end
+
+function MRT_GUI_BossAttendeeDelete()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss selected"]);
+        return;
+    end
+    local attendee_select = MRT_GUI_BossAttendeesTable:GetSelection();
+    if (attendee_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss attendee selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    local attendeenum = MRT_GUI_BossAttendeesTable:GetCell(attendee_select, 1);
+    local attendeeName = MRT_GUI_BossAttendeesTable:GetCell(attendee_select, 2);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm boss attendee entry deletion"], attendeeName);
+    StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_BossAttendeeDeleteAccept(raidnum, bossnum, attendeenum); end
+    StaticPopup_Show("MRT_GUI_ZeroRowDialog");
+end
+
+function MRT_GUI_BossAttendeeDeleteAccept(raidnum, bossnum, attendeenum)
+    --MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"][attendeenum] = nil;
+    tremove(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"], attendeenum);
+    -- do table update, if selected attendee table was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then return; end
+    local bossnum_selected = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    if (raidnum_selected == raidnum and bossnum_selected == bossnum) then
+        MRT_GUI_BossAttendeesTableUpdate(bossnum);
+    end
 end
 
 
@@ -492,9 +584,10 @@ function MRT_GUI_RaidLogTableUpdate()
     local MRT_RaidLogSize = #MRT_RaidLog;
     -- insert reverse order
     for i, v in ipairs(MRT_RaidLog) do
-        --MRT_GUI_RaidLogTableData[i] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
-        MRT_GUI_RaidLogTableData[(MRT_RaidLogSize-i+1)] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
+        MRT_GUI_RaidLogTableData[i] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
+        --MRT_GUI_RaidLogTableData[(MRT_RaidLogSize-i+1)] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
     end
+    table.sort(MRT_GUI_RaidLogTableData, function(a, b) return (a[1] > b[1]); end);
     MRT_GUI_RaidLogTable:ClearSelection();
     MRT_GUI_RaidLogTable:SetData(MRT_GUI_RaidLogTableData, true);
 end
@@ -514,6 +607,7 @@ function MRT_GUI_RaidAttendeesTableUpdate(raidnum)
         end
     end
     table.sort(MRT_GUI_RaidAttendeesTableData, function(a, b) return (a[2] < b[2]); end);
+    MRT_GUI_RaidAttendeesTable:ClearSelection();
     MRT_GUI_RaidAttendeesTable:SetData(MRT_GUI_RaidAttendeesTableData, true);
 end
 
@@ -525,14 +619,15 @@ function MRT_GUI_RaidBosskillsTableUpdate(raidnum)
     if (raidnum and MRT_BosskillsCount) then
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
             if (v["Difficulty"] > 2) then
-                --MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
-                MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
+                --MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
             else
-                --MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
-                MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
+                --MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
             end
         end
     end
+    table.sort(MRT_GUI_RaidBosskillsTableData, function(a, b) return (a[1] > b[1]); end);
     MRT_GUI_RaidBosskillsTable:ClearSelection();
     MRT_GUI_RaidBosskillsTable:SetData(MRT_GUI_RaidBosskillsTableData, true);
 end
@@ -553,6 +648,7 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
         end
     end
     table.sort(MRT_GUI_BossLootTableData, function(a, b) return (a[2] < b[2]); end);
+    MRT_GUI_BossLootTable:ClearSelection();
     MRT_GUI_BossLootTable:SetData(MRT_GUI_BossLootTableData, true);
 end
 
@@ -562,10 +658,11 @@ function MRT_GUI_BossAttendeesTableUpdate(bossnum)
     if (bossnum) then
         local raidnum = MRT_GUI_RaidLogTable:GetCell(MRT_GUI_RaidLogTableSelection, 1);
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"]) do
-            MRT_GUI_BossAttendeesTableData[i] = {v};
+            MRT_GUI_BossAttendeesTableData[i] = {i, v};
         end
     end
-    table.sort(MRT_GUI_BossAttendeesTableData, function(a, b) return (a[1] < b[1]); end);
+    table.sort(MRT_GUI_BossAttendeesTableData, function(a, b) return (a[2] < b[2]); end);
+    MRT_GUI_BossAttendeesTable:ClearSelection();
     MRT_GUI_BossAttendeesTable:SetData(MRT_GUI_BossAttendeesTableData, true);
 end
 

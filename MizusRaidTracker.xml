@@ -179,7 +179,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="$parent_EB" historyLines="0" enableKeyboard="true" letters="65000">
+      <EditBox name="$parent_EB" historyLines="0" enableKeyboard="true" letters="0">
         <Size x="250" y="32"/>
         <Anchors>
           <Anchor point="CENTER" relativePoint="TOP" relativeTo="$parent">

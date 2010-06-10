@@ -1,5 +1,5 @@
 -- *******************************************************
--- **          Mizus RaidTracker - deDE Local          **
+-- **          Mizus RaidTracker - deDE Local           **
 -- **          <http://nanaki.affenfelsen.de>           **
 -- *******************************************************
 --
@@ -83,6 +83,10 @@ MRT_L.Core["GuildAttendanceReplyFail"] = "%s befindet sich bereits in der DKP-Li
 -- MsgBox
 MRT_L.Core["MB_Ok"] = "Ok";
 MRT_L.Core["MB_Cancel"] = "Abbruch";
+MRT_L.Core["MB_Yes"] = "Ja";
+MRT_L.Core["MB_No"] = "Nein";
+-- ExportFrame
+MRT_L.Core["Export_Frame_Title"] = "Daten Export"
 
 
 -----------------------------------
@@ -123,7 +127,7 @@ MRT_L.GUI["Tables_BossAttendeesTitle"] = "Bosskill Teilnehmer";
 MRT_L.GUI["Col_Num"] = "#";
 MRT_L.GUI["Col_Date"] = "Datum";
 MRT_L.GUI["Col_Zone"] = "Zone";
-MRT_L.GUI["Col_Size"] = "Größe";
+MRT_L.GUI["Col_Size"] = "Gr\195\182\195\159e";
 MRT_L.GUI["Col_Name"] = "Name";
 MRT_L.GUI["Col_Join"] = "Join";
 MRT_L.GUI["Col_Leave"] = "Leave";

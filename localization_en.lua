@@ -1,5 +1,5 @@
 -- ********************************************************
--- **        Mizus RaidTracker - enGB/enUS Local        **
+-- **        Mizus RaidTracker - enGB/enUS Local         **
 -- **           <http://nanaki.affenfelsen.de>           **
 -- ********************************************************
 --
@@ -148,6 +148,7 @@ MRT_L.GUI["Button_Modify"] = "Modify";
 -- status/error messages
 MRT_L.GUI["Can not delete current raid"] = "Error: Can't delete current raid.";
 MRT_L.GUI["No boss selected"] = "Error: No boss selected.";
+MRT_L.GUI["No boss attendee selected"] = "Error: No boss attendee selected.";
 MRT_L.GUI["No raid selected"] = "Error: No raid selected.";
 MRT_L.GUI["No raid attendee selected"] = "Error: No raid attendee selected.";
 MRT_L.GUI["No loot selected"] = "Error: No item selected.";
@@ -156,8 +157,8 @@ MRT_L.GUI["Item cost invalid"] = "Error: Item cost is not a number.";
 -- dialog messages
 MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?";
 MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?";
-MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
 MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from the loot list?";
+MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
 MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
 MRT_L.GUI["Add loot data"] = "Add loot data";
 MRT_L.GUI["Modify loot data"] = "Modify loot data";
