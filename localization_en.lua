@@ -112,6 +112,11 @@ MRT_L.Options["TP_MinItemQualityToGetCost_Desc"] = "Min item quality to ask cost
 -- AttendancePanel - Title
 MRT_L.Options["AP_Title"] = "Attendance";
 MRT_L.Options["AP_TitleText"] = "MRT - Attendance options";
+-- AP - Checkboxes
+MRT_L.Options["AP_GuildAttendance"] = "Enable guild attendance check";
+-- AP - Slider
+MRT_L.Options["AP_GuildAttendanceDuration"] = "Duration of taking attendance";
+MRT_L.Options["AP_Minutes"] = "minutes";
 
 
 -------------------

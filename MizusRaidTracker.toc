@@ -1,5 +1,5 @@
 ## Interface: 30300
-## Title: MizusRaidTracker
+## Title: Mizus RaidTracker
 ## Version: 0.5 Beta
 ## Notes: Tracks raid, loot and attendance
 ## Author: Mizukichan@EU-Thrall

@@ -31,7 +31,7 @@
 --  Register panels  --
 -----------------------
 function MRT_Options_MainPanel_OnLoad(panel)
-    panel.name = "MizusRaidTracker";
+    panel.name = "Mizus RaidTracker";
     panel.okay = function(self) MRT_Options_OnOkay(self); end;
     panel.cancel = function(self) MRT_Options_OnCancel(self); end;
     InterfaceOptions_AddCategory(panel);
@@ -39,13 +39,13 @@ end
 
 function MRT_Options_TrackingPanel_OnLoad(panel)
     panel.name = MRT_L.Options["TP_Title"];
-    panel.parent = "MizusRaidTracker";
+    panel.parent = "Mizus RaidTracker";
     InterfaceOptions_AddCategory(panel);
 end
 
 function MRT_Options_AttendancePanel_OnLoad(panel)
     panel.name = MRT_L.Options["AP_Title"];
-    panel.parent = "MizusRaidTracker";
+    panel.parent = "Mizus RaidTracker";
     InterfaceOptions_AddCategory(panel);
 end
 
@@ -77,7 +77,12 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
     -- AttendancePanel
     MRT_Options_AttendancePanel_Title:SetText(MRT_L.Options["AP_TitleText"]);
-    MRT_Options_AttendancePanel_Description:SetText("Not yet implemented");
+    MRT_Options_AttendancePanel_Description:SetText("");
+    MRT_Options_AttendancePanel_GA_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckEnabled"]);
+    MRT_Options_AttendancePanel_GA_CB_Text:SetText(MRT_L.Options["AP_GuildAttendance"]);
+    MRT_Options_AttendancePabel_GADuration_Slider:SetValue(MRT_Options["Attendance_GuildAttendanceCheckDuration"]);
+    MRT_Options_AttendancePabel_GADuration_Slider_SliderText:SetText(MRT_L.Options["AP_GuildAttendanceDuration"]);
+    MRT_Options_AttendancePabel_GADuration_Slider_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"]..MRT_L.Options["AP_Minutes"]);
 end
 
 
@@ -96,6 +101,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_TrackingPanel_AskForDKPValue_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     -- AttendancePanel
+    MRT_Options["Attendance_GuildAttendanceCheckEnabled"] = MRT_Options_AttendancePanel_GA_CB:GetChecked();
+    MRT_L.Options["AP_GuildAttendanceDuration"] = MRT_Options_AttendancePabel_GADuration_Slider:GetValue();
     -- Check tracking status and adjust to new settings
     local currentRaidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local currentRaidZoneEN = MRT_L.Raidzones[MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"]];
@@ -131,6 +138,9 @@ function MRT_Options_OnCancel(panel)
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
     -- AttendancePanel
+    MRT_Options_AttendancePanel_GA_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckEnabled"]);
+    MRT_Options_AttendancePabel_GADuration_Slider:SetValue(MRT_Options["Attendance_GuildAttendanceCheckDuration"]);
+    MRT_Options_AttendancePabel_GADuration_Slider_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"]..MRT_L.Options["AP_Minutes"]);
 end
 
 
@@ -147,4 +157,10 @@ function MRT_Options_TP_MinItemQualityToGetCost_Slider()
     local sliderValue = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_L.ItemValues[sliderValue+1];
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText(sliderText);
+end
+
+function MRT_Options_AP_GADuration_Slider()
+    local sliderValue = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
+    local sliderText = sliderValue..MRT_L.Options["AP_Minutes"];
+    MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(sliderText);
 end
