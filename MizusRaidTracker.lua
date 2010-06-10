@@ -32,8 +32,8 @@
 -------------------------------
 --  Globals/Default Options  --
 -------------------------------
-MRT_ADDON_TITLE = GetAddOnMetadata("Mizus RaidTracker", "Title");
-MRT_ADDON_VERSION = GetAddOnMetadata("Mizus RaidTracker", "Version");
+MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
+MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
 MRT_Options = {};

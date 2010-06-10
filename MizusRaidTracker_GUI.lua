@@ -466,13 +466,14 @@ function MRT_GUI_BossAttendeeAdd()
     MRT_GUI_OneRowDialog_Title:SetText(MRT_L.GUI["Add boss attendee"]);
     MRT_GUI_OneRowDialog_EB1_Text:SetText(MRT_L.GUI["Col_Name"]);
     MRT_GUI_OneRowDialog_EB1:SetText("");
-    MRT_GUI_OneRowDialog_OKButton:SetText(MRT_L.GUI["Add"]);
+    MRT_GUI_OneRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
     MRT_GUI_OneRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_BossAttendeeAddAccept(raidnum, bossnum); end);
     MRT_GUI_OneRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
     MRT_GUI_OneRowDialog:Show();
 end
 
 function MRT_GUI_BossAttendeeAddAccept(raidnum, bossnum)
+    MRT_GUI_HideDialogs();
     local attendee = MRT_GUI_OneRowDialog_EB1:GetText();
     tinsert(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"], attendee);
     -- do table update, if selected attendee table was modified

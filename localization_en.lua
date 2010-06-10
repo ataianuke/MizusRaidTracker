@@ -166,6 +166,7 @@ MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from t
 MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
 MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
 MRT_L.GUI["Add loot data"] = "Add loot data";
+MRT_L.GUI["Add boss attendee"] = "Add boss attendee";
 MRT_L.GUI["Modify loot data"] = "Modify loot data";
 MRT_L.GUI["Itemlink"] = "Itemlink";
 MRT_L.GUI["Looter"] = "Looter";
