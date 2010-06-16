@@ -64,7 +64,7 @@ local MRT_Defaults = {
 local deformat = LibStub("LibDeformat-3.0");
 local tinsert = tinsert;
 
-MRT_TimerFrame = CreateFrame("Frame");              -- Timer for Guild-Attendance-Checks FIXME: Make local after testing
+local MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks
 local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
 
 local MRT_GuildRoster = {};
@@ -600,7 +600,7 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     frame:RegisterEvent("GUILD_ROSTER_UPDATE");
 end
 
--- start guild attendance announcement - FIXME: Activate Messages
+-- start guild attendance announcement
 function MRT_StartGuildAttendanceCheck(bosskilled)
     if (not MRT_NumOfCurrentRaid) then return end;
     if (MRT_TimerFrame.GARunning) then return end;
@@ -615,10 +615,10 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     else
         bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled).." "..MRT_L.Core["GuildAttendanceAnnounceText"];
     end
-    --SendChatMessage("********************", "GUILD");
-    --SendChatMessage(bosskilltext, "GUILD");
+    SendChatMessage("********************", "GUILD");
+    SendChatMessage(bosskilltext, "GUILD");
     SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
-    --SendChatMessage("********************", "GUILD");
+    SendChatMessage("********************", "GUILD");
     MRT_TimerFrame.GABossKillText = bosskilltext;
     MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
     MRT_TimerFrame:SetScript("OnUpdate", function() MRT_GuildAttendanceCheckUpdate(); end);
@@ -634,10 +634,10 @@ function MRT_GuildAttendanceCheckUpdate()
                 SendChatMessage("MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"], "GUILD");
                 MRT_TimerFrame.GARunning = nil;
             else
-                --SendChatMessage("********************", "GUILD");
-                --SendChatMessage(MRT_TimerFrame.GABossKillText, "GUILD");
+                SendChatMessage("********************", "GUILD");
+                SendChatMessage(MRT_TimerFrame.GABossKillText, "GUILD");
                 SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
-                --SendChatMessage("********************", "GUILD");
+                SendChatMessage("********************", "GUILD");
                 MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
             end
         end

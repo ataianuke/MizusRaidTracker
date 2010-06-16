@@ -112,6 +112,11 @@ MRT_L.Options["TP_MinItemQualityToGetCost_Desc"] = "Min item quality to ask cost
 -- AttendancePanel - Title
 MRT_L.Options["AP_Title"] = "Teilnehmerlog";
 MRT_L.Options["AP_TitleText"] = "MRT - Teilnehmerlog-Optionen";
+-- AP - Checkboxes
+MRT_L.Options["AP_GuildAttendance"] = "Aktiviere Gilden-Teilnehmer-Check";
+-- AP - Slider
+MRT_L.Options["AP_GuildAttendanceDuration"] = "Dauer des Teilnehmer-Checks";
+MRT_L.Options["AP_Minutes"] = "Minuten";
 
 
 -------------------
@@ -138,6 +143,34 @@ MRT_L.GUI["Col_Cost"] = "Kosten";
 -- table entry local
 MRT_L.GUI["Cell_Normal"] = "Normal";
 MRT_L.GUI["Cell_Hard"] = "Hard";
+-- buttons
+MRT_L.GUI["Button_Add"] = "Add";
+MRT_L.GUI["Button_Delete"] = "L\195\182schen";
+MRT_L.GUI["Button_Export"] = "Export";
+MRT_L.GUI["Button_ExportNormal"] = "Export N";
+MRT_L.GUI["Button_ExportHeroic"] = "Export H";
+MRT_L.GUI["Button_Modify"] = "Modify";
+-- status/error messages
+MRT_L.GUI["Can not delete current raid"] = "Error: Kann laufenden Raid nicht löschen.";
+MRT_L.GUI["No boss selected"] = "Error: Kein Boss ausgewählt.";
+MRT_L.GUI["No boss attendee selected"] = "Error: Kein Bossteilnehmer ausgewählt.";
+MRT_L.GUI["No raid selected"] = "Error: Kein Raid ausgewählt.";
+MRT_L.GUI["No raid attendee selected"] = "Error: Kein Raidteilnehmer ausgewählt.";
+MRT_L.GUI["No loot selected"] = "Error: Kein Item ausgewählt.";
+MRT_L.GUI["No itemLink found"] = "Error: Itemlink ist ungültig.";
+MRT_L.GUI["Item cost invalid"] = "Error: Itemkosten ist keine Nummer";
+-- dialog messages
+MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?";
+MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?";
+MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from the loot list?";
+MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
+MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
+MRT_L.GUI["Add loot data"] = "Add loot data";
+MRT_L.GUI["Add boss attendee"] = "Add boss attendee";
+MRT_L.GUI["Modify loot data"] = "Modify loot data";
+MRT_L.GUI["Itemlink"] = "Itemlink";
+MRT_L.GUI["Looter"] = "Looter";
+MRT_L.GUI["Value"] = "Wert";
 
 
 ------------
