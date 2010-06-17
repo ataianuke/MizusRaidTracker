@@ -581,6 +581,7 @@ end
 
 -- update raid list table
 function MRT_GUI_RaidLogTableUpdate()
+    if (MRT_RaidLog == nil) then return; end
     local MRT_GUI_RaidLogTableData = {};
     local MRT_RaidLogSize = #MRT_RaidLog;
     -- insert reverse order

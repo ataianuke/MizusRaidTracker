@@ -374,8 +374,8 @@ function MRT_AddBosskill(bossname)
     if (bossname ~= MRT_L.Core["GuildAttendanceBossEntry"] and MRT_Options["Attendance_GuildAttendanceCheckEnabled"]) then
         StaticPopupDialogs["MRT_GA_MSGBOX"] = {
             text = string.format("MRT: "..MRT_L.Core["GuildAttendanceMsgBox"], bossname),
-            button1 = MRT_L.Core["MB_Ok"],
-            button2 = MRT_L.Core["MB_Cancel"],
+            button1 = MRT_L.Core["MB_Yes"],
+            button2 = MRT_L.Core["MB_No"],
             OnAccept = function() MRT_StartGuildAttendanceCheck(bossname); end,
             timeout = 0,
             whileDead = true,
