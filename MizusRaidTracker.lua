@@ -450,7 +450,7 @@ function MRT_AutoAddLoot(chatmsg)
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > MRT_ItemColorValues[itemColor]) then MRT_Debug("Item not tracked - quality is too low."); return; end
     if (MRT_IgnoredItemIDList[itemId]) then return; end
-    -- Quick&Dirty for Trashdrops
+    -- Quick&Dirty for Trashdrops befor first bosskill
     if (MRT_NumOfLastBoss == nil) then 
         MRT_AddBosskill("_TrashMobLoot_");
     end
@@ -583,8 +583,8 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     local guildRosterSelection = GetGuildRosterSelection();
     SetGuildRosterShowOffline(true);
     -- Workaround for buggy guildinfos
-    SortGuildRoster("name");
-    SortGuildRoster("name");
+    --SortGuildRoster("name");
+    --SortGuildRoster("name");
     local numGuildMembers = GetNumGuildMembers();
     local guildRoster = {};
     for i = 1, numGuildMembers do
@@ -1012,7 +1012,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     xml = xml.."<note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].."]]></note>";
     -- check data - goal: create one entry for 100% attendees, create split entries for all others / use join/leave-data, if no boss entry found
     index = 1;
-    if (MRT_RaidLog[raidID]["Bosskills"]) then
+    if (MRT_RaidLog[raidID]["Bosskills"] and #MRT_RaidLog[raidID]["Bosskills"] > 0) then
         xml = xml.."<Join>";
         local appendxml = "<Leave>"
         for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
