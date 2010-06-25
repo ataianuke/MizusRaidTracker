@@ -177,7 +177,7 @@ end
 -- Slashcommand handler
 function MRT_SlashCmdHandler(msg)
     if (msg == 'options' or msg == 'o') then
-        InterfaceOptionsFrame_OpenToCategory("MizusRaidTracker");
+        InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
     elseif (msg == 'dkpcheck') then
         MRT_StartGuildAttendanceCheck("_attendancecheck_");
     elseif (msg == '') then
