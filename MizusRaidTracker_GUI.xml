@@ -102,6 +102,9 @@
             <Offset x="0" y="-52"/>
           </Anchor>
         </Anchors>
+        <Scripts>
+          <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
+        </Scripts>
       </EditBox>
     </Frames>
   </Frame>
@@ -161,6 +164,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
+          <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
           <OnTabPressed>MRT_GUI_TwoRowDialog_EB2:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
@@ -171,6 +175,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
+          <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
           <OnTabPressed>MRT_GUI_TwoRowDialog_EB1:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
@@ -232,6 +237,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
+          <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
           <OnTabPressed>MRT_GUI_ThreeRowDialog_EB2:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
@@ -242,6 +248,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
+          <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
           <OnTabPressed>MRT_GUI_ThreeRowDialog_EB3:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
@@ -252,6 +259,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
+          <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
           <OnTabPressed>MRT_GUI_ThreeRowDialog_EB1:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>

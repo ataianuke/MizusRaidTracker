@@ -216,6 +216,9 @@
             </Texture>
           </Layer>
         </Layers>
+        <Scripts>
+          <OnEscapePressed>MRT_ExportFrame_Hide();</OnEscapePressed>
+        </Scripts>
         <FontString inherits="ChatFontNormal"/>
       </EditBox>
       <Button name="$parent_OKButton" hidden="false" inherits="GameMenuButtonTemplate">
