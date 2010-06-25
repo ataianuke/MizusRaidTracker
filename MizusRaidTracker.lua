@@ -83,7 +83,6 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("CHAT_MSG_WHISPER");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
-    frame:RegisterEvent("GUILD_ROSTER_UPDATE");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
@@ -136,7 +135,7 @@ function MRT_OnEvent(frame, event, ...)
         -- Delay data gathering a bit to make sure, that data is avaiable after login
         -- aka: Dalaran latency fix
         MRT_LoginTimer:SetScript("OnUpdate", function (self)
-            if ((time() - self.loginTime) > 4) then
+            if ((time() - self.loginTime) > 5) then
                 self:SetScript("OnUpdate", nil);
                 MRT_CheckRaidStatusAfterLogin();
                 MRT_GuildRosterUpdate(frame, nil, true)
