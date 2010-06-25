@@ -63,20 +63,33 @@ local MRT_BossLootTableColDef = {
         ["name"] = "Icon", 
         ["width"] = 30,
         ["DoCellUpdate"] = function(rowFrame, cellFrame, data, cols, row, realrow, column, fShow, self, ...)
+            -- icon handling
             if fShow then 
                 --MRT_Debug("self:GetCell(realrow, column) = "..self:GetCell(realrow, column));
                 local itemId = self:GetCell(realrow, column);
                 local itemTexture = GetItemIcon(itemId); 
                 cellFrame:SetBackdrop( { bgFile = itemTexture });
-            end				
+            end
+            -- tooltip handling
+            local itemLink = self:GetCell(realrow, 6);
+            cellFrame:SetScript("OnEnter", function() 
+                                             MRT_GUI_ItemTT:SetOwner(cellFrame, "ANCHOR_RIGHT");
+                                             MRT_GUI_ItemTT:SetHyperlink(itemLink);
+                                             MRT_GUI_ItemTT:Show();
+                                           end);
+            cellFrame:SetScript("OnLeave", function()
+                                             MRT_GUI_ItemTT:Hide();
+                                             MRT_GUI_ItemTT:SetOwner(UIParent, "ANCHOR_NONE");
+                                           end);
         end,
     },
     {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 179},
     {["name"] = MRT_L.GUI["Col_Looter"], ["width"] = 85},
     {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
+    {["name"] = "", ["width"] = 1},                            -- invisible column for itemString (needed for tooltip)
 };
 local MRT_BossAttendeesTableColDef = {
-    {["name"] = "", ["width"] = 1},                            -- invisible coloumn for storing the attendee number index from the raidlog-table
+    {["name"] = "", ["width"] = 1},                            -- invisible column for storing the attendee number index from the raidlog-table
     {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 85},
 };
 
@@ -656,7 +669,7 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
         for i, v in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
             if (v["BossNumber"] == bossnum) then
                 --MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], v["Looter"], v["DKPValue"]};
-                MRT_GUI_BossLootTableData[index] = {i, v["ItemId"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
+                MRT_GUI_BossLootTableData[index] = {i, v["ItemId"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"], v["ItemLink"]};
                 --MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
                 index = index + 1;
             end
