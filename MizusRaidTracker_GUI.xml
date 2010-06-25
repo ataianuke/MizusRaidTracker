@@ -160,6 +160,9 @@
             <Offset x="0" y="-52"/>
           </Anchor>
         </Anchors>
+        <Scripts>
+          <OnTabPressed>MRT_GUI_TwoRowDialog_EB2:SetFocus();</OnTabPressed>
+        </Scripts>
       </EditBox>
       <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
         <Anchors>
@@ -167,6 +170,9 @@
             <Offset x="0" y="-64"/>
           </Anchor>
         </Anchors>
+        <Scripts>
+          <OnTabPressed>MRT_GUI_TwoRowDialog_EB1:SetFocus();</OnTabPressed>
+        </Scripts>
       </EditBox>
     </Frames>
   </Frame>
@@ -225,6 +231,9 @@
             <Offset x="0" y="-52"/>
           </Anchor>
         </Anchors>
+        <Scripts>
+          <OnTabPressed>MRT_GUI_ThreeRowDialog_EB2:SetFocus();</OnTabPressed>
+        </Scripts>
       </EditBox>
       <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
         <Anchors>
@@ -232,6 +241,9 @@
             <Offset x="0" y="-64"/>
           </Anchor>
         </Anchors>
+        <Scripts>
+          <OnTabPressed>MRT_GUI_ThreeRowDialog_EB3:SetFocus();</OnTabPressed>
+        </Scripts>
       </EditBox>
       <EditBox name="$parent_EB3" inherits="MRT_GUI_Editbox_Template">
         <Anchors>
@@ -239,6 +251,9 @@
             <Offset x="0" y="-64"/>
           </Anchor>
         </Anchors>
+        <Scripts>
+          <OnTabPressed>MRT_GUI_ThreeRowDialog_EB1:SetFocus();</OnTabPressed>
+        </Scripts>
       </EditBox>
     </Frames>
   </Frame>
