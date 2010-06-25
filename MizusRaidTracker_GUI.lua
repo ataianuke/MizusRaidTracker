@@ -46,7 +46,7 @@ local MRT_RaidLogTableColDef = {
     {["name"] = MRT_L.GUI["Col_Size"], ["width"] = 25},
 };
 local MRT_RaidAttendeesTableColDef = {
-    {["name"] = "", ["width"] = 1},                           -- invisible coloumn for storing the player number index from the raidlog-table
+    {["name"] = "", ["width"] = 1},                            -- invisible column for storing the player number index from the raidlog-table
     {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 84},
     {["name"] = MRT_L.GUI["Col_Join"], ["width"] = 40},
     {["name"] = MRT_L.GUI["Col_Leave"], ["width"] = 40},
@@ -58,7 +58,19 @@ local MRT_RaidBosskillsTableColDef = {
     {["name"] = MRT_L.GUI["Col_Difficulty"], ["width"] = 40},
 };
 local MRT_BossLootTableColDef = {
-    {["name"] = "", ["width"] = 1},                            -- invisible coloumn for storing the loot number index from the raidlog-table
+    {["name"] = "", ["width"] = 1},                            -- invisible column for storing the loot number index from the raidlog-table
+    {                                                          -- coloumn for Item Icon - need to store ID
+        ["name"] = "Icon", 
+        ["width"] = 30,
+        ["DoCellUpdate"] = function(rowFrame, cellFrame, data, cols, row, realrow, column, fShow, self, ...)
+            if fShow then 
+                --MRT_Debug("self:GetCell(realrow, column) = "..self:GetCell(realrow, column));
+                local itemId = self:GetCell(realrow, column);
+                local itemTexture = GetItemIcon(itemId); 
+                cellFrame:SetBackdrop( { bgFile = itemTexture });
+            end				
+        end,
+    },
     {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 179},
     {["name"] = MRT_L.GUI["Col_Looter"], ["width"] = 85},
     {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
@@ -90,7 +102,8 @@ function MRT_GUI_ParseValues()
     MRT_GUI_RaidBosskillsTable = ScrollingTable:CreateST(MRT_RaidBosskillsTableColDef, 12, nil, nil, MRT_GUIFrame);
     MRT_GUI_RaidBosskillsTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_RaidBosskillsTitle, "BOTTOMLEFT", 0, -15);
     MRT_GUI_RaidBosskillsTable:EnableSelection(true);
-    MRT_GUI_BossLootTable = ScrollingTable:CreateST(MRT_BossLootTableColDef, 12, nil, nil, MRT_GUIFrame);
+    MRT_GUI_BossLootTable = ScrollingTable:CreateST(MRT_BossLootTableColDef, 6, 30, nil, MRT_GUIFrame);           -- ItemId should be squared - so use 30x30 -> 30 pixels high
+    MRT_GUI_BossLootTable.head:SetHeight(15);                                                                     -- Manually correct the height of the header (standard is rowHight - 30 pix would be different from others tables around and looks ugly)
     MRT_GUI_BossLootTable.frame:SetPoint("TOPLEFT", MRT_GUIFrame_BossLootTitle, "BOTTOMLEFT", 0, -15);
     MRT_GUI_BossLootTable:EnableSelection(true);
     MRT_GUI_BossAttendeesTable = ScrollingTable:CreateST(MRT_BossAttendeesTableColDef, 12, nil, nil, MRT_GUIFrame);
@@ -345,9 +358,9 @@ function MRT_GUI_LootModify()
     MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
     MRT_GUI_ThreeRowDialog_EB1:SetText(MRT_RaidLog[raidnum]["Loot"][lootnum]["ItemLink"]);
     MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
-    MRT_GUI_ThreeRowDialog_EB2:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 3));
+    MRT_GUI_ThreeRowDialog_EB2:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 4));
     MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
-    MRT_GUI_ThreeRowDialog_EB3:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 4));
+    MRT_GUI_ThreeRowDialog_EB3:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 5));
     MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Modify"]);
     MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum); end);
     MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
@@ -643,13 +656,13 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
         for i, v in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
             if (v["BossNumber"] == bossnum) then
                 --MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], v["Looter"], v["DKPValue"]};
-                MRT_GUI_BossLootTableData[index] = {i, "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
+                MRT_GUI_BossLootTableData[index] = {i, v["ItemId"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
                 --MRT_GUI_BossLootTableData[index] = {i, v["ItemLink"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"]};
                 index = index + 1;
             end
         end
     end
-    table.sort(MRT_GUI_BossLootTableData, function(a, b) return (a[2] < b[2]); end);
+    table.sort(MRT_GUI_BossLootTableData, function(a, b) return (a[3] < b[3]); end);
     MRT_GUI_BossLootTable:ClearSelection();
     MRT_GUI_BossLootTable:SetData(MRT_GUI_BossLootTableData, true);
 end
