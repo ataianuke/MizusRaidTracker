@@ -455,7 +455,7 @@ function MRT_GUI_LootDelete()
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
-    local lootName = MRT_GUI_BossLootTable:GetCell(loot_select, 2);
+    local lootName = MRT_GUI_BossLootTable:GetCell(loot_select, 3);
     StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm loot entry deletion"], lootName);
     StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_LootDeleteAccept(raidnum, bossnum, lootnum); end
     StaticPopup_Show("MRT_GUI_ZeroRowDialog");
