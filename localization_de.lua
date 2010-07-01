@@ -29,7 +29,7 @@ MRT_L.Raidzones = {
     ["Pr\195\188fung des Obersten Kreuzfahrers"] = "Trial of the Grand Crusader",
     ["Onyxias Hort"] = "Onyxia's Lair",
     ["Eiskronenzitadelle"] = "Icecrown Citadel",
-    ["The Ruby Sanctum"] = "The Ruby Sanctum",    -- FIXME!
+    ["Das Rubinsanktum"] = "The Ruby Sanctum", 
 };
 
 
