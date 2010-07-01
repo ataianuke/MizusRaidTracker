@@ -83,6 +83,10 @@ function MRT_Options_ParseValues()
     MRT_Options_AttendancePanel_GADuration_Slider:SetValue(MRT_Options["Attendance_GuildAttendanceCheckDuration"]);
     MRT_Options_AttendancePanel_GADuration_SliderText:SetText(MRT_L.Options["AP_GuildAttendanceDuration"]);
     MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"].." "..MRT_L.Options["AP_Minutes"]);
+    MRT_Options_AttendancePanel_GroupRestriction:SetChecked(MRT_Options["Attendance_GroupRestriction"]);
+    MRT_Options_AttendancePanel_GroupRestriction_Text:SetText(MRT_L.Options["AP_GroupRestriction"]);
+    MRT_Options_AttendancePanel_OfflinePlayers:SetChecked(MRT_Options["Attendance_TrackOffline"]);
+    MRT_Options_AttendancePanel_OfflinePlayers_Text:SetText(MRT_L.Options["AP_TrackOfflinePlayers"]);
 end
 
 
@@ -103,6 +107,8 @@ function MRT_Options_OnOkay(panel)
     -- AttendancePanel
     MRT_Options["Attendance_GuildAttendanceCheckEnabled"] = MRT_Options_AttendancePanel_GA_CB:GetChecked();
     MRT_Options["Attendance_GuildAttendanceCheckDuration"] = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
+    MRT_Options["Attendance_GroupRestriction"] = MRT_Options_AttendancePanel_GroupRestriction:GetChecked();
+    MRT_Options["Attendance_TrackOffline"] = MRT_Options_AttendancePanel_OfflinePlayers:GetChecked();
     -- Check tracking status and adjust to new settings
     local currentRaidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local currentRaidZoneEN = MRT_L.Raidzones[MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"]];
@@ -141,6 +147,8 @@ function MRT_Options_OnCancel(panel)
     MRT_Options_AttendancePanel_GA_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckEnabled"]);
     MRT_Options_AttendancePanel_GADuration_Slider:SetValue(MRT_Options["Attendance_GuildAttendanceCheckDuration"]);
     MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"].." "..MRT_L.Options["AP_Minutes"]);
+    MRT_Options_AttendancePanel_GroupRestriction:SetChecked(MRT_Options["Attendance_GroupRestriction"]);
+    MRT_Options_AttendancePanel_OfflinePlayers:SetChecked(MRT_Options["Attendance_TrackOffline"]);
 end
 
 

@@ -114,6 +114,8 @@ MRT_L.Options["AP_Title"] = "Attendance";
 MRT_L.Options["AP_TitleText"] = "MRT - Attendance options";
 -- AP - Checkboxes
 MRT_L.Options["AP_GuildAttendance"] = "Enable guild attendance check";
+MRT_L.Options["AP_GroupRestriction"] = "Track only first 2/5 groups";
+MRT_L.Options["AP_TrackOfflinePlayers"] = "Track offline players";
 -- AP - Slider
 MRT_L.Options["AP_GuildAttendanceDuration"] = "Duration of taking attendance";
 MRT_L.Options["AP_Minutes"] = "minutes";

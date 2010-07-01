@@ -92,9 +92,7 @@
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite">
               <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT">
-                  <Offset></Offset>
-                </Anchor>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
               </Anchors>
             </FontString>
           </Layer>
@@ -110,9 +108,7 @@
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite">
               <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT">
-                  <Offset></Offset>
-                </Anchor>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
               </Anchors>
             </FontString>
           </Layer>
@@ -172,9 +168,7 @@
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite">
               <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT">
-                  <Offset></Offset>
-                </Anchor>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
               </Anchors>
             </FontString>
           </Layer>
@@ -259,9 +253,7 @@
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite">
               <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT">
-                  <Offset></Offset>
-                </Anchor>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
               </Anchors>
             </FontString>
           </Layer>
@@ -311,6 +303,38 @@
           </Size>
         </ThumbTexture>
       </Slider>
+      <CheckButton name="$parent_GroupRestriction" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_GADuration_Slider" relativePoint="BOTTOMLEFT">
+            <Offset x="0" y="-5"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <CheckButton name="$parent_OfflinePlayers" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_GroupRestriction" relativePoint="BOTTOMLEFT">
+            <Offset x="0" y="-5"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_AttendancePanel_OnLoad(self);</OnLoad>

@@ -49,6 +49,8 @@ local MRT_Defaults = {
         ["General_DebugEnabled"] = nil,                                             --
         ["Attendance_GuildAttendanceCheckEnabled"] = true,                          -- 
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
+        ["Attendance_GroupRestriction"] = nil,                                      -- if true, track only first 2/5 groups in 10/25 player raids
+        ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
         ["Tracking_Log10MenRaids"] = nil,                                           -- Track 10 player raids: true / nil
         ["Tracking_LogAVRaids"] = nil,                                              -- Track Archavons Vault: true / nil
         ["Tracking_AskForDKPValue"] = true,                                         -- 
@@ -86,7 +88,6 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
-    frame:RegisterEvent("VARIABLES_LOADED");
 end
 
 
@@ -97,6 +98,7 @@ end
 function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
         frame:UnregisterEvent("ADDON_LOADED");
+        MRT_UpdateSavedOptions();
         MRT_Options_ParseValues();
         MRT_GUI_ParseValues();
         MRT_Core_Frames_ParseLocal();
@@ -155,9 +157,6 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif (event == "RAID_ROSTER_UPDATE") then
         MRT_RaidRosterUpdate(frame);
-    
-    elseif (event == "VARIABLES_LOADED") then 
-        MRT_UpdateSavedOptions(); 
     
     end
 end
@@ -360,7 +359,13 @@ function MRT_AddBosskill(bossname)
     local numRaidMembers = GetNumRaidMembers();
     for i = 1, numRaidMembers do
         local playerName, _, playerSubGroup, _, _, _, _, playerOnline = GetRaidRosterInfo(i);
-        tinsert(trackedPlayers, playerName);
+        -- check group number and group related tracking options
+        if (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and (instanceDifficulty == 1 or instanceDifficulty == 3)) or (playerSubGroup <= 5 and (instanceDifficulty == 2 or instanceDifficulty == 4))) then
+            -- check online status and online status related tracking options
+            if (MRT_Options["Attendance_TrackOffline"] or playerOnline == 1) then
+                tinsert(trackedPlayers, playerName);
+            end
+        end
     end
     local MRT_BossKillInfo = {
         ["Players"] = trackedPlayers,
