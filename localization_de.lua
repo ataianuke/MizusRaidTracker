@@ -59,13 +59,16 @@ MRT_L.Bossyells["Die Allianz wankt. Vorw\195\164rts zum Lichk\195\182nig!"] = "I
 MRT_L.Bossyells["Meine K\195\182nigin, sie... kommen."] = "Blood Prince Council"; -- Prince Keleseth
 MRT_L.Bossyells["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Dreamwalker";
 
+-- Ruby Sanctum
+MRT_L.Bossyells["Genie\195\159t euren Sieg, Sterbliche, denn es war euer Letzter! Bei der R\195\188ckkehr des Meisters wird diese Welt brennen..."] = "Halion"; -- Halion
+
 
 ---------------------------------
 --  Core frames local strings  --
 ---------------------------------
 -- Enter DKP cost frame
 MRT_L.Core["DKP_Frame_Title"] = "Kosten eingeben";
-MRT_L.Core["DKP_Frame_Text"] = "Gib die Kosten für %s\nerbeutet von |cFFFFFFFF%s|r ein.";
+MRT_L.Core["DKP_Frame_Text"] = "Gib die Kosten f\195\188r %s\nerbeutet von |cFFFFFFFF%s|r ein.";
 MRT_L.Core["DKP_Frame_OK_Button"] = "Ok";
 MRT_L.Core["DKP_Frame_Cancel_Button"] = "Abbruch";
 MRT_L.Core["DKP_Frame_Delete_Button"] = "L\195\182schen";
@@ -75,10 +78,10 @@ MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Entzaubert";
 MRT_L.Core["GuildAttendanceBossDownText"] = "%s down!";
 MRT_L.Core["GuildAttendanceAnnounceText"] = "Whisper me your mains name to be added to the DKP list.";
 MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d minutes remaining.";
-MRT_L.Core["GuildAttendanceTimeUpText"] = "Wer mich jetzt noch nicht angeflüster hat, ist zu spät!";
+MRT_L.Core["GuildAttendanceTimeUpText"] = "Wer mich jetzt noch nicht angefl\195\188ster hat, ist zu sp\195\164t!";
 MRT_L.Core["GuildAttendanceBossEntry"] = "Attendance check";
 MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Make attendance check now?"
-MRT_L.Core["GuildAttendanceReply"] = "%s zur DKP-Liste hinzugefügt."
+MRT_L.Core["GuildAttendanceReply"] = "%s zur DKP-Liste hinzugef\195\188gt."
 MRT_L.Core["GuildAttendanceReplyFail"] = "%s befindet sich bereits in der DKP-Liste.";
 -- MsgBox
 MRT_L.Core["MB_Ok"] = "Ok";
@@ -114,6 +117,8 @@ MRT_L.Options["AP_Title"] = "Teilnehmerlog";
 MRT_L.Options["AP_TitleText"] = "MRT - Teilnehmerlog-Optionen";
 -- AP - Checkboxes
 MRT_L.Options["AP_GuildAttendance"] = "Aktiviere Gilden-Teilnehmer-Check";
+MRT_L.Options["AP_GroupRestriction"] = "Logge nur die ersten 2/5 Gruppen";
+MRT_L.Options["AP_TrackOfflinePlayers"] = "Logge Spieler, die offline sind";
 -- AP - Slider
 MRT_L.Options["AP_GuildAttendanceDuration"] = "Dauer des Teilnehmer-Checks";
 MRT_L.Options["AP_Minutes"] = "Minuten";
@@ -127,7 +132,7 @@ MRT_L.GUI["Tables_RaidLogTitle"] = "Raidliste";
 MRT_L.GUI["Tables_RaidAttendeesTitle"] = "Raidteilnehmer";
 MRT_L.GUI["Tables_RaidBosskillsTitle"] = "Raidbosskills";
 MRT_L.GUI["Tables_BossLootTitle"] = "Bossloot";
-MRT_L.GUI["Tables_BossAttendeesTitle"] = "Bosskill Teilnehmer";
+MRT_L.GUI["Tables_BossAttendeesTitle"] = "Bossteilnehmer";
 -- table col names
 MRT_L.GUI["Col_Num"] = "#";
 MRT_L.GUI["Col_Date"] = "Datum";
@@ -151,20 +156,20 @@ MRT_L.GUI["Button_ExportNormal"] = "Export N";
 MRT_L.GUI["Button_ExportHeroic"] = "Export H";
 MRT_L.GUI["Button_Modify"] = "Modify";
 -- status/error messages
-MRT_L.GUI["Can not delete current raid"] = "Error: Kann laufenden Raid nicht löschen.";
-MRT_L.GUI["No boss selected"] = "Error: Kein Boss ausgewählt.";
-MRT_L.GUI["No boss attendee selected"] = "Error: Kein Bossteilnehmer ausgewählt.";
-MRT_L.GUI["No raid selected"] = "Error: Kein Raid ausgewählt.";
-MRT_L.GUI["No raid attendee selected"] = "Error: Kein Raidteilnehmer ausgewählt.";
-MRT_L.GUI["No loot selected"] = "Error: Kein Item ausgewählt.";
-MRT_L.GUI["No itemLink found"] = "Error: Itemlink ist ungültig.";
+MRT_L.GUI["Can not delete current raid"] = "Error: Kann laufenden Raid nicht l\195\182schen.";
+MRT_L.GUI["No boss selected"] = "Error: Kein Boss ausgew\195\164hlt.";
+MRT_L.GUI["No boss attendee selected"] = "Error: Kein Bossteilnehmer ausgew\195\164hlt.";
+MRT_L.GUI["No raid selected"] = "Error: Kein Raid ausgew\195\164hlt.";
+MRT_L.GUI["No raid attendee selected"] = "Error: Kein Raidteilnehmer ausgew\195\164hlt.";
+MRT_L.GUI["No loot selected"] = "Error: Kein Item ausgew\195\164hlt.";
+MRT_L.GUI["No itemLink found"] = "Error: Itemlink ist ung\195\188ltig.";
 MRT_L.GUI["Item cost invalid"] = "Error: Itemkosten ist keine Nummer";
 -- dialog messages
-MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?";
-MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?";
-MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from the loot list?";
-MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
-MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
+MRT_L.GUI["Confirm raid entry deletion"] = "Willst du Raid Nummer %d l\195\182schen?";
+MRT_L.GUI["Confirm boss entry deletion"] = "Willst du den Eintrag %d - %s - von der Bosskillliste l\195\182schen?";
+MRT_L.GUI["Confirm loot entry deletion"] = "Willst du %s von der Lootliste l\195\182schen?";
+MRT_L.GUI["Confirm raid attendee entry deletion"] = "Willst du %s von der Raidteilnehmerliste l\195\182schen?";
+MRT_L.GUI["Confirm boss attendee entry deletion"] = "Willst du %s von der Bossteilnehmerliste l\195\182schen?";
 MRT_L.GUI["Add loot data"] = "Add loot data";
 MRT_L.GUI["Add boss attendee"] = "Add boss attendee";
 MRT_L.GUI["Modify loot data"] = "Modify loot data";
@@ -182,6 +187,6 @@ MRT_L.ItemValues = {
     [3] = "Selten",
     [4] = "Rar",
     [5] = "Episch",
-    [6] = "Legendär",
+    [6] = "Legend\195\164r",
     [7] = "Artefakt", 
 }

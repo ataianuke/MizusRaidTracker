@@ -59,6 +59,9 @@ MRT_L.Bossyells["Damage control! Put those fires out! You haven't seen the last 
 MRT_L.Bossyells["My queen, they... come."] = "Blood Prince Council"; -- Prince Keleseth
 MRT_L.Bossyells["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker"; -- Dreamwalker
 
+-- Ruby Sanctum
+MRT_L.Bossyells["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion"; -- Halion
+
 
 ---------------------------------
 --  Core frames local strings  --

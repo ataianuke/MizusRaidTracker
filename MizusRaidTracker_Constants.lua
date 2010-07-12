@@ -120,7 +120,7 @@ MRT_BossIDList = {
     [37813] = "Deathbringer Saurfang",
     [36626] = "Festergut",
     [36627] = "Rotface",
-    [36678] = "Professor Putricide",       -- doesn't work!?! -> 0xF150008F4600DD77 / 0xF15 is ID of a vehicle / -> NPC-Recognition must work for vehicles
+    [36678] = "Professor Putricide",       
         -- Blood Prince Council will need bossyell for "correct" naming - Prince Keleseth alone is trackable
     [37955] = "Blood-Queen Lana'thel",
         -- Dreamwalker will need bossyell
@@ -130,8 +130,9 @@ MRT_BossIDList = {
     ------------------------
     --  The Ruby Sanctum  --
     ------------------------
-    [39863] = "Halion",                     -- according to wowhead
-    [39864] = "Halion",                     -- according to armory
+--  Tracking via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
+--    [39863] = "Halion",                     -- according to wowhead (possibly the true ID)
+--    [39864] = "Halion",                     -- according to armory
 }
 
 --------------------------------

@@ -165,7 +165,7 @@ end
 function MRT_CombatLogHandler(...)
     local _, combatEvent, _, _, _, destGUID, destName = ...;
     if (not MRT_NumOfCurrentRaid) then return; end
-    if (combatEvent == "UNIT_DIED" or combatEvent == "PARTY_KILL") then
+    if (combatEvent == "UNIT_DIED") then
         local NPCID = MRT_GetNPCID(destGUID);
         if (MRT_BossIDList[NPCID]) then
             MRT_AddBosskill(destName);
