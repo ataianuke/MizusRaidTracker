@@ -742,7 +742,7 @@ end
 ------------------------
 --  export functions  --
 ------------------------
--- MRT-Export:
+-- MRT_CreateRaidExport:
 -- - this function should work like a hub for all exports
 -- - if additional export functions are added, implement an option to the option panel
 --   to choose the export format

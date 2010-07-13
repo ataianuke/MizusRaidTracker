@@ -37,12 +37,12 @@ MRT_L.Raidzones = {
 --  Bossyells  --
 -----------------
 -- Naxxramas
-MRT_L.Bossyells["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Four Horsemen"; -- FIXME!
+MRT_L.Bossyells["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Die vier Reiter"; -- FIXME!
 
 -- Ulduar
-MRT_L.Bossyells["Ihr lauft geradewegs in den Schlund des Wahnsinns!"] = "Iron Council";  -- Normalmode - Stormcaller Brundir last
-MRT_L.Bossyells["What have you gained from my defeat? You are no less doomed, mortals!"] = "Iron Council";  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
--- MRT_L.Bossyells["Unm\195\182glich..."] = "Iron Council";  -- Hardmode - Steelbreaker last / also yelled by Lick King... damn
+MRT_L.Bossyells["Ihr lauft geradewegs in den Schlund des Wahnsinns!"] = "Versammlung des Eisens";  -- Normalmode - Stormcaller Brundir last
+MRT_L.Bossyells["What have you gained from my defeat? You are no less doomed, mortals!"] = "Versammlung des Eisens";  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
+-- MRT_L.Bossyells["Unm\195\182glich..."] = "Versammlung des Eisens";  -- Hardmode - Steelbreaker last / also yelled by Lich King... damn
 MRT_L.Bossyells["Ich... bin von ihm befreit... endlich."] = "Hodir";
 MRT_L.Bossyells["Senkt Eure Waffen! Ich ergebe mich!"] = "Thorim";
 MRT_L.Bossyells["Seine Macht \195\188ber mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."] = "Freya";
@@ -50,17 +50,17 @@ MRT_L.Bossyells["Es scheint, als w\195\164re mir eine klitzekleine Fehlkalkulati
 MRT_L.Bossyells["I've rearranged the reply code. Your planet will be spared. I cannot be certain of my own calculations anymore."] = "Algalon";  -- FIXME!
 
 -- Trial of the Crusader
-MRT_L.Bossyells["Ein tragischer Sieg. Wir wurden schw\195\164cher durch die heutigen Verluste. Wer au\195\159er dem Lichk\195\182nig profitiert von solchen Torheiten? Gro\195\159e Krieger gaben ihr Leben. Und wof\195\188r? Die wahre Bedrohung erwartet uns noch - der Lichk\195\182nig erwartet uns alle im Tod."] = "Faction Champions";
-MRT_L.Bossyells["Die Gei\195\159el kann nicht aufgehalten werden..."] = "Twin Val'kyr";
+MRT_L.Bossyells["Ein tragischer Sieg. Wir wurden schw\195\164cher durch die heutigen Verluste. Wer au\195\159er dem Lichk\195\182nig profitiert von solchen Torheiten? Gro\195\159e Krieger gaben ihr Leben. Und wof\195\188r? Die wahre Bedrohung erwartet uns noch - der Lichk\195\182nig erwartet uns alle im Tod."] = "Fraktionschampions";
+MRT_L.Bossyells["Die Gei\195\159el kann nicht aufgehalten werden..."] = "Val'kyr Zwillinge";
     
 -- Icecrown Citadel
-MRT_L.Bossyells["Sagt nicht, ich h\195\164tte Euch nicht gewarnt, Ihr Schurken! Vorw\195\164rts, Br\195\188der und Schwestern!"] = "Icecrown Gunship Battle"; -- Muradin
-MRT_L.Bossyells["Die Allianz wankt. Vorw\195\164rts zum Lichk\195\182nig!"] = "Icecrown Gunship Battle"; -- Saurfang
-MRT_L.Bossyells["Meine K\195\182nigin, sie... kommen."] = "Blood Prince Council"; -- Prince Keleseth
-MRT_L.Bossyells["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Dreamwalker";
+MRT_L.Bossyells["Sagt nicht, ich h\195\164tte Euch nicht gewarnt, Ihr Schurken! Vorw\195\164rts, Br\195\188der und Schwestern!"] = "Eiskrone Luftschiffkampf"; -- Muradin
+MRT_L.Bossyells["Die Allianz wankt. Vorw\195\164rts zum Lichk\195\182nig!"] = "Eiskrone Luftschiffkampf"; -- Saurfang
+MRT_L.Bossyells["Meine K\195\182nigin, sie... kommen."] = "Rat des Blutes"; -- Prince Keleseth
+MRT_L.Bossyells["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Traumwandler";
 
 -- Ruby Sanctum
-MRT_L.Bossyells["Genie\195\159t euren Sieg, Sterbliche, denn es war euer Letzter! Bei der R\195\188ckkehr des Meisters wird diese Welt brennen..."] = "Halion"; -- Halion
+MRT_L.Bossyells["Genie\195\159t euren Sieg, Sterbliche, denn es war euer letzter. Bei der R\195\188ckkehr des Meisters wird diese Welt brennen!"] = "Halion"; -- Halion
 
 
 ---------------------------------
@@ -76,11 +76,11 @@ MRT_L.Core["DKP_Frame_Bank_Button"] = "Bank";
 MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Entzaubert";
 -- guild attendance
 MRT_L.Core["GuildAttendanceBossDownText"] = "%s down!";
-MRT_L.Core["GuildAttendanceAnnounceText"] = "Whisper me your mains name to be added to the DKP list.";
-MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d minutes remaining.";
+MRT_L.Core["GuildAttendanceAnnounceText"] = "Flüstert mir den Namen eures Mainchars, um zur DKP-Liste hinzugefügt zu werden.";
+MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d Minuten verbleibend.";
 MRT_L.Core["GuildAttendanceTimeUpText"] = "Wer mich jetzt noch nicht angefl\195\188ster hat, ist zu sp\195\164t!";
-MRT_L.Core["GuildAttendanceBossEntry"] = "Attendance check";
-MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Make attendance check now?"
+MRT_L.Core["GuildAttendanceBossEntry"] = "Teilnehmer-Check";
+MRT_L.Core["GuildAttendanceMsgBox"] = "%s down. Soll jetzt ein Teilnehmer-Check durchgeführt werden?"
 MRT_L.Core["GuildAttendanceReply"] = "%s zur DKP-Liste hinzugef\195\188gt."
 MRT_L.Core["GuildAttendanceReplyFail"] = "%s befindet sich bereits in der DKP-Liste.";
 -- MsgBox
