@@ -38,6 +38,7 @@ MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
 MRT_Options = {};
 MRT_RaidLog = {};
+MRT_PlayerDB = {};
 
 SLASH_MIZUSRAIDTRACKER1 = "/mrt";
 SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
@@ -102,7 +103,7 @@ function MRT_OnEvent(frame, event, ...)
         MRT_Options_ParseValues();
         MRT_GUI_ParseValues();
         MRT_Core_Frames_ParseLocal();
-        GuildRoster();
+        --GuildRoster();
         MRT_Debug("Addon loaded.");
     
     elseif (event == "CHAT_MSG_LOOT") then 
@@ -586,9 +587,6 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     local guildRosterOfflineFilter = GetGuildRosterShowOffline();
     local guildRosterSelection = GetGuildRosterSelection();
     SetGuildRosterShowOffline(true);
-    -- Workaround for buggy guildinfos
-    --SortGuildRoster("name");
-    --SortGuildRoster("name");
     local numGuildMembers = GetNumGuildMembers();
     local guildRoster = {};
     for i = 1, numGuildMembers do
