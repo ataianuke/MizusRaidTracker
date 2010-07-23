@@ -143,6 +143,7 @@ function MRT_OnEvent(frame, event, ...)
                 MRT_CheckRaidStatusAfterLogin();
                 MRT_GuildRosterUpdate(frame, nil, true)
                 MRT_GuildRosterInitialUpdateDone = true;
+                MRT_VersionUpdate();
             end
         end);
     
@@ -204,6 +205,58 @@ function MRT_UpdateSavedOptions()
         if (MRT_Options[key] == nil) then
             MRT_Options[key] = value;
         end
+    end
+end
+
+------------------------------------------------
+--  Make configuration changes if neccessary  --
+------------------------------------------------
+function MRT_VersionUpdate()
+    if (MRT_Options["DB_Version"] == nil) then
+        if #MRT_RaidLog > 0 then
+            local realm;
+            if (raidInfoTable["Realm"]) then
+                realm = raidInfoTable["Realm"];
+            else
+                realm = GetRealmName();
+                raidInfoTable["Realm"] = realm;
+            end
+            MRT_PlayerDB[realm] = {};
+            for i, raidInfoTable in ipairs(MRT_RaidLog) do
+                for j, playerInfo in ipairs(raidInfoTable["Players"]) do
+                    local name = playerInfo["Name"];
+                    if (MRT_PlayerDB[realm][name] == nil) then 
+                        MRT_PlayerDB[realm][name] = {};
+                        MRT_PlayerDB[realm][name]["Name"] = name;
+                    end
+                    if (playerInfo["Race"]) then
+                        MRT_PlayerDB[realm][name]["Race"] = playerInfo["Race"];
+                        playerInfo["Race"] = nil;
+                    end
+                    if (playerInfo["RaceL"]) then
+                        MRT_PlayerDB[realm][name]["Race"] = playerInfo["RaceL"];
+                        playerInfo["RaceL"] = nil;
+                    end
+                    if (playerInfo["Class"]) then
+                        MRT_PlayerDB[realm][name]["Class"] = playerInfo["Class"];
+                        playerInfo["Class"] = nil;
+                    end
+                    if (playerInfo["ClassL"]) then
+                        MRT_PlayerDB[realm][name]["ClassL"] = playerInfo["ClassL"];
+                        playerInfo["ClassL"] = nil;
+                    end
+                    if (playerInfo["Level"]) then
+                        MRT_PlayerDB[realm][name]["Level"] = playerInfo["Level"];
+                        playerInfo["Level"] = nil;
+                    end
+                    if (playerInfo["Sex"]) then
+                        MRT_PlayerDB[realm][name]["Sex"] = playerInfo["Sex"];
+                        playerInfo["Sex"] = nil;
+                    end
+                end
+            end
+        end
+        MRT_Options["DB_Version"] = 1;
     end
 end
 
