@@ -338,14 +338,18 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["Name"] = playerName,
             ["Join"] = time(),
             ["Leave"] = nil,
+        }
+        local playerDBEntry = {
+            ["Name"] = playerName,
             ["Race"] = playerRace,
             ["RaceL"] = playerRaceL,
             ["Class"] = playerClass,
             ["ClassL"] = playerClassL,
             ["Level"] = playerLvl,
             ["Sex"] = playerSex,
-        }
+        };
         tinsert(MRT_RaidInfo["Players"], playerInfo);
+        MRT_PlayerDB[realm][playerName] = playerDBEntry;
     end
     tinsert(MRT_RaidLog, MRT_RaidInfo);
     MRT_NumOfCurrentRaid = #MRT_RaidLog;
@@ -363,6 +367,7 @@ function MRT_RaidRosterUpdate(frame)
     --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        local realm = GetRealmName();
         tinsert(activePlayerList, playerName);
         local playerInRaid = nil;
         for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
@@ -379,6 +384,9 @@ function MRT_RaidRosterUpdate(frame)
                 ["Name"] = playerName,
                 ["Join"] = time(),
                 ["Leave"] = nil,
+            };
+            local playerDBEntry = {
+                ["Name"] = playerName,
                 ["Race"] = playerRace,
                 ["RaceL"] = playerRaceL,
                 ["Class"] = playerClass,
@@ -387,6 +395,7 @@ function MRT_RaidRosterUpdate(frame)
                 ["Sex"] = playerSex,
             };
             tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
+            MRT_PlayerDB[realm][playerName] = playerDBEntry;
         end    
     end
     -- MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
@@ -713,6 +722,7 @@ function MRT_GuildAttendanceWhisper(msg, source)
                 if (not val["Leave"]) then player_exist = true; end
             end
         end
+--      This code would create a raidattendee entry        
 --      if (player_exist == nil) then
 --          local playerInfo = {
 --              ["Name"] = player,
