@@ -325,6 +325,7 @@ end
 function MRT_CreateNewRaid(zoneName, raidSize)
     if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
     local numRaidMembers = GetNumRaidMembers();
+    local realm = GetRealmName();
     if (numRaidMembers == 0) then return end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
     local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = time()};
@@ -349,6 +350,9 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["Sex"] = playerSex,
         };
         tinsert(MRT_RaidInfo["Players"], playerInfo);
+        if (MRT_PlayerDB[realm] == nil) then
+            MRT_PlayerDB[realm] = {};
+        end
         MRT_PlayerDB[realm][playerName] = playerDBEntry;
     end
     tinsert(MRT_RaidLog, MRT_RaidInfo);

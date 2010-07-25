@@ -130,7 +130,7 @@ MRT_BossIDList = {
     ------------------------
     --  The Ruby Sanctum  --
     ------------------------
---  Tracking via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
+--  Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
 --    [39863] = "Halion",                     -- according to wowhead (possibly the true ID)
 --    [39864] = "Halion",                     -- according to armory
 }
