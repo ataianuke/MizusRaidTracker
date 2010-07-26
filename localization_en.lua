@@ -42,7 +42,7 @@ MRT_L.Bossyells["I grow tired of these games. Proceed, and I will banish your so
 -- Ulduar
 MRT_L.Bossyells["You rush headlong into the maw of madness!"] = "Iron Council";  -- Normalmode - Stormcaller Brundir last
 MRT_L.Bossyells["What have you gained from my defeat? You are no less doomed, mortals!"] = "Iron Council";  -- Semi-Hardmode - Runemaster Molgeim last
--- MRT_L.Bossyells["Impossible..."] = "Iron Council";  -- Hardmode - Steelbreaker last  // also yelled by Lich King - damn
+MRT_L.Bossyells["Impossible..."] = MRT_IsInstanceUlduar("Iron Council");  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
 MRT_L.Bossyells["I... I am released from his grasp... at last."] = "Hodir";
 MRT_L.Bossyells["Stay your arms! I yield!"] = "Thorim";
 MRT_L.Bossyells["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya";
