@@ -167,5 +167,5 @@ function MRT_IsInstanceUlduar(boss)
         return boss;
     else
         return nil;
-    end;
+    end
 end
