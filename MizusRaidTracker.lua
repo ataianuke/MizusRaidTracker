@@ -214,12 +214,13 @@ end
 function MRT_VersionUpdate()
     if (MRT_Options["DB_Version"] == nil) then
         if #MRT_RaidLog > 0 then
+            local currentrealm = GetRealmName();
             for i, raidInfoTable in ipairs(MRT_RaidLog) do
                 local realm;
                 if (raidInfoTable["Realm"]) then
                     realm = raidInfoTable["Realm"];
                 else
-                    realm = GetRealmName();
+                    realm = currentrealm;
                     raidInfoTable["Realm"] = realm;
                 end
                 if (MRT_PlayerDB[realm] == nil) then
@@ -366,12 +367,12 @@ function MRT_RaidRosterUpdate(frame)
         return;
     end
     local numRaidMembers = GetNumRaidMembers();
+    local realm = GetRealmName();
     local activePlayerList = {};
     --MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
     --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        local realm = GetRealmName();
         tinsert(activePlayerList, playerName);
         local playerInRaid = nil;
         for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
