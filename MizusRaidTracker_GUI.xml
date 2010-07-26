@@ -266,7 +266,7 @@
     </Frames>
   </Frame>
   <Frame name="MRT_GUIFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">
-    <Size x="800" y="600"/>
+    <Size x="800" y="606"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
@@ -335,63 +335,87 @@
       <Button name="$parent_RaidLog_Export_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_RaidExportComplete();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Raid_Export");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_RaidLog_Delete_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_RaidDelete();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Raid_Delete");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_RaidLog_ExportNormal_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_RaidExportNormal();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Raid_ExportN");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_RaidLog_ExportHeroic_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_RaidExportHard();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Raid_ExportH");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_RaidBosskills_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidBosskills_Delete_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_BossDelete();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Boss_Delete");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_RaidBosskills_Export_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_BossExport();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Boss_Export");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_RaidAttendees_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
       <Button name="$parent_RaidAttendees_Delete_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_RaidAttendeeDelete();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "RA_Delete");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_BossLoot_Add_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_LootAdd();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Loot_Add");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_BossLoot_Modify_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_LootModify();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Loot_Modify");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_BossLoot_Delete_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_LootDelete();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Loot_Delete");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_BossAttendees_Add_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_BossAttendeeAdd();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "BA_Add");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_BossAttendees_Delete_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_BossAttendeeDelete();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "BA_Delete");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
       <Button name="$parent_CloseButton" inherits="UIPanelCloseButton">
@@ -407,4 +431,5 @@
     </Scripts>
   </Frame>
   <GameTooltip name="MRT_GUI_ItemTT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"></GameTooltip>
+  <GameTooltip name="MRT_GUI_TT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"></GameTooltip>
 </Ui>

@@ -555,6 +555,17 @@ function MRT_GUI_BossAttendeeDeleteAccept(raidnum, bossnum, attendeenum)
     end
 end
 
+function MRT_GUI_SetTT(frame, button)
+    MRT_GUI_TT:SetOwner(frame, "ANCHOR_BOTTOMRIGHT");
+    MRT_GUI_TT:SetText(MRT_L.GUI["TT_"..button]);
+    MRT_GUI_TT:Show();
+end
+
+function MRT_GUI_HideTT()
+    MRT_GUI_TT:Hide();
+    MRT_GUI_TT:SetOwner(UIParent, "ANCHOR_NONE");
+end
+
 
 ------------------------
 --  OnUpdate handler  --

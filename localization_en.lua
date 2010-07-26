@@ -155,6 +155,21 @@ MRT_L.GUI["Button_Export"] = "Export";
 MRT_L.GUI["Button_ExportNormal"] = "Export N";
 MRT_L.GUI["Button_ExportHeroic"] = "Export H";
 MRT_L.GUI["Button_Modify"] = "Modify";
+-- button tooltips
+MRT_L.GUI["TT_Raid_Delete"] = "Delete selected raid.";
+MRT_L.GUI["TT_Raid_Export"] = "Export selected raid.";
+MRT_L.GUI["TT_Raid_ExportN"] = "Export all normal mode encounters of selected raid.";
+MRT_L.GUI["TT_Raid_ExportH"] = "Export all heroic mode encounters of selected raid.";
+MRT_L.GUI["TT_Boss_Add"] = "Add a boss encounter.";
+MRT_L.GUI["TT_Boss_Delete"] = "Delete selected boss encounter.";
+MRT_L.GUI["TT_Boss_Export"] = "Export selected boss encounter.";
+MRT_L.GUI["TT_RA_Add"] = "Add an attendee to the raid attendee list.";
+MRT_L.GUI["TT_RA_Delete"] = "Delete selected raid attendee.";
+MRT_L.GUI["TT_Loot_Add"] = "Add an item to the loot list.";
+MRT_L.GUI["TT_Loot_Modify"] = "Modify data of selected item.";
+MRT_L.GUI["TT_Loot_Delete"] = "Delete selected item.";
+MRT_L.GUI["TT_BA_Add"] = "Add an attendee to the boss attendee list.";
+MRT_L.GUI["TT_BA_Delete"] = "Delete selected boss attendee.";
 -- status/error messages
 MRT_L.GUI["Can not delete current raid"] = "Error: Can't delete current raid.";
 MRT_L.GUI["No boss selected"] = "Error: No boss selected.";
