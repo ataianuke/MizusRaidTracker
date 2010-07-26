@@ -5,6 +5,6 @@ externals:
     libs/LibST:
         url: svn://svn.wowace.com/wow/lib-st/mainline/trunk
         tag: latest
-    libs/LibDeformat-3.0
+    libs/LibDeformat-3.0:
         url: git://git.wowace.com/wow/libdeformat-3-0/mainline.git
         tag: latest
