@@ -212,8 +212,9 @@ end
 --  Make configuration changes if neccessary  --
 ------------------------------------------------
 function MRT_VersionUpdate()
+    -- DB changes from v.nil to v.1: Move extended player information in extra database
     if (MRT_Options["DB_Version"] == nil) then
-        if #MRT_RaidLog > 0 then
+        if (#MRT_RaidLog > 0) then
             local currentrealm = GetRealmName();
             for i, raidInfoTable in ipairs(MRT_RaidLog) do
                 local realm;
@@ -260,6 +261,21 @@ function MRT_VersionUpdate()
             end
         end
         MRT_Options["DB_Version"] = 1;
+    end
+    -- DB changes from v.1 to v.2: Add missing StopTime to each raid entry
+    if (MRT_Options["DB_Version"] == 1) then
+        if (#MRT_RaidLog > 0) then
+            for i, raidInfoTable in ipairs(MRT_RaidLog) do
+                local latestTimestamp = 1;
+                for j, playerInfo in pairs(raidInfoTable["Players"]) do
+                    if (playerInfo["Leave"] > latestTimestamp) then
+                        latestTimestamp = playerInfo["Leave"];
+                    end
+                end
+                raidInfoTable["StopTime"] = latestTimestamp;
+            end
+        end
+        MRT_Options["DB_Version"] = 2;
     end
 end
 
@@ -468,6 +484,7 @@ function MRT_EndActiveRaid()
             MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
         end
     end
+    MRT_RaidLog[MRT_NumOfCurrentRaid]["StopTime"] = time();
     MRT_NumOfCurrentRaid = nil;
     MRT_NumOfLastBoss = nil;
 end

@@ -238,6 +238,19 @@ function MRT_GUI_RaidDeleteAccept(raidnum)
     MRT_GUI_CompleteTableUpdate();
 end
 
+function MRT_GUI_BossAdd()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+end
+
+function MRT_GUI_BossAddAccept(raidnum)
+end
+
 function MRT_GUI_BossDelete()
     MRT_GUI_HideDialogs();
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
