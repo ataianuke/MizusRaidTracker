@@ -1,14 +1,21 @@
+0.12 Beta - Changelog:
+  New:
+    * Implemented dialogs for manually adding boss entries to the raidlog
+  Bugfixes:
+    * Fixed wrong loot assignments after deleting individual boss entries
+    
+
 0.11 Beta - Changelog:
   New:
-    * changed a few things in the internal database (should reduce memory usage around 30%)
-    * added tooltips for GUI buttons
+    * Changed a few things in the internal database (should reduce memory usage around 30%)
+    * Added tooltips for GUI buttons
   Bugfixes:
-    * fixed Steelbraker kill detection (Iron Council / Ulduar) (untested)
+    * Fixed Steelbraker kill detection (Iron Council / Ulduar) (untested)
 
 
 0.10 Beta - Changelog:
   Bugfixes:
-    * fixed Halion kill detection (changed to bossyell because of missing UNIT_DIED-Event in the Twilight Realm)
+    * Fixed Halion kill detection (changed to bossyell because of missing UNIT_DIED-Event in the Twilight Realm)
 
 
 0.9 Beta - Changelog:
@@ -20,6 +27,6 @@
     * Added option to enable/disable tracking of only first 2/5 groups in 10/25 player raids (as boss attendees)
     * Updated deDE localization
   Bugfixes:
-    * fixed raid export for raids without boss kill event
-    * fixed a bug, where the guild data may be crawled incorrectly
-    * fixed '/mrt o' and '/mrt options' slash commands
+    * Fixed raid export for raids without boss kill event
+    * Fixed a bug, where the guild data may be crawled incorrectly
+    * Fixed '/mrt o' and '/mrt options' slash commands
