@@ -548,10 +548,6 @@ function MRT_AutoAddLoot(chatmsg)
     MRT_DKPFrame_AddToItemCostQueue(MRT_NumOfCurrentRaid, #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"]);
 end
 
--- track loot based on slashcommand (maybe via GUI dialog in future release) 
-function MRT_ManuallyAddLoot(playerName, dkpValue, itemLink)
-end
-
 
 ---------------------------
 --  loot cost functions  --
@@ -722,20 +718,11 @@ function MRT_GuildAttendanceWhisper(msg, source)
     if ((MRT_NumOfCurrentRaid ~= nil) and (MRT_GuildRoster[string.lower(msg)] ~= nil)) then
         local player = MRT_GuildRoster[string.lower(msg)];
         local player_exist = nil;
-        for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
-            if (val["Name"] == player) then
-                if (not val["Leave"]) then player_exist = true; end
-            end
-        end
---      This code would create a raidattendee entry        
---      if (player_exist == nil) then
---          local playerInfo = {
---              ["Name"] = player,
---              ["Join"] = (MRT_TimerFrame.GAStart - 1),
---              ["Leave"] = time(),
---          }
---          tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
---      end
+--        for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+--            if (val["Name"] == player) then
+--                if (not val["Leave"]) then player_exist = true; end
+--            end
+--        end
         if (MRT_NumOfLastBoss) then
             for i, v in ipairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"]) do
                 if (v == player) then player_exist = true; end;

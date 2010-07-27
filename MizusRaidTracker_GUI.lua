@@ -31,6 +31,7 @@
 --------------
 --  Locals  --
 --------------
+local deformat = LibStub("LibDeformat-3.0");
 local ScrollingTable = LibStub("ScrollingTable");
 
 local MRT_GUI_RaidLogTableSelection = nil;
@@ -711,8 +712,20 @@ end
 --------------------------------------
 function MRT_GUI_HideDialogs()
     StaticPopup_Hide("MRT_GUI_ZeroRowDialog");
+    MRT_GUI_OneRowDialog_EB1:SetScript("OnEnter", nil);
+    MRT_GUI_OneRowDialog_EB1:SetScript("OnLeave", nil);
     MRT_GUI_OneRowDialog:Hide();
+    MRT_GUI_TwoRowDialog_EB1:SetScript("OnEnter", nil);
+    MRT_GUI_TwoRowDialog_EB1:SetScript("OnLeave", nil);
+    MRT_GUI_TwoRowDialog_EB2:SetScript("OnEnter", nil);
+    MRT_GUI_TwoRowDialog_EB2:SetScript("OnLeave", nil);
     MRT_GUI_TwoRowDialog:Hide();
+    MRT_GUI_ThreeRowDialog_EB1:SetScript("OnEnter", nil);
+    MRT_GUI_ThreeRowDialog_EB1:SetScript("OnLeave", nil);
+    MRT_GUI_ThreeRowDialog_EB2:SetScript("OnEnter", nil);
+    MRT_GUI_ThreeRowDialog_EB2:SetScript("OnLeave", nil);
+    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnEnter", nil);
+    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnLeave", nil);
     MRT_GUI_ThreeRowDialog:Hide();
     MRT_ExportFrame_Hide();
 end
