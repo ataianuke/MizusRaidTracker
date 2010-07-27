@@ -360,7 +360,13 @@
           <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
-      <Button name="$parent_RaidBosskills_Add_Button" inherits="MRT_GUI_Button_Template"></Button>
+      <Button name="$parent_RaidBosskills_Add_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_BossAdd();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Boss_Add");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
+        </Scripts>
+      </Button>
       <Button name="$parent_RaidBosskills_Delete_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_BossDelete();</OnClick>

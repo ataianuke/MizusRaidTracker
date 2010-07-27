@@ -153,7 +153,6 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_BossAttendees_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
     MRT_GUIFrame_BossAttendees_Delete_Button:SetPoint("TOP", MRT_GUIFrame_BossAttendees_Add_Button, "BOTTOM", 0, -5);
     -- disable buttons, if function is NYI
-    MRT_GUIFrame_RaidBosskills_Add_Button:Disable();
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
@@ -246,9 +245,128 @@ function MRT_GUI_BossAdd()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Add bosskill"]);
+    MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Bossname"]);
+    MRT_GUI_ThreeRowDialog_EB1:SetText("");
+    MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Difficulty N or H"]);
+    MRT_GUI_ThreeRowDialog_EB2:SetText("");
+    MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Time"]);
+    MRT_GUI_ThreeRowDialog_EB3:SetText("");
+    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB2, "Boss_Add_TimeEB"); end);
+    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
+    MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_BossAddAccept(raidnum); end);
+    MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_ThreeRowDialog:Show();
 end
 
 function MRT_GUI_BossAddAccept(raidnum)
+    -- sanity check inputs - if error, print error message (bossname is free text, Time has to match HH:MM)
+    local bossname = MRT_GUI_ThreeRowDialog_EB1:GetText();
+    local difficulty = MRT_GUI_ThreeRowDialog_EB2:GetText();
+    local enteredTime = MRT_GUI_ThreeRowDialog_EB3:GetText();
+    local hours = nil;
+    local minutes = nil;
+    local bossTimestamp = nil;
+    if (bossname == "") then
+        MRT_Print(MRT_L.GUI["No boss name entered"]);
+        return;
+    end
+    if (difficulty ~= "N" and difficulty ~= "H") then
+        MRT_Print(MRT_L.GUI["No valid difficulty entered"]);
+        return;
+    end
+    if (enteredTime == "") then
+        -- check if there is an active raid
+        if (MRT_NumOfCurrentRaid == nil) then
+            MRT_Print(MRT_L.GUI["No active raid"]);
+            return;
+        end
+        hours = 255;
+        minutes = 255;
+    else
+        hours, minutes = deformat(enteredTime, "%d:%d");
+        if (hours == nil or minutes == nil or hours > 23 or hours < 0 or minutes > 59 or minutes < 0) then
+            MRT_Print(MRT_L.GUI["No valid time entered"]);
+            return;
+        end
+        -- check timeline of chosen raid
+        local raidStart = MRT_RaidLog[raidnum]["StartTime"];
+        local raidStartDateTable = date("*t", raidStart);
+        raidStartDateTable.hour = hours;
+        raidStartDateTable.min = minutes;
+        bossTimestamp = time(raidStartDateTable);
+        -- if bossTimestamp < raidStart, try raidStart + 24 hours (one day - time around 01:25 is next day)
+        if (bossTimestamp < raidStart) then
+            bossTimestamp = bossTimestamp + 86400;
+        end
+        local raidStop = MRT_RaidLog[raidnum]["StopTime"];
+        if (MRT_RaidLog[raidnum]["StopTime"] == nil) then 
+            if (bossTimestamp < raidStart or bossTimestamp > time()) then
+                MRT_Print(MRT_L.GUI["Entered time is not between start and end of raid"]);
+                return;
+            end
+        else
+            if (bossTimestamp < raidStart or bossTimestamp > raidStop) then
+                MRT_Print(MRT_L.GUI["Entered time is not between start and end of raid"]);
+                return;
+            end
+        end
+    end
+    MRT_GUI_HideDialogs();
+    local insertPos = nil;
+    -- add boss to kill list
+    -- if boss shall be added as last recent boss kill, just call 'AddBosskill' - else do it manually
+    if (hours == 255 and minutes == 255) then
+        MRT_AddBosskill(bossname);
+    else
+        -- prepare bossdata table
+        local bossdata = {};
+        bossdata["Players"] = {};
+        bossdata["Name"] = bossname;
+        bossdata["Date"] = bossTimestamp;
+        if (difficulty == "N" and MRT_RaidLog[raidnum]["RaidSize"] == 10) then
+            bossdata["Difficulty"] = 1;
+        elseif (difficulty == "H" and MRT_RaidLog[raidnum]["RaidSize"] == 10) then
+            bossdata["Difficulty"] = 3;
+        elseif (difficulty == "N" and MRT_RaidLog[raidnum]["RaidSize"] == 25) then
+            bossdata["Difficulty"] = 2;
+        elseif (difficulty == "H" and MRT_RaidLog[raidnum]["RaidSize"] == 25) then
+            bossdata["Difficulty"] = 4;
+        end
+        -- search position in RaidLog (based on time) and insert data
+        if (#MRT_RaidLog[raidnum]["Bosskills"] > 0) then
+            insertPos = 1;
+            for i, val in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
+                if (bossTimestamp > val["Date"]) then
+                    insertPos = i + 1;
+                end
+            end
+            tinsert(MRT_RaidLog[raidnum]["Bosskills"], insertPos, bossdata);
+            -- update data of associated loot
+            for i, val in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
+                if (insertPos <= val["BossNumber"]) then
+                    val["BossNumber"] = val["BossNumber"] + 1;
+                end
+            end
+        else
+            tinsert(MRT_RaidLog[raidnum]["Bosskills"], bossdata);
+        end
+        -- if current raid was modified, change raid parameters accordingly
+        if (MRT_NumOfCurrentRaid and raidnum == MRT_NumOfCurrentRaid) then
+            MRT_NumOfLastBoss = #MRT_RaidLog[raidnum]["Bosskills"];
+        end
+    end
+    -- Do a table update, if the displayed raid was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (raidnum_selected == raidnum) then
+        MRT_GUI_RaidDetailsTableUpdate(raidnum);
+    end
+end
+
+function MRT_GUI_BossAddAccept_AddAttendees(raidnum, bossnum)
 end
 
 function MRT_GUI_BossDelete()

@@ -161,6 +161,7 @@ MRT_L.GUI["TT_Raid_Export"] = "Export selected raid.";
 MRT_L.GUI["TT_Raid_ExportN"] = "Export all normal mode encounters of selected raid.";
 MRT_L.GUI["TT_Raid_ExportH"] = "Export all heroic mode encounters of selected raid.";
 MRT_L.GUI["TT_Boss_Add"] = "Add a boss encounter.";
+MRT_L.GUI["TT_Boss_Add_TimeEB"] = "Format HH:MM \n\nLeave blank, if you want to add a boss \nas the most recent of the current raid.";
 MRT_L.GUI["TT_Boss_Delete"] = "Delete selected boss encounter.";
 MRT_L.GUI["TT_Boss_Export"] = "Export selected boss encounter.";
 MRT_L.GUI["TT_RA_Add"] = "Add an attendee to the raid attendee list.";
@@ -178,7 +179,12 @@ MRT_L.GUI["No raid selected"] = "Error: No raid selected.";
 MRT_L.GUI["No raid attendee selected"] = "Error: No raid attendee selected.";
 MRT_L.GUI["No loot selected"] = "Error: No item selected.";
 MRT_L.GUI["No itemLink found"] = "Error: Itemlink is not valid.";
+MRT_L.GUI["No valid time entered"] = "Error: No valid time entered.";
+MRT_L.GUI["No active raid"] = "Error: No active raid in progress. Please enter time.";
+MRT_L.GUI["No boss name entered"] = "Error: No boss name entered.";
 MRT_L.GUI["Item cost invalid"] = "Error: Item cost is not a number.";
+MRT_L.GUI["Entered time is not between start and end of raid"] = "Error: Entered time is not between start and end of raid.";
+MRT_L.GUI["No valid difficulty entered"] = "Error: No valid difficulty entered.";
 -- dialog messages
 MRT_L.GUI["Confirm raid entry deletion"] = "Do you want to delete raid number %d?";
 MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s - from the bosskill list?";
@@ -187,10 +193,14 @@ MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s fr
 MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
 MRT_L.GUI["Add loot data"] = "Add loot data";
 MRT_L.GUI["Add boss attendee"] = "Add boss attendee";
+MRT_L.GUI["Add bosskill"] = "Add bosskill";
 MRT_L.GUI["Modify loot data"] = "Modify loot data";
+MRT_L.GUI["Bossname"] = "Bossname";
 MRT_L.GUI["Itemlink"] = "Itemlink";
 MRT_L.GUI["Looter"] = "Looter";
+MRT_L.GUI["Time"] = "Time";
 MRT_L.GUI["Value"] = "Value";
+MRT_L.GUI["Difficulty N or H"] = "Difficulty ('N' or 'H')"
 
 
 ------------
