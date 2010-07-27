@@ -351,11 +351,16 @@ function MRT_GUI_BossAddAccept(raidnum)
             end
         else
             tinsert(MRT_RaidLog[raidnum]["Bosskills"], bossdata);
+            insertPos = 1;
         end
         -- if current raid was modified, change raid parameters accordingly
         if (MRT_NumOfCurrentRaid and raidnum == MRT_NumOfCurrentRaid) then
             MRT_NumOfLastBoss = #MRT_RaidLog[raidnum]["Bosskills"];
         end
+        -- ask, if raid attendees should be saved as boss attendees for the new boss
+        StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = MRT_L.GUI["Add raid attendees as boss attendees"];
+        StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_BossAddAccept_AddAttendees(raidnum, insertPos, bossTimestamp); end
+        StaticPopup_Show("MRT_GUI_ZeroRowDialog");
     end
     -- Do a table update, if the displayed raid was modified
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
@@ -366,7 +371,12 @@ function MRT_GUI_BossAddAccept(raidnum)
     end
 end
 
-function MRT_GUI_BossAddAccept_AddAttendees(raidnum, bossnum)
+function MRT_GUI_BossAddAccept_AddAttendees(raidnum, bossnum, bossTimestamp)
+    for key, val in pairs(MRT_RaidLog[raidnum]["Players"]) do
+        if (val["Join"] < bossTimestamp and (val["Leave"] == nil or val["Leave"] > bossTimestamp)) then
+            tinsert(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"], val["Name"]);
+        end
+    end
 end
 
 function MRT_GUI_BossDelete()

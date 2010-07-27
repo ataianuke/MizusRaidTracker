@@ -191,6 +191,7 @@ MRT_L.GUI["Confirm boss entry deletion"] = "Do you want to delete entry %d - %s 
 MRT_L.GUI["Confirm loot entry deletion"] = "Do you want to delete item %s from the loot list?";
 MRT_L.GUI["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?";
 MRT_L.GUI["Confirm boss attendee entry deletion"] = "Do you want to delete %s from the boss attendees list?";
+MRT_L.GUI["Add raid attendees as boss attendees"] = "Do you want to add tracked raid attendees as boss attendees?";
 MRT_L.GUI["Add loot data"] = "Add loot data";
 MRT_L.GUI["Add boss attendee"] = "Add boss attendee";
 MRT_L.GUI["Add bosskill"] = "Add bosskill";
