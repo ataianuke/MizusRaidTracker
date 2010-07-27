@@ -7,3 +7,6 @@ externals:
     libs/LibDeformat-3.0:
         url: git://git.wowace.com/wow/libdeformat-3-0/mainline.git
         tag: latest
+manual-changelog:
+    filename: CHANGELOG.txt
+    markup-type: html
