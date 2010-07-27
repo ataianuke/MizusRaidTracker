@@ -1,35 +1,25 @@
-<h4>0.11 Beta Changelog:</h4>
-<strong>New:</strong>
-<ul>
-	<li>changed a few things in the internal database (should reduce memory usage around 30%)</li>
-	<li>added tooltips for GUI buttons</li>
-</ul>
-<strong>Bugfixes:</strong>
-<ul>    
-	<li>fixed Steelbraker kill detection (Iron Council / Ulduar) (untested)</li>
-</ul>
+0.11 Beta - Changelog:
+  New:
+    * changed a few things in the internal database (should reduce memory usage around 30%)
+    * added tooltips for GUI buttons
+  Bugfixes:
+    * fixed Steelbraker kill detection (Iron Council / Ulduar) (untested)
 
 
-<h4>0.10 Beta Changelog:</h4>
-<strong>Bugfixes:</strong>
-<ul>
-	<li>fixed Halion kill detection (changed to bossyell because of missing UNIT_DIED-Event in the Twilight Realm)</li>
-</ul>
+0.10 Beta - Changelog:
+  Bugfixes:
+    * fixed Halion kill detection (changed to bossyell because of missing UNIT_DIED-Event in the Twilight Realm)
 
 
-<h4>0.9 Beta Changelog:</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added BossID of Halion (Ruby Sanctum)</li>
-	<li>Added  item icons and tooltips to loot list</li>
-	<li>Added support for TAB and  ESC in raidlog dialogs</li>
-	<li>Added option to enable/disable tracking  of offline players (as boss attendees)</li>
-	<li>Added option to  enable/disable tracking of only first 2/5 groups in 10/25 player raids  (as boss attendees)</li>
-	<li>Updated deDE localization</li>
-</ul>
-<strong>Bugfixes:</strong>
-<ul>
-	<li>fixed raid export for raids without boss kill event</li>
-	<li>fixed a bug, where the guild data may be crawled incorrectly</li>
-	<li>fixed '/mrt o' and '/mrt options' slash commands</li>
-</ul>
+0.9 Beta - Changelog:
+  New:
+    * Added BossID of Halion (Ruby Sanctum)
+    * Added item icons and tooltips to loot list
+    * Added support for TAB and ESC in raidlog dialogs
+    * Added option to enable/disable tracking of offline players (as boss attendees)
+    * Added option to enable/disable tracking of only first 2/5 groups in 10/25 player raids (as boss attendees)
+    * Updated deDE localization
+  Bugfixes:
+    * fixed raid export for raids without boss kill event
+    * fixed a bug, where the guild data may be crawled incorrectly
+    * fixed '/mrt o' and '/mrt options' slash commands
