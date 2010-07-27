@@ -395,6 +395,22 @@ function MRT_GUI_BossDeleteAccept(raidnum, bossnum)
     if (MRT_NumOfCurrentRaid == raidnum) then
         MRT_NumOfLastBoss = #MRT_RaidLog[raidnum]["Bosskills"];
     end
+    -- update data of associated loot
+    local lootDeleteList = {}
+    for i, val in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
+        if (bossnum == val["BossNumber"]) then
+            tinsert(lootDeleteList, i);
+        end
+        if (bossnum < val["BossNumber"]) then
+            val["BossNumber"] = val["BossNumber"] - 1;
+        end
+    end
+    -- sort table - descending order
+    table.sort(lootDeleteList, function(val1, val2) if val1 > val2 then return true; end; end);
+    -- delete loot associated with deleted boss
+    for i, num in ipairs(lootDeleteList) do
+        tremove(MRT_RaidLog[raidnum]["Loot"], num);
+    end
     -- Do a table update, if the displayed raid was modified
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then return; end
