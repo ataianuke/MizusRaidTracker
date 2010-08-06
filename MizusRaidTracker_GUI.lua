@@ -416,7 +416,7 @@ function MRT_GUI_BossDeleteAccept(raidnum, bossnum)
         end
     end
     -- sort table - descending order
-    table.sort(lootDeleteList, function(val1, val2) if val1 > val2 then return true; end; end);
+    table.sort(lootDeleteList, function(val1, val2) return (val1 > val2); end);
     -- delete loot associated with deleted boss
     for i, num in ipairs(lootDeleteList) do
         tremove(MRT_RaidLog[raidnum]["Loot"], num);
