@@ -854,13 +854,6 @@ end
 --            (int, nil, <H, N>) = export all hard-/normalmode events
 --            (int, int, <H, N>) = -> will be treated as (int, int, nil)
 function MRT_CreateRaidExport(raidID, bossID, difficulty)
-    --local dkpstring = MRT_CreateCtrtDkpString(raidID, bossID, difficulty);
-    local dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
-    MRT_ExportFrame_Show(dkpstring);
-end
-
--- create CTRT-compatible DKP-String for the EQDKP CTRT-Import-Plugin / Use boss attendee data for creating join/leave-timestamps
-function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     -- basic "catch bad args" routines
     -- check if bad raidID
     if (MRT_RaidLog[raidID] == nil) then return end;
@@ -871,6 +864,14 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     end
     -- check if bad difficulty-setting
     if ((difficulty ~= nil) and (difficulty ~= "H") and (difficulty ~= "N")) then return end;
+    -- FIXME: Choose the correct export function here
+    local dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
+    -- Show the data export
+    MRT_ExportFrame_Show(dkpstring);
+end
+
+-- create CTRT-compatible DKP-String for the EQDKP CTRT-Import-Plugin / Uses boss attendee data for creating join/leave-timestamps
+function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     -- start creating xml-data!
     local index = 1;
     local realm = MRT_RaidLog[raidID]["Realm"];
@@ -961,7 +962,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         end
     end
     xml = xml.."<note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].."]]></note>";
-    -- check data - goal: create one entry for 100% attendees, create split entries for all others / use join/leave-data, if no boss entry found
+    -- check data - FIXME: goal: create one entry for 100% attendees, create split entries for all others / use join/leave-data, if no boss entry found
     index = 1;
     if (MRT_RaidLog[raidID]["Bosskills"] and #MRT_RaidLog[raidID]["Bosskills"] > 0) then
         xml = xml.."<Join>";
@@ -1053,4 +1054,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     xml = xml.."</Loot>";
     xml = xml.."</RaidInfo>";
     return xml;
+end
+
+function MRT_CreateTextExport(bossID, raidID, difficulty, addFormat)
 end
