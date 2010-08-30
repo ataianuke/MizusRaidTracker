@@ -189,6 +189,8 @@ function MRT_SlashCmdHandler(msg)
         else
             MRT_GetDKPValueFrame:Show();
         end
+    elseif (msg == 'snapshot') then
+        MRT_TakeSnapshot();
     elseif (msg == 'extest') then
         MRT_ExportFrame_Show(MRT_CreateCtrtDkpString(27, nil, nil));
     else
@@ -448,7 +450,7 @@ function MRT_AddBosskill(bossname, man_diff)
         else
             instanceDifficulty = 2;
         end;
-        if (man_diff = "H") then
+        if (man_diff == "H") then
             instanceDifficulty = instanceDifficulty + 2;
         end;
     else
@@ -507,6 +509,15 @@ function MRT_CheckRaidStatusAfterLogin()
         MRT_EndActiveRaid();
         return;
     end
+end
+
+function MRT_TakeSnapshot()
+    if (MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.Core["TakeSnapshot_Error"]);
+        return; 
+    end
+    MRT_CreateNewRaid("Snapshot", 0);
+    MRT_EndActiveRaid();
 end
 
 

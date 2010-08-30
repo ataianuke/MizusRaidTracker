@@ -90,6 +90,8 @@ MRT_L.Core["MB_Yes"] = "Ja";
 MRT_L.Core["MB_No"] = "Nein";
 -- ExportFrame
 MRT_L.Core["Export_Frame_Title"] = "Daten Export"
+-- Errors
+MRT_L.Core["TakeSnapshot_Error"] = "Fehler: Es ist ein aktiver Raid vorhanden. Kein Snapshot möglich."
 
 
 -----------------------------------
