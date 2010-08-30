@@ -446,7 +446,7 @@ function MRT_AddBosskill(bossname, man_diff)
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
     local _, _, instanceDifficulty, _, _, dynDiff, isDyn = GetInstanceInfo();
     if (man_diff) then
-        if (MRT_RaidLog[raidnum]["RaidSize"] == 10) then
+        if (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) then
             instanceDifficulty = 1;
         else
             instanceDifficulty = 2;
