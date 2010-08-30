@@ -177,6 +177,7 @@ end
 
 -- Slashcommand handler
 function MRT_SlashCmdHandler(msg)
+    msg = string.lower(msg);
     if (msg == 'options' or msg == 'o') then
         InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
     elseif (msg == 'dkpcheck') then
@@ -513,11 +514,16 @@ end
 
 function MRT_TakeSnapshot()
     if (MRT_NumOfCurrentRaid) then
-        MRT_Print(MRT_L.Core["TakeSnapshot_Error"]);
+        MRT_Print(MRT_L.Core["TakeSnapshot_CurrentRaidError"]);
+        return; 
+    end
+    if (GetNumRaidMembers() == 0) then
+        MRT_Print(MRT_L.Core["TakeSnapshot_NotInRaidError"]);
         return; 
     end
     MRT_CreateNewRaid("Snapshot", 0);
     MRT_EndActiveRaid();
+    MRT_Print(MRT_L.Core["TakeSnapshot_Done"]);
 end
 
 

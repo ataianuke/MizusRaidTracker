@@ -89,9 +89,11 @@ MRT_L.Core["MB_Cancel"] = "Abbruch";
 MRT_L.Core["MB_Yes"] = "Ja";
 MRT_L.Core["MB_No"] = "Nein";
 -- ExportFrame
-MRT_L.Core["Export_Frame_Title"] = "Daten Export"
--- Errors
-MRT_L.Core["TakeSnapshot_Error"] = "Fehler: Es ist ein aktiver Raid vorhanden. Kein Snapshot möglich."
+MRT_L.Core["Export_Frame_Title"] = "Daten Export";
+-- Snapshot
+MRT_L.Core["TakeSnapshot_Done"] = "Snapshot taken.";
+MRT_L.Core["TakeSnapshot_CurrentRaidError"] = "Fehler: Es ist ein aktiver Raid vorhanden. Kein Snapshot möglich.";
+MRT_L.Core["TakeSnapshot_NotInRaidError"] = "Error: You are not in a raid. No snapshot taken.";
 
 
 -----------------------------------

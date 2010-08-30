@@ -89,9 +89,11 @@ MRT_L.Core["MB_Cancel"] = "Cancel";
 MRT_L.Core["MB_Yes"] = "Yes";
 MRT_L.Core["MB_No"] = "No";
 -- ExportFrame
-MRT_L.Core["Export_Frame_Title"] = "Data export"
--- Errors
-MRT_L.Core["TakeSnapshot_Error"] = "Error: Active raid in progress. No snapshot taken."
+MRT_L.Core["Export_Frame_Title"] = "Data export";
+-- Snapshot
+MRT_L.Core["TakeSnapshot_Done"] = "Snapshot taken.";
+MRT_L.Core["TakeSnapshot_CurrentRaidError"] = "Error: Active raid in progress. No snapshot taken.";
+MRT_L.Core["TakeSnapshot_NotInRaidError"] = "Error: You are not in a raid. No snapshot taken.";
 
 
 -----------------------------------
