@@ -436,11 +436,24 @@ function MRT_RaidRosterUpdate(frame)
     end
 end
 
-function MRT_AddBosskill(bossname)
+-- @param man_diff: used by GUI when a bosskill was added manually
+--                  valid values: "H", "N", nil
+function MRT_AddBosskill(bossname, man_diff)
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
     local _, _, instanceDifficulty, _, _, dynDiff, isDyn = GetInstanceInfo();
-    if (isDyn) then instanceDifficulty = instanceDifficulty + (2 * dynDiff); end;
+    if (man_diff) then
+        if (MRT_RaidLog[raidnum]["RaidSize"] == 10) then
+            instanceDifficulty = 1;
+        else
+            instanceDifficulty = 2;
+        end;
+        if (man_diff = "H") then
+            instanceDifficulty = instanceDifficulty + 2;
+        end;
+    else
+        if (isDyn) then instanceDifficulty = instanceDifficulty + (2 * dynDiff); end;
+    end;
     local trackedPlayers = {};
     local numRaidMembers = GetNumRaidMembers();
     for i = 1, numRaidMembers do

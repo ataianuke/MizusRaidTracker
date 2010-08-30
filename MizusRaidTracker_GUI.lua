@@ -318,7 +318,11 @@ function MRT_GUI_BossAddAccept(raidnum)
     -- add boss to kill list
     -- if boss shall be added as last recent boss kill, just call 'AddBosskill' - else do it manually
     if (hours == 255 and minutes == 255) then
-        MRT_AddBosskill(bossname);
+        if (difficulty == "H") then
+            MRT_AddBosskill(bossname, "H");
+        else
+            MRT_AddBosskill(bossname, "N");
+        end;
     else
         -- prepare bossdata table
         local bossdata = {};
