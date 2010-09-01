@@ -891,17 +891,19 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         local name = val["Name"];
         xml = xml.."<key"..index..">";
         xml = xml.."<name>"..name.."</name>";
-        if (MRT_PlayerDB[realm][name]["Race"]) then
-            xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
-        end
-        if (MRT_PlayerDB[realm][name]["Sex"]) then
-            xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
-        end
-        if (MRT_PlayerDB[realm][name]["Class"]) then
-            xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-        end
-        if (MRT_PlayerDB[realm][name]["Level"]) then
-            xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+        if (MRT_PlayerDB[realm][name]) then
+            if (MRT_PlayerDB[realm][name]["Race"]) then
+                xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+            end
+            if (MRT_PlayerDB[realm][name]["Sex"]) then
+                xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+            end
+            if (MRT_PlayerDB[realm][name]["Class"]) then
+                xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+            end
+            if (MRT_PlayerDB[realm][name]["Level"]) then
+                xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+            end
         end
         xml = xml.."</key"..index..">";
         index = index + 1;
@@ -973,17 +975,19 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                 name = val2;
                 xml = xml.."<key"..index..">";
                 xml = xml.."<player>"..val2.."</player>";
-                if (MRT_PlayerDB[realm][name]["Race"]) then
-                xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
-                end
-                if (MRT_PlayerDB[realm][name]["Sex"]) then
-                    xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
-                end
-                if (MRT_PlayerDB[realm][name]["Class"]) then
-                    xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-                end
-                if (MRT_PlayerDB[realm][name]["Level"]) then
-                    xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+                if (MRT_PlayerDB[realm][name]) then
+                    if (MRT_PlayerDB[realm][name]["Race"]) then
+                    xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+                    end
+                    if (MRT_PlayerDB[realm][name]["Sex"]) then
+                        xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+                    end
+                    if (MRT_PlayerDB[realm][name]["Class"]) then
+                        xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+                    end
+                    if (MRT_PlayerDB[realm][name]["Level"]) then
+                        xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+                    end
                 end
                 xml = xml.."<time>"..MRT_MakeEQDKP_Time(val["Date"] - 10).."</time>";
                 xml = xml.."</key"..index..">";
@@ -1003,17 +1007,19 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             local name = val["Name"];
             xml = xml.."<key"..index..">";
             xml = xml.."<player>"..val["Name"].."</player>";
-            if (MRT_PlayerDB[realm][name]["Race"]) then
-                xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
-            end
-            if (MRT_PlayerDB[realm][name]["Sex"]) then
-                xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
-            end
-            if (MRT_PlayerDB[realm][name]["Class"]) then
-                xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-            end
-            if (MRT_PlayerDB[realm][name]["Level"]) then
-                xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+            if (MRT_PlayerDB[realm][name]) then
+                if (MRT_PlayerDB[realm][name]["Race"]) then
+                    xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+                end
+                if (MRT_PlayerDB[realm][name]["Sex"]) then
+                    xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+                end
+                if (MRT_PlayerDB[realm][name]["Class"]) then
+                    xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+                end
+                if (MRT_PlayerDB[realm][name]["Level"]) then
+                    xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+                end
             end
             xml = xml.."<time>"..MRT_MakeEQDKP_Time(val["Join"]).."</time>";
             xml = xml.."</key"..index..">";
