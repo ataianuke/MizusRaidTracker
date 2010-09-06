@@ -57,6 +57,7 @@ local MRT_Defaults = {
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
+        ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
     },
 };
 
@@ -864,8 +865,15 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     end
     -- check if bad difficulty-setting
     if ((difficulty ~= nil) and (difficulty ~= "H") and (difficulty ~= "N")) then return end;
-    -- FIXME: Choose the correct export function here
-    local dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
+    -- Choose the correct export function here
+    local dkpstring;
+    if (MRT_Options["Export_ExportFormat"] == 1) then
+        dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
+    elseif (MRT_Options["Export_ExportFormat"] == 2) then
+        dkpstring = MRT_CreateTextExport(bossID, raidID, difficulty, nil);
+    elseif (MRT_Options["Export_ExportFormat"] == 3) then
+        dkpstring = MRT_CreateTextExport(bossID, raidID, difficulty, 1);
+    end
     -- Show the data export
     MRT_ExportFrame_Show(dkpstring);
 end
@@ -1062,5 +1070,8 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     return xml;
 end
 
+-- Planned format options:
+-- @param addFormat: nil = plainText, 1 = BBCode, 2 = MediaWiki
 function MRT_CreateTextExport(bossID, raidID, difficulty, addFormat)
+    local export;
 end

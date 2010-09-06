@@ -127,6 +127,15 @@ MRT_L.Options["AP_TrackOfflinePlayers"] = "Track offline players";
 MRT_L.Options["AP_GuildAttendanceDuration"] = "Duration of taking attendance";
 MRT_L.Options["AP_Minutes"] = "minutes";
 
+-- ExportPanel - Title
+MRT_L.Options["EP_Title"] = "Export";
+MRT_L.Options["EP_TitleText"] = "MRT - Export options";
+-- EP - DropDownMenu
+MRT_L.Options["EP_ChooseExport_Title"] = "Export format";
+MRT_L.Options["EP_CTRT_compatible"] = "CT RaidTracker combatible";
+MRT_L.Options["EP_Plain_Text"] = "Plain Text";
+MRT_L.Options["EP_BBCode"] = "BBCode formated Text";
+
 
 -------------------
 --  GUI strings  --

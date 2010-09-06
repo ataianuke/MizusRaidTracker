@@ -49,6 +49,12 @@ function MRT_Options_AttendancePanel_OnLoad(panel)
     InterfaceOptions_AddCategory(panel);
 end
 
+function MRT_Options_ExportPanel_OnLoad(panel)
+    panel.name = MRT_L.Options["EP_Title"];
+    panel.parent = "Mizus RaidTracker";
+    InterfaceOptions_AddCategory(panel);
+end    
+
 
 --------------------------------------------------------
 --  parse values and localization after ADDON_LOADED  --
@@ -63,6 +69,7 @@ function MRT_Options_ParseValues()
     MRT_Options_MainPanel_Debug_CB_Text:SetText(MRT_L.Options["MP_Debug"]);
     -- TrackingPanel
     MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
+    MRT_Options_TrackingPanel_Description:SetText("");
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
@@ -87,6 +94,11 @@ function MRT_Options_ParseValues()
     MRT_Options_AttendancePanel_GroupRestriction_Text:SetText(MRT_L.Options["AP_GroupRestriction"]);
     MRT_Options_AttendancePanel_OfflinePlayers:SetChecked(MRT_Options["Attendance_TrackOffline"]);
     MRT_Options_AttendancePanel_OfflinePlayers_Text:SetText(MRT_L.Options["AP_TrackOfflinePlayers"]);
+    -- ExportPanel
+    MRT_Options_ExportPanel_Title:SetText(MRT_L.Options["EP_TitleText"]);
+    MRT_Options_ExportPanel_Description:SetText("");
+    MRT_Options_ExportPanel_ChooseExport_Title:SetText(MRT_L.Options["EP_ChooseExport_Title"]);
+    MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu();
 end
 
 
@@ -109,6 +121,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Attendance_GuildAttendanceCheckDuration"] = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
     MRT_Options["Attendance_GroupRestriction"] = MRT_Options_AttendancePanel_GroupRestriction:GetChecked();
     MRT_Options["Attendance_TrackOffline"] = MRT_Options_AttendancePanel_OfflinePlayers:GetChecked();
+    -- ExportPanel
+    MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
     -- Check tracking status and adjust to new settings
     local currentRaidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local currentRaidZoneEN = MRT_L.Raidzones[MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"]];
@@ -149,6 +163,8 @@ function MRT_Options_OnCancel(panel)
     MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"].." "..MRT_L.Options["AP_Minutes"]);
     MRT_Options_AttendancePanel_GroupRestriction:SetChecked(MRT_Options["Attendance_GroupRestriction"]);
     MRT_Options_AttendancePanel_OfflinePlayers:SetChecked(MRT_Options["Attendance_TrackOffline"]);
+    -- ExportPanel
+    UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
 end
 
 
@@ -171,4 +187,46 @@ function MRT_Options_AP_GADuration_Slider()
     local sliderValue = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
     local sliderText = sliderValue.." "..MRT_L.Options["AP_Minutes"];
     MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(sliderText);
+end
+
+
+-----------------------
+--  Create function  --
+-----------------------
+function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
+    -- Create DropDownFrame
+    if (not MRT_Options_ExportPanel_ChooseExport_DropDownMenu) then
+        CreateFrame("Frame", "MRT_Options_ExportPanel_ChooseExport_DropDownMenu", MRT_Options_ExportPanel, "UIDropDownMenuTemplate");
+    end
+    -- Anchor DropDownFrame
+    MRT_Options_ExportPanel_ChooseExport_DropDownMenu:ClearAllPoints();
+    MRT_Options_ExportPanel_ChooseExport_DropDownMenu:SetPoint("TOPLEFT", MRT_Options_ExportPanel_ChooseExport_Title, "BOTTOMLEFT", -15, -5);
+    MRT_Options_ExportPanel_ChooseExport_DropDownMenu:Show();
+    -- List of DropDownMenuItems
+    local items = {
+        MRT_L.Options["EP_CTRT_compatible"],
+        MRT_L.Options["EP_Plain_Text"],
+--        MRT_L.Options["EP_BBCode"],
+    }
+    -- Click handler function
+    local function OnClick(self)
+       UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, self:GetID())
+    end
+    -- DropDownMenu initialize function
+    local function initialize(self, level)
+        local info = UIDropDownMenu_CreateInfo()
+        for k,v in pairs(items) do
+            info = UIDropDownMenu_CreateInfo()
+            info.text = v
+            info.value = v
+            info.func = OnClick
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+    -- Setup DropDownMenu
+    UIDropDownMenu_Initialize(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, initialize);
+    UIDropDownMenu_SetWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 200);
+    UIDropDownMenu_SetButtonWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 224);
+    UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
+    UIDropDownMenu_JustifyText(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, "LEFT");
 end
