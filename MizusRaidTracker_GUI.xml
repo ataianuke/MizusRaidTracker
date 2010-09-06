@@ -424,6 +424,14 @@
           <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
+      <Button name="$parent_TakeSnapshot_Button" inherits="MRT_GUI_Button_Template">
+        <Size x="180" y="22"/>
+        <Scripts>
+          <OnClick>MRT_GUI_TakeSnapshot();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "TakeSnapshot");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
+        </Scripts>
+      </Button>
       <Button name="$parent_CloseButton" inherits="UIPanelCloseButton">
         <Anchors>
           <Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$parent"></Anchor>

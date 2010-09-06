@@ -159,6 +159,7 @@ MRT_L.GUI["Button_Export"] = "Export";
 MRT_L.GUI["Button_ExportNormal"] = "Export N";
 MRT_L.GUI["Button_ExportHeroic"] = "Export H";
 MRT_L.GUI["Button_Modify"] = "Modify";
+MRT_L.GUI["Button_TakeSnapshot"] = "Take Snapshot";
 -- button tooltips
 MRT_L.GUI["TT_Raid_Delete"] = "Delete selected raid.";
 MRT_L.GUI["TT_Raid_Export"] = "Export selected raid.";
@@ -175,6 +176,7 @@ MRT_L.GUI["TT_Loot_Modify"] = "Modify data of selected item.";
 MRT_L.GUI["TT_Loot_Delete"] = "Delete selected item.";
 MRT_L.GUI["TT_BA_Add"] = "Add an attendee to the boss attendee list.";
 MRT_L.GUI["TT_BA_Delete"] = "Delete selected boss attendee.";
+MRT_L.GUI["TT_TakeSnapshot"] = "Make a snapshot of the current raidgroup. \nDoesn't work, if raidtracking is in progress. \nIn that case, add a boss event."
 -- status/error messages
 MRT_L.GUI["Can not delete current raid"] = "Error: Kann laufenden Raid nicht l\195\182schen.";
 MRT_L.GUI["No boss selected"] = "Error: Kein Boss ausgew\195\164hlt.";

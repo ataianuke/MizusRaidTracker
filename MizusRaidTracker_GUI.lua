@@ -152,6 +152,8 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_BossAttendees_Add_Button:SetPoint("TOPLEFT", MRT_GUI_BossAttendeesTable.frame, "BOTTOMLEFT", 0, -5);
     MRT_GUIFrame_BossAttendees_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
     MRT_GUIFrame_BossAttendees_Delete_Button:SetPoint("TOP", MRT_GUIFrame_BossAttendees_Add_Button, "BOTTOM", 0, -5);
+    MRT_GUIFrame_TakeSnapshot_Button:SetText(MRT_L.GUI["Button_TakeSnapshot"]);
+    MRT_GUIFrame_TakeSnapshot_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "TOPLEFT", -245, 0);
     -- disable buttons, if function is NYI
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     -- Insert table data
@@ -715,6 +717,11 @@ function MRT_GUI_BossAttendeeDeleteAccept(raidnum, bossnum, attendeenum)
     if (raidnum_selected == raidnum and bossnum_selected == bossnum) then
         MRT_GUI_BossAttendeesTableUpdate(bossnum);
     end
+end
+
+function MRT_GUI_TakeSnapshot()
+    MRT_TakeSnapshot();
+    MRT_GUI_RaidLogTableUpdate();
 end
 
 function MRT_GUI_SetTT(frame, button)
