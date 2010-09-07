@@ -140,6 +140,8 @@ MRT_L.Options["EP_Plain_Text"] = "Plain Text";
 MRT_L.Options["EP_BBCode"] = "BBCode formated Text";
 -- EP - Checkboxes
 MRT_L.Options["EP_CTRT_AddPoorItem"] = "Add a poor item as loot to each boss \n(Bugfix for the EQDKP-CTRT-Import encounter detection)";
+-- EP - ToolTips
+MRT_L.Options["TT_EP_DateTimeTT"] = " %d - day of the month [01-31] \n %m - month [01-12] \n %y - two-digit year [00-99] \n %Y - full year \n %H - hour, using a 24-hour clock [00-23] \n %I - hour, using a 12-hour clock [01-12] \n %M - minute [00-59] \n %S - second [00-59] \n %p - either 'am' or 'pm'";
 
 
 -------------------

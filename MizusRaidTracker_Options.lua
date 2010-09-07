@@ -242,3 +242,18 @@ function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
     UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
     UIDropDownMenu_JustifyText(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, "LEFT");
 end
+
+
+-----------------------
+--  ToolTip handler  --
+-----------------------
+function MRT_Options_SetTT(frame, zone)
+    MRT_Options_TT:SetOwner(frame, "ANCHOR_BOTTOMRIGHT");
+    MRT_Options_TT:SetText(MRT_L.Options["TT_"..zone]);
+    MRT_Options_TT:Show();
+end
+
+function MRT_Options_HideTT()
+    MRT_Options_TT:Hide();
+    MRT_Options_TT:SetOwner(UIParent, "ANCHOR_NONE");
+end

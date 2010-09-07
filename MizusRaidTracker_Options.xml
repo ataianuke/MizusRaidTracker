@@ -417,6 +417,10 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+          <OnEnter>MRT_Options_SetTT(self, "EP_DateTimeTT");</OnEnter>
+          <OnLeave>MRT_Options_HideTT();</OnLeave>
+        </Scripts>
         <FontString inherits="ChatFontNormal"></FontString>
       </EditBox>
     </Frames>
@@ -424,4 +428,5 @@
       <OnLoad>MRT_Options_ExportPanel_OnLoad(self);</OnLoad>
     </Scripts>
   </Frame>
+  <GameTooltip name="MRT_Options_TT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"></GameTooltip>
 </Ui>

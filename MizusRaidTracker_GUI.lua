@@ -724,6 +724,10 @@ function MRT_GUI_TakeSnapshot()
     MRT_GUI_RaidLogTableUpdate();
 end
 
+
+-----------------------
+--  ToolTip handler  --
+-----------------------
 function MRT_GUI_SetTT(frame, button)
     MRT_GUI_TT:SetOwner(frame, "ANCHOR_BOTTOMRIGHT");
     MRT_GUI_TT:SetText(MRT_L.GUI["TT_"..button]);
