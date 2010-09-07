@@ -59,6 +59,7 @@ local MRT_Defaults = {
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
         ["Export_CTRT_AddPoorItem"] = true,                                         -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
+        ["Export_DateTimeFormat"] = "%m/%d/%Y - %H:%M",                             -- lua date syntax - http://www.lua.org/pil/22.1.html
     },
 };
 
@@ -992,7 +993,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         end
     end
     xml = xml.."<note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].."]]></note>";
-    -- check data - FIXME: goal: create one entry for 100% attendees, create split entries for all others / use join/leave-data, if no boss entry found
+    -- check data - goal: create one entry for 100% attendees, create split entries for all others / use join/leave-data, if no boss entry found
     -- idea: create table with player names as keys / run through all bossevents / if player is present, set val++ / if val == #BossEvents, then create only one entry
     -- additionally needed: killtimes of first and last boss (as time index for join/leave)
     index = 1;

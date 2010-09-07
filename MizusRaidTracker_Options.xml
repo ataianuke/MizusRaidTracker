@@ -371,6 +371,13 @@
             </Anchor>
           </Anchors>
         </FontString>
+        <FontString name="$parent_TextExport_Title" inherits="GameFontNormal">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_CTRTExport_Title" relativePoint="BOTTOMLEFT">
+              <Offset y="-50"></Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
       </Layer>
     </Layers>
     <Frames>
@@ -390,6 +397,28 @@
           </Layer>
         </Layers>
       </CheckButton>
+      <EditBox name="$parent_SetDateFormat_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
+        <Size>
+          <AbsDimension x="200" y="26"/>
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_TextExport_Title" relativePoint="BOTTOMLEFT">
+            <Offset x="5" y="-20"></Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                  <Offset x="-5"/>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <FontString inherits="ChatFontNormal"></FontString>
+      </EditBox>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_ExportPanel_OnLoad(self);</OnLoad>

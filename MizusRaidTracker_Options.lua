@@ -102,6 +102,10 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_CTRTExport_Title:SetText(MRT_L.Options["EP_CTRTTitleText"]);
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:SetChecked(MRT_Options["Export_CTRT_AddPoorItem"]);
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB_Text:SetText(MRT_L.Options["EP_CTRT_AddPoorItem"]);
+    MRT_Options_ExportPanel_TextExport_Title:SetText(MRT_L.Options["EP_TextExportTitleText"]);
+    MRT_Options_ExportPanel_SetDateFormat_EB_Text:SetText(MRT_L.Options["EP_SetDateTimeFormat"]);
+    MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
+    MRT_Options_ExportPanel_SetDateFormat_EB:SetCursorPosition(0);                                          -- Editboxes in OptionPanels needs ist Position at 0 - nasty bug.
 end
 
 
@@ -127,6 +131,7 @@ function MRT_Options_OnOkay(panel)
     -- ExportPanel
     MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
     MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
+    MRT_Options["Export_DateTimeFormat"] = MRT_Options_ExportPanel_SetDateFormat_EB:GetText();
     -- Check tracking status and adjust to new settings
     local currentRaidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local currentRaidZoneEN = MRT_L.Raidzones[MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"]];
@@ -170,6 +175,8 @@ function MRT_Options_OnCancel(panel)
     -- ExportPanel
     UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:SetChecked(MRT_Options["Export_CTRT_AddPoorItem"]);
+    MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
+    MRT_Options_ExportPanel_SetDateFormat_EB:SetCursorPosition(0);
 end
 
 

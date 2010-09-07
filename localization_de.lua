@@ -131,9 +131,11 @@ MRT_L.Options["AP_Minutes"] = "Minuten";
 MRT_L.Options["EP_Title"] = "Export";
 MRT_L.Options["EP_TitleText"] = "MRT - Export options";
 MRT_L.Options["EP_CTRTTitleText"] = "CTRT compatible export settings";
+MRT_L.Options["EP_TextExportTitleText"] = "Text export settings";
+MRT_L.Options["EP_SetDateTimeFormat"] = "Set format of date and time";
 -- EP - DropDownMenu
 MRT_L.Options["EP_ChooseExport_Title"] = "Export format";
-MRT_L.Options["EP_CTRT_compatible"] = "CT RaidTracker combatible";
+MRT_L.Options["EP_CTRT_compatible"] = "CT RaidTracker compatible";
 MRT_L.Options["EP_Plain_Text"] = "Plain Text";
 MRT_L.Options["EP_BBCode"] = "BBCode formated Text";
 -- EP - Checkboxes
