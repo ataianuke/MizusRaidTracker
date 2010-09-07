@@ -90,6 +90,8 @@ MRT_L.Core["MB_Yes"] = "Yes";
 MRT_L.Core["MB_No"] = "No";
 -- ExportFrame
 MRT_L.Core["Export_Frame_Title"] = "Data export";
+MRT_L.Core["Export_Explanation"] = "Press Ctrl+C to copy the data to the clipboard.\nPress Ctrl+V to import data in your webbrowser.";
+MRT_L.Core["Export_Button"] = "Close";
 -- Snapshot
 MRT_L.Core["TakeSnapshot_Done"] = "Snapshot taken.";
 MRT_L.Core["TakeSnapshot_CurrentRaidError"] = "Error: Active raid in progress. No snapshot taken.";

@@ -147,8 +147,8 @@
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
-  <Frame name="MRT_ExportFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableKeyboard="true" parent="UIParent">
-    <Size x="366" y="150"/>
+  <Frame name="MRT_ExportFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableKeyboard="true" enableMouse="true" parent="UIParent">
+    <Size x="450" y="300"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
@@ -176,62 +176,65 @@
             </Anchor>
           </Anchors>
         </FontString>
+        <FontString name="$parent_ExplanationText" inherits="GameFontWhite" justifyH="CENTER" justifyV="MIDDLE" text="MRT_ExportFrame_ExplanationText">
+          <Anchors>
+            <Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="$parent">
+              <Offset x="0" y="72"/>
+            </Anchor>
+          </Anchors>
+        </FontString>
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="$parent_EB" historyLines="0" enableKeyboard="true" letters="0">
-        <Size x="250" y="32"/>
+      <ScrollFrame name="$parent_ScrollFrame" inherits="UIPanelScrollFrameTemplate">
+        <Size x="350" y="150"/>
         <Anchors>
-          <Anchor point="CENTER" relativePoint="TOP" relativeTo="$parent">
-            <Offset x="0" y="-52"/>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+            <Offset x="-10" y="-40"/>
           </Anchor>
         </Anchors>
-        <Layers>
-          <Layer level="BACKGROUND">
-            <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
-              <Size>
-                <AbsDimension x="140" y="32"></AbsDimension>
-              </Size>
-              <Anchors>
-                <Anchor point="LEFT">
-                  <Offset>
-                    <AbsDimension x="-15" y="0"></AbsDimension>
-                  </Offset>
-                </Anchor>
-              </Anchors>
-              <TexCoords left="0" right="0.55" top="0" bottom="1.0"></TexCoords>
-            </Texture>
-            <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
-              <Size>
-                <AbsDimension x="140" y="32"></AbsDimension>
-              </Size>
-              <Anchors>
-                <Anchor point="RIGHT">
-                  <Offset>
-                    <AbsDimension x="15" y="0"></AbsDimension>
-                  </Offset>
-                </Anchor>
-              </Anchors>
-              <TexCoords left="0.45" right="1.0" top="0" bottom="1.0"></TexCoords>
-            </Texture>
-          </Layer>
-        </Layers>
         <Scripts>
           <OnEscapePressed>MRT_ExportFrame_Hide();</OnEscapePressed>
         </Scripts>
-        <FontString inherits="ChatFontNormal"/>
-      </EditBox>
+        <ScrollChild>
+          <EditBox name="MRT_ExportFrame_EB" multiLine="true" enableKeyboard="true" letters="0" countInvisibleLetters="true">
+            <Size x="350" y="150"/>
+            <Scripts>
+              <OnEscapePressed>MRT_ExportFrame_Hide();</OnEscapePressed>
+            </Scripts>
+            <FontString inherits="ChatFontNormal"/>            
+          </EditBox>
+        </ScrollChild>
+      </ScrollFrame>
       <Button name="$parent_OKButton" hidden="false" inherits="GameMenuButtonTemplate">
         <Size x="95" y="22"/>
         <Anchors>
-          <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_EB">
-            <Offset x="0" y="-10"/>
+          <Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="$parent">
+            <Offset x="0" y="32"/>
           </Anchor>
         </Anchors>
         <Scripts>
           <OnClick>MRT_ExportFrame_Hide();</OnClick>
         </Scripts>
       </Button>
+      <Frame name="$parent_EB_Background">
+        <Size x="386" y="160"/>
+        <Anchors>
+          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
+            <Offset x="0" y="-35"/>
+          </Anchor>
+        </Anchors>
+        <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+          <EdgeSize val="16"/>
+          <TileSize val="16"/>
+          <BackgroundInsets left="5" right="5" top="5" bottom="5"/>
+        </Backdrop>
+      </Frame>
     </Frames>
+    <Scripts>
+      <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
+      <OnDragStart>self:StartMoving();</OnDragStart>
+      <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+    </Scripts>
   </Frame>
 </Ui>

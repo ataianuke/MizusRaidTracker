@@ -195,12 +195,11 @@ function MRT_SlashCmdHandler(msg)
         end
     elseif (msg == 'snapshot') then
         MRT_TakeSnapshot();
-    elseif (msg == 'extest') then
-        MRT_ExportFrame_Show(MRT_CreateCtrtDkpString(27, nil, nil));
     else
         -- FIXME: print commands
     end
 end
+
 
 ----------------------
 --  Apply Defaults  --
@@ -213,6 +212,7 @@ function MRT_UpdateSavedOptions()
         end
     end
 end
+
 
 ------------------------------------------------
 --  Make configuration changes if neccessary  --
@@ -811,7 +811,8 @@ function MRT_Core_Frames_ParseLocal()
     MRT_GetDKPValueFrame_BankButton:SetText(MRT_L.Core["DKP_Frame_Bank_Button"]);
     MRT_GetDKPValueFrame_DisenchantedButton:SetText(MRT_L.Core["DKP_Frame_Disenchanted_Button"]);
     MRT_ExportFrame_Title:SetText("MRT - "..MRT_L.Core["Export_Frame_Title"]);
-    MRT_ExportFrame_OKButton:SetText(MRT_L.Core["DKP_Frame_OK_Button"]);
+    MRT_ExportFrame_ExplanationText:SetText(MRT_L.Core["Export_Explanation"]);
+    MRT_ExportFrame_OKButton:SetText(MRT_L.Core["Export_Button"]);
 end
 
 -- GetNPCID - returns the NPCID or nil, if GUID was no NPC
@@ -835,6 +836,7 @@ end
 ------------------------------
 function MRT_ExportFrame_Show(export)
     MRT_ExportFrame_EB:SetText(export)
+    MRT_ExportFrame_EB:SetCursorPosition(MRT_ExportFrame_EB:GetNumLetters());
     MRT_ExportFrame_EB:HighlightText();
     MRT_ExportFrame:Show();
 end
