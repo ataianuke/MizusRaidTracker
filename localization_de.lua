@@ -130,11 +130,14 @@ MRT_L.Options["AP_Minutes"] = "Minuten";
 -- ExportPanel - Title
 MRT_L.Options["EP_Title"] = "Export";
 MRT_L.Options["EP_TitleText"] = "MRT - Export options";
+MRT_L.Options["EP_CTRTTitleText"] = "CTRT compatible export settings";
 -- EP - DropDownMenu
 MRT_L.Options["EP_ChooseExport_Title"] = "Export format";
 MRT_L.Options["EP_CTRT_compatible"] = "CT RaidTracker combatible";
 MRT_L.Options["EP_Plain_Text"] = "Plain Text";
 MRT_L.Options["EP_BBCode"] = "BBCode formated Text";
+-- EP - Checkboxes
+MRT_L.Options["EP_CTRT_AddPoorItem"] = "Add a poor item as loot to each boss \n(Bugfix for the EQDKP-CTRT-Import encounter detection)";
 
 
 -------------------

@@ -58,6 +58,7 @@ local MRT_Defaults = {
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
+        ["Export_CTRT_AddPoorItem"] = true,                                         -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
     },
 };
 
@@ -917,6 +918,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         index = index + 1;
     end
     xml = xml.."</PlayerInfos>";
+    local bossListToAddPoorItems = {};
     if (MRT_RaidLog[raidID]["Bosskills"]) then
         if ((bossID == nil) and (difficulty == nil)) then
             xml = xml.."<BossKills>";
@@ -931,6 +933,12 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                 end
                 xml = xml.."</attendees>";
                 xml = xml.."</key"..idx..">";
+                local addBossData = {
+                    name = val["Name"],
+                    difficulty = val["Difficulty"],
+                    datetime = MRT_MakeEQDKP_Time(val["Date"]),
+                };
+                tinsert(bossListToAddPoorItems, addBossData);
             end
             xml = xml.."</BossKills>";
         elseif (bossID) then
@@ -943,6 +951,12 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                 xml = xml.."<key"..idx.."><name>"..val.."</name></key"..idx..">";
             end
             xml = xml.."</attendees></key1></BossKills>";
+            local addBossData = {
+                name = MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"],
+                difficulty = MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"],
+                datetime = MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]),
+            };
+            tinsert(bossListToAddPoorItems, addBossData);
         else
             -- difficulties on functionside are "H" and "N"
             local first_boss = true;
@@ -964,7 +978,13 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                     xml = xml.."</attendees>";
                     xml = xml.."</key"..index..">";
                     index = index + 1;
-                end
+                    local addBossData = {
+                        name = val["Name"],
+                        difficulty = val["Difficulty"],
+                        datetime = MRT_MakeEQDKP_Time(val["Date"]),
+                    };
+                    tinsert(bossListToAddPoorItems, addBossData);
+                    end
             end
             if (first_boss == false) then
                 xml = xml.."</BossKills>";
@@ -1065,13 +1085,31 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             index = index + 1;
         end
     end
+    -- EQDKP-CTRT-Import-Fix: If option is set, add one poor item to each boss
+    if (MRT_Options["Export_CTRT_AddPoorItem"]) then
+        for idx, val in ipairs(bossListToAddPoorItems) do
+            xml = xml.."<key"..index..">";
+            xml = xml.."<ItemName>Destroyed Magic Item</ItemName>";
+            xml = xml.."<ItemID>35788:0:0:0:0:0:0:0:80</ItemID>";
+            xml = xml.."<Color>ff9d9d9d</Color>";
+            xml = xml.."<Count>1</Count>";
+            xml = xml.."<Player>disenchanted</Player>";
+            xml = xml.."<Costs>0</Costs>";
+            xml = xml.."<Time>"..val["datetime"].."</Time>";
+            xml = xml.."<Difficulty>"..val["difficulty"].."</Difficulty>";
+            xml = xml.."<Boss>"..val["name"].."</Boss>";
+            xml = xml.."<Note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..val["name"].." - 0 DKP]]></Note>";
+            xml = xml.."</key"..index..">";
+            index = index + 1;
+        end
+    end
     xml = xml.."</Loot>";
     xml = xml.."</RaidInfo>";
     return xml;
 end
 
 -- Planned format options:
--- @param addFormat: nil = plainText, 1 = BBCode, 2 = MediaWiki
+-- @param addFormat: nil = plainText, 1 = BBCode(NYI), 2 = MediaWiki(NYI)
 function MRT_CreateTextExport(bossID, raidID, difficulty, addFormat)
     local export;
 end
