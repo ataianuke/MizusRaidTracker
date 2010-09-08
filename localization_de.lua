@@ -92,6 +92,11 @@ MRT_L.Core["MB_No"] = "Nein";
 MRT_L.Core["Export_Frame_Title"] = "Daten Export";
 MRT_L.Core["Export_Explanation"] = "Press Ctrl+C to copy the data to the clipboard.\nPress Ctrl+V to import data in your webbrowser.";
 MRT_L.Core["Export_Button"] = "Close";
+-- Text Export Local
+MRT_L.Core["Export_Attendees"] = "Teilnehmer";
+MRT_L.Core["Export_Heroic"] = "Heroic";
+MRT_L.Core["Export_Loot"] = "Loot";
+MRT_L.Core["Export_Normal"] = "Normal";
 -- Snapshot
 MRT_L.Core["TakeSnapshot_Done"] = "Snapshot taken.";
 MRT_L.Core["TakeSnapshot_CurrentRaidError"] = "Fehler: Es ist ein aktiver Raid vorhanden. Kein Snapshot möglich.";

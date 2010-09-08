@@ -59,7 +59,8 @@ local MRT_Defaults = {
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
         ["Export_CTRT_AddPoorItem"] = true,                                         -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
-        ["Export_DateTimeFormat"] = "%m/%d/%Y - %H:%M",                             -- lua date syntax - http://www.lua.org/pil/22.1.html
+        ["Export_DateTimeFormat"] = "%m/%d/%Y",                                     -- lua date syntax - http://www.lua.org/pil/22.1.html
+        ["Export_Currency"] = "DKP",
     },
 };
 
@@ -874,9 +875,9 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     if (MRT_Options["Export_ExportFormat"] == 1) then
         dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
     elseif (MRT_Options["Export_ExportFormat"] == 2) then
-        dkpstring = MRT_CreateTextExport(bossID, raidID, difficulty, nil);
+        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, nil);
     elseif (MRT_Options["Export_ExportFormat"] == 3) then
-        dkpstring = MRT_CreateTextExport(bossID, raidID, difficulty, 1);
+        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 1);
     end
     -- Show the data export
     MRT_ExportFrame_Show(dkpstring);
@@ -965,7 +966,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             local first_boss = true;
             local index = 1;
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
-                if ((val["Difficulty"] == 1 or val["Difficulty"] == 2) and difficulty == "N") or ((val["Difficulty"] == 3 or val["Difficulty"] == 4) and difficulty == "H") then
+                if ((val["Difficulty"] < 3) and difficulty == "N") or ((val["Difficulty"] > 2) and difficulty == "H") then
                     if (first_boss) then
                         xml = xml.."<BossKills>";
                         first_boss = false;
@@ -1171,6 +1172,74 @@ end
 
 -- Planned format options:
 -- @param addFormat: nil = plainText, 1 = BBCode(NYI), 2 = MediaWiki(NYI)
-function MRT_CreateTextExport(bossID, raidID, difficulty, addFormat)
-    local export;
+function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
+    -- Generate generic getBossData-Function:
+    local function getBossData(raidID, bossID, addFormat)
+        -- Set up vars, create sorted playerList
+        local bossData = "";
+        local isFirstItem = true;
+        local playerList = MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"];
+        table.sort(playerList);
+        -- Create data
+        bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].." - ";
+        if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] < 3) then
+            bossData = bossData..MRT_L.Core["Export_Normal"];
+        else
+            bossData = bossData..MRT_L.Core["Export_Heroic"];
+        end
+        bossData = bossData.."\n";
+        bossData = bossData..MRT_L.Core["Export_Attendees"].."("..tostring(#playerList).."):\n";
+        bossData = bossData..table.concat(playerList, ", ");
+        bossData = bossData.."\n\n";
+        for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
+            if (val["BossNumber"] == bossID) then
+                if (isFirstItem) then bossData = bossData..MRT_L.Core["Export_Loot"]..":\n"; isFirstItem = false; end
+                bossData = bossData.."- "..val["ItemName"].." - "..val["DKPValue"].." "..MRT_Options["Export_Currency"].." - "..val["Looter"].."\n";
+            end
+        end
+        bossData = bossData.."\n\n";
+        return bossData;
+    end
+    -- Start creating export data
+    local export = "";
+    export = export..date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]);
+    export = export.." - "..MRT_RaidLog[raidID]["RaidZone"].." ("..MRT_RaidLog[raidID]["RaidSize"]..")\n\n";
+    -- If boss events are present, create a list of boss events
+    local bossDataExist = nil;
+    if (MRT_RaidLog[raidID]["Bosskills"] and #MRT_RaidLog[raidID]["Bosskills"] > 0) then
+        if ((bossID == nil) and (difficulty == nil)) then
+            for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                export = export..getBossData(raidID, idx);
+            end
+            bossDataExist = true;
+        elseif (bossID) then
+            export = export..getBossData(raidID, bossID);
+            bossDataExist = true;
+        else
+            for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                if ((val["Difficulty"] < 3) and difficulty == "N") or ((val["Difficulty"] > 2) and difficulty == "H") then
+                    export = export..getBossData(raidID, idx);
+                    bossDataExist = true;
+                end
+            end
+        end
+    end
+    -- If no boss events are present, create a list of raid atendees
+    if (not bossDataExist) then
+        -- Create list, remove duplicates, sort list, add list to export data 
+        -- Very dirty hack for sorting out duplicates, i know....
+        local keyPlayerList = {};
+        local numPlayerList = {};
+        for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+            keyPlayerList[val["Name"]] = val["Name"];
+        end
+        for key, val in pairs(keyPlayerList) do
+            tinsert(numPlayerList, val);
+        end
+        table.sort(numPlayerList);
+        -- Add export data
+        export = export..MRT_L.Core["Export_Attendees"].."("..tostring(#numPlayerList).."):\n";
+        export = export..table.concat(numPlayerList, ", ");
+    end
+    return export;
 end

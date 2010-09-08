@@ -92,6 +92,11 @@ MRT_L.Core["MB_No"] = "No";
 MRT_L.Core["Export_Frame_Title"] = "Data export";
 MRT_L.Core["Export_Explanation"] = "Press Ctrl+C to copy the data to the clipboard.\nPress Ctrl+V to import data in your webbrowser.";
 MRT_L.Core["Export_Button"] = "Close";
+-- Text Export Local
+MRT_L.Core["Export_Attendees"] = "Attendees";
+MRT_L.Core["Export_Heroic"] = "Heroic";
+MRT_L.Core["Export_Loot"] = "Loot";
+MRT_L.Core["Export_Normal"] = "Normal";
 -- Snapshot
 MRT_L.Core["TakeSnapshot_Done"] = "Snapshot taken.";
 MRT_L.Core["TakeSnapshot_CurrentRaidError"] = "Error: Active raid in progress. No snapshot taken.";
