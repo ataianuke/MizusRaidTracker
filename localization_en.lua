@@ -144,7 +144,7 @@ MRT_L.Options["EP_SetDateTimeFormat"] = "Set format of date and time";
 MRT_L.Options["EP_ChooseExport_Title"] = "Export format";
 MRT_L.Options["EP_CTRT_compatible"] = "CT RaidTracker compatible";
 MRT_L.Options["EP_Plain_Text"] = "Plain Text";
-MRT_L.Options["EP_BBCode"] = "BBCode formated Text";
+MRT_L.Options["EP_BBCode"] = "BBCode formatted Text";
 -- EP - Checkboxes
 MRT_L.Options["EP_CTRT_AddPoorItem"] = "Add a poor item as loot to each boss \n(Bugfix for the EQDKP-CTRT-Import encounter detection)";
 -- EP - ToolTips

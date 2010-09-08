@@ -1174,19 +1174,31 @@ end
 -- @param addFormat: nil = plainText, 1 = BBCode(NYI), 2 = MediaWiki(NYI)
 function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
     -- Generate generic getBossData-Function:
-    local function getBossData(raidID, bossID, addFormat)
+    local function getBossData(raidID, bossID)
         -- Set up vars, create sorted playerList
         local bossData = "";
         local isFirstItem = true;
         local playerList = MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"];
         table.sort(playerList);
         -- Create data
+        -- Begin boss headline formatting
+        if (addFormat == 1) then
+            bossData = bossData.."[b]";
+        elseif (addFormat == 2) then
+        end
+        -- Boss headline
         bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].." - ";
         if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] < 3) then
             bossData = bossData..MRT_L.Core["Export_Normal"];
         else
             bossData = bossData..MRT_L.Core["Export_Heroic"];
         end
+        -- End boss headline formatting
+        if (addFormat == 1) then
+            bossData = bossData.."[/b]";
+        elseif (addFormat == 2) then
+        end
+        -- End of boss headline
         bossData = bossData.."\n";
         bossData = bossData..MRT_L.Core["Export_Attendees"].."("..tostring(#playerList).."):\n";
         bossData = bossData..table.concat(playerList, ", ");
@@ -1202,8 +1214,21 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
     end
     -- Start creating export data
     local export = "";
+    -- Begin headline formatting
+    if (addFormat == 1) then
+        export = export.."[u][b]";
+    elseif (addFormat == 2) then
+    end
+    -- Begin headline text
     export = export..date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]);
-    export = export.." - "..MRT_RaidLog[raidID]["RaidZone"].." ("..MRT_RaidLog[raidID]["RaidSize"]..")\n\n";
+    export = export.." - "..MRT_RaidLog[raidID]["RaidZone"].." ("..MRT_RaidLog[raidID]["RaidSize"]..")";
+    -- End headline formatting
+    if (addFormat == 1) then
+        export = export.."[/b][/u]";
+    elseif (addFormat == 2) then
+    end
+    -- End of headline
+    export = export.."\n\n";
     -- If boss events are present, create a list of boss events
     local bossDataExist = nil;
     if (MRT_RaidLog[raidID]["Bosskills"] and #MRT_RaidLog[raidID]["Bosskills"] > 0) then
