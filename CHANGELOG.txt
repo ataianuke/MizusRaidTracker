@@ -1,12 +1,30 @@
+0.15 Beta - Changelog:
+  New:
+    * Added two new export formats: plain text and BBCode formatted text (choose your export format in the options panel)
+    * Added new option panel for export options
+    * CTRT-Export: Added option for automatically adding one item of poor item quality to each boss at data export. This should fix a bug in the EQDKP-CTRT-Import-Plugin boss detection. Boss detection fails, if no loot is connected to a boss event (i.e. attendance checks).
+    * Added settings for text export
+    * Added function to make a snapshot of the current raid composition
+    * Added slash command for taking a snapshot (/mrt snapshot)
+    * Added GUI button for taking a snapshot
+  Changes:
+    * Changed slash command handler to work with uppercase and mixed upper-/lowercase commands
+    * Changed DataExportFrame to support multiline export data
+    * CTRT-Export: Optimized the length of the export string
+  Bug Fixes:
+    * Some manually added boss events were saved with wrong difficulty
+    * Fixed export-error, which happened if extended information in playerDB is missing
+    
+
 0.14 Beta - Changelog:
-  Bugfixes:
+  Bug Fixes:
     * fixed path of lib-ScrollingTable (embedded library) (Ticket ID1 and 2 - thanks to Kanjou)
 
 
 0.12 Beta - Changelog:
   New:
     * Implemented dialogs for manually adding boss entries to the raidlog
-  Bugfixes:
+  Bug Fixes:
     * Fixed wrong loot assignments after deleting individual boss entries
     
 
@@ -14,12 +32,12 @@
   New:
     * Changed a few things in the internal database (should reduce memory usage around 30%)
     * Added tooltips for GUI buttons
-  Bugfixes:
+  Bug Fixes:
     * Fixed Steelbraker kill detection (Iron Council / Ulduar) (untested)
 
 
 0.10 Beta - Changelog:
-  Bugfixes:
+  Bug Fixes:
     * Fixed Halion kill detection (changed to bossyell because of missing UNIT_DIED-Event in the Twilight Realm)
 
 
@@ -31,7 +49,7 @@
     * Added option to enable/disable tracking of offline players (as boss attendees)
     * Added option to enable/disable tracking of only first 2/5 groups in 10/25 player raids (as boss attendees)
     * Updated deDE localization
-  Bugfixes:
+  Bug Fixes:
     * Fixed raid export for raids without boss kill event
     * Fixed a bug, where the guild data may be crawled incorrectly
     * Fixed '/mrt o' and '/mrt options' slash commands
