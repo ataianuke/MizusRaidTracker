@@ -105,7 +105,7 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_TextExport_Title:SetText(MRT_L.Options["EP_TextExportTitleText"]);
     MRT_Options_ExportPanel_SetDateFormat_EB_Text:SetText(MRT_L.Options["EP_SetDateTimeFormat"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
-    MRT_Options_ExportPanel_SetDateFormat_EB:SetCursorPosition(0);                                          -- Editboxes in OptionPanels needs ist Position at 0 - nasty bug.
+    MRT_Options_ExportPanel_SetDateFormat_EB:SetCursorPosition(0);                                          -- Editboxes in OptionPanels needs its Position at 0 - nasty bug.
 end
 
 

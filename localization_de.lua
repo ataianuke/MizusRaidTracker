@@ -76,7 +76,7 @@ MRT_L.Core["DKP_Frame_Bank_Button"] = "Bank";
 MRT_L.Core["DKP_Frame_Disenchanted_Button"] = "Entzaubert";
 -- guild attendance
 MRT_L.Core["GuildAttendanceBossDownText"] = "%s down!";
-MRT_L.Core["GuildAttendanceAnnounceText"] = "Flüstert mir den Namen eures Mainchars, um zur DKP-Liste hinzugefügt zu werden.";
+MRT_L.Core["GuildAttendanceAnnounceText"] = "Fl\195\188stert mir den Namen eures Mainchars, um zur DKP-Liste hinzugef\195\188gt zu werden.";
 MRT_L.Core["GuildAttendanceRemainingTimeText"] = "%d Minuten verbleibend.";
 MRT_L.Core["GuildAttendanceTimeUpText"] = "Wer mich jetzt noch nicht angefl\195\188ster hat, ist zu sp\195\164t!";
 MRT_L.Core["GuildAttendanceBossEntry"] = "Teilnehmer-Check";
@@ -158,6 +158,7 @@ MRT_L.GUI["Header_Title"] = "MRT - Raidlog";
 MRT_L.GUI["Tables_RaidLogTitle"] = "Raidliste";
 MRT_L.GUI["Tables_RaidAttendeesTitle"] = "Raidteilnehmer";
 MRT_L.GUI["Tables_RaidBosskillsTitle"] = "Raidbosskills";
+MRT_L.GUI["Tables_RaidLootTitle"] = "Raidloot";
 MRT_L.GUI["Tables_BossLootTitle"] = "Bossloot";
 MRT_L.GUI["Tables_BossAttendeesTitle"] = "Bossteilnehmer";
 -- table col names

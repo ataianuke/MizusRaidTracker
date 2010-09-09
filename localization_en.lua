@@ -158,7 +158,8 @@ MRT_L.GUI["Header_Title"] = "MRT - Raidlog";
 MRT_L.GUI["Tables_RaidLogTitle"] = "Raid list";
 MRT_L.GUI["Tables_RaidAttendeesTitle"] = "Raid attendees";
 MRT_L.GUI["Tables_RaidBosskillsTitle"] = "Raid bosskills";
-MRT_L.GUI["Tables_BossLootTitle"] = "Boss Loot";
+MRT_L.GUI["Tables_RaidLootTitle"] = "Raid loot";
+MRT_L.GUI["Tables_BossLootTitle"] = "Boss loot";
 MRT_L.GUI["Tables_BossAttendeesTitle"] = "Boss attendees";
 -- table col names
 MRT_L.GUI["Col_Num"] = "#";
