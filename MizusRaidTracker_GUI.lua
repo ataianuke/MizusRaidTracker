@@ -37,6 +37,11 @@ local ScrollingTable = LibStub("ScrollingTable");
 local MRT_GUI_RaidLogTableSelection = nil;
 local MRT_GUI_RaidBosskillsTableSelection = nil;
 
+local lastShownNumOfRaids = nil;
+local lastSelectedRaidNum = nil;
+local lastShownNumOfBosses = nil;
+local lastSelectedBossNum = nil;
+
 local msgbox;
 
 -- table definitions
@@ -168,7 +173,13 @@ function MRT_GUI_Toggle()
     if (not MRT_GUIFrame:IsShown()) then
         MRT_GUIFrame:Show();
         MRT_GUIFrame:SetScript("OnUpdate", function() MRT_GUI_OnUpdateHandler(); end);
-        MRT_GUI_CompleteTableUpdate();
+        if (lastShownNumOfRaids ~= #MRT_RaidLog) then
+            MRT_GUI_CompleteTableUpdate();
+        elseif (lastSelectedRaidNum and lastShownNumOfBosses ~= #MRT_RaidLog[lastSelectedRaidNum]["Bosskills"]) then
+            MRT_GUI_RaidDetailsTableUpdate(lastSelectedRaidNum);
+        else
+            MRT_GUI_BossDetailsTableUpdate(lastSelectedBossNum);
+        end
     else
         MRT_GUIFrame:Hide();
         MRT_GUIFrame:SetScript("OnUpdate", nil);
@@ -720,8 +731,10 @@ function MRT_GUI_BossAttendeeDeleteAccept(raidnum, bossnum, attendeenum)
 end
 
 function MRT_GUI_TakeSnapshot()
-    MRT_TakeSnapshot();
-    MRT_GUI_RaidLogTableUpdate();
+    local status = MRT_TakeSnapshot();
+    if (status) then
+        MRT_GUI_RaidLogTableUpdate();
+    end
 end
 
 
@@ -793,15 +806,14 @@ end
 function MRT_GUI_RaidLogTableUpdate()
     if (MRT_RaidLog == nil) then return; end
     local MRT_GUI_RaidLogTableData = {};
-    local MRT_RaidLogSize = #MRT_RaidLog;
     -- insert reverse order
     for i, v in ipairs(MRT_RaidLog) do
         MRT_GUI_RaidLogTableData[i] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
-        --MRT_GUI_RaidLogTableData[(MRT_RaidLogSize-i+1)] = {i, date("%m/%d %H:%M", v["StartTime"]), v["RaidZone"], v["RaidSize"]};
     end
     table.sort(MRT_GUI_RaidLogTableData, function(a, b) return (a[1] > b[1]); end);
     MRT_GUI_RaidLogTable:ClearSelection();
     MRT_GUI_RaidLogTable:SetData(MRT_GUI_RaidLogTableData, true);
+    lastShownNumOfRaids = #MRT_RaidLog;
 end
 
 -- update raid attendees table
@@ -832,16 +844,16 @@ function MRT_GUI_RaidBosskillsTableUpdate(raidnum)
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
             if (v["Difficulty"] > 2) then
                 MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
-                --MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
             else
                 MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
-                --MRT_GUI_RaidBosskillsTableData[(MRT_BosskillsCount-i+1)] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
             end
         end
     end
     table.sort(MRT_GUI_RaidBosskillsTableData, function(a, b) return (a[1] > b[1]); end);
     MRT_GUI_RaidBosskillsTable:ClearSelection();
     MRT_GUI_RaidBosskillsTable:SetData(MRT_GUI_RaidBosskillsTableData, true);
+    lastSelectedRaidNum = raidnum;
+    lastShownNumOfBosses = MRT_BosskillsCount;
 end
 
 -- update bossloot table
@@ -877,6 +889,7 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
     table.sort(MRT_GUI_BossLootTableData, function(a, b) return (a[3] < b[3]); end);
     MRT_GUI_BossLootTable:ClearSelection();
     MRT_GUI_BossLootTable:SetData(MRT_GUI_BossLootTableData, true);
+    lastSelectedBossNum = bossnum;
 end
 
 -- update bossattendee table

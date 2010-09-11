@@ -519,15 +519,16 @@ end
 function MRT_TakeSnapshot()
     if (MRT_NumOfCurrentRaid) then
         MRT_Print(MRT_L.Core["TakeSnapshot_CurrentRaidError"]);
-        return; 
+        return false; 
     end
     if (GetNumRaidMembers() == 0) then
         MRT_Print(MRT_L.Core["TakeSnapshot_NotInRaidError"]);
-        return; 
+        return false; 
     end
     MRT_CreateNewRaid("Snapshot", 0);
     MRT_EndActiveRaid();
     MRT_Print(MRT_L.Core["TakeSnapshot_Done"]);
+    return true;
 end
 
 
