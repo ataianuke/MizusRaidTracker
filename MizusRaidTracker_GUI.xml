@@ -1,37 +1,9 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
  http://wowprogramming.com/FrameXML/UI.xsd">
   <Script file="MizusRaidTracker_GUI.lua"/>
-  <EditBox name="MRT_GUI_Editbox_Template" virtual="true" historyLines="0" enableKeyboard="true" enableMouse="true" letters="400">
+  <EditBox name="MRT_GUI_Editbox_Template" inherits="InputBoxTemplate" virtual="true" historyLines="0" enableKeyboard="true" enableMouse="true" letters="400">
     <Size x="250" y="32"/>
     <Layers>
-      <Layer level="BACKGROUND">
-        <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
-          <Size>
-            <AbsDimension x="140" y="32"></AbsDimension>
-          </Size>
-          <Anchors>
-            <Anchor point="LEFT">
-              <Offset>
-                <AbsDimension x="-15" y="0"></AbsDimension>
-              </Offset>
-            </Anchor>
-          </Anchors>
-          <TexCoords left="0" right="0.55" top="0" bottom="1.0"></TexCoords>
-        </Texture>
-        <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
-          <Size>
-            <AbsDimension x="140" y="32"></AbsDimension>
-          </Size>
-          <Anchors>
-            <Anchor point="RIGHT">
-              <Offset>
-                <AbsDimension x="15" y="0"></AbsDimension>
-              </Offset>
-            </Anchor>
-          </Anchors>
-          <TexCoords left="0.45" right="1.0" top="0" bottom="1.0"></TexCoords>
-        </Texture>
-      </Layer>
       <Layer level="OVERLAY">
         <FontString name="$parent_Text" inherits="ChatFontNormal" text="FIXME!">
           <Anchors>

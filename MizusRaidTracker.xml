@@ -46,43 +46,13 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="$parent_EB" historyLines="0" enableKeyboard="true" letters="100">
+      <EditBox name="$parent_EB" inherits="InputBoxTemplate" historyLines="0" enableKeyboard="true" letters="100">
         <Size x="250" y="32"/>
         <Anchors>
           <Anchor point="CENTER" relativePoint="TOP" relativeTo="$parent">
             <Offset x="0" y="-75"/>
           </Anchor>
         </Anchors>
-        <Layers>
-          <Layer level="BACKGROUND">
-            <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
-              <Size>
-                <AbsDimension x="140" y="32"></AbsDimension>
-              </Size>
-              <Anchors>
-                <Anchor point="LEFT">
-                  <Offset>
-                    <AbsDimension x="-15" y="0"></AbsDimension>
-                  </Offset>
-                </Anchor>
-              </Anchors>
-              <TexCoords left="0" right="0.55" top="0" bottom="1.0"></TexCoords>
-            </Texture>
-            <Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
-              <Size>
-                <AbsDimension x="140" y="32"></AbsDimension>
-              </Size>
-              <Anchors>
-                <Anchor point="RIGHT">
-                  <Offset>
-                    <AbsDimension x="15" y="0"></AbsDimension>
-                  </Offset>
-                </Anchor>
-              </Anchors>
-              <TexCoords left="0.45" right="1.0" top="0" bottom="1.0"></TexCoords>
-            </Texture>
-          </Layer>
-        </Layers>
         <FontString inherits="ChatFontNormal"/>
       </EditBox>
       <Button name="$parent_OKButton" hidden="false" inherits="GameMenuButtonTemplate">
