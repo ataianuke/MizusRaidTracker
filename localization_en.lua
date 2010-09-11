@@ -56,7 +56,7 @@ MRT_L.Bossyells = {
         
     -- Icecrown Citadel
     ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Gunship Battle", -- Muradin
-    ["Damage control! Put those fires out! You haven't seen the last of the horde!"] = "Gunship Battle", -- Saurfang
+    ["The Alliance falter. Onward to the Lich King!"] = "Gunship Battle", -- Saurfang
     ["My queen, they... come."] = "Blood Prince Council", -- Prince Keleseth
     ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker", -- Dreamwalker
 
