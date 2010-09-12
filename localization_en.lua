@@ -117,6 +117,7 @@ MRT_L.Options = {
 	EP_CTRT_AddPoorItem = "Add a poor item as loot to each boss \n(Bugfix for the EQDKP-CTRT-Import encounter detection)",
 	EP_CTRT_compatible = "CT RaidTracker compatible",
 	EP_CTRTTitleText = "CTRT compatible export settings",
+    EP_Currency = "Currency",
 	EP_Plain_Text = "Plain Text",
 	EP_SetDateTimeFormat = "Set format of date and time",
 	EP_TextExportTitleText = "Text export settings",

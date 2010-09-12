@@ -79,7 +79,7 @@
           <OnEnter>MRT_Options_SetTT(self, "MP_SlashCmd");</OnEnter>
           <OnLeave>MRT_Options_HideTT();</OnLeave>
         </Scripts>
-        <FontString inherits="ChatFontNormal"></FontString>
+        <FontString inherits="ChatFontNormal"/>
       </EditBox>
     </Frames>
     <Scripts>
@@ -443,7 +443,25 @@
           <OnEnter>MRT_Options_SetTT(self, "EP_DateTimeTT");</OnEnter>
           <OnLeave>MRT_Options_HideTT();</OnLeave>
         </Scripts>
-        <FontString inherits="ChatFontNormal"></FontString>
+        <FontString inherits="ChatFontNormal"/>
+      </EditBox>
+      <EditBox name="$parent_Currency_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="100" enableKeyboard="true" enableMouse="true">
+        <Size x="200" y="26"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_SetDateFormat_EB" x="0" y="-20"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Currency - FIXME!">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                  <Offset x="-5"/>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <FontString inherits="ChatFontNormal"/>
       </EditBox>
     </Frames>
     <Scripts>

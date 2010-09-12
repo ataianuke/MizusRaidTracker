@@ -109,6 +109,9 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_SetDateFormat_EB_Text:SetText(MRT_L.Options["EP_SetDateTimeFormat"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetCursorPosition(0);                                          -- Editboxes in OptionPanels needs its Position at 0 - nasty bug.
+    MRT_Options_ExportPanel_Currency_EB_Text:SetText(MRT_L.Options["EP_Currency"]);
+    MRT_Options_ExportPanel_Currency_EB:SetText(MRT_Options["Export_Currency"]);
+    MRT_Options_ExportPanel_Currency_EB:SetCursorPosition(0);        
 end
 
 
@@ -136,6 +139,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
     MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
     MRT_Options["Export_DateTimeFormat"] = MRT_Options_ExportPanel_SetDateFormat_EB:GetText();
+    MRT_Options["Export_Currency"] = MRT_Options_ExportPanel_Currency_EB:GetText();
     -- Set slash command to new value
     SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
     -- Check tracking status and adjust to new settings
@@ -185,6 +189,8 @@ function MRT_Options_OnCancel(panel)
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:SetChecked(MRT_Options["Export_CTRT_AddPoorItem"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetCursorPosition(0);
+    MRT_Options_ExportPanel_Currency_EB:SetText(MRT_Options["Export_Currency"]);
+    MRT_Options_ExportPanel_Currency_EB:SetCursorPosition(0);      
 end
 
 
