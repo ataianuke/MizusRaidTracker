@@ -40,14 +40,12 @@ MRT_Options = {};
 MRT_RaidLog = {};
 MRT_PlayerDB = {};
 
-SLASH_MIZUSRAIDTRACKER1 = "/mrt";
-SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
-
 local MRT_Defaults = {
     ["Options"] = {
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
         ["General_Version"] = GetAddOnMetadata("MizusRaidTracker", "Version"),      -- 
         ["General_DebugEnabled"] = nil,                                             --
+        ["General_SlashCmdHandler"] = "mrt",                                        --
         ["Attendance_GuildAttendanceCheckEnabled"] = nil,                           -- 
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
         ["Attendance_GroupRestriction"] = nil,                                      -- if true, track only first 2/5 groups in 10/25 player raids
@@ -107,7 +105,8 @@ function MRT_OnEvent(frame, event, ...)
         MRT_Options_ParseValues();
         MRT_GUI_ParseValues();
         MRT_Core_Frames_ParseLocal();
-        --GuildRoster();
+        SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
+        SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
         MRT_Debug("Addon loaded.");
     
     elseif (event == "CHAT_MSG_LOOT") then 

@@ -125,6 +125,7 @@ MRT_L.Options = {
 	MP_Debug = "Aktiviere Debugnachrichten",
 	MP_Description = "Trackt Raids, Loot und Teilnehmer",
 	MP_Enabled = "Aktiviere MRT",
+    MP_SlashCmd = "Slash command",
 	TP_AskForDKPValue = "Frage nach Gegenstandskosten",
 	TP_Log10MenRaids = "Logge 10 Spieler Raids",
 	TP_LogAVRaids = "Logge Archavons Kammer",
@@ -133,6 +134,7 @@ MRT_L.Options = {
 	TP_Title = "Tracking",
 	TP_TitleText = "MRT - Tracking-Optionen",
 	TT_EP_DateTimeTT = " %d - day of the month [01-31] \n %m - month [01-12] \n %y - two-digit year [00-99] \n %Y - full year \n\n %H - hour, using a 24-hour clock [00-23] \n %I - hour, using a 12-hour clock [01-12] \n %M - minute [00-59] \n %S - second [00-59] \n %p - either 'am' or 'pm'", -- Requires localization
+    TT_MP_SlashCmd = "Command without leading slash.\nA relog after changing this value is recommended.",
 }
 
 

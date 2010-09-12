@@ -57,6 +57,30 @@
           </Layer>
         </Layers>
       </CheckButton>
+      <EditBox name="$parent_SlashCmd_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
+        <Size x="200" y="26"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Debug_CB">
+            <Offset x="5" y="-20"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="SlashCmdTitle - FIXME!">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                  <Offset x="-5"/>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnEnter>MRT_Options_SetTT(self, "MP_SlashCmd");</OnEnter>
+          <OnLeave>MRT_Options_HideTT();</OnLeave>
+        </Scripts>
+        <FontString inherits="ChatFontNormal"></FontString>
+      </EditBox>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_MainPanel_OnLoad(self);</OnLoad>
@@ -398,9 +422,7 @@
         </Layers>
       </CheckButton>
       <EditBox name="$parent_SetDateFormat_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
-        <Size>
-          <AbsDimension x="200" y="26"/>
-        </Size>
+        <Size x="200" y="26"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_TextExport_Title" relativePoint="BOTTOMLEFT">
             <Offset x="5" y="-20"></Offset>

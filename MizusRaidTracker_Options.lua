@@ -67,6 +67,9 @@ function MRT_Options_ParseValues()
     MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
     MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
     MRT_Options_MainPanel_Debug_CB_Text:SetText(MRT_L.Options["MP_Debug"]);
+    MRT_Options_MainPanel_SlashCmd_EB_Text:SetText(MRT_L.Options["MP_SlashCmd"]);
+    MRT_Options_MainPanel_SlashCmd_EB:SetText(MRT_Options["General_SlashCmdHandler"]);
+    MRT_Options_MainPanel_SlashCmd_EB:SetCursorPosition(0);
     -- TrackingPanel
     MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
     MRT_Options_TrackingPanel_Description:SetText("");
@@ -117,6 +120,7 @@ function MRT_Options_OnOkay(panel)
     -- MainPanel
     MRT_Options["General_MasterEnable"] = MRT_Options_MainPanel_Enabled_CB:GetChecked();
     MRT_Options["General_DebugEnabled"] = MRT_Options_MainPanel_Debug_CB:GetChecked();
+    MRT_Options["General_SlashCmdHandler"] = MRT_Options_MainPanel_SlashCmd_EB:GetText();
     -- TrackingPanel
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
@@ -132,6 +136,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
     MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
     MRT_Options["Export_DateTimeFormat"] = MRT_Options_ExportPanel_SetDateFormat_EB:GetText();
+    -- Set slash command to new value
+    SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
     -- Check tracking status and adjust to new settings
     local currentRaidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local currentRaidZoneEN = MRT_L.Raidzones[MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"]];
@@ -158,6 +164,8 @@ function MRT_Options_OnCancel(panel)
     -- MainPanel
     MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
     MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
+    MRT_Options_MainPanel_SlashCmd_EB:SetText(MRT_Options["General_SlashCmdHandler"]);
+    MRT_Options_MainPanel_SlashCmd_EB:SetCursorPosition(0);
     -- TrackingPanel
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
