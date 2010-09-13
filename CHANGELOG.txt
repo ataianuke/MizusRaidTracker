@@ -1,3 +1,15 @@
+0.16 Beta - Changelog:
+  New:
+    * Added option for changing the slash command. (Please relog after changing)
+    * Added option for changing the currency of the text based export formats.
+  Changes:
+    * The RaidLog browser will now save the last selected raid event and boss event (unless new raid/boss events are tracked).
+    * The RaidLog browser will now show raid loot, if a raid event but no boss event is selected (the title of the table will change accordingly).
+    * Changed localization files for supporting the CurseForge localization system.
+  Bug Fixes:
+    * Fixed boss detection of the horde gunship battle (ICC - untested)
+    
+
 0.15 Beta - Changelog:
   New:
     * Added two new export formats: plain text and BBCode formatted text (choose your export format in the options panel)
@@ -19,7 +31,7 @@
 0.14 Beta - Changelog:
   Bug Fixes:
     * fixed path of lib-ScrollingTable (embedded library) (Ticket ID1 and 2 - thanks to Kanjou)
-
+    
 
 0.12 Beta - Changelog:
   New:
@@ -34,12 +46,12 @@
     * Added tooltips for GUI buttons
   Bug Fixes:
     * Fixed Steelbraker kill detection (Iron Council / Ulduar) (untested)
-
+    
 
 0.10 Beta - Changelog:
   Bug Fixes:
     * Fixed Halion kill detection (changed to bossyell because of missing UNIT_DIED-Event in the Twilight Realm)
-
+    
 
 0.9 Beta - Changelog:
   New:
@@ -53,3 +65,5 @@
     * Fixed raid export for raids without boss kill event
     * Fixed a bug, where the guild data may be crawled incorrectly
     * Fixed '/mrt o' and '/mrt options' slash commands
+    
+    
