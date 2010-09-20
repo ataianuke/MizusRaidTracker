@@ -47,6 +47,7 @@ local MRT_Defaults = {
         ["General_DebugEnabled"] = nil,                                             --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["Attendance_GuildAttendanceCheckEnabled"] = nil,                           -- 
+        ["Attendance_GuildAttendanceCheckNoAuto"] = true,                           --
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
         ["Attendance_GroupRestriction"] = nil,                                      -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
@@ -68,6 +69,8 @@ local MRT_Defaults = {
 --------------
 local deformat = LibStub("LibDeformat-3.0");
 local tinsert = tinsert;
+local pairs = pairs;
+local ipairs = ipairs;
 
 local MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks
 local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
@@ -481,17 +484,21 @@ function MRT_AddBosskill(bossname, man_diff)
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
     MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
     if (bossname ~= MRT_L.Core["GuildAttendanceBossEntry"] and MRT_Options["Attendance_GuildAttendanceCheckEnabled"]) then
-        StaticPopupDialogs["MRT_GA_MSGBOX"] = {
-            text = string.format("MRT: "..MRT_L.Core["GuildAttendanceMsgBox"], bossname),
-            button1 = MRT_L.Core["MB_Yes"],
-            button2 = MRT_L.Core["MB_No"],
-            OnAccept = function() MRT_StartGuildAttendanceCheck(bossname); end,
-            timeout = 0,
-            whileDead = true,
-            hideOnEscape = false,
-        }
-        local msgbox = StaticPopup_Show("MRT_GA_MSGBOX");
-        msgbox.bossname = bossname;
+        if (MRT_Options["Attendance_GuildAttendanceCheckNoAuto"]) then
+            StaticPopupDialogs["MRT_GA_MSGBOX"] = {
+                text = string.format("MRT: "..MRT_L.Core["GuildAttendanceMsgBox"], bossname),
+                button1 = MRT_L.Core["MB_Yes"],
+                button2 = MRT_L.Core["MB_No"],
+                OnAccept = function() MRT_StartGuildAttendanceCheck(bossname); end,
+                timeout = 0,
+                whileDead = true,
+                hideOnEscape = false,
+            }
+            local msgbox = StaticPopup_Show("MRT_GA_MSGBOX");
+            msgbox.bossname = bossname;
+        else
+            MRT_StartGuildAttendanceCheck(bossname);
+        end
     end
 end
 

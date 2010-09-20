@@ -107,6 +107,7 @@ MRT_L.Core = {
 MRT_L.Options = {
 	AP_GroupRestriction = "Track only first 2/5 groups",
 	AP_GuildAttendance = "Enable guild attendance check",
+    AP_GuildAttendanceNoAuto = "Ask for confirmation",
 	AP_GuildAttendanceDuration = "Duration of taking attendance",
 	AP_Minutes = "minutes",
 	AP_Title = "Attendance",
