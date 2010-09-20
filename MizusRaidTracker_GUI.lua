@@ -178,6 +178,7 @@ function MRT_GUI_Toggle()
         elseif (lastSelectedRaidNum and lastShownNumOfBosses ~= #MRT_RaidLog[lastSelectedRaidNum]["Bosskills"]) then
             MRT_GUI_RaidDetailsTableUpdate(lastSelectedRaidNum);
         else
+            MRT_GUI_RaidAttendeesTableUpdate(lastSelectedRaidNum);
             MRT_GUI_BossDetailsTableUpdate(lastSelectedBossNum);
         end
     else
