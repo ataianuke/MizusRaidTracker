@@ -1178,7 +1178,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
 end
 
 -- Planned format options:
--- @param addFormat: nil = plainText, 1 = BBCode(NYI), 2 = MediaWiki(NYI)
+-- @param addFormat: nil = plainText, 1 = BBCode, 2 = MediaWiki(NYI)
 function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
     -- Generate generic getBossData-Function:
     local function getBossData(raidID, bossID)
