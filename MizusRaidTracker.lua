@@ -983,13 +983,49 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     local bossListToAddPoorItems = {};
     -- local function for creating a boss string
     local function createBossKillString(raidID, bossID)
+        local bossKillTime = MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"];
         local bossKillString = "";
         bossKillString = bossKillString.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
         bossKillString = bossKillString.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
-        bossKillString = bossKillString.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]).."</time>";
+        bossKillString = bossKillString.."<time>"..MRT_MakeEQDKP_Time(bossKillTime).."</time>";
         bossKillString = bossKillString.."<attendees>";
-        for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
-            bossKillString = bossKillString.."<key"..idx.."><name>"..val.."</name></key"..idx..">";
+        for idx, name in ipairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
+            bossKillString = bossKillString.."<key"..idx.."><name>"..name.."</name></key"..idx..">";
+            -- check, if player is a raidattendee at this point
+            local raidattendee = false;
+            if (joinLeaveTable[name]) then
+                for idx2, val2 in ipairs(joinLeaveTable[name]) do
+                    if ((val2.Join < bossKillTime) and (bossKillTime < val2.Leave)) then
+                        raidattendee = true;
+                    end
+                end
+            end
+            -- if not raidattendee, create an extra join/leave-date
+            if not raidattendee then
+                joinXml = joinXml.."<key"..index..">";
+                joinXml = joinXml.."<player>"..name.."</player>";
+                if (MRT_PlayerDB[realm][name]) then
+                    if (MRT_PlayerDB[realm][name]["Race"]) then
+                        joinXml = joinXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+                    end
+                    if (MRT_PlayerDB[realm][name]["Sex"]) then
+                        joinXml = joinXml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+                    end
+                    if (MRT_PlayerDB[realm][name]["Class"]) then
+                        joinXml = joinXml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+                    end
+                    if (MRT_PlayerDB[realm][name]["Level"]) then
+                        joinXml = joinXml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+                    end
+                end
+                joinXml = joinXml.."<time>"..MRT_MakeEQDKP_Time(bossKillTime - 10).."</time>";
+                joinXml = joinXml.."</key"..index..">";
+                leaveXml = leaveXml.."<key"..index..">";
+                leaveXml = leaveXml.."<player>"..name.."</player>";
+                leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(bossKillTime + 10).."</time>";
+                leaveXml = leaveXml.."</key"..index..">";
+                index = index + 1;
+            end
         end
         bossKillString = bossKillString.."</attendees>";
         local addBossData = {
@@ -1017,17 +1053,17 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         else
             -- difficulties on functionside are "H" and "N"
             local no_boss = true;
-            local index = 1;
+            local bossindex = 1;
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                 if ((val["Difficulty"] < 3) and difficulty == "N") or ((val["Difficulty"] > 2) and difficulty == "H") then
                     if (no_boss) then
                         bosskillXml = bosskillXml.."<BossKills>";
                         no_boss = false;
                     end
-                    bosskillXml = bosskillXml.."<key"..index..">";
+                    bosskillXml = bosskillXml.."<key"..bossindex..">";
                     bosskillXml = bosskillXml..createBossKillString(raidID, idx);
-                    bosskillXml = bosskillXml.."</key"..index..">";
-                    index = index + 1;
+                    bosskillXml = bosskillXml.."</key"..bossindex..">";
+                    bossindex = bossindex + 1;
                     end
             end
             if (no_boss == false) then
@@ -1179,6 +1215,6 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         -- Add export data
         export = export..MRT_L.Core["Export_Attendees"].."("..tostring(#numPlayerList).."):\n";
         export = export..table.concat(numPlayerList, ", ");
-    end
+    end  
     return export;
 end
