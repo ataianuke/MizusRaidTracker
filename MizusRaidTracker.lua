@@ -978,76 +978,59 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         tinsert(joinLeaveTable[val["Name"]], joinLeaveData);
     end
     -- Create bosskill list
+    -- local helper vars
     local bosskillXml = "";
     local bossListToAddPoorItems = {};
+    -- local function for creating a boss string
+    local function createBossKillString(raidID, bossID)
+        local bossKillString = "";
+        bossKillString = bossKillString.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
+        bossKillString = bossKillString.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
+        bossKillString = bossKillString.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]).."</time>";
+        bossKillString = bossKillString.."<attendees>";
+        for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
+            bossKillString = bossKillString.."<key"..idx.."><name>"..val.."</name></key"..idx..">";
+        end
+        bossKillString = bossKillString.."</attendees>";
+        local addBossData = {
+            name = MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"],
+            difficulty = MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"],
+            datetime = MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]),
+        };
+        tinsert(bossListToAddPoorItems, addBossData);
+        return bossKillString;
+    end
+    -- create boss string for export
     if (MRT_RaidLog[raidID]["Bosskills"]) then
         if ((bossID == nil) and (difficulty == nil)) then
             bosskillXml = bosskillXml.."<BossKills>";
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                 bosskillXml = bosskillXml.."<key"..idx..">";
-                bosskillXml = bosskillXml.."<name>"..val["Name"].."</name>";
-                bosskillXml = bosskillXml.."<difficulty>"..val["Difficulty"].."</difficulty>";
-                bosskillXml = bosskillXml.."<time>"..MRT_MakeEQDKP_Time(val["Date"]).."</time>";
-                bosskillXml = bosskillXml.."<attendees>";
-                for idx2, val2 in pairs(val["Players"]) do
-                    bosskillXml = bosskillXml.."<key"..idx2.."><name>"..val2.."</name></key"..idx2..">";
-                end
-                bosskillXml = bosskillXml.."</attendees>";
+                bosskillXml = bosskillXml..createBossKillString(raidID, idx);
                 bosskillXml = bosskillXml.."</key"..idx..">";
-                local addBossData = {
-                    name = val["Name"],
-                    difficulty = val["Difficulty"],
-                    datetime = MRT_MakeEQDKP_Time(val["Date"]),
-                };
-                tinsert(bossListToAddPoorItems, addBossData);
             end
             bosskillXml = bosskillXml.."</BossKills>";
         elseif (bossID) then
             bosskillXml = bosskillXml.."<BossKills><key1>";
-            bosskillXml = bosskillXml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
-            bosskillXml = bosskillXml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
-            bosskillXml = bosskillXml.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]).."</time>";
-            bosskillXml = bosskillXml.."<attendees>";
-            for idx, val in pairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
-                bosskillXml = bosskillXml.."<key"..idx.."><name>"..val.."</name></key"..idx..">";
-            end
-            bosskillXml = bosskillXml.."</attendees></key1></BossKills>";
-            local addBossData = {
-                name = MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"],
-                difficulty = MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"],
-                datetime = MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]),
-            };
-            tinsert(bossListToAddPoorItems, addBossData);
+            bosskillXml = bosskillXml..createBossKillString(raidID, bossID);
+            bosskillXml = bosskillXml.."</key1></BossKills>";
         else
             -- difficulties on functionside are "H" and "N"
-            local first_boss = true;
+            local no_boss = true;
             local index = 1;
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                 if ((val["Difficulty"] < 3) and difficulty == "N") or ((val["Difficulty"] > 2) and difficulty == "H") then
-                    if (first_boss) then
+                    if (no_boss) then
                         bosskillXml = bosskillXml.."<BossKills>";
-                        first_boss = false;
+                        no_boss = false;
                     end
                     bosskillXml = bosskillXml.."<key"..index..">";
-                    bosskillXml = bosskillXml.."<name>"..val["Name"].."</name>";
-                    bosskillXml = bosskillXml.."<difficulty>"..val["Difficulty"].."</difficulty>";
-                    bosskillXml = bosskillXml.."<time>"..MRT_MakeEQDKP_Time(val["Date"]).."</time>";
-                    bosskillXml = bosskillXml.."<attendees>";
-                    for idx2, val2 in ipairs(val["Players"]) do
-                        bosskillXml = bosskillXml.."<key"..idx2.."><name>"..val2.."</name></key"..idx2..">";
-                    end
-                    bosskillXml = bosskillXml.."</attendees>";
+                    bosskillXml = bosskillXml..createBossKillString(raidID, idx);
                     bosskillXml = bosskillXml.."</key"..index..">";
                     index = index + 1;
-                    local addBossData = {
-                        name = val["Name"],
-                        difficulty = val["Difficulty"],
-                        datetime = MRT_MakeEQDKP_Time(val["Date"]),
-                    };
-                    tinsert(bossListToAddPoorItems, addBossData);
                     end
             end
-            if (first_boss == false) then
+            if (no_boss == false) then
                 bosskillXml = bosskillXml.."</BossKills>";
             end
         end
