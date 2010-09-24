@@ -544,14 +544,16 @@ function MRT_CheckRaidStatusAfterLogin()
         MRT_EndActiveRaid();
         return;
     end
-    -- set up timer for regular raid roster scanning
-    MRT_RaidRosterScanTimer.lastCheck = time()
-    MRT_RaidRosterScanTimer:SetScript("OnUpdate", function (self)
-        if ((time() - self.lastCheck) > 5) then
-            self.lastCheck = time();
-            MRT_RaidRosterUpdate();
-        end
-    end);
+    if (MRT_NumOfCurrentRaid) then
+        -- set up timer for regular raid roster scanning
+        MRT_RaidRosterScanTimer.lastCheck = time()
+        MRT_RaidRosterScanTimer:SetScript("OnUpdate", function (self)
+            if ((time() - self.lastCheck) > 5) then
+                self.lastCheck = time();
+                MRT_RaidRosterUpdate();
+            end
+        end);
+    end
 end
 
 function MRT_TakeSnapshot()
