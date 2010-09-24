@@ -212,9 +212,11 @@ end
 ----------------------
 -- Check variables - if missing, load defaults
 function MRT_UpdateSavedOptions()
-    for key, value in pairs(MRT_Defaults["Options"]) do
-        if (MRT_Options[key] == nil) then
-            MRT_Options[key] = value;
+    if not MRT_Options["General_OptionsVersion"] then
+        for key, value in pairs(MRT_Defaults["Options"]) do
+            if (MRT_Options[key] == nil) then
+                MRT_Options[key] = value;
+            end
         end
     end
 end
