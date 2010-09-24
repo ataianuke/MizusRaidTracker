@@ -108,7 +108,7 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:SetChecked(MRT_Options["Export_CTRT_AddPoorItem"]);
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB_Text:SetText(MRT_L.Options["EP_CTRT_AddPoorItem"]);
     MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(MRT_Options["Export_CTRT_IgnorePerBossAttendance"]);
-    MRT_Options_ExportPanel_IgnorePerBossAttendance_CB_Text:SetText("FIXME!");
+    MRT_Options_ExportPanel_IgnorePerBossAttendance_CB_Text:SetText(MRT_L.Options["EP_CTRT_IgnorePerBossAttendance"]);
     MRT_Options_ExportPanel_TextExport_Title:SetText(MRT_L.Options["EP_TextExportTitleText"]);
     MRT_Options_ExportPanel_SetDateFormat_EB_Text:SetText(MRT_L.Options["EP_SetDateTimeFormat"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
