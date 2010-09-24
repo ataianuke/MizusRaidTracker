@@ -410,7 +410,7 @@
         <FontString name="$parent_TextExport_Title" inherits="GameFontNormal">
           <Anchors>
             <Anchor point="TOPLEFT" relativeTo="$parent_CTRTExport_Title" relativePoint="BOTTOMLEFT">
-              <Offset y="-50"></Offset>
+              <Offset y="-66"></Offset>
             </Anchor>
           </Anchors>
         </FontString>
@@ -426,6 +426,22 @@
         <Layers>
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_AddPoorItemToEachBoss_CB" relativePoint="BOTTOMLEFT">
+            <Offset y="-5"></Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="FIXME!">
               <Anchors>
                 <Anchor point="LEFT" relativePoint="RIGHT"/>
               </Anchors>
