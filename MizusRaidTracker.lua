@@ -72,8 +72,9 @@ local tinsert = tinsert;
 local pairs = pairs;
 local ipairs = ipairs;
 
-local MRT_TimerFrame = CreateFrame("Frame");        -- Timer for Guild-Attendance-Checks
-local MRT_LoginTimer = CreateFrame("Frame");        -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
+local MRT_TimerFrame = CreateFrame("Frame");                -- Timer for Guild-Attendance-Checks
+local MRT_LoginTimer = CreateFrame("Frame");                -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
+local MRT_RaidRosterScanTimer = CreateFrame("Frame");       -- Timer for regular scanning for the raid roster (there is no event for disconnecting players)
 
 local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
@@ -164,6 +165,7 @@ function MRT_OnEvent(frame, event, ...)
         end
     
     elseif (event == "RAID_ROSTER_UPDATE") then
+        MRT_Debug("RAID_ROSTER_UPDATE fired!");
         MRT_RaidRosterUpdate(frame);
     
     end
@@ -375,7 +377,9 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["Level"] = playerLvl,
             ["Sex"] = playerSex,
         };
-        tinsert(MRT_RaidInfo["Players"], playerInfo);
+        if (playerOnline or MRT_Options["Attendance_TrackOffline"]) then
+            tinsert(MRT_RaidInfo["Players"], playerInfo);
+        end
         if (MRT_PlayerDB[realm] == nil) then
             MRT_PlayerDB[realm] = {};
         end
@@ -383,6 +387,14 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     end
     tinsert(MRT_RaidLog, MRT_RaidInfo);
     MRT_NumOfCurrentRaid = #MRT_RaidLog;
+    -- set up timer for regular raid roster scanning
+    MRT_RaidRosterScanTimer.lastCheck = time()
+    MRT_RaidRosterScanTimer:SetScript("OnUpdate", function (self)
+        if ((time() - self.lastCheck) > 5) then
+            self.lastCheck = time();
+            MRT_RaidRosterUpdate();
+        end
+    end);
 end
 
 function MRT_RaidRosterUpdate(frame)
@@ -394,18 +406,20 @@ function MRT_RaidRosterUpdate(frame)
     local numRaidMembers = GetNumRaidMembers();
     local realm = GetRealmName();
     local activePlayerList = {};
-    --MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
+    MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
     --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
         local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        tinsert(activePlayerList, playerName);
+        if (playerOnline or MRT_Options["Attendance_TrackOffline"]) then
+            tinsert(activePlayerList, playerName);
+        end
         local playerInRaid = nil;
         for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
             if (val["Name"] == playerName) then
                 if(val["Leave"] == nil) then playerInRaid = true; end
             end
         end
-        if (playerInRaid == nil) then
+        if ((playerInRaid == nil) and (playerOnline or MRT_Options["Attendance_TrackOffline"])) then
             MRT_Debug("New player found: "..playerName);
             local UnitID = "raid"..tostring(i);
             local playerRaceL, playerRace = UnitRace(UnitID);
@@ -505,6 +519,9 @@ end
 function MRT_EndActiveRaid()
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Ending active raid...");
+    -- disable RaidRosterScanTimer
+    MRT_RaidRosterScanTimer:SetScript("OnUpdate", nil);
+    -- update DB
     for key, value in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
         if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"]) then
             MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
@@ -612,7 +629,7 @@ end
 ---------------------------
 -- basic idea: add looted items to a little queue and ask cost for each item in the queue 
 --             this should avoid missing dialogs for fast looted items
--- note: standard dkpvalue is already 0
+-- note: standard dkpvalue is already 0 (unless EPGP-system-support enabled)
 function MRT_DKPFrame_AddToItemCostQueue(raidnum, itemnum)
     local MRT_DKPCostQueueItem = {
         ["RaidNum"] = raidnum,
