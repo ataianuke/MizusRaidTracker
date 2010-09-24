@@ -199,6 +199,10 @@ function MRT_GUI_RaidExportComplete()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
+        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
+        return;
+    end
     MRT_CreateRaidExport(raidnum, nil, nil);
 end
 
@@ -210,6 +214,10 @@ function MRT_GUI_RaidExportNormal()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
+        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
+        return;
+    end
     MRT_CreateRaidExport(raidnum, nil, "N");
 end
 
@@ -221,6 +229,10 @@ function MRT_GUI_RaidExportHard()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
+        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
+        return;
+    end
     MRT_CreateRaidExport(raidnum, nil, "H");
 end
 
@@ -461,6 +473,10 @@ function MRT_GUI_BossExport()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
+        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
+        return;
+    end
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     MRT_CreateRaidExport(raidnum, bossnum, nil);
 end

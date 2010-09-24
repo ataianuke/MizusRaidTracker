@@ -926,18 +926,18 @@ end
 
 -- create CTRT-compatible DKP-String for the EQDKP CTRT-Import-Plugin / Uses boss attendee data for creating join/leave-timestamps
 function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
+    local raidStart = MRT_RaidLog[raidID]["StartTime"];
+    local raidStop = MRT_RaidLog[raidID]["StopTime"];
+    local realm = MRT_RaidLog[raidID]["Realm"];
     -- start creating xml-data!
     local index = 1;
-    local realm = MRT_RaidLog[raidID]["Realm"];
     local xml = "<RaidInfo>";
     xml = xml.."<key>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</key>";
     if (MRT_RaidLog[raidID]["Realm"]) then
         xml = xml.."<realm>"..MRT_RaidLog[raidID]["Realm"].."</realm>";
     end
     xml = xml.."<start>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</start>";
-    if (MRT_RaidLog[raidID]["StopTime"]) then
-        xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"]).."</end>";
-    end
+    xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"]).."</end>";
     xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
     xml = xml.."<PlayerInfos>";
     index = 1;
@@ -963,11 +963,8 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         index = index + 1;
     end
     xml = xml.."</PlayerInfos>";
-    -- check data - goal: create one entry for 100% attendees, create split entries for all others / use join/leave-data, if no boss entry found
-    -- idea: create table with player names as keys / run through all bossevents / if player is present, set val++ / if val == #BossEvents, then create only one entry
-    -- additionally needed: killtimes of first and last boss (as time index for join/leave)
-    -- this prioritizes boss attendance - but raid attendance (join/leave-times) should be prioritized... damn
-    -- new idea: 
+    -- check data - goal: create as few join/leave pairs as possible
+    -- idea: 
         -- 1. parse join/leave times and create table with these time (joinLeaveTable["PlayerName"][#]["Join"], joinLeaveTable["PlayerName"][#]["Leave"]
         -- 2. parse boss events, iterate for each attendee through these timestamps. If a matching pair is found, then work is done. If not, create an extra set of join and leave data for the bosskill timestamp
         -- Note: For avoiding handling issues, use extra strings vor bosskill-data and join/leave data. Concatenate later.
@@ -1002,7 +999,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(val["Leave"]).."</time>";
         leaveXml = leaveXml.."</key"..index..">";
         index = index + 1;
-        joinLeaveData = {
+        local joinLeaveData = {
             ["Join"] = val["Join"],
             ["Leave"] = val["Leave"],
         }

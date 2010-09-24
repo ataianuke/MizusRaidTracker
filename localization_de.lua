@@ -176,6 +176,7 @@ MRT_L.GUI = {
 	["Confirm raid attendee entry deletion"] = "Willst du %s von der Raidteilnehmerliste l\195\182schen?",
 	["Confirm raid entry deletion"] = "Willst du Raid Nummer %d l\195\182schen?",
 	["Difficulty N or H"] = "Difficulty ('N' or 'H')", -- Requires localization
+    ["End tracking of current raid before exporting it"] = "Error: Can't export active raid.", -- Requires localization
 	["Entered time is not between start and end of raid"] = "Error: Entered time is not between start and end of raid.", -- Requires localization
 	Header_Title = "MRT - Raidlog",
 	["Item cost invalid"] = "Fehler: Itempreis ist keine Zahl",

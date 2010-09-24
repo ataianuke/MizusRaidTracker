@@ -176,6 +176,7 @@ MRT_L.GUI = {
 	["Confirm raid attendee entry deletion"] = "Do you want to delete %s from the raid attendees list?",
 	["Confirm raid entry deletion"] = "Do you want to delete raid number %d?",
 	["Difficulty N or H"] = "Difficulty ('N' or 'H')",
+    ["End tracking of current raid before exporting it"] = "Error: Can't export active raid.",
 	["Entered time is not between start and end of raid"] = "Error: Entered time is not between start and end of raid.",
 	Header_Title = "MRT - Raidlog",
 	["Item cost invalid"] = "Error: Item cost is not a number.",
