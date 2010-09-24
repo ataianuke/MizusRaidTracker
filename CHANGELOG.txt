@@ -5,7 +5,7 @@
     * Added option for disabling the confirmation box for an attendance check.
   Changes:
     * Rewritten large parts of the CTRT-Export. Raid attendee data now take priority over boss attendee data. This should fix the Join/Leave timestamps and provide correct information for time based DKP systems (Thanks to Omega for pointing that out)
-    * Disconnection players are now treated as leaving players, if "Track offline players" is disabled.
+    * Disconnecting players are now treated as leaving players, if "Track offline players" is disabled.
     * In 10/25 raids, players moved in groups >2/>5 are now treated as leaving players, if "Track only first 2/5 groups" is enabled.
   Bug Fixes:
     * Fixed nasty bug, which could enable previously disabled options (please check your settings in the option menu)
