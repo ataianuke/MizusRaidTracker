@@ -1,6 +1,6 @@
 0.17 Beta - Changelog:
   New:
-    * Added option for disabling boss based attendee data for CTRT-export (if you only create one raid entry for each raid in your EQDKP(-Plus) and make corrections to raid members manually, you might on to activate this options)
+    * Added option for disabling boss based attendee data for CTRT-export (if you only create one raid entry for each raid in your EQDKP(-Plus) and make corrections to raid members manually, you might want to activate this option)
     * Added checks to prevent exporting of an active raid (raid data is incomplete until a raid is finished)
     * Added option for disabling the confirmation box for an attendance check.
   Changes:
