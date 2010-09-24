@@ -1,3 +1,16 @@
+0.17 Beta - Changelog:
+  New:
+    * Added option for disabling boss based attendee data for CTRT-export (if you only create one raid entry for each raid in your EQDKP(-Plus) and make corrections to raid members manually, you might on to activate this options)
+    * Added checks to prevent exporting of an active raid (raid data is incomplete until a raid is finished)
+    * Added option for disabling the confirmation box for an attendance check.
+  Changes:
+    * Rewritten large parts of the CTRT-Export. Raid attendee data now take priority over boss attendee data. This should fix the Join/Leave timestamps and provide correct information for time based DKP systems (Thanks to Omega for pointing that out)
+    * Disconnection players are now treated as leaving players, if "Track offline players" is disabled.
+    * In 10/25 raids, players moved in groups >2/>5 are now treated as leaving players, if "Track only first 2/5 groups" is enabled.
+  Bug Fixes:
+    * Fixed nasty bug, which could enable previously disabled options (please check your settings in the option menu)
+
+
 0.16 Beta - Changelog:
   New:
     * Added option for changing the slash command. (Please relog after changing)
@@ -31,39 +44,5 @@
 0.14 Beta - Changelog:
   Bug Fixes:
     * fixed path of lib-ScrollingTable (embedded library) (Ticket ID1 and 2 - thanks to Kanjou)
-    
-
-0.12 Beta - Changelog:
-  New:
-    * Implemented dialogs for manually adding boss entries to the raidlog
-  Bug Fixes:
-    * Fixed wrong loot assignments after deleting individual boss entries
-    
-
-0.11 Beta - Changelog:
-  New:
-    * Changed a few things in the internal database (should reduce memory usage around 30%)
-    * Added tooltips for GUI buttons
-  Bug Fixes:
-    * Fixed Steelbraker kill detection (Iron Council / Ulduar) (untested)
-    
-
-0.10 Beta - Changelog:
-  Bug Fixes:
-    * Fixed Halion kill detection (changed to bossyell because of missing UNIT_DIED-Event in the Twilight Realm)
-    
-
-0.9 Beta - Changelog:
-  New:
-    * Added BossID of Halion (Ruby Sanctum)
-    * Added item icons and tooltips to loot list
-    * Added support for TAB and ESC in raidlog dialogs
-    * Added option to enable/disable tracking of offline players (as boss attendees)
-    * Added option to enable/disable tracking of only first 2/5 groups in 10/25 player raids (as boss attendees)
-    * Updated deDE localization
-  Bug Fixes:
-    * Fixed raid export for raids without boss kill event
-    * Fixed a bug, where the guild data may be crawled incorrectly
-    * Fixed '/mrt o' and '/mrt options' slash commands
     
     
