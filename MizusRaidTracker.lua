@@ -359,7 +359,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = time()};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
     for i = 1, numRaidMembers do
-        local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
         local UnitID = "raid"..tostring(i);
         local playerRaceL, playerRace = UnitRace(UnitID);
         local playerSex = UnitSex(UnitID);
@@ -377,7 +377,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["Level"] = playerLvl,
             ["Sex"] = playerSex,
         };
-        if (playerOnline or MRT_Options["Attendance_TrackOffline"]) then
+        if ((playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25))) then
             tinsert(MRT_RaidInfo["Players"], playerInfo);
         end
         if (MRT_PlayerDB[realm] == nil) then
@@ -405,12 +405,13 @@ function MRT_RaidRosterUpdate(frame)
     end
     local numRaidMembers = GetNumRaidMembers();
     local realm = GetRealmName();
+    local raidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local activePlayerList = {};
     MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
     --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
-        local playerName, _, _, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        if (playerOnline or MRT_Options["Attendance_TrackOffline"]) then
+        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        if (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25)) then
             tinsert(activePlayerList, playerName);
         end
         local playerInRaid = nil;
@@ -419,7 +420,7 @@ function MRT_RaidRosterUpdate(frame)
                 if(val["Leave"] == nil) then playerInRaid = true; end
             end
         end
-        if ((playerInRaid == nil) and (playerOnline or MRT_Options["Attendance_TrackOffline"])) then
+        if ((playerInRaid == nil) and (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25))) then
             MRT_Debug("New player found: "..playerName);
             local UnitID = "raid"..tostring(i);
             local playerRaceL, playerRace = UnitRace(UnitID);
@@ -429,6 +430,13 @@ function MRT_RaidRosterUpdate(frame)
                 ["Join"] = time(),
                 ["Leave"] = nil,
             };
+            tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
+        end
+        -- PlayerDB is being renewed when creating a new raid, so only update unknown players here
+        if (not MRT_PlayerDB[realm][playerName]) then
+            local UnitID = "raid"..tostring(i);
+            local playerRaceL, playerRace = UnitRace(UnitID);
+            local playerSex = UnitSex(UnitID);
             local playerDBEntry = {
                 ["Name"] = playerName,
                 ["Race"] = playerRace,
@@ -438,9 +446,8 @@ function MRT_RaidRosterUpdate(frame)
                 ["Level"] = playerLvl,
                 ["Sex"] = playerSex,
             };
-            tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
             MRT_PlayerDB[realm][playerName] = playerDBEntry;
-        end    
+        end
     end
     -- MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
     for key, val in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
@@ -537,6 +544,14 @@ function MRT_CheckRaidStatusAfterLogin()
         MRT_EndActiveRaid();
         return;
     end
+    -- set up timer for regular raid roster scanning
+    MRT_RaidRosterScanTimer.lastCheck = time()
+    MRT_RaidRosterScanTimer:SetScript("OnUpdate", function (self)
+        if ((time() - self.lastCheck) > 5) then
+            self.lastCheck = time();
+            MRT_RaidRosterUpdate();
+        end
+    end);
 end
 
 function MRT_TakeSnapshot()
