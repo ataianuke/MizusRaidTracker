@@ -85,6 +85,8 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
+    MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
+    MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
     -- AttendancePanel
     MRT_Options_AttendancePanel_Title:SetText(MRT_L.Options["AP_TitleText"]);
     MRT_Options_AttendancePanel_Description:SetText("");
@@ -134,6 +136,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_TrackingPanel_AskForDKPValue_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
+    MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
     -- AttendancePanel
     MRT_Options["Attendance_GuildAttendanceCheckEnabled"] = MRT_Options_AttendancePanel_GA_CB:GetChecked();
     MRT_Options["Attendance_GuildAttendanceCheckNoAuto"] = MRT_Options_AttendancePanel_GA_NoAuto_CB:GetChecked();
@@ -184,6 +187,7 @@ function MRT_Options_OnCancel(panel)
     MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
+    MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
     -- AttendancePanel
     MRT_Options_AttendancePanel_GA_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckEnabled"]);
     MRT_Options_AttendancePanel_GA_NoAuto_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckNoAuto"]);

@@ -184,9 +184,7 @@
       </Slider>
       <CheckButton name="$parent_AskForDKPValue_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToLog_Slider" relativePoint="BOTTOMLEFT">
-            <Offset y="-5"></Offset>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToLog_Slider" relativePoint="BOTTOMLEFT" y="-5"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -242,6 +240,20 @@
           </Size>
         </ThumbTexture>
       </Slider>
+      <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToGetCost_Slider" relativePoint="BOTTOMLEFT" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="FIXME!">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_TrackingPanel_OnLoad(self);</OnLoad>

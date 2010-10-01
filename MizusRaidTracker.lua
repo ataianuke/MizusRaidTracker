@@ -56,6 +56,7 @@ local MRT_Defaults = {
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
+        ["Tracking_UseServerTime"] = nil,
         ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
         ["Export_CTRT_AddPoorItem"] = true,                                         -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
         ["Export_CTRT_IgnorePerBossAttendance"] = nil,                              -- This will create an export where each raid member has 100% attendance: true / nil
@@ -360,7 +361,8 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     local realm = GetRealmName();
     if (numRaidMembers == 0) then return end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
-    local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = time()};
+    local currentTime = MRT_GetCurrentTime();
+    local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = currentTime};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
     for i = 1, numRaidMembers do
         local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
@@ -369,7 +371,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
         local playerSex = UnitSex(UnitID);
         local playerInfo = {
             ["Name"] = playerName,
-            ["Join"] = time(),
+            ["Join"] = currentTime,
             ["Leave"] = nil,
         }
         local playerDBEntry = {
@@ -431,7 +433,7 @@ function MRT_RaidRosterUpdate(frame)
             local playerSex = UnitSex(UnitID);
             local playerInfo = {
                 ["Name"] = playerName,
-                ["Join"] = time(),
+                ["Join"] = MRT_GetCurrentTime(),
                 ["Leave"] = nil,
             };
             tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
@@ -464,7 +466,7 @@ function MRT_RaidRosterUpdate(frame)
         if (not matchFound) then
             if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"]) then
                 MRT_Debug("Leaving player found: "..val["Name"]);
-                MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
+                MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = MRT_GetCurrentTime();
             end
         end
     end
@@ -503,7 +505,7 @@ function MRT_AddBosskill(bossname, man_diff)
     local MRT_BossKillInfo = {
         ["Players"] = trackedPlayers,
         ["Name"] = bossname,
-        ["Date"] = time(),
+        ["Date"] = MRT_GetCurrentTime(),
         ["Difficulty"] = instanceDifficulty,
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
@@ -533,12 +535,13 @@ function MRT_EndActiveRaid()
     -- disable RaidRosterScanTimer
     MRT_RaidRosterScanTimer:SetScript("OnUpdate", nil);
     -- update DB
+    local currentTime = MRT_GetCurrentTime();
     for key, value in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
         if (not MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"]) then
-            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = time();
+            MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"][key]["Leave"] = currentTime;
         end
     end
-    MRT_RaidLog[MRT_NumOfCurrentRaid]["StopTime"] = time();
+    MRT_RaidLog[MRT_NumOfCurrentRaid]["StopTime"] = currentTime;
     MRT_NumOfCurrentRaid = nil;
     MRT_NumOfLastBoss = nil;
 end
@@ -636,7 +639,7 @@ function MRT_AutoAddLoot(chatmsg)
         ["Looter"] = playerName,
         ["DKPValue"] = 0,
         ["BossNumber"] = MRT_NumOfLastBoss,
-        ["Time"] = time(),
+        ["Time"] = MRT_GetCurrentTime(),
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
     if (not MRT_Options["Tracking_AskForDKPValue"]) then return; end
@@ -869,6 +872,16 @@ function MRT_GetNPCID(GUID)
         return tonumber("0x"..strsub(GUID, 9, 12));
     else
         return nil;
+    end
+end
+
+function MRT_GetCurrentTime()
+    if MRT_Options["Tracking_UseServerTime"] then
+        local _, month, day, year = CalendarGetDate();
+        local hour, minute = GetGameTime();
+        return time( { year = year, month = month, day = day, hour = hour, min = minute, } );
+    else
+        return time();
     end
 end
 
