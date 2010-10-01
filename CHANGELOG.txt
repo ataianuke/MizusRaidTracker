@@ -9,7 +9,7 @@
     * In 10/25 raids, players moved in groups >2/>5 are now treated as leaving players, if "Track only first 2/5 groups" is enabled.
   Bug Fixes:
     * Fixed nasty bug, which could enable previously disabled options (please check your settings in the option menu)
-
+  
 
 0.16 Beta - Changelog:
   New:
