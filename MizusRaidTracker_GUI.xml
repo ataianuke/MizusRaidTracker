@@ -294,7 +294,7 @@
         </Anchors>
         <Scripts>
           <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
-          <OnTabPressed>MRT_GUI_ThreeRowDialog_EB2:SetFocus();</OnTabPressed>
+          <OnTabPressed>MRT_GUI_FourRowDialog_EB2:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
       <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
@@ -305,7 +305,7 @@
         </Anchors>
         <Scripts>
           <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
-          <OnTabPressed>MRT_GUI_ThreeRowDialog_EB3:SetFocus();</OnTabPressed>
+          <OnTabPressed>MRT_GUI_FourRowDialog_EB3:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
       <EditBox name="$parent_EB3" inherits="MRT_GUI_Editbox_Template">
@@ -316,7 +316,7 @@
         </Anchors>
         <Scripts>
           <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
-          <OnTabPressed>MRT_GUI_ThreeRowDialog_EB4:SetFocus();</OnTabPressed>
+          <OnTabPressed>MRT_GUI_FourRowDialog_EB4:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
       <EditBox name="$parent_EB4" inherits="MRT_GUI_Editbox_Template">
@@ -327,7 +327,7 @@
         </Anchors>
         <Scripts>
           <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
-          <OnTabPressed>MRT_GUI_ThreeRowDialog_EB1:SetFocus();</OnTabPressed>
+          <OnTabPressed>MRT_GUI_FourRowDialog_EB1:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
     </Frames>

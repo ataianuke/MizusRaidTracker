@@ -526,19 +526,19 @@ function MRT_GUI_LootAdd()
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
-    MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Add loot data"]);
-    MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
-    MRT_GUI_ThreeRowDialog_EB1:SetText("");
-    MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
-    MRT_GUI_ThreeRowDialog_EB2:SetText("");
-    MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
-    MRT_GUI_ThreeRowDialog_EB3:SetText("");
-    MRT_GUI_ThreeRowDialog_EB4_Text:SetText(MRT_L.GUI["Note"]);
-    MRT_GUI_ThreeRowDialog_EB4:SetText("");
-    MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
-    MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, nil); end);
-    MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
-    MRT_GUI_ThreeRowDialog:Show();
+    MRT_GUI_FourRowDialog_Title:SetText(MRT_L.GUI["Add loot data"]);
+    MRT_GUI_FourRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
+    MRT_GUI_FourRowDialog_EB1:SetText("");
+    MRT_GUI_FourRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
+    MRT_GUI_FourRowDialog_EB2:SetText("");
+    MRT_GUI_FourRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
+    MRT_GUI_FourRowDialog_EB3:SetText("");
+    MRT_GUI_FourRowDialog_EB4_Text:SetText(MRT_L.GUI["Note"]);
+    MRT_GUI_FourRowDialog_EB4:SetText("");
+    MRT_GUI_FourRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_FourRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, nil); end);
+    MRT_GUI_FourRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_FourRowDialog:Show();
 end
 
 function MRT_GUI_LootModify()
@@ -562,23 +562,23 @@ function MRT_GUI_LootModify()
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
     local lootnote = MRT_RaidLog[raidnum]["Loot"][lootnum]["Note"];
-    MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Modify loot data"]);
-    MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
-    MRT_GUI_ThreeRowDialog_EB1:SetText(MRT_RaidLog[raidnum]["Loot"][lootnum]["ItemLink"]);
-    MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
-    MRT_GUI_ThreeRowDialog_EB2:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 4));
-    MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
-    MRT_GUI_ThreeRowDialog_EB3:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 5));
-    MRT_GUI_ThreeRowDialog_EB4_Text:SetText(MRT_L.GUI["Note"]);
+    MRT_GUI_FourRowDialog_Title:SetText(MRT_L.GUI["Modify loot data"]);
+    MRT_GUI_FourRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
+    MRT_GUI_FourRowDialog_EB1:SetText(MRT_RaidLog[raidnum]["Loot"][lootnum]["ItemLink"]);
+    MRT_GUI_FourRowDialog_EB2_Text:SetText(MRT_L.GUI["Looter"]);
+    MRT_GUI_FourRowDialog_EB2:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 4));
+    MRT_GUI_FourRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
+    MRT_GUI_FourRowDialog_EB3:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 5));
+    MRT_GUI_FourRowDialog_EB4_Text:SetText(MRT_L.GUI["Note"]);
     if (lootnote == nil or lootnote == "" or lootnote == " ") then
-        MRT_GUI_ThreeRowDialog_EB4:SetText("");
+        MRT_GUI_FourRowDialog_EB4:SetText("");
     else
-        MRT_GUI_ThreeRowDialog_EB4:SetText(lootnote);
+        MRT_GUI_FourRowDialog_EB4:SetText(lootnote);
     end
-    MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Modify"]);
-    MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum); end);
-    MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
-    MRT_GUI_ThreeRowDialog:Show();
+    MRT_GUI_FourRowDialog_OKButton:SetText(MRT_L.GUI["Button_Modify"]);
+    MRT_GUI_FourRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum); end);
+    MRT_GUI_FourRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_FourRowDialog:Show();
 end
 
 function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
@@ -956,6 +956,15 @@ function MRT_GUI_HideDialogs()
     MRT_GUI_ThreeRowDialog_EB3:SetScript("OnEnter", nil);
     MRT_GUI_ThreeRowDialog_EB3:SetScript("OnLeave", nil);
     MRT_GUI_ThreeRowDialog:Hide();
+    MRT_GUI_FourRowDialog_EB1:SetScript("OnEnter", nil);
+    MRT_GUI_FourRowDialog_EB1:SetScript("OnLeave", nil);
+    MRT_GUI_FourRowDialog_EB2:SetScript("OnEnter", nil);
+    MRT_GUI_FourRowDialog_EB2:SetScript("OnLeave", nil);
+    MRT_GUI_FourRowDialog_EB3:SetScript("OnEnter", nil);
+    MRT_GUI_FourRowDialog_EB3:SetScript("OnLeave", nil);
+    MRT_GUI_FourRowDialog_EB4:SetScript("OnEnter", nil);
+    MRT_GUI_FourRowDialog_EB4:SetScript("OnLeave", nil);
+    MRT_GUI_FourRowDialog:Hide();
     MRT_ExportFrame_Hide();
 end
 
@@ -980,6 +989,17 @@ function MRT_GUI_Hook_ChatEdit_InsertLink(link)
             MRT_GUI_ThreeRowDialog_EB2:SetText(link);
         elseif MRT_GUI_ThreeRowDialog_EB3:HasFocus() then 
             MRT_GUI_ThreeRowDialog_EB3:SetText(link);
+        end
+    end
+    if MRT_GUI_FourRowDialog:IsVisible() then
+        if MRT_GUI_FourRowDialog_EB1:HasFocus() then 
+            MRT_GUI_FourRowDialog_EB1:SetText(link); 
+        elseif MRT_GUI_FourRowDialog_EB2:HasFocus() then 
+            MRT_GUI_FourRowDialog_EB2:SetText(link);
+        elseif MRT_GUI_FourRowDialog_EB3:HasFocus() then 
+            MRT_GUI_FourRowDialog_EB3:SetText(link);
+        elseif MRT_GUI_FourRowDialog_EB4:HasFocus() then 
+            MRT_GUI_FourRowDialog_EB4:SetText(link);
         end
     end
 end
