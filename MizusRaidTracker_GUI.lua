@@ -533,6 +533,8 @@ function MRT_GUI_LootAdd()
     MRT_GUI_ThreeRowDialog_EB2:SetText("");
     MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
     MRT_GUI_ThreeRowDialog_EB3:SetText("");
+    MRT_GUI_ThreeRowDialog_EB4_Text:SetText(MRT_L.GUI["Note"]);
+    MRT_GUI_ThreeRowDialog_EB4:SetText("");
     MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
     MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, nil); end);
     MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
@@ -559,6 +561,7 @@ function MRT_GUI_LootModify()
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
+    local lootnote = MRT_RaidLog[raidnum]["Loot"][lootnum]["Note"];
     MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Modify loot data"]);
     MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
     MRT_GUI_ThreeRowDialog_EB1:SetText(MRT_RaidLog[raidnum]["Loot"][lootnum]["ItemLink"]);
@@ -566,6 +569,12 @@ function MRT_GUI_LootModify()
     MRT_GUI_ThreeRowDialog_EB2:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 4));
     MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Value"]);
     MRT_GUI_ThreeRowDialog_EB3:SetText(MRT_GUI_BossLootTable:GetCell(loot_select, 5));
+    MRT_GUI_ThreeRowDialog_EB4_Text:SetText(MRT_L.GUI["Note"]);
+    if (lootnote == nil or lootnote == "" or lootnote == " ") then
+        MRT_GUI_ThreeRowDialog_EB4:SetText("");
+    else
+        MRT_GUI_ThreeRowDialog_EB4:SetText(lootnote);
+    end
     MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Modify"]);
     MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum); end);
     MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
@@ -576,8 +585,10 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
     local itemLink = MRT_GUI_ThreeRowDialog_EB1:GetText();
     local looter = MRT_GUI_ThreeRowDialog_EB2:GetText();
     local cost = MRT_GUI_ThreeRowDialog_EB3:GetText();
+    local lootNote = MRT_GUI_ThreeRowDialog_EB4:GetText();
     if (cost == "") then cost = 0; end
     cost = tonumber(cost);
+    if (lootNote == nil or lootNote == "" or lootNote == " ") then lootNote = nil; end
     -- sanity-check values here - especially the itemlink / looter is free text / cost has to be a number
     -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
     -- strip the itemlink into its parts / may change to use deformat with easier pattern ("|c%s|H%s|h[%s]|h|r")
@@ -604,6 +615,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         ["BossNumber"] = bossnum,
         ["Looter"] = looter,
         ["DKPValue"] = cost,
+        ["Note"] = lootNote,
     }
     if (lootnum) then
         oldLootDB = MRT_RaidLog[raidnum]["Loot"][lootnum];

@@ -194,6 +194,7 @@ MRT_L.GUI = {
 	["No raid selected"] = "Error: No raid selected.",
 	["No valid difficulty entered"] = "Error: No valid difficulty entered.",
 	["No valid time entered"] = "Error: No valid time entered.",
+    Note = "Note",
 	Tables_BossAttendeesTitle = "Boss attendees",
 	Tables_BossLootTitle = "Boss loot",
 	Tables_RaidAttendeesTitle = "Raid attendees",

@@ -194,6 +194,7 @@ MRT_L.GUI = {
 	["No raid selected"] = "Fehler: Kein Raid ausgew\195\164hlt.",
 	["No valid difficulty entered"] = "Error: No valid difficulty entered.", -- Requires localization
 	["No valid time entered"] = "Error: No valid time entered.", -- Requires localization
+    Note = "Note",
 	Tables_BossAttendeesTitle = "Bossteilnehmer",
 	Tables_BossLootTitle = "Bossloot",
 	Tables_RaidAttendeesTitle = "Raidteilnehmer",
