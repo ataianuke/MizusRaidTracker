@@ -1181,7 +1181,12 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             xml = xml.."<Time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Date"]).."</Time>";
             xml = xml.."<Difficulty>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"].."</Difficulty>";
             xml = xml.."<Boss>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].."</Boss>";
-            xml = xml.."<Note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].." - "..val["DKPValue"].." DKP]]></Note>";
+            xml = xml.."<Note><![CDATA[";
+            if val["Note"] then
+                xml = xml..val["Note"];
+            end;
+            xml = xml.." - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].." - "..val["DKPValue"].." DKP]]>";
+            xml = xml.."</Note>";
             xml = xml.."</key"..index..">";
             index = index + 1;
         end
@@ -1245,7 +1250,9 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
             if (val["BossNumber"] == bossID) then
                 if (isFirstItem) then bossData = bossData..MRT_L.Core["Export_Loot"]..":\n"; isFirstItem = false; end
-                bossData = bossData.."- "..val["ItemName"].." - "..val["DKPValue"].." "..MRT_Options["Export_Currency"].." - "..val["Looter"].."\n";
+                bossData = bossData.."- "..val["ItemName"].." - "..val["DKPValue"].." "..MRT_Options["Export_Currency"].." - "..val["Looter"]
+                if val["Note"] then bossData = bossData.." ("..val["Note"]..")"; end
+                bossData = bossData.."\n";
             end
         end
         bossData = bossData.."\n\n";
