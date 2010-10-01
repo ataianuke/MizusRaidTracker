@@ -74,7 +74,7 @@ local MRT_BossLootTableColDef = {
                 --MRT_Debug("self:GetCell(realrow, column) = "..self:GetCell(realrow, column));
                 local itemId = self:GetCell(realrow, column);
                 local itemTexture = GetItemIcon(itemId); 
-                cellFrame:SetBackdrop( { bgFile = itemTexture });
+                cellFrame:SetBackdrop( { bgFile = itemTexture } );
             end
             -- tooltip handling
             local itemLink = self:GetCell(realrow, 6);
@@ -93,6 +93,32 @@ local MRT_BossLootTableColDef = {
     {["name"] = MRT_L.GUI["Col_Looter"], ["width"] = 85},
     {["name"] = MRT_L.GUI["Col_Cost"], ["width"] = 30},
     {["name"] = "", ["width"] = 1},                            -- invisible column for itemString (needed for tooltip)
+    {
+        ["name"] = MRT_L.GUI["Note"], 
+        ["width"] = 30,
+        ["DoCellUpdate"] = function(rowFrame, cellFrame, data, cols, row, realrow, column, fShow, self, ...)
+            -- icon handling
+            local lootNote = self:GetCell(realrow, column);
+            if fShow and lootNote then
+                cellFrame:SetBackdrop( { bgFile = "Interface\\BUTTONS\\UI-GuildButton-PublicNote-Up", insets = { left = 5, right = 5, top = 5, bottom = 5 }, } );
+                cellFrame:SetScript("OnEnter", function() 
+                                                 MRT_GUI_ItemTT:SetOwner(cellFrame, "ANCHOR_RIGHT");
+                                                 MRT_GUI_ItemTT:SetText(lootNote);
+                                                 MRT_GUI_ItemTT:Show();
+                                               end);
+                cellFrame:SetScript("OnLeave", function()
+                                                 MRT_GUI_ItemTT:Hide();
+                                                 MRT_GUI_ItemTT:SetOwner(UIParent, "ANCHOR_NONE");
+                                               end);
+            else
+                cellFrame:SetBackdrop(nil);
+                cellFrame:SetScript("OnEnter", nil);
+                cellFrame:SetScript("OnLeave", nil);
+                MRT_GUI_ItemTT:Hide();
+                MRT_GUI_ItemTT:SetOwner(UIParent, "ANCHOR_NONE");
+            end
+        end,
+    },
 };
 local MRT_BossAttendeesTableColDef = {
     {["name"] = "", ["width"] = 1},                            -- invisible column for storing the attendee number index from the raidlog-table
@@ -158,7 +184,7 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_BossAttendees_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
     MRT_GUIFrame_BossAttendees_Delete_Button:SetPoint("TOP", MRT_GUIFrame_BossAttendees_Add_Button, "BOTTOM", 0, -5);
     MRT_GUIFrame_TakeSnapshot_Button:SetText(MRT_L.GUI["Button_TakeSnapshot"]);
-    MRT_GUIFrame_TakeSnapshot_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "TOPLEFT", -245, 0);
+    MRT_GUIFrame_TakeSnapshot_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "TOPLEFT", -215, 0);
     -- disable buttons, if function is NYI
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     -- Insert table data
@@ -582,10 +608,10 @@ function MRT_GUI_LootModify()
 end
 
 function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
-    local itemLink = MRT_GUI_ThreeRowDialog_EB1:GetText();
-    local looter = MRT_GUI_ThreeRowDialog_EB2:GetText();
-    local cost = MRT_GUI_ThreeRowDialog_EB3:GetText();
-    local lootNote = MRT_GUI_ThreeRowDialog_EB4:GetText();
+    local itemLink = MRT_GUI_FourRowDialog_EB1:GetText();
+    local looter = MRT_GUI_FourRowDialog_EB2:GetText();
+    local cost = MRT_GUI_FourRowDialog_EB3:GetText();
+    local lootNote = MRT_GUI_FourRowDialog_EB4:GetText();
     if (cost == "") then cost = 0; end
     cost = tonumber(cost);
     if (lootNote == nil or lootNote == "" or lootNote == " ") then lootNote = nil; end
@@ -898,7 +924,7 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
         local index = 1;
         for i, v in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
             if (v["BossNumber"] == bossnum) then
-                MRT_GUI_BossLootTableData[index] = {i, v["ItemId"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"], v["ItemLink"]};
+                MRT_GUI_BossLootTableData[index] = {i, v["ItemId"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"], v["ItemLink"], v["Note"]};
                 index = index + 1;
             end
         end
@@ -907,7 +933,7 @@ function MRT_GUI_BossLootTableUpdate(bossnum)
     elseif (raidnum) then
         local index = 1;
         for i, v in ipairs(MRT_RaidLog[raidnum]["Loot"]) do
-            MRT_GUI_BossLootTableData[index] = {i, v["ItemId"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"], v["ItemLink"]};
+            MRT_GUI_BossLootTableData[index] = {i, v["ItemId"], "|c"..v["ItemColor"]..v["ItemName"].."|r", v["Looter"], v["DKPValue"], v["ItemLink"], v["Note"]};
             index = index + 1;
         end
         MRT_GUIFrame_BossLootTitle:SetText(MRT_L.GUI["Tables_RaidLootTitle"]);
