@@ -574,19 +574,14 @@ function MRT_GUI_LootModify()
         MRT_Print(MRT_L.GUI["No raid selected"]);
         return;
     end
-    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
-    if (boss_select == nil) then
-        MRT_Print(MRT_L.GUI["No boss selected"]);
-        return;
-    end
     local loot_select = MRT_GUI_BossLootTable:GetSelection();
     if (loot_select == nil) then
         MRT_Print(MRT_L.GUI["No loot selected"]);
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
-    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
+    local bossnum = MRT_RaidLog[raidnum]["Loot"][lootnum]["BossNumber"];
     local lootnote = MRT_RaidLog[raidnum]["Loot"][lootnum]["Note"];
     MRT_GUI_FourRowDialog_Title:SetText(MRT_L.GUI["Modify loot data"]);
     MRT_GUI_FourRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
@@ -658,7 +653,12 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
     if (raid_select == nil) then return; end
     local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
-    if (boss_select == nil) then return; end
+    if (boss_select == nil) then 
+        if (raidnum_selected == raidnum) then
+            MRT_GUI_BossLootTableUpdate(nil);
+        end
+        return; 
+    end
     local bossnum_selected = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     if (raidnum_selected == raidnum and bossnum_selected == bossnum) then
         MRT_GUI_BossLootTableUpdate(bossnum);
@@ -672,19 +672,14 @@ function MRT_GUI_LootDelete()
         MRT_Print(MRT_L.GUI["No raid selected"]);
         return;
     end
-    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
-    if (boss_select == nil) then
-        MRT_Print(MRT_L.GUI["No boss selected"]);
-        return;
-    end
     local loot_select = MRT_GUI_BossLootTable:GetSelection();
     if (loot_select == nil) then
         MRT_Print(MRT_L.GUI["No loot selected"]);
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
-    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
+    local bossnum = MRT_RaidLog[raidnum]["Loot"][lootnum]["BossNumber"];
     local lootName = MRT_GUI_BossLootTable:GetCell(loot_select, 3);
     StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm loot entry deletion"], lootName);
     StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_LootDeleteAccept(raidnum, bossnum, lootnum); end
@@ -698,7 +693,12 @@ function MRT_GUI_LootDeleteAccept(raidnum, bossnum, lootnum)
     if (raid_select == nil) then return; end
     local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
-    if (boss_select == nil) then return; end
+    if (boss_select == nil) then 
+        if (raidnum_selected == raidnum) then
+            MRT_GUI_BossLootTableUpdate(nil);
+        end
+        return; 
+    end
     local bossnum_selected = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     if (raidnum_selected == raidnum and bossnum_selected == bossnum) then
         MRT_GUI_BossLootTableUpdate(bossnum);
