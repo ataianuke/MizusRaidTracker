@@ -7,6 +7,7 @@
 ## DefaultState: enabled
 ## SavedVariables: MRT_Options, MRT_RaidLog, MRT_PlayerDB, MRT_NumOfCurrentRaid, MRT_NumOfLastBoss
 ## X-Website: http://nanaki.affenfelsen.de
+
 embeds.xml
 MizusRaidTracker_Constants.lua
 localization_en.lua

@@ -77,6 +77,8 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
+    MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);
+    MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToLog_Desc"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
@@ -133,6 +135,7 @@ function MRT_Options_OnOkay(panel)
     -- TrackingPanel
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
+    MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_TrackingPanel_AskForDKPValue_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
@@ -174,35 +177,7 @@ end
 ----------------------
 function MRT_Options_OnCancel(panel)
     MRT_Debug("InterfaceOptions - CancelButton pressed");
-    -- MainPanel
-    MRT_Options_MainPanel_Enabled_CB:SetChecked(MRT_Options["General_MasterEnable"]);
-    MRT_Options_MainPanel_Debug_CB:SetChecked(MRT_Options["General_DebugEnabled"]);
-    MRT_Options_MainPanel_SlashCmd_EB:SetText(MRT_Options["General_SlashCmdHandler"]);
-    MRT_Options_MainPanel_SlashCmd_EB:SetCursorPosition(0);
-    -- TrackingPanel
-    MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
-    MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
-    MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
-    MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
-    MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
-    -- AttendancePanel
-    MRT_Options_AttendancePanel_GA_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckEnabled"]);
-    MRT_Options_AttendancePanel_GA_NoAuto_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckNoAuto"]);
-    MRT_Options_AttendancePanel_GADuration_Slider:SetValue(MRT_Options["Attendance_GuildAttendanceCheckDuration"]);
-    MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"].." "..MRT_L.Options["AP_Minutes"]);
-    MRT_Options_AttendancePanel_GroupRestriction:SetChecked(MRT_Options["Attendance_GroupRestriction"]);
-    MRT_Options_AttendancePanel_OfflinePlayers:SetChecked(MRT_Options["Attendance_TrackOffline"]);
-    -- ExportPanel
-    UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
-    MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:SetChecked(MRT_Options["Export_CTRT_AddPoorItem"]);
-    MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(MRT_Options["Export_CTRT_IgnorePerBossAttendance"]);
-    MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
-    MRT_Options_ExportPanel_SetDateFormat_EB:SetCursorPosition(0);
-    MRT_Options_ExportPanel_Currency_EB:SetText(MRT_Options["Export_Currency"]);
-    MRT_Options_ExportPanel_Currency_EB:SetCursorPosition(0);      
+    MRT_Options_ParseValues();   
 end
 
 

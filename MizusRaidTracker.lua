@@ -43,7 +43,7 @@ MRT_PlayerDB = {};
 local MRT_Defaults = {
     ["Options"] = {
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 1,                                             -- OptionsVersion - Counter, which increases after a new option has been added
+        ["General_OptionsVersion"] = 2,                                             -- OptionsVersion - Counter, which increases after a new option has been added
         ["General_DebugEnabled"] = nil,                                             --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["Attendance_GuildAttendanceCheckEnabled"] = nil,                           -- 
@@ -56,6 +56,7 @@ local MRT_Defaults = {
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
+        ["Tracking_CreateNewRaidOnNewZone"] = true,
         ["Tracking_UseServerTime"] = nil,
         ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
         ["Export_CTRT_AddPoorItem"] = true,                                         -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
@@ -162,7 +163,10 @@ function MRT_OnEvent(frame, event, ...)
         local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
         if (MRT_L.Raidzones[instanceInfoName]) then
             -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
-            if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then return end;
+            if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then 
+                if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+                return;
+            end
             MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
         end
     
@@ -220,6 +224,10 @@ function MRT_UpdateSavedOptions()
                 MRT_Options[key] = value;
             end
         end
+    end
+    if MRT_Options["General_OptionsVersion"] == 1 then
+        MRT_Options["Tracking_CreateNewRaidOnNewZone"] = true;
+        MRT_Options["General_OptionsVersion"] = 2;
     end
 end
 
@@ -305,7 +313,8 @@ function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     --  if 10 player tracking disabled, check for 25 player
     --  II) If changed from 10 men to 25 men
     --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
-    --  IV) If RaidZone changed
+    --  IV) If RaidZone changed and CreateNewRaidOnNewZone on
+    --  V) If RaidZone changed and CreateNewRaidOnNewZone on (check for raid size)
     MRT_Debug("Match in MRT_L.Raidzones from GetInstanceInfo() fround.");
     -- Case: No active raidtracking:
     if (not MRT_NumOfCurrentRaid) then
@@ -345,12 +354,38 @@ function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
                 MRT_EndActiveRaid();
             end
         end
-    -- Case: There is an active raid and a zone change
-    else
+    -- Case: There is an active raid and a zone change and MRT_Options["Tracking_CreateNewRaidOnNewZone"] is enabled:
+    elseif (MRT_Options["Tracking_CreateNewRaidOnNewZone"]) then
         MRT_Debug("Active raid in different zone found...");
         if (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then MRT_CreateNewRaid(instanceInfoName, 25);
         elseif (MRT_Options["Tracking_Log10MenRaids"]) then MRT_CreateNewRaid(instanceInfoName, 10);
         else MRT_EndActiveRaid();
+        end
+    -- Case: There is an active raid and a zone change and MRT_Options["Tracking_CreateNewRaidOnNewZone"] is disabled:
+    else
+        -- Case: Active Raid is a 10 player raid -> 10 player raids tracking enabled
+        if (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) then
+            -- Case: Zonechange and same raid size
+            if (instanceInfoDifficulty == 1 or instanceInfoDifficulty == 3) then
+                MRT_Debug("Raid zone changed. Raid size didn't change. CreateNewRaidOnNewZone is disabled. Won't create new raid.");
+                return;
+            else
+                MRT_Debug("Raid zone and raid size changed. Starting new raid.");
+                MRT_CreateNewRaid(instanceInfoName, 25);
+            end
+        -- Case: Active Raid is a 25 player raid
+        else
+            if (instanceInfoDifficulty == 2 or instanceInfoDifficulty == 4) then 
+                MRT_Debug("Raid zone changed. Raid size didn't change. CreateNewRaidOnNewZone is disabled. Won't create new raid.");
+                return;
+            -- Case: different size as active raid
+            elseif (MRT_Options["Tracking_Log10MenRaids"]) then
+                MRT_Debug("Raid zone and raid size changed. Starting new raid.");
+                MRT_CreateNewRaid(instanceInfoName, 10);
+            else
+                MRT_Debug("Raidsize changed to 10, but 10 player tracking disabled - ending active raid...")
+                MRT_EndActiveRaid();
+            end
         end
     end
 end

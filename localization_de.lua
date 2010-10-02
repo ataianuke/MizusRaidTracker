@@ -130,6 +130,7 @@ MRT_L.Options = {
 	MP_Enabled = "Aktiviere MRT",
     MP_SlashCmd = "Slash command",
 	TP_AskForDKPValue = "Frage nach Gegenstandskosten",
+    TP_CreateNewRaidOnNewZone = "Create new raid on new zone",
 	TP_Log10MenRaids = "Logge 10 Spieler Raids",
 	TP_LogAVRaids = "Logge Archavons Kammer",
 	TP_MinItemQualityToGetCost_Desc = "Min item quality to ask cost for", -- Requires localization
