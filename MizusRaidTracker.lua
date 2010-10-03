@@ -714,6 +714,7 @@ function MRT_DKPFrame_AskCost()
     MRT_GetDKPValueFrame_TextThirdLine:SetText(string.format(MRT_L.Core.DKP_Frame_LootetBy, MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
     MRT_GetDKPValueFrame_TTArea:SetWidth(MRT_GetDKPValueFrame_TextSecondLine:GetWidth());
     MRT_GetDKPValueFrame_EB:SetText("");
+    MRT_GetDKPValueFrame_EB2:SetText("");
     MRT_GetDKPValueFrame:Show();
 end
 
@@ -727,8 +728,12 @@ function MRT_DKPFrame_Ok()
         dkpValue = tonumber(MRT_GetDKPValueFrame_EB:GetText(), 10);
     end
     if (dkpValue == nil) then return; end
+    local lootNote = MRT_GetDKPValueFrame_EB2:GetText();
     MRT_GetDKPValueFrame:Hide();
     MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["DKPValue"] = dkpValue;
+    if (lootNote ~= nil and lootNote ~= "" and lootNote ~= " ") then
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+    end
     MRT_DKPFrame_PostAskQueue();
 end
 
@@ -749,17 +754,25 @@ end
 
 -- Case Bank: Set DKP-Value = 0, set Looter = bank
 function MRT_DKPFrame_Bank()
+    local lootNote = MRT_GetDKPValueFrame_EB2:GetText();
     MRT_Debug("DKPFrame: Bank pressed");
     MRT_GetDKPValueFrame:Hide();
     MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "bank";
+    if (lootNote ~= nil and lootNote ~= "" and lootNote ~= " ") then
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+    end
     MRT_DKPFrame_PostAskQueue();
 end
 
 -- Case Disenchanted: Set DKP-Value = 0, set Looter = disenchanted
 function MRT_DKPFrame_Disenchanted()
+    local lootNote = MRT_GetDKPValueFrame_EB2:GetText();
     MRT_Debug("DKPFrame: Disenchanted pressed");
     MRT_GetDKPValueFrame:Hide();
     MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "disenchanted";
+    if (lootNote ~= nil and lootNote ~= "" and lootNote ~= " ") then
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+    end
     MRT_DKPFrame_PostAskQueue();
 end
 
@@ -892,6 +905,8 @@ end
 -- Parse static local strings
 function MRT_Core_Frames_ParseLocal()
     MRT_GetDKPValueFrame_Title:SetText("MRT - "..MRT_L.Core["DKP_Frame_Title"]);
+    MRT_GetDKPValueFrame_CostString:SetText(MRT_L.Core["DKP_Frame_Cost"]);
+    MRT_GetDKPValueFrame_NoteString:SetText(MRT_L.Core["DKP_Frame_Note"]);
     MRT_GetDKPValueFrame_OKButton:SetText(MRT_L.Core["DKP_Frame_OK_Button"]);
     MRT_GetDKPValueFrame_CancelButton:SetText(MRT_L.Core["DKP_Frame_Cancel_Button"]);
     MRT_GetDKPValueFrame_DeleteButton:SetText(MRT_L.Core["DKP_Frame_Delete_Button"]);

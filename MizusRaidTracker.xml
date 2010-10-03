@@ -8,7 +8,7 @@
     </Scripts>
   </Frame>
   <Frame name="MRT_GetDKPValueFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableMouse="true" parent="UIParent">
-    <Size x="365" y="210"/>
+    <Size x="365" y="285"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
     </Anchors>
@@ -51,15 +51,30 @@
             <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_TextSecondLine"/>
           </Anchors>
         </FontString>
+        <FontString name="$parent_CostString" inherits="GameFontWhite" text="Cost - FIXME!">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="TOPLEFT" relativeTo="$parent" x="50" y="-90"/>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_NoteString" inherits="GameFontWhite" text="Note - FIXME!">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_CostString" x="0" y="-48"/>
+          </Anchors>
+        </FontString>
       </Layer>
     </Layers>
     <Frames>
       <EditBox name="$parent_EB" inherits="InputBoxTemplate" historyLines="0" enableKeyboard="true" letters="100">
         <Size x="250" y="32"/>
         <Anchors>
-          <Anchor point="CENTER" relativePoint="TOP" relativeTo="$parent">
-            <Offset x="0" y="-90"/>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CostString" x="8"/>
+        </Anchors>
+        <FontString inherits="ChatFontNormal"/>
+      </EditBox>
+      <EditBox name="$parent_EB2" inherits="InputBoxTemplate" historyLines="0" enableKeyboard="true" letters="150">
+        <Size x="250" y="32"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NoteString" x="8"/>
         </Anchors>
         <FontString inherits="ChatFontNormal"/>
       </EditBox>
