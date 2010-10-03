@@ -8,7 +8,7 @@
     </Scripts>
   </Frame>
   <Frame name="MRT_GetDKPValueFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableMouse="true" parent="UIParent">
-    <Size x="365" y="190"/>
+    <Size x="365" y="210"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
     </Anchors>
@@ -36,11 +36,19 @@
             </Anchor>
           </Anchors>
         </FontString>
-        <FontString name="$parent_Text" inherits="GameFontNormal">
+        <FontString name="$parent_TextFirstLine" inherits="GameFontNormal" text="FirstLine">
           <Anchors>
-            <Anchor point="TOP">
-              <Offset x="0" y="-32"/>
-            </Anchor>
+            <Anchor point="TOP" x="0" y="-32"/>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_TextSecondLine" inherits="GameFontNormal" text="SecondLine">
+          <Anchors>
+            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_TextFirstLine"/>
+          </Anchors>
+        </FontString>
+        <FontString name="$parent_TextThirdLine" inherits="GameFontNormal" text="ThirdLine">
+          <Anchors>
+            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="$parent_TextSecondLine"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -50,7 +58,7 @@
         <Size x="250" y="32"/>
         <Anchors>
           <Anchor point="CENTER" relativePoint="TOP" relativeTo="$parent">
-            <Offset x="0" y="-75"/>
+            <Offset x="0" y="-90"/>
           </Anchor>
         </Anchors>
         <FontString inherits="ChatFontNormal"/>
@@ -110,6 +118,16 @@
           <OnClick>MRT_DKPFrame_Disenchanted();</OnClick>
         </Scripts>
       </Button>
+      <Frame name="$parent_TTArea" hidden="false" enableMouse="true">
+        <Size x="100" y="12"/>
+        <Anchors>
+          <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent_TextSecondLine"/>
+        </Anchors>
+        <Scripts>
+          <OnEnter>MRT_Core_TT:SetOwner(self, "ANCHOR_BOTTOMRIGHT"); MRT_Core_TT:SetHyperlink(MRT_GetDKPValueFrame_TextSecondLine:GetText()); MRT_Core_TT:Show();</OnEnter>
+          <OnLeave>MRT_Core_TT:Hide();</OnLeave>
+        </Scripts>
+      </Frame>
     </Frames>
     <Scripts>
       <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
@@ -207,4 +225,5 @@
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
+  <GameTooltip name="MRT_Core_TT" inherits="GameTooltipTemplate" parent="UI_Parent" hidden="true"/>
 </Ui>

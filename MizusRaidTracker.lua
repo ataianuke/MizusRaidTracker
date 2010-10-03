@@ -708,7 +708,11 @@ function MRT_DKPFrame_AskCost()
         return; 
     end
     -- else format text and show "Enter Cost" frame
-    MRT_GetDKPValueFrame_Text:SetText(string.format(MRT_L.Core["DKP_Frame_Text"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["ItemLink"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
+    --MRT_GetDKPValueFrame_Text:SetText(string.format(MRT_L.Core["DKP_Frame_Text"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["ItemLink"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
+    MRT_GetDKPValueFrame_TextFirstLine:SetText(MRT_L.Core["DKP_Frame_EnterCostFor"]);
+    MRT_GetDKPValueFrame_TextSecondLine:SetText(MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["ItemLink"]);
+    MRT_GetDKPValueFrame_TextThirdLine:SetText(string.format(MRT_L.Core.DKP_Frame_LootetBy, MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
+    MRT_GetDKPValueFrame_TTArea:SetWidth(MRT_GetDKPValueFrame_TextSecondLine:GetWidth());
     MRT_GetDKPValueFrame_EB:SetText("");
     MRT_GetDKPValueFrame:Show();
 end
@@ -888,7 +892,6 @@ end
 -- Parse static local strings
 function MRT_Core_Frames_ParseLocal()
     MRT_GetDKPValueFrame_Title:SetText("MRT - "..MRT_L.Core["DKP_Frame_Title"]);
-    MRT_GetDKPValueFrame_Text:SetText(MRT_L.Core["DKP_Frame_Text"]);
     MRT_GetDKPValueFrame_OKButton:SetText(MRT_L.Core["DKP_Frame_OK_Button"]);
     MRT_GetDKPValueFrame_CancelButton:SetText(MRT_L.Core["DKP_Frame_Cancel_Button"]);
     MRT_GetDKPValueFrame_DeleteButton:SetText(MRT_L.Core["DKP_Frame_Delete_Button"]);

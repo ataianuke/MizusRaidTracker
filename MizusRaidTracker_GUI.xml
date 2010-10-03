@@ -511,6 +511,6 @@
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
-  <GameTooltip name="MRT_GUI_ItemTT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"></GameTooltip>
-  <GameTooltip name="MRT_GUI_TT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"></GameTooltip>
+  <GameTooltip name="MRT_GUI_ItemTT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"/>
+  <GameTooltip name="MRT_GUI_TT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"/>
 </Ui>
