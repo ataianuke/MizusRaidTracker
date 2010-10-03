@@ -1,3 +1,16 @@
+0.18 Beta - Changelog:
+  New:
+    * Added support for loot notes. Extra input fields have been added to the loot dialog, the add item dialog and the modify item dialog.
+    * The loot list of the raidlog browser got an extra column for a loot note symbol. The loot note itself will display as a tooltip on mouseover.
+    * Added option for using server time instead of local time.
+    * Added option for disabling the automatic creation of a new raid entry after changing raid zones.
+    * Added item tooltip support for the loot dialog.
+  Changes:
+    * Raidlog browser: Modifying and deleting items don't require a selected boss event anymore.
+  Bug Fixes:
+    * When a running raid changes zone to Archavons Vault, MRT should now end tracking correctly, if tracking of AV is disabled.
+  
+
 0.17 Beta - Changelog:
   New:
     * Added option for disabling boss based attendee data for CTRT-export (if you only create one raid entry for each raid in your EQDKP(-Plus) and make corrections to raid members manually, you might want to activate this option)
