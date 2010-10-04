@@ -41,24 +41,24 @@ MRT_L.Bossyells = {
     ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Quatre cavaliers",
 
     -- Ulduar
-    ["You rush headlong into the maw of madness!"] = "Iron Council",  -- Normalmode - Stormcaller Brundir last
-    ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Iron Council",  -- Semi-Hardmode - Runemaster Molgeim last
-    ["Impossible..."] = MRT_IsInstanceUlduar("Iron Council"),  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
-    ["I... I am released from his grasp... at last."] = "Hodir",
-    ["Stay your arms! I yield!"] = "Thorim",
-    ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",
-    ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "Mimiron",
-    ["I've rearranged the reply code. Your planet will be spared. I cannot be certain of my own calculations anymore."] = "Algalon l'Observateur",
+    ["You rush headlong into the maw of madness!"] = "Assemblée du Fer",  -- Normalmode - Stormcaller Brundir last
+    ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Assemblée du Fer",  -- Semi-Hardmode - Runemaster Molgeim last
+    ["Imposible!"] = MRT_IsInstanceUlduar("Assemblée du Fer"),  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
+    ["Je suis... libéré de son emprise... enfin."] = "Hodir",
+    ["Retenez vos coups ! Je me rends !"] = "Thorim",
+    ["Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."] = "Freya",
+    ["Il semblerait que j'aie pu faire une minime erreur de calcul. J'ai permis \195\160 mon esprit de se laisser corrompre par ce d\195\169mon dans la prison qui a désactiv\195\169 ma directive principale. Tous les syst\195\168mes fonctionnent \195\160 nouveau. Termin\195\169."] = "Mimiron",
+    ["J'ai vu des mondes baigner dans les flammes"] = "Algalon l'Observateur",
 
     -- Trial of the Crusader
-    ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Champions de faction",
-    ["The Scourge cannot be stopped..."] = "Val'kyr Twins",
+    ["Une victoire tragique et depourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait beneficier d'une telle folie?? De grands guerriers ont perdu la vie. Et pour quoi?? La vraie menace plane à l'horizon?: le roi-liche nous attend, tous, dans la mort."] = "Champions de faction",
+    ["Personne ne peut arr\195\170ter le Fl\195\169au…"] = "Soeurs Val'kyr",
         
     -- Icecrown Citadel
-    ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Bataille des canonnières", -- Muradin
-    ["The Alliance falter. Onward to the Lich King!"] = "Bataille des canonnières", -- Saurfang
+    ["Vous direz pas que j'vous avais pas prévenus, canailles ! Mes frères et sœurs, en avant !"] = "Bataille des canonnières", -- Muradin
+    ["L'Alliance baisse pavillon. Sus au roi%-liche !"] = "Bataille des canonnières", -- Saurfang
     ["My queen, they... come."] = "Conseil des princes de sang", -- Prince Keleseth
-    ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Marcherêve", -- Dreamwalker
+    ["JE REVIS !"] = "Valithria Marcherêve", -- Dreamwalker
 
     -- Ruby Sanctum
     ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
