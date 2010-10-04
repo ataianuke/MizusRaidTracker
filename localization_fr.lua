@@ -20,16 +20,16 @@ if GetLocale() ~= "frFR" then return end
 -- 'keys' = text in squared brackets
 MRT_L.Raidzones = {
     -- Wrath of the Lich King
-	["The Eye of Eternity"] = "The Eye of Eternity",
-	["The Obsidian Sanctum"] = "The Obsidian Sanctum",
-	["Vault of Archavon"] = "Vault of Archavon",
+	["L'Œil de l'éternité"] = "The Eye of Eternity",
+	["Le sanctum Obsidien"] = "The Obsidian Sanctum",
+	["Caveau d'Archavon"] = "Vault of Archavon",
 	["Naxxramas"] = "Naxxramas",
 	["Ulduar"] = "Ulduar",
-	["Trial of the Crusader"] = "Trial of the Crusader",
+	["L'épreuve du croisé"] = "Trial of the Crusader",
 	["Trial of the Grand Crusader"] = "Trial of the Grand Crusader",
-	["Onyxia's Lair"] = "Onyxia's Lair",
-	["Icecrown Citadel"] = "Icecrown Citadel",
-    ["The Ruby Sanctum"] = "The Ruby Sanctum",
+	["Repaire d'Onyxia"] = "Onyxia's Lair",
+	["Citadelle de la Couronne de glace"] = "Icecrown Citadel",
+    ["Le sanctum Rubis"] = "The Ruby Sanctum",
 }
 
 
