@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Title: Mizus RaidTracker
-## Version: 0.18 Beta
+## Version: 0.18-2 Beta
 ## Notes: Tracks raid, loot and attendance
 ## Author: Mizukichan@EU-Thrall
 ## LoadOnDemand: 0
@@ -12,6 +12,7 @@ embeds.xml
 MizusRaidTracker_Constants.lua
 localization_en.lua
 localization_de.lua
+localization_fr.lua
 MizusRaidTracker.xml
 MizusRaidTracker_Options.xml
 MizusRaidTracker_GUI.xml
