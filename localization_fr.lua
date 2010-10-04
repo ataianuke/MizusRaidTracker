@@ -56,7 +56,7 @@ MRT_L.Bossyells = {
         
     -- Icecrown Citadel
     ["Vous direz pas que j'vous avais pas prévenus, canailles ! Mes frères et sœurs, en avant !"] = "Bataille des canonnières", -- Muradin
-    ["L'Alliance baisse pavillon. Sus au roi%-liche !"] = "Bataille des canonnières", -- Saurfang
+    ["L'Alliance baisse pavillon. Sus au roi-liche !"] = "Bataille des canonnières", -- Saurfang
     ["My queen, they... come."] = "Conseil des princes de sang", -- Prince Keleseth
     ["JE REVIS !"] = "Valithria Marcherêve", -- Dreamwalker
 
