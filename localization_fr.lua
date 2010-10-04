@@ -38,7 +38,7 @@ MRT_L.Raidzones = {
 -----------------
 MRT_L.Bossyells = {
     -- Naxxramas
-    ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Four Horsemen",
+    ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Quatre cavaliers",
 
     -- Ulduar
     ["You rush headlong into the maw of madness!"] = "Iron Council",  -- Normalmode - Stormcaller Brundir last
@@ -48,17 +48,17 @@ MRT_L.Bossyells = {
     ["Stay your arms! I yield!"] = "Thorim",
     ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",
     ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "Mimiron",
-    ["I've rearranged the reply code. Your planet will be spared. I cannot be certain of my own calculations anymore."] = "Algalon",
+    ["I've rearranged the reply code. Your planet will be spared. I cannot be certain of my own calculations anymore."] = "Algalon l'Observateur",
 
     -- Trial of the Crusader
-    ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Faction Champions",
+    ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Champions de faction",
     ["The Scourge cannot be stopped..."] = "Val'kyr Twins",
         
     -- Icecrown Citadel
-    ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Gunship Battle", -- Muradin
-    ["The Alliance falter. Onward to the Lich King!"] = "Gunship Battle", -- Saurfang
-    ["My queen, they... come."] = "Blood Prince Council", -- Prince Keleseth
-    ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker", -- Dreamwalker
+    ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Bataille des canonnières", -- Muradin
+    ["The Alliance falter. Onward to the Lich King!"] = "Bataille des canonnières", -- Saurfang
+    ["My queen, they... come."] = "Conseil des princes de sang", -- Prince Keleseth
+    ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Marcherêve", -- Dreamwalker
 
     -- Ruby Sanctum
     ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
