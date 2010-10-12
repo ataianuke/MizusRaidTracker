@@ -1008,27 +1008,31 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"]).."</end>";
     xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
     xml = xml.."<PlayerInfos>";
+    local proceededPlayerInfo = {};
     index = 1;
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
         local name = val["Name"];
-        xml = xml.."<key"..index..">";
-        xml = xml.."<name>"..name.."</name>";
-        if (MRT_PlayerDB[realm][name]) then
-            if (MRT_PlayerDB[realm][name]["Race"]) then
-                xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+        if not proceededPlayerInfo[name] then
+            xml = xml.."<key"..index..">";
+            xml = xml.."<name>"..name.."</name>";
+            if (MRT_PlayerDB[realm][name]) then
+                if (MRT_PlayerDB[realm][name]["Race"]) then
+                    xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+                end
+                if (MRT_PlayerDB[realm][name]["Sex"]) then
+                    xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+                end
+                if (MRT_PlayerDB[realm][name]["Class"]) then
+                    xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+                end
+                if (MRT_PlayerDB[realm][name]["Level"]) then
+                    xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+                end
             end
-            if (MRT_PlayerDB[realm][name]["Sex"]) then
-                xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
-            end
-            if (MRT_PlayerDB[realm][name]["Class"]) then
-                xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-            end
-            if (MRT_PlayerDB[realm][name]["Level"]) then
-                xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
-            end
+            xml = xml.."</key"..index..">";
+            index = index + 1;
+            proceededPlayerInfo[name] = true;
         end
-        xml = xml.."</key"..index..">";
-        index = index + 1;
     end
     xml = xml.."</PlayerInfos>";
     -- check data - goal: create as few join/leave pairs as possible
