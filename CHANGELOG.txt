@@ -1,3 +1,8 @@
+0.19-2 Beta:
+  Bug Fixes:
+    * Updated item string handling (Patch 4.0.1 issue)
+ 
+
 0.19 Beta - Changelog:
   New:
     * Added very basic support for french EU-clients (Gunship Battle, Dreamwalker, Blood Prince Council and Halion kill detection will not work)
