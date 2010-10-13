@@ -1,3 +1,12 @@
+0.19 Beta - Changelog:
+  New:
+    * Added very basic support for french EU-clients (Gunship Battle, Dreamwalker, Blood Prince Council and Halion kill detection will not work)
+  Changes:
+    * Updated NPC ID conversion for Patch 4.0.1
+  Bug Fixes:
+    * The CTRT-compatible raid export shouldn't export duplicated player exports. This should fix an issue with the Raidlogimport-Plugin for EQDKP-Plus
+ 
+
 0.18 Beta - Changelog:
   New:
     * Added support for loot notes. Extra input fields have been added to the loot dialog, the add item dialog and the modify item dialog.
