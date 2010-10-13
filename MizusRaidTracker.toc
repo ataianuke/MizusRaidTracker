@@ -1,4 +1,4 @@
-## Interface: 30300
+## Interface: 40000
 ## Title: Mizus RaidTracker
 ## Version: 0.18-2 Beta
 ## Notes: Tracks raid, loot and attendance
