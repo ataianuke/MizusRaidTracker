@@ -1,3 +1,8 @@
+0.19-3 Beta:
+  Bug Fixes:
+    * Fixed positioning of a few strings in the options panel
+ 
+
 0.19-2 Beta:
   Bug Fixes:
     * Updated item string handling (Patch 4.0.1 issue)
@@ -66,10 +71,4 @@
   Bug Fixes:
     * Some manually added boss events were saved with wrong difficulty
     * Fixed export-error, which happened if extended information in playerDB is missing
-    
-
-0.14 Beta - Changelog:
-  Bug Fixes:
-    * fixed path of lib-ScrollingTable (embedded library) (Ticket ID1 and 2 - thanks to Kanjou)
-    
-    
+  

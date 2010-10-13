@@ -31,9 +31,7 @@
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite">
               <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT">
-                  <Offset></Offset>
-                </Anchor>
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
               </Anchors>
             </FontString>
           </Layer>
@@ -49,9 +47,7 @@
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite">
               <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT">
-                  <Offset></Offset>
-                </Anchor>
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
               </Anchors>
             </FontString>
           </Layer>
