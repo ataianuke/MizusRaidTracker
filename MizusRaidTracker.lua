@@ -921,8 +921,9 @@ end
 function MRT_GetNPCID(GUID)
     local first3 = tonumber("0x"..strsub(GUID, 3, 5));
     local unitType = bit.band(first3, 0x007);
+    -- old: GUID, 9, 12
     if ((unitType == 0x003) or (unitType == 0x005)) then
-        return tonumber("0x"..strsub(GUID, 9, 12));
+        return tonumber("0x"..strsub(GUID, 7, 10));
     else
         return nil;
     end
