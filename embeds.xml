@@ -3,4 +3,6 @@
   <Script file="libs\LibStub\LibStub.lua"/>
   <Script file="libs\LibDeformat-3.0\LibDeformat-3.0.lua"/>
   <Script file="libs\LibST\core.lua"/>
+  <Script file="libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
+  <Script file="libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
 </Ui>
