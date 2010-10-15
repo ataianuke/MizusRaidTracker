@@ -71,6 +71,7 @@ local MRT_Defaults = {
 --  Locals  --
 --------------
 local deformat = LibStub("LibDeformat-3.0");
+local LDB = LibStub("LibDataBroker-1.1");
 local tinsert = tinsert;
 local pairs = pairs;
 local ipairs = ipairs;
@@ -108,15 +109,7 @@ end
 function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
         frame:UnregisterEvent("ADDON_LOADED");
-        MRT_UpdateSavedOptions();
-        MRT_VersionUpdate();
-        MRT_PeriodicMaintenance();
-        MRT_Options_ParseValues();
-        MRT_GUI_ParseValues();
-        MRT_Core_Frames_ParseLocal();
-        SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
-        SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
-        MRT_Debug("Addon loaded.");
+        MRT_Initialize();
     
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
@@ -210,6 +203,47 @@ function MRT_SlashCmdHandler(msg)
     else
         -- FIXME: print commands
     end
+end
+
+
+------------------
+--  Initialize  --
+------------------
+function MRT_Initialize()
+    -- Update settings and DB
+    MRT_UpdateSavedOptions();
+    MRT_VersionUpdate();
+    -- Maintenance
+    MRT_PeriodicMaintenance();
+    -- Parse localization
+    MRT_Options_ParseValues();
+    MRT_GUI_ParseValues();
+    MRT_Core_Frames_ParseLocal();
+    -- set up slash command
+    SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
+    SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
+    -- set up LDB data source
+    MRT_LDB_DS = LDB:NewDataObject("Mizus RaidTracker", {
+        icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_disabled",
+        label = MRT_ADDON_TITLE,
+        text = "MRT",
+        type = "data source",
+        OnClick = function(self, button)
+            if (button == "LeftButton") then
+                MRT_GUI_Toggle();
+            elseif (button == "RightButton") then
+                InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
+            end
+        end,
+        OnTooltipShow = function(tooltip)
+            tooltip:AddLine(MRT_ADDON_TITLE);
+            tooltip:AddLine(" ");
+            tooltip:AddLine(MRT_L.Core["LDB Left-click to toggle the raidlog browser"]);
+            tooltip:AddLine(MRT_L.Core["LDB Right-click to open the options menu"]);
+        end,
+    });
+    -- Finish
+    MRT_Debug("Addon loaded.");
 end
 
 
@@ -342,6 +376,25 @@ end
 -------------------------------------
 --  basic raid tracking functions  --
 -------------------------------------
+function MRT_CheckRaidStatusAfterLogin()
+    if (GetNumRaidMembers() == 0) then
+        MRT_EndActiveRaid();
+        return;
+    end
+    if (MRT_NumOfCurrentRaid) then
+        -- set up timer for regular raid roster scanning
+        MRT_RaidRosterScanTimer.lastCheck = time()
+        MRT_RaidRosterScanTimer:SetScript("OnUpdate", function (self)
+            if ((time() - self.lastCheck) > 5) then
+                self.lastCheck = time();
+                MRT_RaidRosterUpdate();
+            end
+        end);
+        -- update LDB text and icon
+        MRT_LDB_DS.icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_enabled";
+    end
+end
+
 function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
     --  I) If no active raid and 10 player tracking enabled
@@ -471,6 +524,8 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             MRT_RaidRosterUpdate();
         end
     end);
+    -- update LDB text and icon
+    MRT_LDB_DS.icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_enabled";
 end
 
 function MRT_RaidRosterUpdate(frame)
@@ -614,23 +669,8 @@ function MRT_EndActiveRaid()
     MRT_RaidLog[MRT_NumOfCurrentRaid]["StopTime"] = currentTime;
     MRT_NumOfCurrentRaid = nil;
     MRT_NumOfLastBoss = nil;
-end
-
-function MRT_CheckRaidStatusAfterLogin()
-    if (GetNumRaidMembers() == 0) then
-        MRT_EndActiveRaid();
-        return;
-    end
-    if (MRT_NumOfCurrentRaid) then
-        -- set up timer for regular raid roster scanning
-        MRT_RaidRosterScanTimer.lastCheck = time()
-        MRT_RaidRosterScanTimer:SetScript("OnUpdate", function (self)
-            if ((time() - self.lastCheck) > 5) then
-                self.lastCheck = time();
-                MRT_RaidRosterUpdate();
-            end
-        end);
-    end
+    -- update LDB text and icon
+    MRT_LDB_DS.icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_disabled";
 end
 
 function MRT_TakeSnapshot()
