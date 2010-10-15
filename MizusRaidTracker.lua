@@ -109,6 +109,8 @@ function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
         frame:UnregisterEvent("ADDON_LOADED");
         MRT_UpdateSavedOptions();
+        MRT_VersionUpdate();
+        MRT_PeriodicMaintenance();
         MRT_Options_ParseValues();
         MRT_GUI_ParseValues();
         MRT_Core_Frames_ParseLocal();
@@ -153,7 +155,6 @@ function MRT_OnEvent(frame, event, ...)
                 MRT_CheckRaidStatusAfterLogin();
                 MRT_GuildRosterUpdate(frame, nil, true)
                 MRT_GuildRosterInitialUpdateDone = true;
-                MRT_VersionUpdate();
             end
         end);
     
@@ -303,6 +304,40 @@ function MRT_VersionUpdate()
     end
 end
 
+
+----------------------------
+--  Periodic maintenance  --
+----------------------------
+-- delete unused PlayerDB-Entries
+function MRT_PeriodicMaintenance()
+    if (#MRT_RaidLog == 0) then return; end
+    local deletedEntries = 0;
+    local usedPlayerList = {};
+    local startTime = time();
+    for i, raidInfoTable in ipairs(MRT_RaidLog) do
+        local name;
+        local realm = raidInfoTable["Realm"];
+        if (not usedPlayerList[realm]) then usedPlayerList[realm] = {}; end
+        for j, playerInfo in pairs(raidInfoTable["Players"]) do
+            name = playerInfo.Name;
+            usedPlayerList[realm][name] = true;
+        end
+        for j, bossInfo in ipairs(raidInfoTable["Bosskills"]) do
+            for k, playerName in ipairs(bossInfo["Players"]) do
+                usedPlayerList[realm][playerName] = true;
+            end
+        end
+    end
+    for realm, playerInfoList in pairs(MRT_PlayerDB) do
+        for player, playerInfo in pairs(MRT_PlayerDB[realm]) do
+            if (not usedPlayerList[realm][player]) then
+                MRT_PlayerDB[realm][player] = nil;
+                deletedEntries = deletedEntries + 1;
+            end
+        end
+    end
+    MRT_Debug("Maintenance finished in "..tostring(time() - startTime).." seconds. Deleted "..tostring(deletedEntries).." player entries.");
+end
 
 -------------------------------------
 --  basic raid tracking functions  --
@@ -491,7 +526,7 @@ function MRT_RaidRosterUpdate(frame)
         end
     end
     -- MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
-    for key, val in pairs (MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+    for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
         local matchFound = nil;
         for index, activePlayer in ipairs (activePlayerList) do
             if (val["Name"] == activePlayer) then 
