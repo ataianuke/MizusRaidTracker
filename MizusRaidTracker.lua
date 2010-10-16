@@ -242,6 +242,8 @@ function MRT_Initialize()
             tooltip:AddLine(MRT_L.Core["LDB Right-click to open the options menu"]);
         end,
     });
+    -- update version number in saved vars
+    MRT_Options["General_Version"] = MRT_ADDON_VERSION;
     -- Finish
     MRT_Debug("Addon loaded.");
 end
