@@ -60,8 +60,8 @@ local MRT_RaidAttendeesTableColDef = {
 local MRT_RaidBosskillsTableColDef = {
     {["name"] = MRT_L.GUI["Col_Num"], ["width"] = 25, ["defaultsort"] = "dsc"},
     {["name"] = MRT_L.GUI["Col_Time"], ["width"] = 40},
-    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 110},
-    {["name"] = MRT_L.GUI["Col_Difficulty"], ["width"] = 40},
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 105},
+    {["name"] = MRT_L.GUI["Col_Difficulty"], ["width"] = 45},
 };
 local MRT_BossLootTableColDef = {
     {["name"] = "", ["width"] = 1},                            -- invisible column for storing the loot number index from the raidlog-table
