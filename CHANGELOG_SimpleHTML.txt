@@ -1,4 +1,4 @@
-<h4>0.20 Beta - Changelog:</h4>
+<h4>0.20 Beta</h4>
 <strong>New:</strong>
 <ul>
 	<li>Added regularly check for PlayerDB and delete unused entries.</li>
@@ -15,7 +15,7 @@
 </ul>
    
    
-<h4>0.19-3 Beta - Changelog:</h4>
+<h4>0.19-3 Beta</h4>
 <strong>New:</strong>
 <ul>
 	<li>Added very basic support for french EU-clients (Gunship Battle, Dreamwalker, Blood Prince Council and Halion kill detection will not work)</li>
@@ -29,7 +29,7 @@
 </ul>
    
    
-<h4>0.18 Beta - Changelog:</h4>
+<h4>0.18 Beta</h4>
 <strong>New:</strong>
 <ul>
 	<li>Added support for loot notes. Extra input fields have been added to the loot dialog, the add item dialog and the modify item dialog.</li>
@@ -48,7 +48,7 @@
 </ul>
    
    
-<h4>0.17 Beta - Changelog:</h4>
+<h4>0.17 Beta</h4>
 <strong>New:</strong>
 <ul>
 	<li>Added option for disabling boss based attendee data for  CTRT-export (if you only create one raid entry for each raid in your  EQDKP(-Plus) and make corrections to raid members manually, you might want  to activate this option)</li>
@@ -67,7 +67,7 @@
 </ul>
    
    
-<h4>0.16 Changelog:</h4>
+<h4>0.16 Beta</h4>
 <strong>New:</strong>
 <ul>
 	<li>Added option for changing the slash command. (Please relog after changing)</li>
@@ -85,7 +85,7 @@
 </ul>
   
   
-<h4>0.15 Changelog:</h4>
+<h4>0.15 Beta</h4>
 <strong>New:</strong>
 <ul>
 	<li>Added two new export formats: plain text and BBCode formatted text (choose your export format in the options panel)</li>
