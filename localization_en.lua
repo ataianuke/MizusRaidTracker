@@ -51,7 +51,7 @@ MRT_L.Bossyells = {
     ["Stay your arms! I yield!"] = "Thorim",
     ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",
     ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "Mimiron",
-    ["I've rearranged the reply code - your planet will be spared. I cannot be certain of my own calculations anymore."] = "Algalon the Observer",
+    ["I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?"] = "Algalon the Observer",
 
     -- Trial of the Crusader
     ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Faction Champions",
