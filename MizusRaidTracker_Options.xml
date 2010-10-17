@@ -450,6 +450,10 @@
             </FontString>
           </Layer>
         </Layers>
+        <Scripts>
+          <OnEnter>MRT_Options_SetTT(self, "EP_AddPoorItem");</OnEnter>
+          <OnLeave>MRT_Options_HideTT();</OnLeave>
+        </Scripts>
       </CheckButton>
       <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
