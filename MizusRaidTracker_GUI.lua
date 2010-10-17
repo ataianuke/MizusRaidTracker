@@ -413,10 +413,12 @@ function MRT_GUI_BossAddAccept(raidnum)
         if (MRT_NumOfCurrentRaid and raidnum == MRT_NumOfCurrentRaid) then
             MRT_NumOfLastBoss = #MRT_RaidLog[raidnum]["Bosskills"];
         end
-        -- ask, if raid attendees should be saved as boss attendees for the new boss
-        StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = MRT_L.GUI["Add raid attendees as boss attendees"];
-        StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_BossAddAccept_AddAttendees(raidnum, insertPos, bossTimestamp); end
-        StaticPopup_Show("MRT_GUI_ZeroRowDialog");
+        -- save raid attendees as boss attendees for the new boss
+        for key, val in pairs(MRT_RaidLog[raidnum]["Players"]) do
+            if (val["Join"] < bossTimestamp and (val["Leave"] == nil or val["Leave"] > bossTimestamp)) then
+                tinsert(MRT_RaidLog[raidnum]["Bosskills"][insertPos]["Players"], val["Name"]);
+            end
+        end
     end
     -- Do a table update, if the displayed raid was modified
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
@@ -424,14 +426,6 @@ function MRT_GUI_BossAddAccept(raidnum)
     local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     if (raidnum_selected == raidnum) then
         MRT_GUI_RaidDetailsTableUpdate(raidnum);
-    end
-end
-
-function MRT_GUI_BossAddAccept_AddAttendees(raidnum, bossnum, bossTimestamp)
-    for key, val in pairs(MRT_RaidLog[raidnum]["Players"]) do
-        if (val["Join"] < bossTimestamp and (val["Leave"] == nil or val["Leave"] > bossTimestamp)) then
-            tinsert(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"], val["Name"]);
-        end
     end
 end
 
