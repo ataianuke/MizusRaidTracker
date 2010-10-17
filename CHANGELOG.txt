@@ -1,3 +1,14 @@
+0.20 Beta:
+  New:
+    * Added regularly check for PlayerDB and delete unused entries.
+    * Added a LibDataBroker data source for opening the raidlog and the options panel
+  Changes:
+    * 'Add Bosskill' dialog: Deleted the user dialog, which asked, if raid attendees should be copied to the boss attendees list. This is now done by default. Since raid attendee data takes priority over boss attendee data since v0.17, having this optional didn't make sense anymore.
+    * Updated deDE translation.
+  Bug Fixes: 
+    * Changed layout of the boss kill table slightly. The last column shouldn't cut off anymore.
+    
+
 0.19-3 Beta:
   Bug Fixes:
     * Fixed positioning of a few strings in the options panel
