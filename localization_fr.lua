@@ -3,6 +3,9 @@
 -- **          <http://nanaki.affenfelsen.de>           **
 -- *******************************************************
 --
+-- The localizations is written by:
+--  Mizukichan
+--
 -- Note: 
 --  MRT requires a correct localization of RaidZones and Bossyells for working
 --
