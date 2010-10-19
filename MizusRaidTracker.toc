@@ -9,10 +9,10 @@
 ## X-Website: http://nanaki.affenfelsen.de
 
 embeds.xml
+localization.lua
+localization_deDE.lua
+localization_frFR.lua
 MizusRaidTracker_Constants.lua
-localization_en.lua
-localization_de.lua
-localization_fr.lua
 MizusRaidTracker.xml
 MizusRaidTracker_Options.xml
 MizusRaidTracker_GUI.xml
