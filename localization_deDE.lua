@@ -46,7 +46,7 @@ MRT_L.Bossyells = {
     -- Ulduar
     ["Ihr lauft geradewegs in den Schlund des Wahnsinns!"] = "Versammlung des Eisens",  -- Normalmode - Stormcaller Brundir last
     ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Versammlung des Eisens",  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
-    ["Unm\195\182glich..."] = MRT_IsInstanceUlduar("Versammlung des Eisens"),  -- Hardmode - Steelbreaker last // also yelled by Lich King -> instance check necessary
+    ["Unm\195\182glich..."] = function() return MRT_IsInstanceUlduar("Versammlung des Eisens") end,  -- Hardmode - Steelbreaker last // also yelled by Lich King -> instance check necessary
     ["Ich... bin von ihm befreit... endlich."] = "Hodir",
     ["Senkt Eure Waffen! Ich ergebe mich!"] = "Thorim",
     ["Seine Macht \195\188ber mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."] = "Freya",
