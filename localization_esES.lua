@@ -71,17 +71,16 @@ MRT_L.Bossyells = {
 ---------------------------------
 --  Core frames local strings  --
 ---------------------------------
-MRT_L.Core = @localization(locale="esES", format="lua_table", handle-unlocalized="comment", namespace="MRT_L/Core")@
+--@localization(locale="esES", format="lua_additive_table", handle-unlocalized="comment", table-name="MRT_L.Core", namespace="MRT_L/Core")@
 
 
 -----------------------------------
 --  Option panels local strings  --
 -----------------------------------
-MRT_L.Options = @localization(locale="esES", format="lua_table", handle-unlocalized="comment", namespace="MRT_L/Options")@
+--@localization(locale="esES", format="lua_additive_table", handle-unlocalized="comment", table-name="MRT_L.Options", namespace="MRT_L/Options")@
 
 
 -------------------
 --  GUI strings  --
 -------------------
-MRT_L.GUI = @localization(locale="esES", format="lua_table", handle-unlocalized="comment", namespace="MRT_L/GUI")@
-
+--@localization(locale="esES", format="lua_additive_table", handle-unlocalized="comment", table-name="MRT_L.GUI", namespace="MRT_L/GUI")@
