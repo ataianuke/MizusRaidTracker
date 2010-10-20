@@ -301,7 +301,7 @@ function MRT_GUI_BossAdd()
     MRT_GUI_ThreeRowDialog_EB2:SetText("");
     MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Time"]);
     MRT_GUI_ThreeRowDialog_EB3:SetText("");
-    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB2, "Boss_Add_TimeEB"); end);
+    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_ThreeRowDialog_EB3, "Boss_Add_TimeEB"); end);
     MRT_GUI_ThreeRowDialog_EB3:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
     MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
     MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_BossAddAccept(raidnum); end);
@@ -795,8 +795,12 @@ function MRT_GUI_StartNewRaid()
     MRT_GUI_TwoRowDialog_Title:SetText(MRT_L.GUI["Button_StartNewRaid"]);
     MRT_GUI_TwoRowDialog_EB1_Text:SetText(MRT_L.GUI["Zone name"]);
     MRT_GUI_TwoRowDialog_EB1:SetText("");
+    MRT_GUI_TwoRowDialog_EB1:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB1, "StartNewRaid_ZoneNameEB"); end);
+    MRT_GUI_TwoRowDialog_EB1:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
     MRT_GUI_TwoRowDialog_EB2_Text:SetText(MRT_L.GUI["Raid size"]);
     MRT_GUI_TwoRowDialog_EB2:SetText("");
+    MRT_GUI_TwoRowDialog_EB2:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB2, "StartNewRaid_RaidSizeEB"); end);
+    MRT_GUI_TwoRowDialog_EB2:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
     MRT_GUI_TwoRowDialog_OKButton:SetText(MRT_L.Core["MB_Ok"]);
     MRT_GUI_TwoRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_StartNewRaidAccept(); end);
     MRT_GUI_TwoRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
