@@ -3,7 +3,7 @@
 -- **          <http://nanaki.affenfelsen.de>           **
 -- *******************************************************
 --
--- The localizations is written by:
+-- This localization is written by:
 --  Hestrall, Mizukichan
 --
 -- Note: 
