@@ -35,6 +35,16 @@ MRT_PvPRaids = {
     ["Vault of Archavon"] = true;
 }
 
+MRT_L.ItemValues = {
+    [1] = ITEM_QUALITY0_DESC,
+    [2] = ITEM_QUALITY1_DESC,
+    [3] = ITEM_QUALITY2_DESC,
+    [4] = ITEM_QUALITY3_DESC,
+    [5] = ITEM_QUALITY4_DESC,
+    [6] = ITEM_QUALITY5_DESC,
+    [7] = ITEM_QUALITY6_DESC, 
+}
+
 -----------------------------------
 --  ID-List of trackable Bosses  --
 -----------------------------------

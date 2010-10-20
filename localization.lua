@@ -242,16 +242,3 @@ MRT_L.GUI = {
     ["Zone name"] = "Zone name",
 }
 
-
-------------
---  Misc  --
-------------
-MRT_L.ItemValues = {
-    [1] = "Poor",
-    [2] = "Common",
-    [3] = "Uncommon",
-    [4] = "Rare",
-    [5] = "Epic",
-    [6] = "Legendary",
-    [7] = "Artifact", 
-}
