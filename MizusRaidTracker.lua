@@ -1263,7 +1263,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         local addBossData = {
             name = MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"],
             difficulty = MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"],
-            datetime = MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]),
+            timestamp = MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"],
         };
         tinsert(bossListToAddPoorItems, addBossData);
         return bossKillString;
@@ -1321,7 +1321,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             xml = xml.."<Count>1</Count>";
             xml = xml.."<Player>"..val["Looter"].."</Player>";
             xml = xml.."<Costs>"..val["DKPValue"].."</Costs>";
-            xml = xml.."<Time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Date"]).."</Time>";
+            xml = xml.."<Time>"..MRT_MakeEQDKP_Time((MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Date"]) + index).."</Time>";    -- add a few seconds to bosskill-time, different for each item | bugfix for an import-plugin (probably RaidTracker Import by d23)
             xml = xml.."<Difficulty>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"].."</Difficulty>";
             xml = xml.."<Boss>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].."</Boss>";
             xml = xml.."<Note><![CDATA[";
@@ -1344,7 +1344,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             xml = xml.."<Count>1</Count>";
             xml = xml.."<Player>disenchanted</Player>";
             xml = xml.."<Costs>0</Costs>";
-            xml = xml.."<Time>"..val["datetime"].."</Time>";
+            xml = xml.."<Time>"..MRT_MakeEQDKP_Time(val["timestamp"] + index).."</Time>";                                       -- add a few seconds to bosskill-time, different for each item | bugfix for an import-plugin (probably RaidTracker Import by d23)
             xml = xml.."<Difficulty>"..val["difficulty"].."</Difficulty>";
             xml = xml.."<Boss>"..val["name"].."</Boss>";
             xml = xml.."<Note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..val["name"].." - 0 DKP]]></Note>";
