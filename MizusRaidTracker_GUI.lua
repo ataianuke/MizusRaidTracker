@@ -180,6 +180,8 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_BossAttendees_Delete_Button:SetPoint("TOP", MRT_GUIFrame_BossAttendees_Add_Button, "BOTTOM", 0, -5);
     MRT_GUIFrame_TakeSnapshot_Button:SetText(MRT_L.GUI["Button_TakeSnapshot"]);
     MRT_GUIFrame_TakeSnapshot_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "TOPLEFT", -215, 0);
+    MRT_GUIFrame_StartNewRaid_Button:SetText(MRT_L.GUI["Button_StartNewRaid"]);
+    MRT_GUIFrame_EndCurrentRaid_Button:SetText(MRT_L.GUI["Button_EndCurrentRaid"]);
     -- disable buttons, if function is NYI
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     -- Insert table data
@@ -326,7 +328,7 @@ function MRT_GUI_BossAddAccept(raidnum)
     if (enteredTime == "") then
         -- check if there is an active raid
         if (MRT_NumOfCurrentRaid == nil) then
-            MRT_Print(MRT_L.GUI["No active raid"]);
+            MRT_Print(MRT_L.GUI["No active raid in progress. Please enter time."]);
             return;
         end
         hours = 255;
@@ -779,6 +781,70 @@ function MRT_GUI_TakeSnapshot()
     if (status) then
         MRT_GUI_RaidLogTableUpdate();
     end
+end
+
+function MRT_GUI_StartNewRaid()
+    if (MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.GUI["Active raid found. End current one first."]);
+        return;
+    end
+    if (GetNumRaidMembers() == 0) then
+        MRT_Print(MRT_L.GUI["Player not in raid."]);
+        return;
+    end
+    MRT_GUI_TwoRowDialog_Title:SetText(MRT_L.GUI["Button_StartNewRaid"]);
+    MRT_GUI_TwoRowDialog_EB1_Text:SetText(MRT_L.GUI["Zone name"]);
+    MRT_GUI_TwoRowDialog_EB1:SetText("");
+    MRT_GUI_TwoRowDialog_EB2_Text:SetText(MRT_L.GUI["Raid size"]);
+    MRT_GUI_TwoRowDialog_EB2:SetText("");
+    MRT_GUI_TwoRowDialog_OKButton:SetText(MRT_L.Core["MB_Ok"]);
+    MRT_GUI_TwoRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_StartNewRaidAccept(); end);
+    MRT_GUI_TwoRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_TwoRowDialog:Show();
+end
+
+function MRT_GUI_StartNewRaidAccept()
+    local zoneName = MRT_GUI_TwoRowDialog_EB1:GetText()
+    local raidSize = MRT_GUI_TwoRowDialog_EB2:GetText()
+    -- sanity check entered values
+    if (raidSize == "") then raidSize = 25; end
+    raidSize = tonumber(raidSize);
+    if (not raidSize) then 
+        MRT_Print(MRT_L.GUI["No valid raid size"]); 
+        return;
+    end
+    -- Hide dialogs
+    MRT_GUI_HideDialogs();
+    -- check current raidstatus is ok
+    if (MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.GUI["Active raid found. End current one first."]);
+        return;
+    end
+    if (GetNumRaidMembers() == 0) then
+        MRT_Print(MRT_L.GUI["Player not in raid."]);
+        return;
+    end
+    -- if no zoneName was entered, use the current zone
+    if (zoneName == "" or zoneName == " " or zoneName == nil) then
+        zoneName = GetRealZoneText();
+    end
+    -- create new raid
+    MRT_CreateNewRaid(zoneName, raidSize);
+    MRT_GUI_CompleteTableUpdate();
+end
+
+function MRT_GUI_EndCurrentRaid()
+    if (not MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.GUI["No active raid"]);
+        return;
+    end
+    MRT_EndActiveRaid();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    MRT_GUI_RaidAttendeesTableUpdate(raidnum);
 end
 
 

@@ -156,6 +156,7 @@ MRT_L.Options = {
 --  GUI strings  --
 -------------------
 MRT_L.GUI = {
+    ["Active raid found. End current one first."] = "Error: Active raid found. Please end the active raid before starting a new one.",
 	["Add boss attendee"] = "Add boss attendee",
 	["Add bosskill"] = "Add bosskill",
 	["Add loot data"] = "Add loot data",
@@ -163,10 +164,12 @@ MRT_L.GUI = {
 	Bossname = "Bossname",
 	Button_Add = "Add",
 	Button_Delete = "Delete",
+    Button_EndCurrentRaid = "End current raid",
 	Button_Export = "Export",
 	Button_ExportHeroic = "Export H",
 	Button_ExportNormal = "Export N",
 	Button_Modify = "Modify",
+    Button_StartNewRaid = "Start new raid",
 	Button_TakeSnapshot = "Take Snapshot",
 	["Can not delete current raid"] = "Error: Can't delete current raid.",
 	Cell_Hard = "Hard",
@@ -195,7 +198,8 @@ MRT_L.GUI = {
 	Itemlink = "Itemlink",
 	Looter = "Looter",
 	["Modify loot data"] = "Modify loot data",
-	["No active raid"] = "Error: No active raid in progress. Please enter time.",
+    ["No active raid"] = "Error: No active raid.",
+	["No active raid in progress. Please enter time."] = "Error: No active raid in progress. Please enter time.",
 	["No boss attendee selected"] = "Error: No boss attendee selected.",
 	["No boss name entered"] = "Error: No boss name entered.",
 	["No boss selected"] = "Error: No boss selected.",
@@ -204,8 +208,11 @@ MRT_L.GUI = {
 	["No raid attendee selected"] = "Error: No raid attendee selected.",
 	["No raid selected"] = "Error: No raid selected.",
 	["No valid difficulty entered"] = "Error: No valid difficulty entered.",
+    ["No valid raid size"] = "Error: No valid raid size entered.",
 	["No valid time entered"] = "Error: No valid time entered.",
     Note = "Note",
+    ["Player not in raid."] = "Error: You are not in a raid.",
+    ["Raid size"] = "Raid size",
 	Tables_BossAttendeesTitle = "Boss attendees",
 	Tables_BossLootTitle = "Boss loot",
 	Tables_RaidAttendeesTitle = "Raid attendees",
@@ -230,6 +237,7 @@ MRT_L.GUI = {
 	TT_Raid_ExportN = "Export all normal mode encounters of selected raid.",
 	TT_TakeSnapshot = "Make a snapshot of the current raidgroup. \nDoesn't work, if raidtracking is in progress. \nIn that case, add a boss event.",
 	Value = "Value",
+    ["Zone name"] = "Zone name",
 }
 
 
