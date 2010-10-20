@@ -1,3 +1,17 @@
+0.21 Beta - Changelog:
+  New:
+    * Added support and a complete UI translation for spanish (esES) clients (a big thanks to Hestrall, who translated 90% of the addon).
+      (Note: Boss yells for Halion, Horde Gunship Battle, TotC bosses and Ulduar bosses are still missing. For specific boss support, see the translation status page at CurseForge.com).
+    * Added buttons to the GUI for starting and ending raid tracking manually.
+    * CTRT-Export: added a workaround for a problem with an unknown EQDKP-RaidImport-Plugin (probably the "RaidTracker Import"-Plugin by d23)
+  Changes:
+    * Updated german (deDE) translation (thanks to gOOvER)
+    * The localization files are now created automatically by the CurseForge-Packager. If there are any issues, please report them.
+  Bug Fixes:
+    * Fixed Algalon kill detection for english (enUS / enGB) clients
+    * Fixed Iron Council - Steelbraker last kill detection. Again. Hopefully.
+  
+
 0.20 Beta:
   New:
     * Added regularly check for PlayerDB and delete unused entries.
