@@ -76,12 +76,12 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToLog_Desc"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
+    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
     MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
     MRT_Options_TrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);    
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
-    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_L.ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
+    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
     MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
     MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
     -- AttendancePanel
@@ -181,13 +181,13 @@ end
 ------------------------
 function MRT_Options_TP_MinItemQualityToLog_Slider()
     local sliderValue = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
-    local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_L.ItemValues[sliderValue+1];
+    local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_ItemValues[sliderValue+1];
     MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText(sliderText);
 end
 
 function MRT_Options_TP_MinItemQualityToGetCost_Slider()
     local sliderValue = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
-    local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_L.ItemValues[sliderValue+1];
+    local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_ItemValues[sliderValue+1];
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText(sliderText);
 end
 

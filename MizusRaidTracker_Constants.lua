@@ -35,7 +35,7 @@ MRT_PvPRaids = {
     ["Vault of Archavon"] = true;
 }
 
-MRT_L.ItemValues = {
+MRT_ItemValues = {
     [1] = ITEM_QUALITY0_DESC,
     [2] = ITEM_QUALITY1_DESC,
     [3] = ITEM_QUALITY2_DESC,
