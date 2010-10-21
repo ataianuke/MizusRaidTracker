@@ -1058,12 +1058,18 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     if ((difficulty ~= nil) and (difficulty ~= "H") and (difficulty ~= "N")) then return end;
     -- Choose the correct export function here
     local dkpstring;
+    -- 1: CTRT-compatible export
     if (MRT_Options["Export_ExportFormat"] == 1) then
         dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
+    -- 2: plain text export
     elseif (MRT_Options["Export_ExportFormat"] == 2) then
         dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, nil);
+    -- 3: BBCode formated export
     elseif (MRT_Options["Export_ExportFormat"] == 3) then
         dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 1);
+    -- 4: BBCode formated export with wowhead links
+    elseif (MRT_Options["Export_ExportFormat"] == 4) then
+        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 2);
     end
     -- Show the data export
     MRT_ExportFrame_Show(dkpstring);
@@ -1360,7 +1366,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
 end
 
 -- Planned format options:
--- @param addFormat: nil = plainText, 1 = BBCode, 2 = MediaWiki(NYI)
+-- @param addFormat: nil = plainText, 1 = BBCode, 2 = BBCode with wowhead-links, 3 = ?
 function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
     -- Generate generic getBossData-Function:
     local function getBossData(raidID, bossID)
@@ -1371,9 +1377,9 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         table.sort(playerList);
         -- Create data
         -- Begin boss headline formatting
-        if (addFormat == 1) then
+        if (addFormat == 1 or addFormat == 2) then
             bossData = bossData.."[b]";
-        elseif (addFormat == 2) then
+        elseif (addFormat == 3) then
         end
         -- Boss headline
         bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].." - ";
@@ -1383,9 +1389,9 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
             bossData = bossData..MRT_L.Core["Export_Heroic"];
         end
         -- End boss headline formatting
-        if (addFormat == 1) then
+        if (addFormat == 1 or addFormat == 2) then
             bossData = bossData.."[/b]";
-        elseif (addFormat == 2) then
+        elseif (addFormat == 3) then
         end
         -- End of boss headline
         bossData = bossData.."\n";
@@ -1395,7 +1401,12 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
             if (val["BossNumber"] == bossID) then
                 if (isFirstItem) then bossData = bossData..MRT_L.Core["Export_Loot"]..":\n"; isFirstItem = false; end
-                bossData = bossData.."- "..val["ItemName"].." - "..val["DKPValue"].." "..MRT_Options["Export_Currency"].." - "..val["Looter"]
+                bossData = bossData.."- ";
+                if (addFormat == 2) then bossData = bossData.."[url=http://www.wowhead.com/?item="..val["ItemId"].."]"; end
+                bossData = bossData..val["ItemName"];
+                if (addFormat == 2) then bossData = bossData.."[/url]"; end
+                bossData = bossData.." - "..val["DKPValue"].." "..MRT_Options["Export_Currency"];
+                bossData = bossData.." - "..val["Looter"];
                 if val["Note"] then bossData = bossData.." ("..val["Note"]..")"; end
                 bossData = bossData.."\n";
             end
@@ -1406,17 +1417,17 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
     -- Start creating export data
     local export = "";
     -- Begin headline formatting
-    if (addFormat == 1) then
+    if (addFormat == 1 or addFormat == 2) then
         export = export.."[u][b]";
-    elseif (addFormat == 2) then
+    elseif (addFormat == 3) then
     end
     -- Begin headline text
     export = export..date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]);
     export = export.." - "..MRT_RaidLog[raidID]["RaidZone"].." ("..MRT_RaidLog[raidID]["RaidSize"]..")";
     -- End headline formatting
-    if (addFormat == 1) then
+    if (addFormat == 1 or addFormat == 2) then
         export = export.."[/b][/u]";
-    elseif (addFormat == 2) then
+    elseif (addFormat == 3) then
     end
     -- End of headline
     export = export.."\n\n";

@@ -31,6 +31,16 @@ MRT_ItemColors = {
     [7] = "ffe6cc80",  -- artifact / heirloom
 }
 
+MRT_ItemColorsNonAlpha = {
+    [1] = "9d9d9d",  -- poor
+    [2] = "ffffff",  -- common
+    [3] = "1eff00",  -- uncommon
+    [4] = "0070dd",  -- rare
+    [5] = "a335ee",  -- epic
+    [6] = "ff8000",  -- legendary
+    [7] = "e6cc80",  -- artifact / heirloom
+}
+
 MRT_PvPRaids = {
     ["Vault of Archavon"] = true;
 }

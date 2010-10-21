@@ -122,6 +122,7 @@ MRT_L.Options = {
 	AP_TitleText = "MRT - Attendance options",
 	AP_TrackOfflinePlayers = "Track offline players",
 	EP_BBCode = "BBCode formatted Text",
+    EP_BBCode_wowhead = "BBCode formatted Text with wowhead links",
 	EP_ChooseExport_Title = "Export format",
 	EP_CTRT_AddPoorItem = "Add a poor item as loot to each boss \n(Bugfix for the EQDKP-CTRT-Import encounter detection)",
 	EP_CTRT_compatible = "CT RaidTracker compatible",
