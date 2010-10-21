@@ -239,6 +239,7 @@ function MRT_Initialize()
     });
     -- update version number in saved vars
     MRT_Options["General_Version"] = MRT_ADDON_VERSION;
+    MRT_Options["General_ClientLocale"] = GetLocale();
     -- Finish
     MRT_Debug("Addon loaded.");
 end
@@ -376,6 +377,7 @@ end
 function MRT_CheckRaidStatusAfterLogin()
     if (GetNumRaidMembers() == 0) then
         MRT_EndActiveRaid();
+        MRT_LDB_DS.icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_disabled";
         return;
     end
     if (MRT_NumOfCurrentRaid) then
