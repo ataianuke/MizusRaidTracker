@@ -855,6 +855,7 @@ function MRT_DKPFrame_PostAskQueue()
     table.remove(MRT_AskCostQueue, 1);
     if (#MRT_AskCostQueue == 0) then
         MRT_AskCostQueueRunning = nil;
+        -- queue finished, delete itemes which were marked as deleted - FIXME!
     else
         MRT_DKPFrame_AskCost();
     end    

@@ -19,6 +19,33 @@
   <Button name="MRT_GUI_Button_Template" inherits="GameMenuButtonTemplate" virtual="true" hidden="false" text="FIXME!">
     <Size x="85" y="22"/>
   </Button>
+  <Button name="MRT_GUI_DropDownButtonTemplate" virtual="true" hidden="false">
+    <Size x="24" y="24"/>
+    <NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\UI-ChatIcon-ScrollDown-Up">
+      <Size>
+        <AbsDimension x="24" y="24"/>
+      </Size>
+      <Anchors>
+        <Anchor point="RIGHT"/>
+      </Anchors>
+    </NormalTexture>
+    <PushedTexture name="$parentPushedTexture" file="Interface\ChatFrame\UI-ChatIcon-ScrollDown-Down">
+      <Size>
+        <AbsDimension x="24" y="24"/>
+      </Size>
+      <Anchors>
+        <Anchor point="RIGHT"/>
+      </Anchors>
+    </PushedTexture>
+    <HighlightTexture name="$parentHighlightTexture" file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD">
+      <Size>
+        <AbsDimension x="24" y="24"/>
+      </Size>
+      <Anchors>
+        <Anchor point="RIGHT"/>
+      </Anchors>
+    </HighlightTexture>
+  </Button>
   <Frame name="MRT_GUI_OneRowDialog" toplevel="true" hidden="true" enableMouse="true" enableKeyboard="true" movable="true" parent="UIParent">
     <Size x="366" y="154"/>
     <Anchors>
@@ -298,10 +325,9 @@
         </Scripts>
       </EditBox>
       <EditBox name="$parent_EB2" inherits="MRT_GUI_Editbox_Template">
+        <Size x="226" y="32"/>
         <Anchors>
-          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent_EB1">
-            <Offset x="0" y="-64"/>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_EB1" x="0" y="-64"/>
         </Anchors>
         <Scripts>
           <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
@@ -310,9 +336,7 @@
       </EditBox>
       <EditBox name="$parent_EB3" inherits="MRT_GUI_Editbox_Template">
         <Anchors>
-          <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent_EB2">
-            <Offset x="0" y="-64"/>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_EB2" x="0" y="-64"/>
         </Anchors>
         <Scripts>
           <OnEscapePressed>MRT_GUI_HideDialogs();</OnEscapePressed>
@@ -330,6 +354,14 @@
           <OnTabPressed>MRT_GUI_FourRowDialog_EB1:SetFocus();</OnTabPressed>
         </Scripts>
       </EditBox>
+      <Button name="$parent_DropDownButton" inherits="MRT_GUI_DropDownButtonTemplate">
+        <Anchors>
+          <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_EB2"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_GUI_PlayerDropDownList_Toggle();</OnClick>
+        </Scripts>
+      </Button>
     </Frames>
   </Frame>
   <Frame name="MRT_GUIFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">

@@ -119,6 +119,9 @@ local MRT_BossAttendeesTableColDef = {
     {["name"] = "", ["width"] = 1},                            -- invisible column for storing the attendee number index from the raidlog-table
     {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 85},
 };
+local MRT_PlayerDropDownTableColDef = {
+    {["name"] = "", ["width"] = 100},
+};
 
 
 ---------------------------------------------------------------
@@ -186,6 +189,21 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
+    -- Create and anchor drop down menu table for add/modify loot dialog
+    MRT_GUI_PlayerDropDownTable = ScrollingTable:CreateST(MRT_PlayerDropDownTableColDef, 9, nil, nil, MRT_GUI_FourRowDialog);
+    MRT_GUI_PlayerDropDownTable.head:SetHeight(1);
+    MRT_GUI_PlayerDropDownTable.frame:SetFrameLevel(3);
+    MRT_GUI_PlayerDropDownTable.frame:Hide();
+    MRT_GUI_PlayerDropDownTable:EnableSelection(false);
+    MRT_GUI_PlayerDropDownTable:RegisterEvents({
+        ["OnClick"] = function (rowFrame, cellFrame, data, cols, row, realrow, column, scrollingTable, ...)
+            local playerName = MRT_GUI_PlayerDropDownTable:GetCell(realrow, column);
+            if (playerName) then
+                MRT_GUI_FourRowDialog_EB2:SetText(playerName);
+                MRT_GUI_PlayerDropDownList_Toggle();
+            end
+        end
+    });
 end
 
 
@@ -543,6 +561,20 @@ function MRT_GUI_LootAdd()
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    -- gather playerdata and fill drop down menu
+    local playerData = {};
+    for i, val in ipairs(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"]) do
+        playerData[i] = { val };
+    end
+    table.sort(playerData, function(a, b) return (a[1] < b[1]); end );
+    MRT_GUI_PlayerDropDownTable:SetData(playerData, true);
+    if (#playerData < 9) then
+        MRT_GUI_PlayerDropDownTable:SetDisplayRows(#playerData, 15);
+    else
+        MRT_GUI_PlayerDropDownTable:SetDisplayRows(9, 15);
+    end
+    MRT_GUI_PlayerDropDownTable.frame:Hide();
+    -- prepare dialog
     MRT_GUI_FourRowDialog_Title:SetText(MRT_L.GUI["Add loot data"]);
     MRT_GUI_FourRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
     MRT_GUI_FourRowDialog_EB1:SetText("");
@@ -574,6 +606,20 @@ function MRT_GUI_LootModify()
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
     local bossnum = MRT_RaidLog[raidnum]["Loot"][lootnum]["BossNumber"];
     local lootnote = MRT_RaidLog[raidnum]["Loot"][lootnum]["Note"];
+    -- gather playerdata and fill drop down menu
+    local playerData = {};
+    for i, val in ipairs(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"]) do
+        playerData[i] = { val };
+    end
+    table.sort(playerData, function(a, b) return (a[1] < b[1]); end );
+    MRT_GUI_PlayerDropDownTable:SetData(playerData, true);
+    if (#playerData < 9) then
+        MRT_GUI_PlayerDropDownTable:SetDisplayRows(#playerData, 15);
+    else
+        MRT_GUI_PlayerDropDownTable:SetDisplayRows(9, 15);
+    end
+    MRT_GUI_PlayerDropDownTable.frame:Hide();
+    -- prepare dialog
     MRT_GUI_FourRowDialog_Title:SetText(MRT_L.GUI["Modify loot data"]);
     MRT_GUI_FourRowDialog_EB1_Text:SetText(MRT_L.GUI["Itemlink"]);
     MRT_GUI_FourRowDialog_EB1:SetText(MRT_RaidLog[raidnum]["Loot"][lootnum]["ItemLink"]);
@@ -591,6 +637,15 @@ function MRT_GUI_LootModify()
     MRT_GUI_FourRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum); end);
     MRT_GUI_FourRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
     MRT_GUI_FourRowDialog:Show();
+end
+
+function MRT_GUI_PlayerDropDownList_Toggle()
+    if (MRT_GUI_PlayerDropDownTable.frame:IsShown()) then
+        MRT_GUI_PlayerDropDownTable.frame:Hide();
+    else
+        MRT_GUI_PlayerDropDownTable.frame:Show();
+        MRT_GUI_PlayerDropDownTable.frame:SetPoint("TOPRIGHT", MRT_GUI_FourRowDialog_DropDownButton, "BOTTOMRIGHT", 0, 0);
+    end
 end
 
 function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
