@@ -45,13 +45,13 @@ MRT_L.Bossyells = {
 
     -- Ulduar
     ["Ihr lauft geradewegs in den Schlund des Wahnsinns!"] = "Versammlung des Eisens",  -- Normalmode - Stormcaller Brundir last
-    ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Versammlung des Eisens",  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
+    ["Was gewinnt Ihr durch meinen Tod? Ihr seid dennoch verdammt, Sterbliche."] = "Versammlung des Eisens",  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
     ["Unm\195\182glich..."] = function() return MRT_IsInstanceUlduar("Versammlung des Eisens") end,  -- Hardmode - Steelbreaker last // also yelled by Lich King -> instance check necessary
     ["Ich... bin von ihm befreit... endlich."] = "Hodir",
     ["Senkt Eure Waffen! Ich ergebe mich!"] = "Thorim",
     ["Seine Macht \195\188ber mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."] = "Freya",
     ["Es scheint, als w\195\164re mir eine klitzekleine Fehlkalkulation unterlaufen. Ich habe zugelassen, dass das Scheusal im Gef\195\164ngnis meine Prim\195\164rdirektive \195\188berschreibt. Alle Systeme nun funktionst\195\188chtig."] = "Mimiron",
-    ["I've rearranged the reply code. Your planet will be spared. I cannot be certain of my own calculations anymore."] = "Algalon",  -- FIXME!
+    ["Ich sah Welten umhüllt von den Flammen der Schöpfer, sah ohne einen Hauch von Trauer ihre Bewohner vergehen. Ganze Planetensysteme geboren und vernichtet, während Eure sterblichen Herzen nur einmal schlagen. Doch immer war mein Herz kalt... ohne Mitgefühl. Ich - habe - nichts - gefühlt. Millionen, Milliarden Leben verschwendet. Trugen sie alle dieselbe Beharrlichkeit in sich, wie Ihr? Liebten sie alle das Leben so sehr, wie Ihr es tut?"] = "Algalon",  -- FIXME!
 
     -- Trial of the Crusader
     ["Ein tragischer Sieg. Wir wurden schw\195\164cher durch die heutigen Verluste. Wer au\195\159er dem Lichk\195\182nig profitiert von solchen Torheiten? Gro\195\159e Krieger gaben ihr Leben. Und wof\195\188r? Die wahre Bedrohung erwartet uns noch - der Lichk\195\182nig erwartet uns alle im Tod."] = "Fraktionschampions",
