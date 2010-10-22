@@ -1015,7 +1015,7 @@ function MRT_GetCurrentTime()
 end
 
 function MRT_MakeEQDKP_Time(timestamp)
-    return date("%c", timestamp)
+    return date("%m/%d/%y %H:%M:%S", timestamp)
 end
 
 
