@@ -1078,8 +1078,9 @@ end
 
 -- create CTRT-compatible DKP-String for the EQDKP CTRT-Import-Plugin / Uses boss attendee data for creating join/leave-timestamps
 function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
+    local now = time();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
-    local raidStop = MRT_RaidLog[raidID]["StopTime"];
+    local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
     -- start creating xml-data!
     local index = 1;
@@ -1087,7 +1088,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     xml = xml.."<key>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</key>";
     xml = xml.."<realm>"..MRT_RaidLog[raidID]["Realm"].."</realm>";
     xml = xml.."<start>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</start>";
-    xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"]).."</end>";
+    xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"] or now).."</end>";
     xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
     xml = xml.."<PlayerInfos>";
     local proceededPlayerInfo = {};
@@ -1159,7 +1160,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
                 leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(raidStop).."</time>";
             else
-                leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(val["Leave"]).."</time>";
+                leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(val["Leave"] or now).."</time>";
             end
             leaveXml = leaveXml.."</key"..index..">";
             index = index + 1;
@@ -1167,7 +1168,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
             if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
                 joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
             else
-                joinLeaveData = { ["Join"] = val["Join"], ["Leave"] = val["Leave"], }
+                joinLeaveData = { ["Join"] = val["Join"], ["Leave"] = val["Leave"] or now, }
             end
             if (not joinLeaveTable[name]) then
                 joinLeaveTable[name] = {};
