@@ -16,6 +16,7 @@ localization_esMX.lua
 localization_frFR.lua
 localization_koKR.lua
 localization_ruRU.lua
+localization_zhCN.lua
 MizusRaidTracker_Constants.lua
 MizusRaidTracker.xml
 MizusRaidTracker_Options.xml
