@@ -12,7 +12,9 @@ embeds.xml
 localization.lua
 localization_deDE.lua
 localization_esES.lua
+localization_esMX.lua
 localization_frFR.lua
+localization_koKR.lua
 MizusRaidTracker_Constants.lua
 MizusRaidTracker.xml
 MizusRaidTracker_Options.xml
