@@ -541,42 +541,45 @@ function MRT_RaidRosterUpdate(frame)
     --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
         local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        if (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25)) then
-            tinsert(activePlayerList, playerName);
-        end
-        local playerInRaid = nil;
-        for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
-            if (val["Name"] == playerName) then
-                if(val["Leave"] == nil) then playerInRaid = true; end
+        -- seems like there is a slight possibility, that playerName is not available - so check it
+        if playerName then
+            if (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25)) then
+                tinsert(activePlayerList, playerName);
             end
-        end
-        if ((playerInRaid == nil) and (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25))) then
-            MRT_Debug("New player found: "..playerName);
-            local UnitID = "raid"..tostring(i);
-            local playerRaceL, playerRace = UnitRace(UnitID);
-            local playerSex = UnitSex(UnitID);
-            local playerInfo = {
-                ["Name"] = playerName,
-                ["Join"] = MRT_GetCurrentTime(),
-                ["Leave"] = nil,
-            };
-            tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
-        end
-        -- PlayerDB is being renewed when creating a new raid, so only update unknown players here
-        if (not MRT_PlayerDB[realm][playerName]) then
-            local UnitID = "raid"..tostring(i);
-            local playerRaceL, playerRace = UnitRace(UnitID);
-            local playerSex = UnitSex(UnitID);
-            local playerDBEntry = {
-                ["Name"] = playerName,
-                ["Race"] = playerRace,
-                ["RaceL"] = playerRaceL,
-                ["Class"] = playerClass,
-                ["ClassL"] = playerClassL,
-                ["Level"] = playerLvl,
-                ["Sex"] = playerSex,
-            };
-            MRT_PlayerDB[realm][playerName] = playerDBEntry;
+            local playerInRaid = nil;
+            for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
+                if (val["Name"] == playerName) then
+                    if(val["Leave"] == nil) then playerInRaid = true; end
+                end
+            end
+            if ((playerInRaid == nil) and (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25))) then
+                MRT_Debug("New player found: "..playerName);
+                local UnitID = "raid"..tostring(i);
+                local playerRaceL, playerRace = UnitRace(UnitID);
+                local playerSex = UnitSex(UnitID);
+                local playerInfo = {
+                    ["Name"] = playerName,
+                    ["Join"] = MRT_GetCurrentTime(),
+                    ["Leave"] = nil,
+                };
+                tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"], playerInfo);
+            end
+            -- PlayerDB is being renewed when creating a new raid, so only update unknown players here
+            if (not MRT_PlayerDB[realm][playerName]) then
+                local UnitID = "raid"..tostring(i);
+                local playerRaceL, playerRace = UnitRace(UnitID);
+                local playerSex = UnitSex(UnitID);
+                local playerDBEntry = {
+                    ["Name"] = playerName,
+                    ["Race"] = playerRace,
+                    ["RaceL"] = playerRaceL,
+                    ["Class"] = playerClass,
+                    ["ClassL"] = playerClassL,
+                    ["Level"] = playerLvl,
+                    ["Sex"] = playerSex,
+                };
+                MRT_PlayerDB[realm][playerName] = playerDBEntry;
+            end
         end
     end
     -- MRT_Debug("RaidRosterUpdate: Checking for leaving players...");
