@@ -67,6 +67,7 @@ local MRT_Defaults = {
 --------------
 local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
+local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
 local pairs = pairs;
 local ipairs = ipairs;
@@ -80,6 +81,11 @@ local MRT_GuildRosterInitialUpdateDone = nil;
 local MRT_GuildRosterUpdating = nil;
 local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
+
+-- Table definition for the drop down menu for the DKPFrame
+local MRT_DKPFrame_DropDownTableColDef = {
+    {["name"] = "", ["width"] = 100},
+};
 
 
 ----------------------
@@ -237,6 +243,25 @@ function MRT_Initialize()
             tooltip:AddLine(MRT_L.Core["LDB Right-click to open the options menu"]);
         end,
     });
+    -- set up drop down menu for the DKPFrame
+    MRT_DKPFrame_DropDownTable = ScrollingTable:CreateST(MRT_DKPFrame_DropDownTableColDef, 9, nil, nil, MRT_GetDKPValueFrame);
+    MRT_DKPFrame_DropDownTable.head:SetHeight(1);
+    MRT_DKPFrame_DropDownTable.frame:SetFrameLevel(3);
+    MRT_DKPFrame_DropDownTable.frame:Hide();
+    MRT_DKPFrame_DropDownTable:EnableSelection(false);
+    MRT_DKPFrame_DropDownTable:RegisterEvents({
+        ["OnClick"] = function (rowFrame, cellFrame, data, cols, row, realrow, column, scrollingTable, ...)
+            if (not realrow) then return true; end
+            local playerName = MRT_DKPFrame_DropDownTable:GetCell(realrow, column);
+            if (playerName) then
+                MRT_GetDKPValueFrame.Looter = playerName;
+                MRT_GetDKPValueFrame_TextThirdLine:SetText(string.format(MRT_L.Core.DKP_Frame_LootetBy, playerName));
+                MRT_GetDKPValueFrame_DropDownList_Toggle();
+            end
+            return true;
+        end
+    });
+    MRT_DKPFrame_DropDownTable.head:SetHeight(1);
     -- update version number in saved vars
     MRT_Options["General_Version"] = MRT_ADDON_VERSION;
     MRT_Options["General_ClientLocale"] = GetLocale();
@@ -785,12 +810,29 @@ function MRT_DKPFrame_AskCost()
         return; 
     end
     -- else format text and show "Enter Cost" frame
+    local raidNum = MRT_AskCostQueue[1]["RaidNum"];
+    local itemNum = MRT_AskCostQueue[1]["ItemNum"];
+    -- gather playerdata and fill drop down menu
+    local playerData = {};
+    for i, val in ipairs(MRT_RaidLog[raidNum]["Bosskills"][MRT_NumOfLastBoss]["Players"]) do
+        playerData[i] = { val };
+    end
+    table.sort(playerData, function(a, b) return (a[1] < b[1]); end );
+    MRT_DKPFrame_DropDownTable:SetData(playerData, true);
+    if (#playerData < 8) then
+        MRT_DKPFrame_DropDownTable:SetDisplayRows(#playerData, 15);
+    else
+        MRT_DKPFrame_DropDownTable:SetDisplayRows(8, 15);
+    end
+    MRT_DKPFrame_DropDownTable.frame:Hide();
+    -- set up rest of the frame
     MRT_GetDKPValueFrame_TextFirstLine:SetText(MRT_L.Core["DKP_Frame_EnterCostFor"]);
-    MRT_GetDKPValueFrame_TextSecondLine:SetText(MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["ItemLink"]);
-    MRT_GetDKPValueFrame_TextThirdLine:SetText(string.format(MRT_L.Core.DKP_Frame_LootetBy, MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
+    MRT_GetDKPValueFrame_TextSecondLine:SetText(MRT_RaidLog[raidNum]["Loot"][itemNum]["ItemLink"]);
+    MRT_GetDKPValueFrame_TextThirdLine:SetText(string.format(MRT_L.Core.DKP_Frame_LootetBy, MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"]));
     MRT_GetDKPValueFrame_TTArea:SetWidth(MRT_GetDKPValueFrame_TextSecondLine:GetWidth());
     MRT_GetDKPValueFrame_EB:SetText("");
     MRT_GetDKPValueFrame_EB2:SetText("");
+    MRT_GetDKPValueFrame.Looter = MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"];
     MRT_GetDKPValueFrame:Show();
 end
 
@@ -814,18 +856,22 @@ function MRT_DKPFrame_Handler(button)
     -- hide frame
     MRT_GetDKPValueFrame:Hide();
     -- process item
+    local raidNum = MRT_AskCostQueue[1]["RaidNum"];
+    local itemNum = MRT_AskCostQueue[1]["ItemNum"];
+    local looter = MRT_GetDKPValueFrame.Looter;
     if (button == "OK") then
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["DKPValue"] = dkpValue;
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = looter;
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["DKPValue"] = dkpValue;
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"] = lootNote;
     elseif (button == "Cancel") then
     elseif (button == "Delete") then
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_deleted_";
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = "_deleted_";
     elseif (button == "Bank") then
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "bank";
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = "bank";
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"] = lootNote;
     elseif (button == "Disenchanted") then
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "disenchanted";
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = "disenchanted";
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"] = lootNote;
     end
     -- done with handling item - proceed to next one
     table.remove(MRT_AskCostQueue, 1);
@@ -835,6 +881,15 @@ function MRT_DKPFrame_Handler(button)
     else
         MRT_DKPFrame_AskCost();
     end    
+end
+
+function MRT_GetDKPValueFrame_DropDownList_Toggle()
+    if (MRT_DKPFrame_DropDownTable.frame:IsShown()) then
+        MRT_DKPFrame_DropDownTable.frame:Hide();
+    else
+        MRT_DKPFrame_DropDownTable.frame:Show();
+        MRT_DKPFrame_DropDownTable.frame:SetPoint("TOPRIGHT", MRT_GetDKPValueFrame_DropDownButton, "BOTTOMRIGHT", 0, 0);
+    end
 end
 
 

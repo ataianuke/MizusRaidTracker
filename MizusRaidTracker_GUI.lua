@@ -197,11 +197,13 @@ function MRT_GUI_ParseValues()
     MRT_GUI_PlayerDropDownTable:EnableSelection(false);
     MRT_GUI_PlayerDropDownTable:RegisterEvents({
         ["OnClick"] = function (rowFrame, cellFrame, data, cols, row, realrow, column, scrollingTable, ...)
+            if (not realrow) then return true; end
             local playerName = MRT_GUI_PlayerDropDownTable:GetCell(realrow, column);
             if (playerName) then
                 MRT_GUI_FourRowDialog_EB2:SetText(playerName);
                 MRT_GUI_PlayerDropDownList_Toggle();
             end
+            return true;
         end
     });
 end
