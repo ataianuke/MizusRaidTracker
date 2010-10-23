@@ -92,7 +92,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnClick>MRT_DKPFrame_Ok();</OnClick>
+          <OnClick>MRT_DKPFrame_Handler("OK");</OnClick>
         </Scripts>
       </Button>
       <Button name="$parent_CancelButton" hidden="false" inherits="GameMenuButtonTemplate">
@@ -103,7 +103,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnClick>MRT_DKPFrame_Cancel();</OnClick>
+          <OnClick>MRT_DKPFrame_Handler("Cancel");</OnClick>
         </Scripts>
       </Button>
       <Button name="$parent_DeleteButton" hidden="false" inherits="GameMenuButtonTemplate">
@@ -114,7 +114,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnClick>MRT_DKPFrame_Delete();</OnClick>
+          <OnClick>MRT_DKPFrame_Handler("Delete");</OnClick>
         </Scripts>
       </Button>
       <Button name="$parent_BankButton" hidden="false" inherits="GameMenuButtonTemplate">
@@ -125,7 +125,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnClick>MRT_DKPFrame_Bank();</OnClick>
+          <OnClick>MRT_DKPFrame_Handler("Bank");</OnClick>
         </Scripts>
       </Button>
       <Button name="$parent_DisenchantedButton" hidden="false" inherits="GameMenuButtonTemplate">
@@ -136,7 +136,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnClick>MRT_DKPFrame_Disenchanted();</OnClick>
+          <OnClick>MRT_DKPFrame_Handler("Disenchanted");</OnClick>
         </Scripts>
       </Button>
       <Frame name="$parent_TTArea" hidden="false" enableMouse="true">

@@ -785,7 +785,6 @@ function MRT_DKPFrame_AskCost()
         return; 
     end
     -- else format text and show "Enter Cost" frame
-    --MRT_GetDKPValueFrame_Text:SetText(string.format(MRT_L.Core["DKP_Frame_Text"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["ItemLink"], MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
     MRT_GetDKPValueFrame_TextFirstLine:SetText(MRT_L.Core["DKP_Frame_EnterCostFor"]);
     MRT_GetDKPValueFrame_TextSecondLine:SetText(MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["ItemLink"]);
     MRT_GetDKPValueFrame_TextThirdLine:SetText(string.format(MRT_L.Core.DKP_Frame_LootetBy, MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"]));
@@ -795,66 +794,40 @@ function MRT_DKPFrame_AskCost()
     MRT_GetDKPValueFrame:Show();
 end
 
--- Case Ok: Save DKP-Value - Treat no input as zero
-function MRT_DKPFrame_Ok()
-    MRT_Debug("DKPFrame: OK pressed");
+-- Buttons: OK, Cancel, Delete, Bank, Disenchanted
+function MRT_DKPFrame_Handler(button)
+    MRT_Debug("DKPFrame: "..button.." pressed.");
+    -- if OK was pressed, check input data
     local dkpValue = nil;
-    if (MRT_GetDKPValueFrame_EB:GetText() == "") then
-        dkpValue = 0;
-    else
-        dkpValue = tonumber(MRT_GetDKPValueFrame_EB:GetText(), 10);
-    end
-    if (dkpValue == nil) then return; end
     local lootNote = MRT_GetDKPValueFrame_EB2:GetText();
+    if (button == "OK") then
+        if (MRT_GetDKPValueFrame_EB:GetText() == "") then
+            dkpValue = 0;
+        else
+            dkpValue = tonumber(MRT_GetDKPValueFrame_EB:GetText(), 10);
+        end
+        if (dkpValue == nil) then return; end
+    end
+    if (lootNote == "" or lootNote == " ") then
+        lootNote = nil;
+    end
+    -- hide frame
     MRT_GetDKPValueFrame:Hide();
-    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["DKPValue"] = dkpValue;
-    if (lootNote ~= nil and lootNote ~= "" and lootNote ~= " ") then
+    -- process item
+    if (button == "OK") then
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["DKPValue"] = dkpValue;
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+    elseif (button == "Cancel") then
+    elseif (button == "Delete") then
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_deleted_";
+    elseif (button == "Bank") then
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "bank";
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
+    elseif (button == "Disenchanted") then
+        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "disenchanted";
         MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
     end
-    MRT_DKPFrame_PostAskQueue();
-end
-
--- Case Cancel: Set DKP-Value = 0
-function MRT_DKPFrame_Cancel()
-    MRT_Debug("DKPFrame: Cancel pressed");
-    MRT_GetDKPValueFrame:Hide();
-    MRT_DKPFrame_PostAskQueue();
-end
-
--- Case Delete: Set DKP-Value = 0, set Looter = _deleted_
-function MRT_DKPFrame_Delete()
-    MRT_Debug("DKPFrame: Delete pressed");
-    MRT_GetDKPValueFrame:Hide();
-    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "_deleted_";
-    MRT_DKPFrame_PostAskQueue();
-end
-
--- Case Bank: Set DKP-Value = 0, set Looter = bank
-function MRT_DKPFrame_Bank()
-    local lootNote = MRT_GetDKPValueFrame_EB2:GetText();
-    MRT_Debug("DKPFrame: Bank pressed");
-    MRT_GetDKPValueFrame:Hide();
-    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "bank";
-    if (lootNote ~= nil and lootNote ~= "" and lootNote ~= " ") then
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
-    end
-    MRT_DKPFrame_PostAskQueue();
-end
-
--- Case Disenchanted: Set DKP-Value = 0, set Looter = disenchanted
-function MRT_DKPFrame_Disenchanted()
-    local lootNote = MRT_GetDKPValueFrame_EB2:GetText();
-    MRT_Debug("DKPFrame: Disenchanted pressed");
-    MRT_GetDKPValueFrame:Hide();
-    MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Looter"] = "disenchanted";
-    if (lootNote ~= nil and lootNote ~= "" and lootNote ~= " ") then
-        MRT_RaidLog[MRT_AskCostQueue[1]["RaidNum"]]["Loot"][MRT_AskCostQueue[1]["ItemNum"]]["Note"] = lootNote;
-    end
-    MRT_DKPFrame_PostAskQueue();
-end
-
--- delete processed entry - if there are still items in the queue, process the next item
-function MRT_DKPFrame_PostAskQueue()
+    -- done with handling item - proceed to next one
     table.remove(MRT_AskCostQueue, 1);
     if (#MRT_AskCostQueue == 0) then
         MRT_AskCostQueueRunning = nil;
