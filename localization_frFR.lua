@@ -46,7 +46,7 @@ MRT_L.Bossyells = {
     -- Ulduar
     ["You rush headlong into the maw of madness!"] = "Assemblée du Fer",  -- Normalmode - Stormcaller Brundir last
     ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Assemblée du Fer",  -- Semi-Hardmode - Runemaster Molgeim last
-    --["Imposible!"] = function() return MRT_IsInstanceUlduar("Assemblée du Fer") end,  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
+    --["Imposible!"] = "Assemblée du Fer",  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
     ["Je suis... libéré de son emprise... enfin."] = "Hodir",
     ["Retenez vos coups ! Je me rends !"] = "Thorim",
     ["Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."] = "Freya",

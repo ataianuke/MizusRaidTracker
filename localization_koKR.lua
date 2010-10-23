@@ -46,7 +46,7 @@ MRT_L.Bossyells = {
     -- Ulduar
     ["You rush headlong into the maw of madness!"] = "무쇠 평의회",  -- Normalmode - Stormcaller Brundir last
     ["What have you gained from my defeat? You are no less doomed, mortals!"] = "무쇠 평의회",  -- Semi-Hardmode - Runemaster Molgeim last
-    --["Impossible..."] = function() return MRT_IsInstanceUlduar("무쇠 평의회") end,  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
+    --["Impossible..."] = "무쇠 평의회",  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
     ["I... I am released from his grasp... at last."] = "호디르",  -- Hodir
     ["Stay your arms! I yield!"] = "토림",  -- Thorim
     ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "프레이야",  -- Freya
