@@ -70,6 +70,8 @@
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CostString" x="8"/>
         </Anchors>
         <Scripts>
+          <OnEnterPressed>MRT_DKPFrame_Handler("OK");</OnEnterPressed>
+          <OnEscapePressed>MRT_DKPFrame_Handler("Cancel");</OnEscapePressed>
           <OnTabPressed>MRT_GetDKPValueFrame_EB2:SetFocus();</OnTabPressed>
         </Scripts>
         <FontString inherits="ChatFontNormal"/>
@@ -80,6 +82,8 @@
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NoteString" x="8"/>
         </Anchors>
         <Scripts>
+          <OnEnterPressed>MRT_DKPFrame_Handler("OK");</OnEnterPressed>
+          <OnEscapePressed>MRT_DKPFrame_Handler("Cancel");</OnEscapePressed>
           <OnTabPressed>MRT_GetDKPValueFrame_EB:SetFocus();</OnTabPressed>
         </Scripts>
         <FontString inherits="ChatFontNormal"/>
