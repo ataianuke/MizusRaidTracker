@@ -29,7 +29,6 @@ MRT_L.Raidzones = {
     ["Naxxramas"] = "Naxxramas",
     ["Ulduar"] = "Ulduar",
     ["Pr\195\188fung des Kreuzfahrers"] = "Trial of the Crusader",
-    ["Pr\195\188fung des Obersten Kreuzfahrers"] = "Trial of the Grand Crusader",
     ["Onyxias Hort"] = "Onyxia's Lair",
     ["Eiskronenzitadelle"] = "Icecrown Citadel",
     ["Das Rubinsanktum"] = "The Ruby Sanctum", 
@@ -40,31 +39,36 @@ MRT_L.Raidzones = {
 --  Bossyells  --
 -----------------
 MRT_L.Bossyells = {
-    -- Naxxramas
-    ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Die vier Reiter", -- FIXME!
+    ["Naxxramas"] = {
+        ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Die vier Reiter", -- FIXME!
+    },
 
-    -- Ulduar
-    ["Ihr lauft geradewegs in den Schlund des Wahnsinns!"] = "Versammlung des Eisens",  -- Normalmode - Stormcaller Brundir last
-    ["Was gewinnt Ihr durch meinen Tod? Ihr seid dennoch verdammt, Sterbliche."] = "Versammlung des Eisens",  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
-    --["Unm\195\182glich..."] = "Versammlung des Eisens",  -- Hardmode - Steelbreaker last // also yelled by Lich King -> instance check necessary
-    ["Ich... bin von ihm befreit... endlich."] = "Hodir",
-    ["Senkt Eure Waffen! Ich ergebe mich!"] = "Thorim",
-    ["Seine Macht \195\188ber mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."] = "Freya",
-    ["Es scheint, als w\195\164re mir eine klitzekleine Fehlkalkulation unterlaufen. Ich habe zugelassen, dass das Scheusal im Gef\195\164ngnis meine Prim\195\164rdirektive \195\188berschreibt. Alle Systeme nun funktionst\195\188chtig."] = "Mimiron",
-    ["Ich sah Welten umhüllt von den Flammen der Schöpfer, sah ohne einen Hauch von Trauer ihre Bewohner vergehen. Ganze Planetensysteme geboren und vernichtet, während Eure sterblichen Herzen nur einmal schlagen. Doch immer war mein Herz kalt... ohne Mitgefühl. Ich - habe - nichts - gefühlt. Millionen, Milliarden Leben verschwendet. Trugen sie alle dieselbe Beharrlichkeit in sich, wie Ihr? Liebten sie alle das Leben so sehr, wie Ihr es tut?"] = "Algalon",  -- FIXME!
+    ["Ulduar"] = {
+        ["Ihr lauft geradewegs in den Schlund des Wahnsinns!"] = "Versammlung des Eisens",  -- Normalmode - Stormcaller Brundir last
+        ["Was gewinnt Ihr durch meinen Tod? Ihr seid dennoch verdammt, Sterbliche."] = "Versammlung des Eisens",  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
+        ["Unm\195\182glich..."] = "Versammlung des Eisens",  -- Hardmode - Steelbreaker last
+        ["Ich... bin von ihm befreit... endlich."] = "Hodir",
+        ["Senkt Eure Waffen! Ich ergebe mich!"] = "Thorim",
+        ["Seine Macht \195\188ber mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."] = "Freya",
+        ["Es scheint, als w\195\164re mir eine klitzekleine Fehlkalkulation unterlaufen. Ich habe zugelassen, dass das Scheusal im Gef\195\164ngnis meine Prim\195\164rdirektive \195\188berschreibt. Alle Systeme nun funktionst\195\188chtig."] = "Mimiron",
+        ["Ich sah Welten umhüllt von den Flammen der Schöpfer, sah ohne einen Hauch von Trauer ihre Bewohner vergehen. Ganze Planetensysteme geboren und vernichtet, während Eure sterblichen Herzen nur einmal schlagen. Doch immer war mein Herz kalt... ohne Mitgefühl. Ich - habe - nichts - gefühlt. Millionen, Milliarden Leben verschwendet. Trugen sie alle dieselbe Beharrlichkeit in sich, wie Ihr? Liebten sie alle das Leben so sehr, wie Ihr es tut?"] = "Algalon",  -- FIXME!
+    },
 
-    -- Trial of the Crusader
-    ["Ein tragischer Sieg. Wir wurden schw\195\164cher durch die heutigen Verluste. Wer au\195\159er dem Lichk\195\182nig profitiert von solchen Torheiten? Gro\195\159e Krieger gaben ihr Leben. Und wof\195\188r? Die wahre Bedrohung erwartet uns noch - der Lichk\195\182nig erwartet uns alle im Tod."] = "Fraktionschampions",
-    ["Die Gei\195\159el kann nicht aufgehalten werden..."] = "Val'kyr Zwillinge",
+    ["Trial of the Crusader"] = {
+        ["Ein tragischer Sieg. Wir wurden schw\195\164cher durch die heutigen Verluste. Wer au\195\159er dem Lichk\195\182nig profitiert von solchen Torheiten? Gro\195\159e Krieger gaben ihr Leben. Und wof\195\188r? Die wahre Bedrohung erwartet uns noch - der Lichk\195\182nig erwartet uns alle im Tod."] = "Fraktionschampions",
+        ["Die Gei\195\159el kann nicht aufgehalten werden..."] = "Val'kyr Zwillinge",
+    },
         
-    -- Icecrown Citadel
-    ["Sagt nicht, ich h\195\164tte Euch nicht gewarnt, Ihr Schurken! Vorw\195\164rts, Br\195\188der und Schwestern!"] = "Eiskrone Luftschiffkampf", -- Muradin
-    ["Die Allianz wankt. Vorw\195\164rts zum Lichk\195\182nig!"] = "Eiskrone Luftschiffkampf", -- Saurfang
-    ["Meine K\195\182nigin, sie... kommen."] = "Rat des Blutes", -- Prince Keleseth
-    ["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Traumwandler",
+    ["Icecrown Citadel"] = {
+        ["Sagt nicht, ich h\195\164tte Euch nicht gewarnt, Ihr Schurken! Vorw\195\164rts, Br\195\188der und Schwestern!"] = "Eiskrone Luftschiffkampf", -- Muradin
+        ["Die Allianz wankt. Vorw\195\164rts zum Lichk\195\182nig!"] = "Eiskrone Luftschiffkampf", -- Saurfang
+        ["Meine K\195\182nigin, sie... kommen."] = "Rat des Blutes", -- Prince Keleseth
+        ["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Traumwandler",
+    },
 
-    -- Ruby Sanctum
-    ["Genie\195\159t euren Sieg, Sterbliche, denn es war euer letzter. Bei der R\195\188ckkehr des Meisters wird diese Welt brennen!"] = "Halion", -- Halion
+    ["The Ruby Sanctum"] = {
+        ["Genie\195\159t euren Sieg, Sterbliche, denn es war euer letzter. Bei der R\195\188ckkehr des Meisters wird diese Welt brennen!"] = "Halion", -- Halion
+    },
 }
 
 

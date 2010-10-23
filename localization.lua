@@ -29,7 +29,6 @@ MRT_L.Raidzones = {
 	["Naxxramas"] = "Naxxramas",
 	["Ulduar"] = "Ulduar",
 	["Trial of the Crusader"] = "Trial of the Crusader",
-	["Trial of the Grand Crusader"] = "Trial of the Grand Crusader",
 	["Onyxia's Lair"] = "Onyxia's Lair",
 	["Icecrown Citadel"] = "Icecrown Citadel",
     ["The Ruby Sanctum"] = "The Ruby Sanctum",
@@ -40,31 +39,36 @@ MRT_L.Raidzones = {
 --  Bossyells  --
 -----------------
 MRT_L.Bossyells = {
-    -- Naxxramas
-    ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Four Horsemen",
+    ["Naxxramas"] = {
+        ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Four Horsemen",
+    },
 
-    -- Ulduar
-    ["You rush headlong into the maw of madness!"] = "Iron Council",  -- Normalmode - Stormcaller Brundir last
-    ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Iron Council",  -- Semi-Hardmode - Runemaster Molgeim last
-    --["Impossible..."] = "Iron Council",  -- Hardmode - Steelbreaker last  // also yelled by Lich King -> instance check necessary
-    ["I... I am released from his grasp... at last."] = "Hodir",
-    ["Stay your arms! I yield!"] = "Thorim",
-    ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",
-    ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "Mimiron",
-    ["I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?"] = "Algalon the Observer",
-
-    -- Trial of the Crusader
-    ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Faction Champions",
-    ["The Scourge cannot be stopped..."] = "Val'kyr Twins",
-        
-    -- Icecrown Citadel
-    ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Gunship Battle", -- Muradin
-    ["The Alliance falter. Onward to the Lich King!"] = "Gunship Battle", -- Saurfang
-    ["My queen, they... come."] = "Blood Prince Council", -- Prince Keleseth
-    ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker", -- Dreamwalker
-
-    -- Ruby Sanctum
-    ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
+    ["Ulduar"] = {
+        ["You rush headlong into the maw of madness!"] = "Iron Council",  -- Normalmode - Stormcaller Brundir last
+        ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Iron Council",  -- Semi-Hardmode - Runemaster Molgeim last
+        ["Impossible..."] = "Iron Council",  -- Hardmode - Steelbreaker last
+        ["I... I am released from his grasp... at last."] = "Hodir",
+        ["Stay your arms! I yield!"] = "Thorim",
+        ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",
+        ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "Mimiron",
+        ["I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?"] = "Algalon the Observer",
+    },
+    
+    ["Trial of the Crusader"] = {
+        ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Faction Champions",
+        ["The Scourge cannot be stopped..."] = "Val'kyr Twins",
+    },
+    
+    ["Icecrown Citadel"] = {
+        ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Gunship Battle", -- Muradin
+        ["The Alliance falter. Onward to the Lich King!"] = "Gunship Battle", -- Saurfang
+        ["My queen, they... come."] = "Blood Prince Council", -- Prince Keleseth
+        ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker", -- Dreamwalker
+    },
+      
+    ["The Ruby Sanctum"] = {
+        ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
+    },
 }
 
 

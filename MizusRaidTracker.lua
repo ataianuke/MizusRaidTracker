@@ -118,12 +118,15 @@ function MRT_OnEvent(frame, event, ...)
         end
     
     elseif (event == "CHAT_MSG_MONSTER_YELL") then
+        if (not MRT_NumOfCurrentRaid) then return; end
         local monsteryell, sourceName = ...;
-        if (MRT_L.Bossyells[monsteryell]) then
+        local localInstance = GetInstanceInfo();
+        if (not localInstance) then return; end
+        local instance = MRT_L.Raidzones[localInstance];
+        if (not instance) then return; end
+        if (MRT_L.Bossyells[instance][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
-            if (MRT_NumOfCurrentRaid) then
-                MRT_AddBosskill(MRT_L.Bossyells[monsteryell]);
-            end
+            MRT_AddBosskill(MRT_L.Bossyells[monsteryell]);
         end
     
     elseif (event == "CHAT_MSG_WHISPER") then
