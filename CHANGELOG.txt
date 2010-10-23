@@ -1,3 +1,19 @@
+0.22 Beta - Changelog:
+  New:
+    * Added new export format: BBcode formatted text with wowhead links
+    * UI 'Add/modify'-dialog: Added a dropdown menu with a list of available players.
+    * Added boss detection for Iron Council (Molgeim last) and Algalon on german (deDE) clients. (Thanks to Früchtchen)
+    * Added localization files for esMX, koKR, ruRU, zhCN, zhTW. Zone name translations are included. This should provide basic tracking support for the corresponding WoW-Clients.
+  Updates:
+    * Updated frFR localization (Thanks to Cyliah)
+  Changes:
+    * MRT now supports data exports of a running raid.
+  Bug Fixes:
+    * Fixed a lua-error which occured at the very last part of the Lich King fight. Because of that, the kill detection for the Iron Council (Stellbraker last) is deactivated once again, because both bosses use the same emote. This will be fixed in the next release. Hopefully. (Ticket ID 13)
+    * Fixed an issue with the CTRT-Export, which produced a wrong time format on Mac system. (Ticket ID 6)
+    * Fixed a lua-error, which occured, if data of a raidmember wasn't available at scan time.
+   
+
 0.21 Beta - Changelog:
   New:
     * Added support and a complete UI translation for spanish (esES) clients (a big thanks to Hestrall, who translated 90% of the addon).

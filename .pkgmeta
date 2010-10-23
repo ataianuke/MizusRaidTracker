@@ -11,7 +11,7 @@ externals:
     libs/CallbackHandler-1.0:
         url: svn://svn.wowace.com/wow/callbackhandler/mainline/trunk/CallbackHandler-1.0
         tag: latest
-#manual-changelog: 
-#    filename: CHANGELOG_SimpleHTML.txt
-#    markup-type: html
+manual-changelog: 
+    filename: CHANGELOG_SimpleHTML.txt
+    markup-type: html
 enable-nolib-creation: no

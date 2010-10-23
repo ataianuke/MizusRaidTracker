@@ -1,3 +1,26 @@
+<h4>0.22 Beta - Changelog:</h4>
+<strong>New:</strong>
+<ul>
+	<li>Added new export format: BBcode formatted text with wowhead links</li>
+	<li>UI 'Add/modify'-dialog: Added a dropdown menu with a list of available players.</li>
+	<li>Added boss detection for Iron Council (Molgeim last) and Algalon on german (deDE) clients. (Thanks to Früchtchen)</li>
+	<li>Added localization files for esMX, koKR, ruRU, zhCN, zhTW. Zone name translations are included. This should provide basic tracking support for the corresponding WoW-Clients.</li>
+</ul>
+<strong>Updates:</strong>
+<ul>
+	<li>Updated frFR localization (Thanks to Cyliah)</li>
+</ul>
+<strong>Changes:</strong>
+<ul>
+	<li>MRT now supports data exports of a running raid.</li>
+</ul>
+<strong>Bug Fixes:</strong>
+<ul>
+	<li> Fixed a lua-error which occured at the very last part of the Lich King fight. Because of that, the kill detection for the Iron Council (Stellbraker last) is deactivated once again, because both bosses use the same emote. This will be fixed in the next release. Hopefully. (Ticket ID 13)</li>
+	<li>Fixed an issue with the CTRT-Export, which produced a wrong time format on Mac system. (Ticket ID 6)</li>
+	<li>Fixed a lua-error, which occured, if data of a raidmember wasn't available at scan time.</li>
+</ul>
+
 <h4>0.21 Beta - Changelog:</h4>
 <strong>New:</strong>
 <ul>
@@ -16,8 +39,7 @@
 	<li>Fixed Algalon kill detection for english (enUS / enGB) clients</li>
 	<li>Fixed Iron Council - Steelbraker last kill detection. Again. Hopefully.</li>
 </ul>
-  
-  
+
 <h4>0.20 Beta</h4>
 <strong>New:</strong>
 <ul>
@@ -33,8 +55,7 @@
 <ul>
 	<li> Changed layout of the boss kill table slightly. The last column shouldn't cut off anymore.</li>
 </ul>
-   
-   
+
 <h4>0.19-3 Beta</h4>
 <strong>New:</strong>
 <ul>
@@ -47,8 +68,7 @@
 	<li>Updated item string handling (Patch 4.0.1 issue)</li>
 	<li>Fixed positioning of a few strings in the options panel (Patch 4.0.1 issue)</li>
 </ul>
-   
-   
+
 <h4>0.18 Beta</h4>
 <strong>New:</strong>
 <ul>
@@ -65,65 +85,4 @@
 <strong>Bug Fixes:</strong>
 <ul>
 	<li> When a running raid changes zone to Archavons Vault, MRT should now end tracking correctly, if tracking of AV is disabled.</li>
-</ul>
-   
-   
-<h4>0.17 Beta</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added option for disabling boss based attendee data for  CTRT-export (if you only create one raid entry for each raid in your  EQDKP(-Plus) and make corrections to raid members manually, you might want  to activate this option)</li>
-	<li> Added checks to prevent exporting of an active raid (raid data is incomplete until a raid is finished)</li>
-	<li> Added option for disabling the confirmation box for an attendance check.</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li> Rewritten large parts of the CTRT-Export. Raid attendee data now  take priority over boss attendee data. This should fix the Join/Leave  timestamps and provide correct information for time based DKP systems  (Thanks to Omega for pointing that out)</li>
-	<li> Disconnecting players are now treated as leaving players, if "Track offline players" is disabled.</li>
-	<li> In 10/25 raids, players moved in groups &gt;2/&gt;5 are now  treated as leaving players, if "Track only first 2/5 groups" is enabled.</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li> Fixed nasty bug, which could enable previously disabled options (please check your settings in the option menu)</li>
-</ul>
-   
-   
-<h4>0.16 Beta</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added option for changing the slash command. (Please relog after changing)</li>
-	<li>Added option for changing the currency of the text based export formats.</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li>The RaidLog browser will now save the last selected raid event and boss event (unless new raid/boss events are tracked).</li>
-	<li>The RaidLog browser will now show raid loot, if a raid event but no boss event is selected (the title of the table will change accordingly).</li>
-	<li>Changed localization files for supporting the CurseForge localization system.</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li>Fixed boss detection of the horde gunship battle (ICC - untested)</li>
-</ul>
-  
-  
-<h4>0.15 Beta</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added two new export formats: plain text and BBCode formatted text (choose your export format in the options panel)</li>
-	<li>Added new option panel for export options</li>
-	<li>CTRT-Export: Added option for automatically adding one item of poor item quality to each boss at data export. This should fix a bug in the EQDKP-CTRT-Import-Plugin boss detection. Boss detection fails, if no loot is connected to a boss event (i.e. attendance checks).</li>
-	<li>Added settings for text export</li>
-	<li>Added function to make a snapshot of the current raid composition</li>
-	<li>Added slash command for taking a snapshot (/mrt snapshot)</li>
-	<li>Added GUI button for taking a snapshot</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li>Changed slash command handler to work with uppercase and mixed upper-/lowercase commands</li>
-	<li>Changed DataExportFrame to support multiline export data</li>
-	<li>CTRT-Export: Optimized the length of the export string</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li>Some manually added boss events were saved with wrong difficulty</li>
-	<li>Fixed export-error, which happened if extended information in playerDB is missing</li>
 </ul>
