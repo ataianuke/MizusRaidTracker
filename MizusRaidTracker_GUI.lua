@@ -653,8 +653,23 @@ end
 
 function MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee)
     local playerInfo = MRT_RaidLog[raidnum]["Players"][attendee];
+    if (not playerInfo["Leave"]) then
+        playerInfo["Leave"] = MRT_GetCurrentTime();
+    end
     -- Delete player from the boss attendees lists...
-    
+    for i, val in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
+        if (playerInfo["Join"] < val["Date"] and val["Date"] < playerInfo["Leave"]) then
+            local playerPos;
+            for j, val2 in ipairs(val["Players"]) do
+                if (val2 == playerInfo["Name"]) then
+                    playerPos = j;
+                end
+            end
+            if (playerPos) then
+                tremove(val["Players"], playerPos);
+            end
+        end
+    end
     -- ...and raid attendees list
     MRT_RaidLog[raidnum]["Players"][attendee] = nil;
     -- Do a table update, if the displayed raid was modified
@@ -663,7 +678,13 @@ function MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee)
     local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     if (raidnum_selected == raidnum) then
         MRT_GUI_RaidAttendeesTableUpdate(raidnum);
+    else
+        return;
     end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then return; end
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    MRT_GUI_BossAttendeesTableUpdate(bossnum);
 end
 
 function MRT_GUI_LootAdd()
