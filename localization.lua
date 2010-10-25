@@ -161,6 +161,12 @@ MRT_L.Options = {
 --  GUI strings  --
 -------------------
 MRT_L.GUI = {
+    ["Add raid attendee"] = "Add raid attendee",
+    TT_Attendee_Add_JoinEB = "Format HH:MM \n\nIf left blank, MRT will use \nthe raid start time.",
+    TT_Attendee_Add_LeaveEB = "Format HH:MM \n\nIf left blank, MRT will use \nthe raid end time or current time.",
+    ["No name entered"] = "Error: No name entered.",
+    ["Entered join time is not before leave time"] = "Error: Entered join time is not before leave time.",
+    
     ["Active raid found. End current one first."] = "Error: Active raid found. Please end the active raid before starting a new one.",
 	["Add boss attendee"] = "Add boss attendee",
 	["Add bosskill"] = "Add bosskill",

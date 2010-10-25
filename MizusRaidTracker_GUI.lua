@@ -185,8 +185,6 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_TakeSnapshot_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "TOPLEFT", -215, 0);
     MRT_GUIFrame_StartNewRaid_Button:SetText(MRT_L.GUI["Button_StartNewRaid"]);
     MRT_GUIFrame_EndCurrentRaid_Button:SetText(MRT_L.GUI["Button_EndCurrentRaid"]);
-    -- disable buttons, if function is NYI
-    MRT_GUIFrame_RaidAttendees_Add_Button:Disable();
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
     -- Create and anchor drop down menu table for add/modify loot dialog
@@ -242,12 +240,6 @@ function MRT_GUI_RaidExportComplete()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
-    --[[
-    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
-        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
-        return;
-    end
-    --]]
     MRT_CreateRaidExport(raidnum, nil, nil);
 end
 
@@ -259,12 +251,6 @@ function MRT_GUI_RaidExportNormal()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
-    --[[
-    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
-        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
-        return;
-    end
-    --]]
     MRT_CreateRaidExport(raidnum, nil, "N");
 end
 
@@ -276,12 +262,6 @@ function MRT_GUI_RaidExportHard()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
-    --[[
-    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
-        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
-        return;
-    end
-    --]]
     MRT_CreateRaidExport(raidnum, nil, "H");
 end
 
@@ -516,14 +496,139 @@ function MRT_GUI_BossExport()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
-    --[[
-    if (MRT_NumOfCurrentRaid and MRT_NumOfCurrentRaid == raidnum) then
-        MRT_Print(MRT_L.GUI["End tracking of current raid before exporting it"]);
-        return;
-    end
-    --]]
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     MRT_CreateRaidExport(raidnum, bossnum, nil);
+end
+
+function MRT_GUI_RaidAttendeeAdd()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Add raid attendee"]);
+    MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Col_Name"]);
+    MRT_GUI_ThreeRowDialog_EB1:SetText("");
+    MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Col_Join"]);
+    MRT_GUI_ThreeRowDialog_EB2:SetText("");
+    MRT_GUI_ThreeRowDialog_EB2:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_ThreeRowDialog_EB2, "Attendee_Add_JoinEB"); end);
+    MRT_GUI_ThreeRowDialog_EB2:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
+    MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Col_Leave"]);
+    MRT_GUI_ThreeRowDialog_EB3:SetText("");
+    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_ThreeRowDialog_EB3, "Attendee_Add_LeaveEB"); end);
+    MRT_GUI_ThreeRowDialog_EB3:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
+    MRT_GUI_ThreeRowDialog_OKButton:SetText(MRT_L.GUI["Button_Add"]);
+    MRT_GUI_ThreeRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_RaidAttendeeAddAccept(raidnum); end);
+    MRT_GUI_ThreeRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_ThreeRowDialog:Show();
+end
+
+function MRT_GUI_RaidAttendeeAddAccept(raidnum)
+    -- sanity check inputs - if error, print error message (bossname is free text, time has to match HH:MM)
+    local currentTime = MRT_GetCurrentTime();
+    local playerName = MRT_GUI_ThreeRowDialog_EB1:GetText();
+    local joinTime = MRT_GUI_ThreeRowDialog_EB2:GetText();
+    local leaveTime = MRT_GUI_ThreeRowDialog_EB3:GetText();
+    local joinTimestamp, leaveTimestamp;
+    local raidStart = MRT_RaidLog[raidnum]["StartTime"];
+    local raidStop;
+    if (raidnum == MRT_NumOfCurrentRaid) then
+        raidStop = currentTime;
+    else
+        raidStop = MRT_RaidLog[raidnum]["StopTime"];
+    end
+    -- check name
+    if (playerName == "") then
+        MRT_Print(MRT_L.GUI["No name entered"]);
+        return;
+    end
+    -- check format of join time and create join timestamp
+    if (joinTime == "") then
+        joinTimestamp = MRT_RaidLog[raidnum]["StartTime"] + 1;
+    else
+        local joinHours, joinMinutes = deformat(joinTime, "%d:%d");
+        if (joinHours == nil or joinMinutes == nil or joinHours > 23 or joinHours < 0 or joinMinutes > 59 or joinMinutes < 0) then
+            MRT_Print(MRT_L.GUI["No valid time entered"]);
+            return;
+        end
+        -- check timeline of chosen raid
+        local raidStartDateTable = date("*t", raidStart);
+        raidStartDateTable.hour = joinHours;
+        raidStartDateTable.min = joinMinutes;
+        joinTimestamp = time(raidStartDateTable);
+        -- if joinTimestamp < raidStart, try raidStart + 24 hours (one day - time around 01:25 is next day)
+        if (joinTimestamp < raidStart) then
+            joinTimestamp = joinTimestamp + 86400;
+        end
+    end
+    -- check format of leave time and create leave timestamp
+    if (leaveTime == "") then
+        if (raidnum == MRT_NumOfCurrentRaid) then
+            leaveTimestamp = currentTime - 1;
+        else
+            leaveTimestamp = MRT_RaidLog[raidnum]["StopTime"] - 1;
+        end
+    else
+        local leaveHours, leaveMinutes = deformat(leaveTime, "%d:%d");
+        if (leaveHours == nil or leaveMinutes == nil or leaveHours > 23 or leaveHours < 0 or leaveMinutes > 59 or leaveMinutes < 0) then
+            MRT_Print(MRT_L.GUI["No valid time entered"]);
+            return;
+        end
+        -- check timeline of chosen raid
+        local raidStartDateTable = date("*t", raidStart);
+        raidStartDateTable.hour = leaveHours;
+        raidStartDateTable.min = leaveMinutes;
+        leaveTimestamp = time(raidStartDateTable);
+        -- if leaveTimestamp < raidStart, try raidStart + 24 hours (one day - time around 01:25 is next day)
+        if (leaveTimestamp < raidStart) then
+            leaveTimestamp = leaveTimestamp + 86400;
+        end
+    end
+    -- check if timestamps make sense
+    if not (raidStart < joinTimestamp and joinTimestamp < raidStop and raidStart < leaveTimestamp and leaveTimestamp < raidStop) then
+        MRT_Print(MRT_L.GUI["Entered time is not between start and end of raid"]);
+        return;
+    end
+    if (joinTimestamp > leaveTimestamp) then
+        MRT_Print(MRT_L.GUI["Entered join time is not before leave time"]);
+        MRT_Debug(tostring(joinTimestamp).." > "..tostring(leaveTimestamp));
+        return;
+    end
+    MRT_GUI_HideDialogs();
+    -- if we reach this point, we should have a valid raidnum, playername, join timestamp and leave timestamp - now add them to the raid attendee list...
+    local playerInfo = {
+        ["Name"] = playerName,
+        ["Join"] = joinTimestamp,
+        ["Leave"] = leaveTimestamp,
+    };
+    tinsert(MRT_RaidLog[raidnum]["Players"], playerInfo);
+    -- ... and as boss attendee to the relevant bosses
+    for i, val in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
+        if (joinTimestamp < val["Date"] and val["Date"] < leaveTimestamp) then
+            local playerList = {};
+            for j, val2 in ipairs(val["Players"]) do
+                playerList[val2] = true;
+            end
+            if (not playerList[playerName]) then
+                tinsert(val["Players"], playerName);
+            end
+        end
+    end
+    -- Do a table update, if the displayed raid was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (raidnum_selected == raidnum) then
+        MRT_GUI_RaidAttendeesTableUpdate(raidnum);
+    else
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then return; end
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    MRT_GUI_BossAttendeesTableUpdate(bossnum);
 end
 
 function MRT_GUI_RaidAttendeeDelete()
@@ -547,6 +652,10 @@ function MRT_GUI_RaidAttendeeDelete()
 end
 
 function MRT_GUI_RaidAttendeeDeleteAccept(raidnum, attendee)
+    local playerInfo = MRT_RaidLog[raidnum]["Players"][attendee];
+    -- Delete player from the boss attendees lists...
+    
+    -- ...and raid attendees list
     MRT_RaidLog[raidnum]["Players"][attendee] = nil;
     -- Do a table update, if the displayed raid was modified
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
