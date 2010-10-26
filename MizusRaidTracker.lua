@@ -85,6 +85,11 @@ local MRT_GuildRosterUpdating = nil;
 local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
 
+-- Vars for API
+local MRT_ExternalItemCostHandler = nil;
+local MRT_SuppressAskCostDialog = nil;
+local MRT_ExternalLootNotifier = {};
+
 -- Table definition for the drop down menu for the DKPFrame
 local MRT_DKPFrame_DropDownTableColDef = {
     {["name"] = "", ["width"] = 100},
@@ -400,6 +405,31 @@ function MRT_PeriodicMaintenance()
         end
     end
     MRT_Debug("Maintenance finished in "..tostring(time() - startTime).." seconds. Deleted "..tostring(deletedEntries).." player entries.");
+end
+
+
+-----------
+--  API  --
+-----------
+-- FIXME!!!
+function MRT_RegisterItemCostHandler(functionToCall, suppressAskCostDialog)
+    MRT_ExternalItemCostHandler = functionToCall;
+    MRT_SuppressAskCostDialog = suppressAskCostDialog;
+end
+
+-- FIXME!!!
+function MRT_UnregisterItemCostHandler()
+    MRT_ExternalItemCostHandler = nil;
+    MRT_SuppressAskCostDialog = nil;
+end
+
+function MRT_RegisterLootNotify(functionToCall)
+    tinsert(MRT_ExternalLootNotifier, functionToCall);
+end
+
+-- FIXME!!!
+function MRT_UnregisterLootNotify(functionToCall)
+    MRT_ExternalLootNotifier = {};
 end
 
 -------------------------------------
@@ -861,6 +891,8 @@ function MRT_DKPFrame_Handler(button)
     end
     -- hide frame
     MRT_GetDKPValueFrame:Hide();
+    -- this line is solely for debug purposes 
+    if (button == "Cancel") then return; end
     -- process item
     local raidNum = MRT_AskCostQueue[1]["RaidNum"];
     local itemNum = MRT_AskCostQueue[1]["ItemNum"];
@@ -879,6 +911,12 @@ function MRT_DKPFrame_Handler(button)
         MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = "disenchanted";
         MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"] = lootNote;
     end
+    -- notify registered, external functions
+    if (#MRT_ExternalLootNotifier > 0) then
+        for i, val in ipairs(MRT_ExternalLootNotifier) do
+            val(MRT_RaidLog[raidNum]["Loot"][itemNum]);
+        end
+    end
     -- done with handling item - proceed to next one
     table.remove(MRT_AskCostQueue, 1);
     if (#MRT_AskCostQueue == 0) then
@@ -888,6 +926,14 @@ function MRT_DKPFrame_Handler(button)
         MRT_DKPFrame_AskCost();
     end    
 end
+
+--[[
+function MRT_PrintItemInfo(itemInfo)
+    MRT_Print(itemInfo["ItemLink"]);
+end
+
+MRT_RegisterLootNotify(MRT_PrintItemInfo);
+--]]
 
 function MRT_GetDKPValueFrame_DropDownList_Toggle()
     if (MRT_DKPFrame_DropDownTable.frame:IsShown()) then
