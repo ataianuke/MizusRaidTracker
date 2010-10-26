@@ -423,12 +423,12 @@ function MRT_UnregisterItemCostHandler()
     MRT_SuppressAskCostDialog = nil;
 end
 
-function MRT_RegisterLootNotify(functionToCall)
+function MRT_RegisterLootNotifyCore(functionToCall)
     tinsert(MRT_ExternalLootNotifier, functionToCall);
 end
 
 -- FIXME!!!
-function MRT_UnregisterLootNotify(functionToCall)
+function MRT_UnregisterLootNotifyCore(functionToCall)
     MRT_ExternalLootNotifier = {};
 end
 
