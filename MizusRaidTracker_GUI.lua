@@ -1209,6 +1209,9 @@ function MRT_GUI_BossAttendeesTableUpdate(bossnum)
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"]) do
             MRT_GUI_BossAttendeesTableData[i] = {i, v};
         end
+        MRT_GUIFrame_BossAttendeesTitle:SetText(MRT_L.GUI["Tables_BossAttendeesTitle"].." ("..tostring(#MRT_GUI_BossAttendeesTableData)..")");
+    else
+        MRT_GUIFrame_BossAttendeesTitle:SetText(MRT_L.GUI["Tables_BossAttendeesTitle"]);
     end
     table.sort(MRT_GUI_BossAttendeesTableData, function(a, b) return (a[2] < b[2]); end);
     MRT_GUI_BossAttendeesTable:ClearSelection();
