@@ -216,6 +216,7 @@ function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
         MRT_L.Options["EP_Plain_Text"],
         MRT_L.Options["EP_BBCode"],
         MRT_L.Options["EP_BBCode_wowhead"],
+        MRT_L.Options["EP_HTML"],
     }
     -- Click handler function
     local function OnClick(self)

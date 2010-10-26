@@ -133,6 +133,7 @@ MRT_L.Options = {
     EP_CTRT_IgnorePerBossAttendance = "Ignore per boss attendance",
 	EP_CTRTTitleText = "CTRT compatible export settings",
     EP_Currency = "Currency",
+    EP_HTML = "CSS based HTML with wowhead links",
 	EP_Plain_Text = "Plain Text",
 	EP_SetDateTimeFormat = "Set format of date and time",
 	EP_TextExportTitleText = "Text export settings",

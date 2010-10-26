@@ -6,6 +6,9 @@
 -- This addon is written and copyrighted by:
 --    * Mizukichan @ EU-Thrall (2010)
 --
+-- Contributors:
+--    * Kevin (HTML-Export) (2010)
+--
 --    This file is part of Mizus RaidTracker.
 --
 --    Mizus RaidTracker is free software: you can redistribute it and/or 
@@ -1105,6 +1108,9 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     -- 4: BBCode formated export with wowhead links
     elseif (MRT_Options["Export_ExportFormat"] == 4) then
         dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 2);
+    -- 5: CSS based HTML with wowhead links
+    elseif (MRT_Options["Export_ExportFormat"] == 5) then
+        dkpstring = MRT_CreateHTMLExport(raidID, bossID, difficulty)
     end
     -- Show the data export
     MRT_ExportFrame_Show(dkpstring);
@@ -1504,5 +1510,100 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         export = export..MRT_L.Core["Export_Attendees"].."("..tostring(#numPlayerList).."):\n";
         export = export..table.concat(numPlayerList, ", ");
     end  
+    return export;
+end
+
+-- CSS based HTML, including wowhead links (contributed by Kevin)
+function MRT_CreateHTMLExport(raidID, bossID, difficulty)
+    -- Generate generic getBossData-Function:
+    local function getBossData(raidID, bossID)
+        -- Set up vars, create sorted playerList
+        local bossData = "<div class=\"bossData\">";
+        local isFirstItem = true;
+        local playerList = MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"];
+        table.sort(playerList);
+        -- Create data
+        -- Begin boss headline formatting
+        bossData = bossData.."<div class=\"boss\">";
+        -- Boss headline
+        bossData = bossData.."<span class=\"name\">"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</span><span class=\"difficulty\">";
+        if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] < 3) then
+            bossData = bossData..MRT_L.Core["Export_Normal"];
+        else
+            bossData = bossData..MRT_L.Core["Export_Heroic"];
+        end
+        -- End boss headline formatting
+        bossData = bossData.."</span></div>";
+        -- End of boss headline
+        bossData = bossData.."<div class=\"info\">";
+        bossData = bossData.."<span class=\"label\">"..MRT_L.Core["Export_Attendees"].." ("..tostring(#playerList)..")</span>";
+        bossData = bossData.."<span class=\"attendees\">"..table.concat(playerList, ", ").."</span>";
+        bossData = bossData.."</div>";
+        bossData = bossData.."<div class=\"loot\">";
+        for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
+            if (val["BossNumber"] == bossID) then
+                if (isFirstItem) then bossData = bossData.."<span class=\"label\">"..MRT_L.Core["Export_Loot"].."</span><ul>"; isFirstItem = false; end
+                bossData = bossData.."<li>";
+                bossData = bossData.."<a class=\"item\" href=\"http://www.wowhead.com/?item="..val["ItemId"].."\">";
+                bossData = bossData..val["ItemName"];
+                bossData = bossData.."</a>";
+                bossData = bossData.."<span class=\"value\">"..val["DKPValue"].." "..MRT_Options["Export_Currency"].."</span>";
+                bossData = bossData.."<span class=\"looter\">"..val["Looter"].."</span>";
+                if val["Note"] then bossData = bossData.."<span=\"note\">("..val["Note"]..")</span>"; end
+                bossData = bossData.."</li>";
+            end
+        end
+        bossData = bossData.."</ul></div></div>";
+        return bossData;
+    end
+    -- Start creating export data
+    local export = "<div class=\"raidExport\">";
+    -- Begin headline formatting
+    export = export.."<div class=\"headline\">";
+    -- Begin headline text
+    export = export.."<span class=\"zone\">"..MRT_RaidLog[raidID]["RaidZone"].." ("..MRT_RaidLog[raidID]["RaidSize"]..")</span>";
+    export = export.."<span class=\"start\">"..date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]).."</span>";
+    -- End headline formatting
+    export = export.."</div>";
+    -- If boss events are present, create a list of boss events
+    local bossDataExist = nil;
+    if (MRT_RaidLog[raidID]["Bosskills"] and #MRT_RaidLog[raidID]["Bosskills"] > 0) then
+        if ((bossID == nil) and (difficulty == nil)) then
+            for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                export = export..getBossData(raidID, idx);
+            end
+            bossDataExist = true;
+        elseif (bossID) then
+            export = export..getBossData(raidID, bossID);
+            bossDataExist = true;
+        else
+            for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                if ((val["Difficulty"] < 3) and difficulty == "N") or ((val["Difficulty"] > 2) and difficulty == "H") then
+                    export = export..getBossData(raidID, idx);
+                    bossDataExist = true;
+                end
+            end
+        end
+    end
+    -- If no boss events are present, create a list of raid atendees
+    if (not bossDataExist) then
+        -- Create list, remove duplicates, sort list, add list to export data 
+        -- Very dirty hack for sorting out duplicates, i know....
+        local keyPlayerList = {};
+        local numPlayerList = {};
+        for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+            keyPlayerList[val["Name"]] = val["Name"];
+        end
+        for key, val in pairs(keyPlayerList) do
+            tinsert(numPlayerList, val);
+        end
+        table.sort(numPlayerList);
+        -- Add export data
+        export = export.."<div class=\"info\">";
+        export = export.."<span class=\"label\">"..MRT_L.Core["Export_Attendees"].." ("..tostring(#numPlayerList)..")</span>";
+        export = export.."<span class=\"attendees\">"..table.concat(numPlayerList, ", ").."</span>";
+        export = export.."</div>";
+    end
+    export = export.."</div>";
     return export;
 end
