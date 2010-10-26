@@ -272,11 +272,11 @@ function MRT_GUI_RaidDelete()
         MRT_Print(MRT_L.GUI["No raid selected"]);
         return;
     end
-    if (raid_select == MRT_NumOfCurrentRaid) then
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (raidnum == MRT_NumOfCurrentRaid) then
         MRT_Print(MRT_L.GUI["Can not delete current raid"]);
         return;
     end
-    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     StaticPopupDialogs.MRT_GUI_ZeroRowDialog.text = string.format(MRT_L.GUI["Confirm raid entry deletion"], raidnum);
     StaticPopupDialogs.MRT_GUI_ZeroRowDialog.OnAccept = function() MRT_GUI_RaidDeleteAccept(raidnum); end
     StaticPopup_Show("MRT_GUI_ZeroRowDialog");

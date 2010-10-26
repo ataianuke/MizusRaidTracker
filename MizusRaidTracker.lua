@@ -152,7 +152,7 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
         MRT_LoginTimer.loginTime = time();
-        -- Delay data gathering a bit to make sure, that data is avaiable after login
+        -- Delay data gathering a bit to make sure, that data is available after login
         -- aka: Dalaran latency fix
         MRT_LoginTimer:SetScript("OnUpdate", function (self)
             if ((time() - self.loginTime) > 5) then
@@ -892,7 +892,7 @@ function MRT_DKPFrame_Handler(button)
     -- hide frame
     MRT_GetDKPValueFrame:Hide();
     -- this line is solely for debug purposes 
-    if (button == "Cancel") then return; end
+    -- if (button == "Cancel") then return; end
     -- process item
     local raidNum = MRT_AskCostQueue[1]["RaidNum"];
     local itemNum = MRT_AskCostQueue[1]["ItemNum"];
