@@ -1,0 +1,4 @@
+-
+    type: luadoc
+    input-file: MizusRaidTracker_API.lua
+    output-page: "API / Register Functions"
