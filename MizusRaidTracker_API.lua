@@ -96,7 +96,7 @@ end
 
 --- Unregister a previously registered loot notify function
 -- @name MRT_UnregisterLootNotify
--- @param functionCalled The function, which shall be unregistered
+-- @param registeredFunction The function, which shall be unregistered
 -- @return boolean - indicates if the unregistration of the function was successful
 -- @usage unregistrationSuccess = MRT_UnregisterLootNotify(registeredFunction);
 function MRT_UnregisterLootNotify(registeredFunction)
