@@ -1,6 +1,6 @@
 ## Interface: 40000
 ## Title: Mizus RaidTracker
-## Version: 0.23-2 Alpha
+## Version: 0.23-3 Alpha
 ## Notes: Tracks raid, loot and attendance
 ## Author: Mizukichan@EU-Thrall
 ## LoadOnDemand: 0
@@ -22,3 +22,4 @@ MizusRaidTracker_Constants.lua
 MizusRaidTracker.xml
 MizusRaidTracker_Options.xml
 MizusRaidTracker_GUI.xml
+MizusRaidTracker_API.lua

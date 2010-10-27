@@ -86,8 +86,11 @@ local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
 
 -- Vars for API
-local MRT_ExternalItemCostHandler = nil;
-local MRT_SuppressAskCostDialog = nil;
+local MRT_ExternalItemCostHandler = {
+    func = nil,
+    suppressDialog = nil,
+    addonName = nil,
+};
 local MRT_ExternalLootNotifier = {};
 
 -- Table definition for the drop down menu for the DKPFrame
@@ -408,28 +411,70 @@ function MRT_PeriodicMaintenance()
 end
 
 
------------
---  API  --
------------
--- FIXME!!!
-function MRT_RegisterItemCostHandler(functionToCall, suppressAskCostDialog)
-    MRT_ExternalItemCostHandler = functionToCall;
-    MRT_SuppressAskCostDialog = suppressAskCostDialog;
+-----------------
+--  API-Stuff  --
+-----------------
+function MRT_RegisterItemCostHandlerCore(functionToCall, suppressAskCostDialog, addonName)
+    if (functionToCall == nil or addonName == nil) then
+        return false;
+    end
+    if (not MRT_ExternalItemCostHandler.func) then
+        MRT_ExternalItemCostHandler.func = functionToCall;
+        MRT_ExternalItemCostHandler.suppressDialog = suppressAskCostDialog;
+        MRT_ExternalItemCostHandler.addonName = addonName;
+        if (suppressAskCostDialog) then
+            MRT_Print("Note: The addon '"..addonName.."' has registered itself to handle item tracking. The loot popup has been disabled.");
+        else
+            MRT_Print("Note: The addon '"..addonName.."' has registered itself to handle item tracking. The loot popup hasn't been disabled.");
+        end
+        return true;
+    else
+        return false;
+    end
 end
 
--- FIXME!!!
-function MRT_UnregisterItemCostHandler()
-    MRT_ExternalItemCostHandler = nil;
-    MRT_SuppressAskCostDialog = nil;
+function MRT_UnregisterItemCostHandlerCore(functionCalled)
+    if (functionCalled == nil) then
+        return false;
+    end
+    if (MRT_ExternalItemCostHandler.func == functionCalled) then
+        MRT_ExternalItemCostHandler.func = nil;
+        MRT_ExternalItemCostHandler.suppressDialog = nil;
+        MRT_ExternalItemCostHandler.addonName = nil;
+        return true;
+    else
+        return false;
+    end
 end
 
 function MRT_RegisterLootNotifyCore(functionToCall)
-    tinsert(MRT_ExternalLootNotifier, functionToCall);
+    local isRegistered = nil;
+    for i, val in ipairs(MRT_ExternalLootNotifier) do
+        if (val == functionToCall) then
+            isRegistered = true;
+        end
+    end
+    if (isRegistered) then
+        return false;
+    else
+        tinsert(MRT_ExternalLootNotifier, functionToCall);
+        return true;
+    end
 end
 
--- FIXME!!!
-function MRT_UnregisterLootNotifyCore(functionToCall)
-    MRT_ExternalLootNotifier = {};
+function MRT_UnregisterLootNotifyCore(functionCalled)
+    local isRegistered = nil;
+    for i, val in ipairs(MRT_ExternalLootNotifier) do
+        if (val == functionCalled) then
+            isRegistered = i;
+        end
+    end
+    if (isRegistered) then
+        tremove(MRT_ExternalLootNotifier, isRegistered);
+        return true;
+    else
+        return false;
+    end
 end
 
 -------------------------------------
@@ -796,6 +841,24 @@ function MRT_AutoAddLoot(chatmsg)
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > MRT_ItemColorValues[itemColor]) then MRT_Debug("Item not tracked - quality is too low."); return; end
     if (MRT_IgnoredItemIDList[itemId]) then return; end
+    -- if an external function handles item data, notify it
+    local dkpValue = 0;
+    local deleteItem = nil;
+    local itemNote = nil;
+    if (MRT_ExternalItemCostHandler.func) then
+        local notifierInfo = {
+            ["ItemLink"] = itemLink,
+            ["ItemString"] = itemString,
+            ["ItemId"] = itemId,
+            ["ItemName"] = itemName,
+            ["ItemColor"] = itemColor,
+            ["ItemCount"] = itemCount,
+            ["Looter"] = playerName,
+            ["DKPValue"] = dkpValue,
+        };
+        dkpValue, playerName, itemNote, deleteItem = MRT_ExternalItemCostHandler.func(notifierInfo);
+        if (deleteItem) then return; end
+    end
     -- Quick&Dirty for Trashdrops befor first bosskill
     if (MRT_NumOfLastBoss == nil) then 
         MRT_AddBosskill("_TrashMobLoot_");
@@ -810,12 +873,26 @@ function MRT_AutoAddLoot(chatmsg)
         ["ItemColor"] = itemColor,
         ["ItemCount"] = itemCount,
         ["Looter"] = playerName,
-        ["DKPValue"] = 0,
+        ["DKPValue"] = dkpValue,
         ["BossNumber"] = MRT_NumOfLastBoss,
         ["Time"] = MRT_GetCurrentTime(),
+        ["Note"] = itemNote,
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
-    if (not MRT_Options["Tracking_AskForDKPValue"]) then return; end
+    if ((not MRT_Options["Tracking_AskForDKPValue"]) or MRT_ExternalItemCostHandler.suppressDialog) then 
+        -- notify registered, external functions
+        local itemNum = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"];
+        if (#MRT_ExternalLootNotifier > 0) then
+            local itemInfo = {};
+            for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"][itemNum]) do
+                itemInfo[key] = val;
+            end
+            for i, val in ipairs(MRT_ExternalLootNotifier) do
+                val(itemInfo, 2, MRT_NumOfCurrentRaid, itemNum);
+            end
+        end
+        return; 
+    end
     if (MRT_Options["Tracking_MinItemQualityToGetDKPValue"] > MRT_ItemColorValues[itemColor]) then return; end
     MRT_DKPFrame_AddToItemCostQueue(MRT_NumOfCurrentRaid, #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"]);
 end
@@ -866,8 +943,16 @@ function MRT_DKPFrame_AskCost()
     MRT_GetDKPValueFrame_TextSecondLine:SetText(MRT_RaidLog[raidNum]["Loot"][itemNum]["ItemLink"]);
     MRT_GetDKPValueFrame_TextThirdLine:SetText(string.format(MRT_L.Core.DKP_Frame_LootetBy, MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"]));
     MRT_GetDKPValueFrame_TTArea:SetWidth(MRT_GetDKPValueFrame_TextSecondLine:GetWidth());
-    MRT_GetDKPValueFrame_EB:SetText("");
-    MRT_GetDKPValueFrame_EB2:SetText("");
+    if (MRT_RaidLog[raidNum]["Loot"][itemNum]["DKPValue"] == 0) then
+        MRT_GetDKPValueFrame_EB:SetText("");
+    else
+        MRT_GetDKPValueFrame_EB:SetText(tostring(MRT_RaidLog[raidNum]["Loot"][itemNum]["DKPValue"]));
+    end
+    if (MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"]) then
+        MRT_GetDKPValueFrame_EB2:SetText(MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"]);
+    else
+        MRT_GetDKPValueFrame_EB2:SetText("");
+    end
     MRT_GetDKPValueFrame.Looter = MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"];
     MRT_GetDKPValueFrame:Show();
 end
@@ -913,8 +998,12 @@ function MRT_DKPFrame_Handler(button)
     end
     -- notify registered, external functions
     if (#MRT_ExternalLootNotifier > 0) then
+        local itemInfo = {};
+        for key, val in pairs(MRT_RaidLog[raidNum]["Loot"][itemNum]) do
+            itemInfo[key] = val;
+        end
         for i, val in ipairs(MRT_ExternalLootNotifier) do
-            val(MRT_RaidLog[raidNum]["Loot"][itemNum]);
+            val(itemInfo, 1, raidNum, itemNum);
         end
     end
     -- done with handling item - proceed to next one

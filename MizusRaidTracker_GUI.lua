@@ -32,12 +32,12 @@ local ScrollingTable = LibStub("ScrollingTable");
 local MRT_GUI_RaidLogTableSelection = nil;
 local MRT_GUI_RaidBosskillsTableSelection = nil;
 
+local MRT_ExternalLootNotifier = {};
+
 local lastShownNumOfRaids = nil;
 local lastSelectedRaidNum = nil;
 local lastShownNumOfBosses = nil;
 local lastSelectedBossNum = nil;
-
-local msgbox;
 
 -- table definitions
 local MRT_RaidLogTableColDef = { 
@@ -122,6 +122,40 @@ local MRT_BossAttendeesTableColDef = {
 local MRT_PlayerDropDownTableColDef = {
     {["name"] = "", ["width"] = 100},
 };
+
+
+-----------------
+--  API-Stuff  --
+-----------------
+function MRT_RegisterLootNotifyGUI(functionToCall)
+    local isRegistered = nil;
+    for i, val in ipairs(MRT_ExternalLootNotifier) do
+        if (val == functionToCall) then
+            isRegistered = true;
+        end
+    end
+    if (isRegistered) then
+        return false;
+    else
+        tinsert(MRT_ExternalLootNotifier, functionToCall);
+        return true;
+    end
+end
+
+function MRT_UnregisterLootNotifyGUI(functionCalled)
+    local isRegistered = nil;
+    for i, val in ipairs(MRT_ExternalLootNotifier) do
+        if (val == functionCalled) then
+            isRegistered = i;
+        end
+    end
+    if (isRegistered) then
+        tremove(MRT_ExternalLootNotifier, isRegistered);
+        return true;
+    else
+        return false;
+    end
+end
 
 
 ---------------------------------------------------------------
@@ -829,14 +863,35 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         ["Note"] = lootNote,
     }
     if (lootnum) then
-        oldLootDB = MRT_RaidLog[raidnum]["Loot"][lootnum];
+        local oldLootDB = MRT_RaidLog[raidnum]["Loot"][lootnum];
         MRT_LootInfo["ItemCount"] = oldLootDB["ItemCount"];
         MRT_LootInfo["Time"] = oldLootDB["Time"];
         MRT_RaidLog[raidnum]["Loot"][lootnum] = MRT_LootInfo;
+        -- notify registered, external functions
+        if (#MRT_ExternalLootNotifier > 0) then
+            local itemInfo = {};
+            for key, val in pairs(MRT_RaidLog[raidnum]["Loot"][lootnum]) do
+                itemInfo[key] = val;
+            end
+            for i, val in ipairs(MRT_ExternalLootNotifier) do
+                val(itemInfo, 4, raidnum, lootnum);
+            end
+        end
     else
         MRT_LootInfo["ItemCount"] = 1;
         MRT_LootInfo["Time"] = time();
         tinsert(MRT_RaidLog[raidnum]["Loot"], MRT_LootInfo);
+        -- notify registered, external functions
+        if (#MRT_ExternalLootNotifier > 0) then
+            local itemNum = #MRT_RaidLog[raidnum]["Loot"];
+            local itemInfo = {};
+            for key, val in pairs(MRT_RaidLog[raidnum]["Loot"][itemNum]) do
+                itemInfo[key] = val;
+            end
+            for i, val in ipairs(MRT_ExternalLootNotifier) do
+                val(itemInfo, 3, raidnum, itemNum);
+            end
+        end
     end
     -- do table update, if selected loot table was modified
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
