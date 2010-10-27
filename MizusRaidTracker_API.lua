@@ -23,7 +23,7 @@
 --    If not, see <http://www.gnu.org/licenses/>.
 
 
---- API for handling item costs of newly looted items. The function will only be called, when an item was tracked with the automatic tracking system.
+--- API for handling item costs of newly looted items. The registered function will only be called, when an item was tracked with the automatic tracking system.
 -- It won't be called, if the user has added an item manually. Only one function can be registered at any given time.
 -- @name MRT_RegisterItemCostHandler
 -- @param functionToCall The function, which shall be called, when a new items has been looted and tracked

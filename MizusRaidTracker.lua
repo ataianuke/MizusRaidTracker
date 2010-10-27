@@ -137,7 +137,7 @@ function MRT_OnEvent(frame, event, ...)
         if (not instance) then return; end
         if (MRT_L.Bossyells[instance][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
-            MRT_AddBosskill(MRT_L.Bossyells[monsteryell]);
+            MRT_AddBosskill(MRT_L.Bossyells[instance][monsteryell]);
         end
     
     elseif (event == "CHAT_MSG_WHISPER") then
@@ -1540,6 +1540,11 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     xml = xml.."</Loot>";
     xml = xml.."</RaidInfo>";
     return xml;
+end
+
+-- 
+function MRT_CreateDKPBoardComExport(raidID, bossID, difficulty)
+    
 end
 
 -- Planned format options:
