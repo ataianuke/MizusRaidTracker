@@ -25,7 +25,7 @@
 
 --- API for handling item costs of newly looted items. The function will only be called, when an item was tracked with the automatic tracking system.
 -- It won't be called, if the user has added an item manually. Only one function can be registered at any given time.
--- @name MRT_RegisterItemCostHandler(functionToCall, suppressAskCostDialog, addonName)
+-- @name MRT_RegisterItemCostHandler
 -- @param functionToCall The function, which shall be called, when a new items has been looted and tracked
 -- @param suppressAskCostDialog Boolean - If set to true, it will disable the popup dialog.
 -- @param addonName The name of addon which registers one of its functions here. Will be used to inform the user.
@@ -33,7 +33,8 @@
 -- @usage -- The function, which should be called, will receive and shall return the following variables
 -- cost, looter, itemNote, deleteItem = functionToCall(itemInfoTable)
 -- -- param itemInfoTable: A stripped down variant of the loot information from the MRT_RaidLog table
---                         Will include the key 'ItemLink', 'ItemString', 'ItemId', 'ItemName', 'ItemColor', 'ItemCount', 'Looter', 'DKPValue'
+-- --                      Will include the keys 'ItemLink', 'ItemString', 'ItemId', 'ItemName', 'ItemColor', 'ItemCount', 'Looter', 'DKPValue'
+-- --                      see http://wow.curseforge.com/addons/mizusraidtracker/pages/api/variables-and-tables/ for more information
 -- -- return cost: number - the cost for this item
 -- -- return looter: string - the looter for this item, either a name, or 'bank' or 'disenchanted'
 -- -- return itemNote: string - an item note for this item
@@ -53,7 +54,7 @@ end
 
 
 --- Unregister a previously registered item cost handler
--- @name MRT_UnregisterItemCostHandler(registeredFunction)
+-- @name MRT_UnregisterItemCostHandler
 -- @param registeredFunction The function, which shall be unregistered
 -- @return boolean - indicates if the unregistration of the function was successful
 -- @usage unregistrationSuccess = MRT_UnregisterItemCostHandler(registeredFunction);
@@ -63,7 +64,7 @@ end
 
 
 --- API for notifying external functions about changes in the loot table. Multiple functions can be registered.
--- @name MRT_RegisterLootNotify(functionToCall)
+-- @name MRT_RegisterLootNotify
 -- @param functionToCall The function, which shall be called, when the loot table changed
 -- @return boolean - indicates if the registration of the function was successful
 -- @usage -- The function, which should be called, will receive the following variables:
@@ -94,7 +95,7 @@ end
 
 
 --- Unregister a previously registered loot notify function
--- @name MRT_UnregisterLootNotify(registeredFunction)
+-- @name MRT_UnregisterLootNotify
 -- @param functionCalled The function, which shall be unregistered
 -- @return boolean - indicates if the unregistration of the function was successful
 -- @usage unregistrationSuccess = MRT_UnregisterLootNotify(registeredFunction);
