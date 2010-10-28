@@ -1265,6 +1265,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     xml = xml.."<start>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</start>";
     xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"] or now).."</end>";
     xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    -- gather PlayerInfo - create PlayerInfo only once for each player
     xml = xml.."<PlayerInfos>";
     local proceededPlayerInfo = {};
     index = 1;
@@ -1299,92 +1300,88 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         -- 2. parse boss events, iterate for each attendee through these timestamps. If a matching pair is found, then work is done. If not, create an extra set of join and leave data for the bosskill timestamp
         -- Note: For avoiding handling issues, use extra strings vor bosskill-data and join/leave data. Concatenate later.
         -- if ["Export_CTRT_IgnorePerBossAttendance"] is set, create a join/left entry which spans the complete raid timespan
+        -- if ["Export_CTRT_CreateFiftyPercentAttendance"] is set, create at least 50% attendance for everyone - this option is mutual exclusive to IgnorePerBossAttendance - and mix up attendance time
+        --      it is a workaround for the raid-log-importet by Hoofy, which only tracks attendance of a player, if he/she has at least 50% time attendance
+        --      however, this function shouldn't mix up attendance data
+    -- generic function for creating a join/leave xml pair
+    local function createJoinLeavePairString(index, name, realm, joinTimestamp, leaveTimestamp)
+        local joinString = "";
+        local leaveString = "";
+        -- create joinString...
+        joinString = joinString.."<key"..index..">";
+        joinString = joinString.."<player>"..name.."</player>";
+        if (MRT_PlayerDB[realm][name]) then
+            if (MRT_PlayerDB[realm][name]["Race"]) then
+                joinString = joinString.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+            end
+            if (MRT_PlayerDB[realm][name]["Sex"]) then
+                joinString = joinString.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+            end
+            if (MRT_PlayerDB[realm][name]["Class"]) then
+                joinString = joinString.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+            end
+            if (MRT_PlayerDB[realm][name]["Level"]) then
+                joinString = joinString.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+            end
+        end
+        joinString = joinString.."<time>"..MRT_MakeEQDKP_Time(joinTimestamp).."</time>";
+        joinString = joinString.."</key"..index..">";
+        -- ...and leaveString
+        leaveString = leaveString.."<key"..index..">";
+        leaveString = leaveString.."<player>"..name.."</player>";
+        leaveString = leaveString.."<time>"..MRT_MakeEQDKP_Time(leaveTimestamp).."</time>";
+        leaveString = leaveString.."</key"..index..">";
+        return joinString, leaveString;
+    end
     local joinXml = "";
     local leaveXml = "";
+    local joinTemp, leaveTemp;
     local joinLeaveTable = {};
     index = 1;
     joinXml = joinXml.."<Join>";
     leaveXml = leaveXml.."<Leave>";
-    for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
-        if (not MRT_Options["Export_CTRT_IgnorePerBossAttendance"] or (MRT_Options["Export_CTRT_IgnorePerBossAttendance"] and not joinLeaveTable[val["Name"]])) then
-            local name = val["Name"];
-            joinXml = joinXml.."<key"..index..">";
-            joinXml = joinXml.."<player>"..name.."</player>";
-            if (MRT_PlayerDB[realm][name]) then
-                if (MRT_PlayerDB[realm][name]["Race"]) then
-                    joinXml = joinXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+    if (not MRT_Options["Export_CTRT_CreateFiftyPercentAttendance"] then
+        for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+            if (not MRT_Options["Export_CTRT_IgnorePerBossAttendance"] or (MRT_Options["Export_CTRT_IgnorePerBossAttendance"] and not joinLeaveTable[val["Name"]])) then
+                if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+                    joinTemp, leaveTemp = createJoinLeavePairString(index, val["Name"], realm, raidStart, raidStop);
+                else
+                    joinTemp, leaveTemp = createJoinLeavePairString(index, val["Name"], realm, val["Join"], (val["Leave"] or now));
                 end
-                if (MRT_PlayerDB[realm][name]["Sex"]) then
-                    joinXml = joinXml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+                joinXml = joinXml..joinTemp;
+                leaveXml = leaveXml..leaveTemp;
+                index = index + 1;
+                local joinLeaveData = {};
+                if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+                    joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
+                else
+                    joinLeaveData = { ["Join"] = val["Join"], ["Leave"] = val["Leave"] or now, }
                 end
-                if (MRT_PlayerDB[realm][name]["Class"]) then
-                    joinXml = joinXml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-                end
-                if (MRT_PlayerDB[realm][name]["Level"]) then
-                    joinXml = joinXml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
-                end
-            end
-            if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
-                joinXml = joinXml.."<time>"..MRT_MakeEQDKP_Time(raidStart).."</time>";
-            else
-                joinXml = joinXml.."<time>"..MRT_MakeEQDKP_Time(val["Join"]).."</time>";
-            end
-            joinXml = joinXml.."</key"..index..">";
-            leaveXml = leaveXml.."<key"..index..">";
-            leaveXml = leaveXml.."<player>"..name.."</player>";
-            if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
-                leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(raidStop).."</time>";
-            else
-                leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(val["Leave"] or now).."</time>";
-            end
-            leaveXml = leaveXml.."</key"..index..">";
-            index = index + 1;
-            local joinLeaveData = {};
-            if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
-                joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
-            else
-                joinLeaveData = { ["Join"] = val["Join"], ["Leave"] = val["Leave"] or now, }
-            end
-            if (not joinLeaveTable[name]) then
-                joinLeaveTable[name] = {};
-            end
-            tinsert(joinLeaveTable[name], joinLeaveData);
-        end
-    end
-    -- if ["Export_CTRT_IgnorePerBossAttendance"] is set, check boss attendees for unknown players and add them to join/leave-data before processing bosskill-data
-    if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
-        for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
-            for idx2, name in ipairs(MRT_RaidLog[raidID]["Bosskills"][idx]["Players"]) do
                 if (not joinLeaveTable[name]) then
-                    joinXml = joinXml.."<key"..index..">";
-                    joinXml = joinXml.."<player>"..name.."</player>";
-                    if (MRT_PlayerDB[realm][name]) then
-                        if (MRT_PlayerDB[realm][name]["Race"]) then
-                            joinXml = joinXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
-                        end
-                        if (MRT_PlayerDB[realm][name]["Sex"]) then
-                            joinXml = joinXml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
-                        end
-                        if (MRT_PlayerDB[realm][name]["Class"]) then
-                            joinXml = joinXml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-                        end
-                        if (MRT_PlayerDB[realm][name]["Level"]) then
-                            joinXml = joinXml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
-                        end
-                    end
-                    joinXml = joinXml.."<time>"..MRT_MakeEQDKP_Time(raidStart).."</time>";
-                    joinXml = joinXml.."</key"..index..">";
-                    leaveXml = leaveXml.."<key"..index..">";
-                    leaveXml = leaveXml.."<player>"..name.."</player>";
-                    leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(raidStop).."</time>";
-                    leaveXml = leaveXml.."</key"..index..">";
-                    index = index + 1;
-                    local joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
                     joinLeaveTable[name] = {};
-                    tinsert(joinLeaveTable[name], joinLeaveData);
+                end
+                tinsert(joinLeaveTable[name], joinLeaveData);
+            end
+        end
+        -- if ["Export_CTRT_IgnorePerBossAttendance"] is set, check boss attendees for unknown players and add them to join/leave-data before processing bosskill-data
+        if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+            for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                for idx2, name in ipairs(MRT_RaidLog[raidID]["Bosskills"][idx]["Players"]) do
+                    if (not joinLeaveTable[name]) then
+                        joinTemp, leaveTemp = createJoinLeavePairString(index, name, realm, raidStart, raidStop);
+                        joinXml = joinXml..joinTemp;
+                        leaveXml = leaveXml..leaveTemp;
+                        index = index + 1;
+                        local joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
+                        joinLeaveTable[name] = {};
+                        tinsert(joinLeaveTable[name], joinLeaveData);
+                    end
                 end
             end
         end
+    elseif (MRT_Options["Export_CTRT_CreateFiftyPercentAttendance"]) then
+        -- basic idea: 1) attendees of all boss events gets 100% attendance (full time from raid start to raid end)
+        --             2) 
     end
     -- Create bosskill list
     -- local helper vars
@@ -1399,6 +1396,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         bossKillString = bossKillString.."<time>"..MRT_MakeEQDKP_Time(bossKillTime).."</time>";
         bossKillString = bossKillString.."<attendees>";
         if (not MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+            local joinTemp, leaveTemp;
             for idx, name in ipairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
                 bossKillString = bossKillString.."<key"..idx.."><name>"..name.."</name></key"..idx..">";
                 -- check, if player is a raidattendee at this point
@@ -1412,28 +1410,9 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                 end
                 -- if not raidattendee, create an extra join/leave-date
                 if not raidattendee then
-                    joinXml = joinXml.."<key"..index..">";
-                    joinXml = joinXml.."<player>"..name.."</player>";
-                    if (MRT_PlayerDB[realm][name]) then
-                        if (MRT_PlayerDB[realm][name]["Race"]) then
-                            joinXml = joinXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
-                        end
-                        if (MRT_PlayerDB[realm][name]["Sex"]) then
-                            joinXml = joinXml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
-                        end
-                        if (MRT_PlayerDB[realm][name]["Class"]) then
-                            joinXml = joinXml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-                        end
-                        if (MRT_PlayerDB[realm][name]["Level"]) then
-                            joinXml = joinXml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
-                        end
-                    end
-                    joinXml = joinXml.."<time>"..MRT_MakeEQDKP_Time(bossKillTime - 10).."</time>";
-                    joinXml = joinXml.."</key"..index..">";
-                    leaveXml = leaveXml.."<key"..index..">";
-                    leaveXml = leaveXml.."<player>"..name.."</player>";
-                    leaveXml = leaveXml.."<time>"..MRT_MakeEQDKP_Time(bossKillTime + 10).."</time>";
-                    leaveXml = leaveXml.."</key"..index..">";
+                    joinTemp, leaveTemp = createJoinLeavePairString(index, name, realm, (bossKillTime - 10), (bossKillTime + 10));
+                    joinXml = joinXml..joinTemp;
+                    leaveXml = leaveXml..leaveTemp;
                     index = index + 1;
                 end
             end
