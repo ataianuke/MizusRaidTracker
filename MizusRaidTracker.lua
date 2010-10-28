@@ -1340,7 +1340,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     index = 1;
     joinXml = joinXml.."<Join>";
     leaveXml = leaveXml.."<Leave>";
-    if (not MRT_Options["Export_CTRT_CreateFiftyPercentAttendance"] then
+    if (not MRT_Options["Export_CTRT_CreateFiftyPercentAttendance"]) then
         for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
             if (not MRT_Options["Export_CTRT_IgnorePerBossAttendance"] or (MRT_Options["Export_CTRT_IgnorePerBossAttendance"] and not joinLeaveTable[val["Name"]])) then
                 if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
