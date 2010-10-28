@@ -1355,12 +1355,12 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                 if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
                     joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
                 else
-                    joinLeaveData = { ["Join"] = val["Join"], ["Leave"] = val["Leave"] or now, }
+                    joinLeaveData = { ["Join"] = val["Join"], ["Leave"] = (val["Leave"] or now), }
                 end
-                if (not joinLeaveTable[name]) then
-                    joinLeaveTable[name] = {};
+                if (not joinLeaveTable[val["Name"]]) then
+                    joinLeaveTable[val["Name"]] = {};
                 end
-                tinsert(joinLeaveTable[name], joinLeaveData);
+                tinsert(joinLeaveTable[val["Name"]], joinLeaveData);
             end
         end
         -- if ["Export_CTRT_IgnorePerBossAttendance"] is set, check boss attendees for unknown players and add them to join/leave-data before processing bosskill-data
