@@ -87,26 +87,34 @@
       <Layer level="OVERLAY">
         <FontString name="$parent_Title" inherits="GameFontNormalLarge">
           <Anchors>
-            <Anchor point="TOPLEFT">
-              <Offset x="20" y="-20"></Offset>
-            </Anchor>
+            <Anchor point="TOPLEFT" x="20" y="-20"/>
           </Anchors>
         </FontString>
         <FontString name="$parent_Description" inherits="GameFontWhite">
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT">
-              <Offset y="-10"></Offset>
-            </Anchor>
+            <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
           </Anchors>
         </FontString>
       </Layer>
     </Layers>
     <Frames>
+      <CheckButton name="$parent_CreateNewRaidOnNewZone_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT" y="-20"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="CreateNewRaidOnNewZone_CB_Text">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
       <CheckButton name="$parent_Log10MenRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT">
-            <Offset y="-20"></Offset>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativeTo="$parent_CreateNewRaidOnNewZone_CB" relativePoint="BOTTOMLEFT" y="-5"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -120,7 +128,7 @@
       </CheckButton>
       <CheckButton name="$parent_LogAVRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOP" relativeTo="$parent_Log10MenRaids_CB" relativePoint="BOTTOM" y="-5"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Log10MenRaids_CB" relativePoint="BOTTOMLEFT" y="-5"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -131,25 +139,11 @@
             </FontString>
           </Layer>
         </Layers>
-      </CheckButton>
-      <CheckButton name="$parent_CreateNewRaidOnNewZone_CB" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOP" relativeTo="$parent_LogAVRaids_CB" relativePoint="BOTTOM" y="-5"/>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" text="CreateNewRaidOnNewZone_CB_Text">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-      </CheckButton>
+      </CheckButton>    
       <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
         <Size x="200" y="20"/>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_CreateNewRaidOnNewZone_CB" relativePoint="BOTTOMLEFT" y="-20"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_LogAVRaids_CB" relativePoint="BOTTOMLEFT" y="-40"/>
         </Anchors>
         <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
           <EdgeSize>
@@ -248,7 +242,7 @@
       </Slider>
       <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToGetCost_Slider" relativePoint="BOTTOMLEFT" y="-5"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToGetCost_Slider" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -285,9 +279,39 @@
       </Layer>
     </Layers>
     <Frames>
+      <CheckButton name="$parent_GroupRestriction" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT" x="0" y="-20"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <CheckButton name="$parent_OfflinePlayers" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_GroupRestriction" relativePoint="BOTTOMLEFT">
+            <Offset x="0" y="-5"/>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
       <CheckButton name="$parent_GA_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT" y="-20"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_OfflinePlayers" relativePoint="BOTTOMLEFT" y="-20"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -357,38 +381,6 @@
           </Size>
         </ThumbTexture>
       </Slider>
-      <CheckButton name="$parent_GroupRestriction" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_GADuration_Slider" relativePoint="BOTTOMLEFT">
-            <Offset x="0" y="-5"/>
-          </Anchor>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-      </CheckButton>
-      <CheckButton name="$parent_OfflinePlayers" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_GroupRestriction" relativePoint="BOTTOMLEFT">
-            <Offset x="0" y="-5"/>
-          </Anchor>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-      </CheckButton>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_AttendancePanel_OnLoad(self);</OnLoad>
@@ -419,12 +411,12 @@
         </FontString>
         <FontString name="$parent_CTRTExport_Title" inherits="GameFontNormal">
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-33"/>
+            <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-40"/>
           </Anchors>
         </FontString>
         <FontString name="$parent_TextExport_Title" inherits="GameFontNormal">
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_CTRTExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-66"/>
+            <Anchor point="TOPLEFT" relativeTo="$parent_CTRTExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-70"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -447,29 +439,9 @@
           <OnClick>MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(false);</OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_AddPoorItemToEachBoss_CB" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_CTRTExport_Title" relativePoint="BOTTOMLEFT">
-            <Offset y="-5"></Offset>
-          </Anchor>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnEnter>MRT_Options_SetTT(self, "EP_AddPoorItem");</OnEnter>
-          <OnLeave>MRT_Options_HideTT();</OnLeave>
-        </Scripts>
-      </CheckButton>
       <CheckButton name="$parent_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_AddPoorItemToEachBoss_CB" x="0" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CTRTExport_Title" x="0" y="-5"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -483,6 +455,24 @@
         <Scripts>
           <OnClick>MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(false);</OnClick>
           <OnEnter>MRT_Options_SetTT(self, "EP_RLIAttendanceFix");</OnEnter>
+          <OnLeave>MRT_Options_HideTT();</OnLeave>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_AddPoorItemToEachBoss_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_RLIPerBossAttendanceFix_CB" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnEnter>MRT_Options_SetTT(self, "EP_AddPoorItem");</OnEnter>
           <OnLeave>MRT_Options_HideTT();</OnLeave>
         </Scripts>
       </CheckButton>
