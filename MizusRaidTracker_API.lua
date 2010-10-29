@@ -106,7 +106,7 @@ end
 -- -- itemNumber: The itemNumber of this item in its specific raid.
 -- -- oldItemInfoTable: If the source was MRT_NOTIFYSOURCE_EDIT_GUI, then this will be a copy of the corresponding loot information from the MRT_RaidLog before it was modified
 -- --                   otherwise nil
--- @usage -- A simple information function, which displays item information, wenn an item was added using the main UI:
+-- @usage -- A simple information function, which displays item information, when an item was added using the main UI:
 -- function MRT_LootNotify(itemInfoTable, source, raidNum, itemNum, oldItemInfoTable)
 --     if (source == MRT_NOTIFYSOURCE_ADD_GUI) then 
 --         MRT_Print("LootNotify! Item is "..itemInfoTable["ItemLink"].." - Source is "..tostring(source).." - raidNum/itemnum: "..tostring(raidNum).."/"..tostring(itemNum));
