@@ -415,19 +415,14 @@ end
 -----------------
 --  API-Stuff  --
 -----------------
-function MRT_RegisterItemCostHandlerCore(functionToCall, suppressAskCostDialog, addonName)
+function MRT_RegisterItemCostHandlerCore(functionToCall, addonName)
     if (functionToCall == nil or addonName == nil) then
         return false;
     end
     if (not MRT_ExternalItemCostHandler.func) then
         MRT_ExternalItemCostHandler.func = functionToCall;
-        MRT_ExternalItemCostHandler.suppressDialog = suppressAskCostDialog;
         MRT_ExternalItemCostHandler.addonName = addonName;
-        if (suppressAskCostDialog) then
-            MRT_Print("Note: The addon '"..addonName.."' has registered itself to handle item tracking. The loot popup has been disabled.");
-        else
-            MRT_Print("Note: The addon '"..addonName.."' has registered itself to handle item tracking. The loot popup hasn't been disabled.");
-        end
+        MRT_Print("Note: The addon '"..addonName.."' has registered itself to handle item tracking.");
         return true;
     else
         return false;
@@ -440,7 +435,6 @@ function MRT_UnregisterItemCostHandlerCore(functionCalled)
     end
     if (MRT_ExternalItemCostHandler.func == functionCalled) then
         MRT_ExternalItemCostHandler.func = nil;
-        MRT_ExternalItemCostHandler.suppressDialog = nil;
         MRT_ExternalItemCostHandler.addonName = nil;
         return true;
     else
@@ -844,8 +838,9 @@ function MRT_AutoAddLoot(chatmsg)
     if (MRT_IgnoredItemIDList[itemId]) then return; end
     -- if an external function handles item data, notify it
     local dkpValue = 0;
-    local deleteItem = nil;
+    local lootAction = nil;
     local itemNote = nil;
+    local supressCostDialog = nil;
     if (MRT_ExternalItemCostHandler.func) then
         local notifierInfo = {
             ["ItemLink"] = itemLink,
@@ -857,10 +852,16 @@ function MRT_AutoAddLoot(chatmsg)
             ["Looter"] = playerName,
             ["DKPValue"] = dkpValue,
         };
-        dkpValue, playerName, itemNote, deleteItem = MRT_ExternalItemCostHandler.func(notifierInfo);
-        if (deleteItem) then return; end
+        dkpValue, playerName, itemNote, lootAction, supressCostDialog = MRT_ExternalItemCostHandler.func(notifierInfo);
+        if (lootAction == MRT_LOOTACTION_BANK) then
+            playerName = "bank";
+        elseif (lootAction == MRT_LOOTACTION_DISENCHANT) then
+            playerName = "disenchanted";
+        elseif (lootAction == MRT_LOOTACTION_DELETE) then
+            playerName = "_deleted_";
+        end
     end
-    -- Quick&Dirty for Trashdrops befor first bosskill
+    -- Quick&Dirty for Trashdrops before first bosskill
     if (MRT_NumOfLastBoss == nil) then 
         MRT_AddBosskill("_TrashMobLoot_");
     end
@@ -880,7 +881,7 @@ function MRT_AutoAddLoot(chatmsg)
         ["Note"] = itemNote,
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
-    if ((not MRT_Options["Tracking_AskForDKPValue"]) or MRT_ExternalItemCostHandler.suppressDialog) then 
+    if ((not MRT_Options["Tracking_AskForDKPValue"]) or supressCostDialog) then 
         -- notify registered, external functions
         local itemNum = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"];
         if (#MRT_ExternalLootNotifier > 0) then
@@ -889,7 +890,7 @@ function MRT_AutoAddLoot(chatmsg)
                 itemInfo[key] = val;
             end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
-                val(itemInfo, 2, MRT_NumOfCurrentRaid, itemNum);
+                val(itemInfo, MRT_NOTIFYSOURCE_ADD_SILENT, MRT_NumOfCurrentRaid, itemNum);
             end
         end
         return; 
@@ -1004,7 +1005,7 @@ function MRT_DKPFrame_Handler(button)
             itemInfo[key] = val;
         end
         for i, val in ipairs(MRT_ExternalLootNotifier) do
-            val(itemInfo, 1, raidNum, itemNum);
+            val(itemInfo, MRT_NOTIFYSOURCE_ADD_POPUP, raidNum, itemNum);
         end
     end
     -- done with handling item - proceed to next one

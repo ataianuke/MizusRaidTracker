@@ -864,6 +864,11 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
     }
     if (lootnum) then
         local oldLootDB = MRT_RaidLog[raidnum]["Loot"][lootnum];
+        -- create a copy of the old loot data for the api
+        local oldItemInfoTable = {}
+        for key, val in pairs(oldLootDB) do
+            oldItemInfoTable[key] = val;
+        end
         MRT_LootInfo["ItemCount"] = oldLootDB["ItemCount"];
         MRT_LootInfo["Time"] = oldLootDB["Time"];
         MRT_RaidLog[raidnum]["Loot"][lootnum] = MRT_LootInfo;
@@ -874,7 +879,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
                 itemInfo[key] = val;
             end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
-                val(itemInfo, 4, raidnum, lootnum);
+                val(itemInfo, MRT_NOTIFYSOURCE_EDIT_GUI, raidnum, lootnum, oldItemInfoTable);
             end
         end
     else
@@ -889,7 +894,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
                 itemInfo[key] = val;
             end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
-                val(itemInfo, 3, raidnum, itemNum);
+                val(itemInfo, MRT_NOTIFYSOURCE_ADD_GUI, raidnum, itemNum);
             end
         end
     end
