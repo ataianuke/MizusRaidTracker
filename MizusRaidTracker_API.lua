@@ -106,9 +106,11 @@ end
 -- -- itemNumber: The itemNumber of this item in its specific raid.
 -- -- oldItemInfoTable: If the source was MRT_NOTIFYSOURCE_EDIT_GUI, then this will be a copy of the corresponding loot information from the MRT_RaidLog before it was modified
 -- --                   otherwise nil
--- @usage -- A simple information function:
+-- @usage -- A simple information function, which displays item information, wenn an item was added using the main UI:
 -- function MRT_LootNotify(itemInfoTable, source, raidNum, itemNum, oldItemInfoTable)
---     MRT_Print("LootNotify! Item is "..itemInfoTable["ItemLink"].." - Source is "..tostring(source).." - raidNum/itemnum: "..tostring(raidNum).."/"..tostring(itemNum));
+--     if (source == MRT_NOTIFYSOURCE_ADD_GUI) then 
+--         MRT_Print("LootNotify! Item is "..itemInfoTable["ItemLink"].." - Source is "..tostring(source).." - raidNum/itemnum: "..tostring(raidNum).."/"..tostring(itemNum));
+--     end
 -- end
 -- 
 -- local registrationSuccess = MRT_RegisterLootNotify(MRT_LootNotify);
@@ -138,7 +140,9 @@ end
 --[[
 -- examples:
 function MRT_LootNotify(itemInfoTable, source, raidNum, itemNum, oldItemInfoTable)
-    MRT_Print("LootNotify! Item is "..itemInfoTable["ItemLink"].." - Source is "..tostring(source).." - raidNum/itemnum: "..tostring(raidNum).."/"..tostring(itemNum));
+    if (source == MRT_NOTIFYSOURCE_ADD_GUI) then 
+        MRT_Print("LootNotify! Item is "..itemInfoTable["ItemLink"].." - Source is "..tostring(source).." - raidNum/itemnum: "..tostring(raidNum).."/"..tostring(itemNum));
+    end
 end
 local registrationSuccess = MRT_RegisterLootNotify(MRT_LootNotify);
 if registrationSuccess then
@@ -149,8 +153,8 @@ end
 function MRT_ItemCostHandlerExample(itemInfo)
     return 42, itemInfo.Looter, "Example ItemNote", MRT_LOOTACTION_BANK, nil;
 end
-local registrationSuccess = MRT_RegisterItemCostHandler(MRT_ItemCostHandlerExample, false, "MRT TestSuite");
+local registrationSuccess = MRT_RegisterItemCostHandler(MRT_ItemCostHandlerExample, "MRT TestSuite");
 if registrationSuccess then
     MRT_Print("ItemCostHandler registration was a success!");
 end
-]]--
+--]]
