@@ -125,12 +125,14 @@ MRT_L.Options = {
 	AP_Title = "Attendance",
 	AP_TitleText = "MRT - Attendance options",
 	AP_TrackOfflinePlayers = "Track offline players",
+    EP_AllXMLExportsTitle = "All XML export formats",
 	EP_BBCode = "BBCode formatted Text",
     EP_BBCode_wowhead = "BBCode formatted Text with wowhead links",
 	EP_ChooseExport_Title = "Export format",
 	EP_CTRT_AddPoorItem = "Add a poor item as loot to each boss \n(Bugfix for the EQDKP-CTRT-Import encounter detection)",
 	EP_CTRT_compatible = "CT RaidTracker compatible",
     EP_CTRT_IgnorePerBossAttendance = "Ignore per boss attendance",
+    EP_CTRT_RLIAttendanceFix = "Enable attendance fix for the \nEQDKP-Plus Raid-Log-Import 0.5.x",
 	EP_CTRTTitleText = "CTRT compatible export settings",
     EP_Currency = "Currency",
     EP_HTML = "CSS based HTML with wowhead links",
@@ -154,6 +156,7 @@ MRT_L.Options = {
     TP_UseServerTime = "Use server time",
     TT_EP_AddPoorItem = "Only for the old CTRT-Import-Plugin.\nNOT the Raid-Log-Import-Plugin.",
 	TT_EP_DateTimeTT = " %d - day of the month [01-31] \n %m - month [01-12] \n %y - two-digit year [00-99] \n %Y - full year \n\n %H - hour, using a 24-hour clock [00-23] \n %I - hour, using a 12-hour clock [01-12] \n %M - minute [00-59] \n %S - second [00-59] \n %p - either 'am' or 'pm'",
+    TT_EP_RLIAttendanceFix = "This option changes the export timestamps a bit to pass \nthe 50% attendance threshold of the Raid-Log-Importer. \nOnly use this option, if your DKP is based on per boss attendance.",
     TT_MP_SlashCmd = "Command without leading slash.\nA relog after changing this value is recommended.",
 }
 
@@ -161,17 +164,12 @@ MRT_L.Options = {
 -------------------
 --  GUI strings  --
 -------------------
-MRT_L.GUI = {
-    ["Add raid attendee"] = "Add raid attendee",
-    TT_Attendee_Add_JoinEB = "Format HH:MM \n\nIf left blank, MRT will use \nthe raid start time.",
-    TT_Attendee_Add_LeaveEB = "Format HH:MM \n\nIf left blank, MRT will use \nthe raid end time or current time.",
-    ["No name entered"] = "Error: No name entered.",
-    ["Entered join time is not before leave time"] = "Error: Entered join time is not before leave time.",
-    
+MRT_L.GUI = { 
     ["Active raid found. End current one first."] = "Error: Active raid found. Please end the active raid before starting a new one.",
 	["Add boss attendee"] = "Add boss attendee",
 	["Add bosskill"] = "Add bosskill",
 	["Add loot data"] = "Add loot data",
+    ["Add raid attendee"] = "Add raid attendee",
 	["Add raid attendees as boss attendees"] = "Do you want to add tracked raid attendees as boss attendees?",
 	Bossname = "Bossname",
 	Button_Add = "Add",
@@ -204,6 +202,7 @@ MRT_L.GUI = {
 	["Confirm raid entry deletion"] = "Do you want to delete raid number %d?",
 	["Difficulty N or H"] = "Difficulty ('N' or 'H')",
     ["End tracking of current raid before exporting it"] = "Error: Can't export active raid.",
+    ["Entered join time is not before leave time"] = "Error: Entered join time is not before leave time.",
 	["Entered time is not between start and end of raid"] = "Error: Entered time is not between start and end of raid.",
 	Header_Title = "MRT - Raidlog",
 	["Item cost invalid"] = "Error: Item cost is not a number.",
@@ -217,6 +216,7 @@ MRT_L.GUI = {
 	["No boss selected"] = "Error: No boss selected.",
 	["No itemLink found"] = "Error: Itemlink is not valid.",
 	["No loot selected"] = "Error: No item selected.",
+    ["No name entered"] = "Error: No name entered.",
 	["No raid attendee selected"] = "Error: No raid attendee selected.",
 	["No raid selected"] = "Error: No raid selected.",
 	["No valid difficulty entered"] = "Error: No valid difficulty entered.",
@@ -232,6 +232,8 @@ MRT_L.GUI = {
 	Tables_RaidLogTitle = "Raid list",
 	Tables_RaidLootTitle = "Raid loot",
 	Time = "Time",
+    TT_Attendee_Add_JoinEB = "Format HH:MM \n\nIf left blank, MRT will use \nthe raid start time.",
+    TT_Attendee_Add_LeaveEB = "Format HH:MM \n\nIf left blank, MRT will use \nthe raid end time or current time.",
 	TT_BA_Add = "Add an attendee to the boss attendee list.",
 	TT_BA_Delete = "Delete selected boss attendee.",
 	TT_Boss_Add = "Add a boss encounter.",

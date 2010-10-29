@@ -103,11 +103,14 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_Description:SetText("");
     MRT_Options_ExportPanel_ChooseExport_Title:SetText(MRT_L.Options["EP_ChooseExport_Title"]);
     MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu();
+    MRT_Options_ExportPanel_XMLExport_Title:SetText(MRT_L.Options["EP_AllXMLExportsTitle"]);
+    MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(MRT_Options["Export_CTRT_IgnorePerBossAttendance"]);
+    MRT_Options_ExportPanel_IgnorePerBossAttendance_CB_Text:SetText(MRT_L.Options["EP_CTRT_IgnorePerBossAttendance"]);
     MRT_Options_ExportPanel_CTRTExport_Title:SetText(MRT_L.Options["EP_CTRTTitleText"]);
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:SetChecked(MRT_Options["Export_CTRT_AddPoorItem"]);
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB_Text:SetText(MRT_L.Options["EP_CTRT_AddPoorItem"]);
-    MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(MRT_Options["Export_CTRT_IgnorePerBossAttendance"]);
-    MRT_Options_ExportPanel_IgnorePerBossAttendance_CB_Text:SetText(MRT_L.Options["EP_CTRT_IgnorePerBossAttendance"]);
+    MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]);
+    MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB_Text:SetText(MRT_L.Options["EP_CTRT_RLIAttendanceFix"]);
     MRT_Options_ExportPanel_TextExport_Title:SetText(MRT_L.Options["EP_TextExportTitleText"]);
     MRT_Options_ExportPanel_SetDateFormat_EB_Text:SetText(MRT_L.Options["EP_SetDateTimeFormat"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
@@ -143,8 +146,9 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Attendance_TrackOffline"] = MRT_Options_AttendancePanel_OfflinePlayers:GetChecked();
     -- ExportPanel
     MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
-    MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
     MRT_Options["Export_CTRT_IgnorePerBossAttendance"] = MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:GetChecked();
+    MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
+    MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"] = MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:GetChecked();
     MRT_Options["Export_DateTimeFormat"] = MRT_Options_ExportPanel_SetDateFormat_EB:GetText();
     MRT_Options["Export_Currency"] = MRT_Options_ExportPanel_Currency_EB:GetText();
     -- Set slash command to new value

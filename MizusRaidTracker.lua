@@ -42,23 +42,24 @@ local MRT_Defaults = {
     ["Options"] = {
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
         ["General_OptionsVersion"] = 2,                                             -- OptionsVersion - Counter, which increases after a new option has been added
-        ["General_DebugEnabled"] = nil,                                             --
+        ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
-        ["Attendance_GuildAttendanceCheckEnabled"] = nil,                           -- 
+        ["Attendance_GuildAttendanceCheckEnabled"] = false,                         -- 
         ["Attendance_GuildAttendanceCheckNoAuto"] = true,                           --
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
-        ["Attendance_GroupRestriction"] = nil,                                      -- if true, track only first 2/5 groups in 10/25 player raids
+        ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
-        ["Tracking_Log10MenRaids"] = nil,                                           -- Track 10 player raids: true / nil
-        ["Tracking_LogAVRaids"] = nil,                                              -- Track Archavons Vault: true / nil
+        ["Tracking_Log10MenRaids"] = false,                                         -- Track 10 player raids: true / nil
+        ["Tracking_LogAVRaids"] = false,                                            -- Track Archavons Vault: true / nil
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_CreateNewRaidOnNewZone"] = true,
-        ["Tracking_UseServerTime"] = nil,
+        ["Tracking_UseServerTime"] = false,
         ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
-        ["Export_CTRT_AddPoorItem"] = nil,                                          -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
-        ["Export_CTRT_IgnorePerBossAttendance"] = nil,                              -- This will create an export where each raid member has 100% attendance: true / nil
+        ["Export_CTRT_AddPoorItem"] = false,                                        -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
+        ["Export_CTRT_IgnorePerBossAttendance"] = false,                            -- This will create an export where each raid member has 100% attendance: true / nil
+        ["Export_CTRT_RLIPerBossAttendanceFix"] = false,
         ["Export_DateTimeFormat"] = "%m/%d/%Y",                                     -- lua date syntax - http://www.lua.org/pil/22.1.html
         ["Export_Currency"] = "DKP",
     },
@@ -1265,32 +1266,46 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     xml = xml.."<start>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StartTime"]).."</start>";
     xml = xml.."<end>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["StopTime"] or now).."</end>";
     xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    -- generic function for creating playerinfo
+    local function createPlayerInfoString(index, name, realm)
+        local playerInfoString = "";
+        playerInfoString = playerInfoString.."<key"..index..">";
+        playerInfoString = playerInfoString.."<name>"..name.."</name>";
+        if (MRT_PlayerDB[realm][name]) then
+            if (MRT_PlayerDB[realm][name]["Race"]) then
+                playerInfoString = playerInfoString.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+            end
+            if (MRT_PlayerDB[realm][name]["Sex"]) then
+                playerInfoString = playerInfoString.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+            end
+            if (MRT_PlayerDB[realm][name]["Class"]) then
+                playerInfoString = playerInfoString.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+            end
+            if (MRT_PlayerDB[realm][name]["Level"]) then
+                playerInfoString = playerInfoString.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+            end
+        end
+        playerInfoString = playerInfoString.."</key"..index..">";
+        return playerInfoString;
+    end
     -- gather PlayerInfo - create PlayerInfo only once for each player
     xml = xml.."<PlayerInfos>";
     local proceededPlayerInfo = {};
     index = 1;
     for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
-        local name = val["Name"];
-        if not proceededPlayerInfo[name] then
-            xml = xml.."<key"..index..">";
-            xml = xml.."<name>"..name.."</name>";
-            if (MRT_PlayerDB[realm][name]) then
-                if (MRT_PlayerDB[realm][name]["Race"]) then
-                    xml = xml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
-                end
-                if (MRT_PlayerDB[realm][name]["Sex"]) then
-                    xml = xml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
-                end
-                if (MRT_PlayerDB[realm][name]["Class"]) then
-                    xml = xml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
-                end
-                if (MRT_PlayerDB[realm][name]["Level"]) then
-                    xml = xml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
-                end
-            end
-            xml = xml.."</key"..index..">";
+        if (not proceededPlayerInfo[val["Name"]]) then
+            xml = xml..createPlayerInfoString(index, val["Name"], realm);
             index = index + 1;
-            proceededPlayerInfo[name] = true;
+            proceededPlayerInfo[val["Name"]] = true;
+        end
+    end
+    for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+        for j, name in ipairs(bossInfo["Players"]) do
+            if (not proceededPlayerInfo[name]) then
+                xml = xml..createPlayerInfoString(index, name, realm);
+                index = index + 1;
+                proceededPlayerInfo[name] = true;
+            end
         end
     end
     xml = xml.."</PlayerInfos>";
@@ -1300,13 +1315,20 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         -- 2. parse boss events, iterate for each attendee through these timestamps. If a matching pair is found, then work is done. If not, create an extra set of join and leave data for the bosskill timestamp
         -- Note: For avoiding handling issues, use extra strings vor bosskill-data and join/leave data. Concatenate later.
         -- if ["Export_CTRT_IgnorePerBossAttendance"] is set, create a join/left entry which spans the complete raid timespan
-        -- if ["Export_CTRT_CreateFiftyPercentAttendance"] is set, create at least 50% attendance for everyone - this option is mutual exclusive to IgnorePerBossAttendance - and mix up attendance time
+        -- if ["Export_CTRT_RLIPerBossAttendanceFix"] is set, create at least 50% attendance for everyone - this option is mutual exclusive to IgnorePerBossAttendance - and mix up attendance time
         --      it is a workaround for the raid-log-importet by Hoofy, which only tracks attendance of a player, if he/she has at least 50% time attendance
         --      however, this function shouldn't mix up attendance data
     -- generic function for creating a join/leave xml pair
+    local joinLeaveTable = {};
     local function createJoinLeavePairString(index, name, realm, joinTimestamp, leaveTimestamp)
         local joinString = "";
         local leaveString = "";
+        -- Add data to Join/Leave-Table
+        local joinLeaveData = { ["Join"] = joinTimestamp, ["Leave"] = leaveTimestamp, };
+        if (not joinLeaveTable[name]) then
+            joinLeaveTable[name] = {};
+        end
+        tinsert(joinLeaveTable[name], joinLeaveData);
         -- create joinString...
         joinString = joinString.."<key"..index..">";
         joinString = joinString.."<player>"..name.."</player>";
@@ -1336,11 +1358,10 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     local joinXml = "";
     local leaveXml = "";
     local joinTemp, leaveTemp;
-    local joinLeaveTable = {};
     index = 1;
     joinXml = joinXml.."<Join>";
     leaveXml = leaveXml.."<Leave>";
-    if (not MRT_Options["Export_CTRT_CreateFiftyPercentAttendance"]) then
+    if (not MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]) then
         for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
             if (not MRT_Options["Export_CTRT_IgnorePerBossAttendance"] or (MRT_Options["Export_CTRT_IgnorePerBossAttendance"] and not joinLeaveTable[val["Name"]])) then
                 if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
@@ -1351,16 +1372,6 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                 joinXml = joinXml..joinTemp;
                 leaveXml = leaveXml..leaveTemp;
                 index = index + 1;
-                local joinLeaveData = {};
-                if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
-                    joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
-                else
-                    joinLeaveData = { ["Join"] = val["Join"], ["Leave"] = (val["Leave"] or now), }
-                end
-                if (not joinLeaveTable[val["Name"]]) then
-                    joinLeaveTable[val["Name"]] = {};
-                end
-                tinsert(joinLeaveTable[val["Name"]], joinLeaveData);
             end
         end
         -- if ["Export_CTRT_IgnorePerBossAttendance"] is set, check boss attendees for unknown players and add them to join/leave-data before processing bosskill-data
@@ -1372,16 +1383,83 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                         joinXml = joinXml..joinTemp;
                         leaveXml = leaveXml..leaveTemp;
                         index = index + 1;
-                        local joinLeaveData = { ["Join"] = raidStart, ["Leave"] = raidStop, }
-                        joinLeaveTable[name] = {};
-                        tinsert(joinLeaveTable[name], joinLeaveData);
                     end
                 end
             end
         end
-    elseif (MRT_Options["Export_CTRT_CreateFiftyPercentAttendance"]) then
+    elseif (MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]) then
         -- basic idea: 1) attendees of all boss events gets 100% attendance (full time from raid start to raid end)
-        --             2) 
+        --             2) do vodoo stuff with all other attendees (see below)
+        -- so lets start - how long is 50% raid time?
+        --local halfRaidTime = math.modf( (raidStop - raidStart) / 2 );
+        --if (halfRaidTime) > 1 then halfRaidTime = halfRaidTime + 1; end
+        local attendedBosses = {}
+        -- initialize attendedBosses with raid attendees (necessary, if #BossKills == 0)
+        for i, playerInfo in pairs(MRT_RaidLog[raidID]["Players"]) do
+            attendedBosses[playerInfo["Name"]] = 0;
+        end
+        -- count number of attended bosses for each player:
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            for j, name in ipairs(bossInfo["Players"]) do
+                if (not attendedBosses[name]) then
+                    attendedBosses[name] = 1;
+                else
+                    attendedBosses[name] = attendedBosses[name] + 1;
+                end
+            end
+        end
+        -- now create xml-data for everyone, who has 100% attendance (because of the initilization with 0, this also works, if 0 boss events are present)
+        for name, count in pairs(attendedBosses) do
+            if (count == #MRT_RaidLog[raidID]["Bosskills"]) then
+                joinTemp, leaveTemp = createJoinLeavePairString(index, name, realm, raidStart, raidStop);
+                joinXml = joinXml..joinTemp;
+                leaveXml = leaveXml..leaveTemp;
+                index = index + 1;
+                MRT_Debug("Processed "..name.." with 100% attendance");
+            end
+        end
+        -- so, each player, who is still in attendedBosses{} has attended x boss kills, with 1 <= x <= #RaidBossKills
+        -- this is the point, where stuff gets complicated
+        -- the goals should be to preserve boss attendance data and meet the 50% attendance threshold of the Raid-Log-Importer with as few additional raid entries as possible
+        -- Note: the last part of the previous line is probably not implemented here ;)
+        -- ok - first shot - brute force: add join/leave pair from raidstart till first boss with no attendance (-20 seconds) - then start 20 seconds after this boss until next boss without attendance, etc. 
+        -- FAIL! - RLI defines a counts a bosskill as attended, when a player has attended in 50% of the time between the last bosskill and the recent bosskill
+        -- second try: quick & dirty: when player attended a boss, let him join 20 sec after the last bosskill and let him leave 10 seconds after the current one
+        local lastBossKillTimeStamp;
+        for name, count in pairs(attendedBosses) do
+            -- this var should have been used to count the attendance time and check, if it is beyond 50% raid time - well - didn't use it
+            --local exportedAttendanceTime = 0;
+            if (count < #MRT_RaidLog[raidID]["Bosskills"]) then
+                MRT_Debug("Processing "..name.."...");
+                lastBossKillTimeStamp = raidStart;
+                local playerAttended;
+                for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                    playerAttended = false;
+                    for j, attendee in ipairs(bossInfo["Players"]) do
+                        if (attendee == name) then
+                            playerAttended = true;
+                        end
+                    end
+                    -- if the player has not attended this boss, let him leave before this boss, and set a new join timestamp after this boss
+                    if (playerAttended) then
+                        joinTemp, leaveTemp = createJoinLeavePairString(index, name, realm, lastBossKillTimeStamp, (bossInfo["Date"] + 10) );
+                        joinXml = joinXml..joinTemp;
+                        leaveXml = leaveXml..leaveTemp;
+                        index = index + 1;
+                        MRT_Debug("Adding join/leave-pair for "..name.." with the start "..date("%c", lastBossKillTimeStamp).." and stop "..date("%c", (bossInfo["Date"] + 10)));
+                    end
+                    lastBossKillTimeStamp = bossInfo["Date"] + 20;
+                end
+                -- if there is enough time between the last boss and the raid end, give him one last entry
+                if (lastBossKillTimeStamp < raidStop) then
+                    joinTemp, leaveTemp = createJoinLeavePairString(index, name, realm, lastBossKillTimeStamp, raidStop);
+                    joinXml = joinXml..joinTemp;
+                    leaveXml = leaveXml..leaveTemp;
+                    index = index + 1;
+                    MRT_Debug("Adding join/leave-pair for "..name.." with the start "..date("%c", lastBossKillTimeStamp).." and stop "..date("%c", raidStop));
+                end
+            end
+        end
     end
     -- Create bosskill list
     -- local helper vars
@@ -1409,7 +1487,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
                     end
                 end
                 -- if not raidattendee, create an extra join/leave-date
-                if not raidattendee then
+                if (not raidattendee) then
                     joinTemp, leaveTemp = createJoinLeavePairString(index, name, realm, (bossKillTime - 10), (bossKillTime + 10));
                     joinXml = joinXml..joinTemp;
                     leaveXml = leaveXml..leaveTemp;
