@@ -129,7 +129,7 @@ MRT_L.Options = {
 	EP_BBCode = "BBCode formatted Text",
     EP_BBCode_wowhead = "BBCode formatted Text with wowhead links",
 	EP_ChooseExport_Title = "Export format",
-	EP_CTRT_AddPoorItem = "Add a poor item as loot to each boss \n(Bugfix for the EQDKP-CTRT-Import encounter detection)",
+	EP_CTRT_AddPoorItem = "Enable boss encounter detection fix for the \nEQDKP(-Plus) CT_RaidTrackerImport 1.16.x",
 	EP_CTRT_compatible = "CT RaidTracker compatible",
     EP_CTRT_IgnorePerBossAttendance = "Ignore per boss attendance",
     EP_CTRT_RLIAttendanceFix = "Enable attendance fix for the \nEQDKP-Plus Raid-Log-Import 0.5.x",
@@ -154,9 +154,9 @@ MRT_L.Options = {
 	TP_Title = "Tracking",
 	TP_TitleText = "MRT - Tracking options",
     TP_UseServerTime = "Use server time",
-    TT_EP_AddPoorItem = "Only for the old CTRT-Import-Plugin.\nNOT the Raid-Log-Import-Plugin.",
+    TT_EP_AddPoorItem = "This option changes the loot export a bit to fix the boss encounter detection \nof the CTRT_RaidTrackerImport. Use this, if you have boss events \nin your raid without loot associated to it. (e.g. attendance checks).",
 	TT_EP_DateTimeTT = " %d - day of the month [01-31] \n %m - month [01-12] \n %y - two-digit year [00-99] \n %Y - full year \n\n %H - hour, using a 24-hour clock [00-23] \n %I - hour, using a 12-hour clock [01-12] \n %M - minute [00-59] \n %S - second [00-59] \n %p - either 'am' or 'pm'",
-    TT_EP_RLIAttendanceFix = "This option changes the export timestamps a bit to pass \nthe 50% attendance threshold of the Raid-Log-Importer. \nOnly use this option, if your DKP is based on per boss attendance.",
+    TT_EP_RLIAttendanceFix = "This option changes the export of timestamps a bit to pass \nthe 50% attendance threshold of the Raid-Log-Importer. \nOnly use this option, if your DKP is based on per boss attendance.",
     TT_MP_SlashCmd = "Command without leading slash.\nA relog after changing this value is recommended.",
 }
 
