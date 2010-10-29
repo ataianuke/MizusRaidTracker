@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This localization is written by:
---  Cyliah, Mizukichan
+--  Cinedelle, Cyliah
 --
 -- Note: 
 --  MRT requires a correct localization of RaidZones and Bossyells for working
