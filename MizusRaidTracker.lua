@@ -1777,9 +1777,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         -- use join/leave times - add a short join/leave-pair, if a player is only tracked as a boss attendee
         local joinLeavePair = nil;
         for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
-            if (not playerList[playerTimes.Name]) then
-                playerList[playerTimes.Name] = {};
-            end
+            if (not playerList[playerTimes.Name]) then playerList[playerTimes.Name] = {}; end
             joinLeavePair = { Join = playerTimes.Join, Leave = (playerTimes.Leave or now), };
             tinsert(playerList[playerTimes.Name], joinLeavePair);
         end
