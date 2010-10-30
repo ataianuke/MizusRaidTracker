@@ -1256,7 +1256,7 @@ end
 
 -- create CTRT-compatible DKP-String for the EQDKP CTRT-Import-Plugin
 function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
-    local now = time();
+    local now = MRT_GetCurrentTime();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
     local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
