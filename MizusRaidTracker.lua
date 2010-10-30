@@ -60,6 +60,7 @@ local MRT_Defaults = {
         ["Export_CTRT_AddPoorItem"] = false,                                        -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
         ["Export_CTRT_IgnorePerBossAttendance"] = false,                            -- This will create an export where each raid member has 100% attendance: true / nil
         ["Export_CTRT_RLIPerBossAttendanceFix"] = false,
+        ["Export_EQDKP_RLIPerBossAttendanceFix"] = false,
         ["Export_DateTimeFormat"] = "%m/%d/%Y",                                     -- lua date syntax - http://www.lua.org/pil/22.1.html
         ["Export_Currency"] = "DKP",
     },
@@ -1719,6 +1720,56 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
             for j, attendeeName in ipairs(bossInfo["Players"]) do
                 if (not playerList[attendeeName]) then
                     playerList[attendeeName] = { { Join = raidStart, Leave = raidStop, }, };
+                end
+            end
+        end
+    elseif (MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"]) then
+        -- in the "one raid per boss"-setting, the RLI slices the export in subraids.
+        -- each player needs to have 50% attendance in each raid slice to be a valid attendee
+        -- attendance fix solution:
+        -- export all players, who have attended all bosses, with 100% attendance time.
+        -- for all other players, create a set of join/leave-times for each time slice
+        -- so, lets start - scan raid attendees first
+        local attendanceCount = {};
+        local lastBossTimeStamp;
+        local joinLeavePair;
+        for key, playerInfo in pairs(MRT_RaidLog[raidID]["Players"]) do
+            if (not attendanceCount[playerInfo.Name]) then
+                attendanceCount[playerInfo.Name] = 0;
+            end
+        end
+        -- if we have no bosses, than #BossKills = 0 - convenient.
+        -- now count attendance for each boss
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            for j, playerName in ipairs(bossInfo["Players"]) do
+                if (not attendanceCount[playerName]) then
+                    attendanceCount[playerName] = 1;
+                else
+                    attendanceCount[playerName] = attendanceCount[playerName] + 1;
+                end
+            end
+        end
+        -- and the last step, create join/leave-pairs. if 100% attendance, create one join/leave-pair. if not, make one for each attended boss
+        for playerName, bossKillCount in pairs(attendanceCount) do
+            if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
+                playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
+            else
+                lastBossTimeStamp = raidStart;
+                for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                    for j, attendeeName in ipairs(bossInfo["Players"]) do
+                        if (attendeeName == playerName) then
+                            joinLeavePair = { Join = lastBossTimeStamp, Leave = (bossInfo.Date + 10), };
+                            if (not playerList[playerName]) then playerList[playerName] = {}; end
+                            tinsert(playerList[playerName], joinLeavePair);
+                        end
+                    end
+                    lastBossTimeStamp = bossInfo.Date + 20;
+                end
+                -- if enough time between last bosskill and raid end, add on last join/leave pair
+                if (lastBossTimeStamp < raidStop) then
+                    joinLeavePair = { Join = lastBossTimeStamp, Leave = raidStop, };
+                    if (not playerList[playerName]) then playerList[playerName] = {}; end
+                    tinsert(playerList[playerName], joinLeavePair);
                 end
             end
         end

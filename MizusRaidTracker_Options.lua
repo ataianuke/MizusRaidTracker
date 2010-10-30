@@ -111,6 +111,9 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB_Text:SetText(MRT_L.Options["EP_CTRT_AddPoorItem"]);
     MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]);
     MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB_Text:SetText(MRT_L.Options["EP_CTRT_RLIAttendanceFix"]);
+    MRT_Options_ExportPanel_EQDKPExport_Title:SetText(MRT_L.Options["EP_EQDKPTitleText"]);
+    MRT_Options_ExportPanel_EQDKP_RLIPerBossAttendanceFix_CB:SetChecked(MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"]);
+    MRT_Options_ExportPanel_EQDKP_RLIPerBossAttendanceFix_CB_Text:SetText(MRT_L.Options["EP_CTRT_RLIAttendanceFix"]);
     MRT_Options_ExportPanel_TextExport_Title:SetText(MRT_L.Options["EP_TextExportTitleText"]);
     MRT_Options_ExportPanel_SetDateFormat_EB_Text:SetText(MRT_L.Options["EP_SetDateTimeFormat"]);
     MRT_Options_ExportPanel_SetDateFormat_EB:SetText(MRT_Options["Export_DateTimeFormat"]);
@@ -149,6 +152,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Export_CTRT_IgnorePerBossAttendance"] = MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:GetChecked();
     MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
     MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"] = MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:GetChecked();
+    MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"] = MRT_Options_ExportPanel_EQDKP_RLIPerBossAttendanceFix_CB:GetChecked();
     MRT_Options["Export_DateTimeFormat"] = MRT_Options_ExportPanel_SetDateFormat_EB:GetText();
     MRT_Options["Export_Currency"] = MRT_Options_ExportPanel_Currency_EB:GetText();
     -- Set slash command to new value

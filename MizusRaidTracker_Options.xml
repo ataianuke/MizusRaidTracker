@@ -414,9 +414,14 @@
             <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-40"/>
           </Anchors>
         </FontString>
+        <FontString name="$parent_EQDKPExport_Title" inherits="GameFontNormal" text="EQDKP-Plus XML settings - FIXME!">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CTRTExport_Title" x="0" y="-70"/>
+          </Anchors>
+        </FontString>
         <FontString name="$parent_TextExport_Title" inherits="GameFontNormal">
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_CTRTExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-70"/>
+            <Anchor point="TOPLEFT" relativeTo="$parent_EQDKPExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-40"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -436,7 +441,7 @@
           </Layer>
         </Layers>
         <Scripts>
-          <OnClick>MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(false);</OnClick>
+          <OnClick>MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(false);MRT_Options_ExportPanel_EQDKP_RLIPerBossAttendanceFix_CB:SetChecked(false);</OnClick>
         </Scripts>
       </CheckButton>
       <CheckButton name="$parent_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
@@ -473,6 +478,25 @@
         </Layers>
         <Scripts>
           <OnEnter>MRT_Options_SetTT(self, "EP_AddPoorItem");</OnEnter>
+          <OnLeave>MRT_Options_HideTT();</OnLeave>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_EQDKP_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EQDKPExport_Title" x="0" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Enable attendance fix for the EQDKP RLI 0.5.x (FIXME!)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnClick>MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(false);</OnClick>
+          <OnEnter>MRT_Options_SetTT(self, "EP_RLIAttendanceFix");</OnEnter>
           <OnLeave>MRT_Options_HideTT();</OnLeave>
         </Scripts>
       </CheckButton>
