@@ -137,6 +137,7 @@ function MRT_OnEvent(frame, event, ...)
         if (not localInstance) then return; end
         local instance = MRT_L.Raidzones[localInstance];
         if (not instance) then return; end
+        if (not MRT_L.Bossyells[instance]) then return; end
         if (MRT_L.Bossyells[instance][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
             MRT_AddBosskill(MRT_L.Bossyells[instance][monsteryell]);
