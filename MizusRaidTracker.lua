@@ -895,6 +895,15 @@ function MRT_AutoAddLoot(chatmsg)
             for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"][itemNum]) do
                 itemInfo[key] = val;
             end
+            if (itemInfo.Looter == "bank") then
+                itemInfo.Action = MRT_LOOTACTION_BANK;
+            elseif (itemInfo.Looter == "disenchanted") then
+                itemInfo.Action = MRT_LOOTACTION_DISENCHANT;
+            elseif (itemInfo.Looter == "_deleted_") then
+                itemInfo.Action = MRT_LOOTACTION_DELETE;
+            else
+                itemInfo.Action = MRT_LOOTACTION_NORMAL;
+            end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
                 val(itemInfo, MRT_NOTIFYSOURCE_ADD_SILENT, MRT_NumOfCurrentRaid, itemNum);
             end
@@ -1009,6 +1018,15 @@ function MRT_DKPFrame_Handler(button)
         local itemInfo = {};
         for key, val in pairs(MRT_RaidLog[raidNum]["Loot"][itemNum]) do
             itemInfo[key] = val;
+        end
+        if (itemInfo.Looter == "bank") then
+            itemInfo.Action = MRT_LOOTACTION_BANK;
+        elseif (itemInfo.Looter == "disenchanted") then
+            itemInfo.Action = MRT_LOOTACTION_DISENCHANT;
+        elseif (itemInfo.Looter == "_deleted_") then
+            itemInfo.Action = MRT_LOOTACTION_DELETE;
+        else
+            itemInfo.Action = MRT_LOOTACTION_NORMAL;
         end
         for i, val in ipairs(MRT_ExternalLootNotifier) do
             val(itemInfo, MRT_NOTIFYSOURCE_ADD_POPUP, raidNum, itemNum);

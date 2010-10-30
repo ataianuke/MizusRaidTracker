@@ -878,6 +878,24 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
             for key, val in pairs(MRT_RaidLog[raidnum]["Loot"][lootnum]) do
                 itemInfo[key] = val;
             end
+            if (oldItemInfoTable.Looter == "bank") then
+                oldItemInfoTable.Action = MRT_LOOTACTION_BANK;
+            elseif (oldItemInfoTable.Looter == "disenchanted") then
+                oldItemInfoTable.Action = MRT_LOOTACTION_DISENCHANT;
+            elseif (oldItemInfoTable.Looter == "_deleted_") then
+                oldItemInfoTable.Action = MRT_LOOTACTION_DELETE;
+            else
+                oldItemInfoTable.Action = MRT_LOOTACTION_NORMAL;
+            end
+            if (itemInfo.Looter == "bank") then
+                itemInfo.Action = MRT_LOOTACTION_BANK;
+            elseif (itemInfo.Looter == "disenchanted") then
+                itemInfo.Action = MRT_LOOTACTION_DISENCHANT;
+            elseif (itemInfo.Looter == "_deleted_") then
+                itemInfo.Action = MRT_LOOTACTION_DELETE;
+            else
+                itemInfo.Action = MRT_LOOTACTION_NORMAL;
+            end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
                 val(itemInfo, MRT_NOTIFYSOURCE_EDIT_GUI, raidnum, lootnum, oldItemInfoTable);
             end
@@ -892,6 +910,15 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
             local itemInfo = {};
             for key, val in pairs(MRT_RaidLog[raidnum]["Loot"][itemNum]) do
                 itemInfo[key] = val;
+            end
+            if (itemInfo.Looter == "bank") then
+                itemInfo.Action = MRT_LOOTACTION_BANK;
+            elseif (itemInfo.Looter == "disenchanted") then
+                itemInfo.Action = MRT_LOOTACTION_DISENCHANT;
+            elseif (itemInfo.Looter == "_deleted_") then
+                itemInfo.Action = MRT_LOOTACTION_DELETE;
+            else
+                itemInfo.Action = MRT_LOOTACTION_NORMAL;
             end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
                 val(itemInfo, MRT_NOTIFYSOURCE_ADD_GUI, raidnum, itemNum);
@@ -937,6 +964,24 @@ function MRT_GUI_LootDelete()
 end
 
 function MRT_GUI_LootDeleteAccept(raidnum, bossnum, lootnum)
+    if (#MRT_ExternalLootNotifier > 0) then
+        local itemInfo = {};
+        for key, val in pairs(MRT_RaidLog[raidnum]["Loot"][lootnum]) do
+            itemInfo[key] = val;
+        end
+        if (itemInfo.Looter == "bank") then
+            itemInfo.Action = MRT_LOOTACTION_BANK;
+        elseif (itemInfo.Looter == "disenchanted") then
+            itemInfo.Action = MRT_LOOTACTION_DISENCHANT;
+        elseif (itemInfo.Looter == "_deleted_") then
+            itemInfo.Action = MRT_LOOTACTION_DELETE;
+        else
+            itemInfo.Action = MRT_LOOTACTION_NORMAL;
+        end
+        for i, val in ipairs(MRT_ExternalLootNotifier) do
+            val(itemInfo, MRT_NOTIFYSOURCE_DELETE_GUI, raidnum, lootnum);
+        end
+    end
     tremove(MRT_RaidLog[raidnum]["Loot"], lootnum);
     -- do table update, if selected loot table was modified
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();

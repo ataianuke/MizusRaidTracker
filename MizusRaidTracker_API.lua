@@ -95,6 +95,7 @@ end
 -- @usage -- The function, which should be called, will receive the following variables:
 -- functionToCall(itemInfoTable, source, raidNumber, itemNumber, oldItemInfoTable)
 -- -- itemInfoTable: A copy of the corresponding loot information from the MRT_RaidLog table
+-- --                Additionally a key "Action" with a MRT_LOOTACTION-value
 -- --                see http://wow.curseforge.com/addons/mizusraidtracker/pages/api/variables-and-tables/ for more information
 -- -- source: Indicates, what user action was the cause for calling the function. There are currently fives values defined:
 -- --         MRT_NOTIFYSOURCE_ADD_POPUP  = Item was tracked automatically and the user entered his/her data into the loot popup (function will be called, after data from the loot popup has been processed)
@@ -140,9 +141,8 @@ end
 --[[
 -- examples:
 function MRT_LootNotify(itemInfoTable, source, raidNum, itemNum, oldItemInfoTable)
-    if (source == MRT_NOTIFYSOURCE_ADD_GUI) then 
-        MRT_Print("LootNotify! Item is "..itemInfoTable["ItemLink"].." - Source is "..tostring(source).." - raidNum/itemnum: "..tostring(raidNum).."/"..tostring(itemNum));
-    end
+    MRT_Print("LootNotify! Item is "..itemInfoTable["ItemLink"].." - Source is "..tostring(source).." - raidNum/itemnum: "..tostring(raidNum).."/"..tostring(itemNum));
+    MRT_Print("ItemAction is: "..itemInfoTable.Action);
 end
 local registrationSuccess = MRT_RegisterLootNotify(MRT_LootNotify);
 if registrationSuccess then
