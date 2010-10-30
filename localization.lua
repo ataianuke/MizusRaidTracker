@@ -135,6 +135,7 @@ MRT_L.Options = {
     EP_CTRT_RLIAttendanceFix = "Enable attendance fix for the \nEQDKP-Plus Raid-Log-Import 0.5.6.3",
 	EP_CTRTTitleText = "CTRT compatible export settings",
     EP_Currency = "Currency",
+    EP_EQDKP_Plus_XML = "EQDKP-Plus XML",
     EP_HTML = "CSS based HTML with wowhead links",
 	EP_Plain_Text = "Plain Text",
 	EP_SetDateTimeFormat = "Set format of date and time",
