@@ -138,6 +138,7 @@ MRT_L.Options = {
     EP_EQDKP_Plus_XML = "EQdkp-Plus XML",
     EP_EQDKPTitleText = "EQdkp-Plus XML settings",
     EP_HTML = "CSS based HTML with wowhead links",
+    EP_MLDKP_15 = "MLdkp 1.5",
 	EP_Plain_Text = "Plain Text",
 	EP_SetDateTimeFormat = "Set format of date and time",
 	EP_TextExportTitleText = "Text export settings",

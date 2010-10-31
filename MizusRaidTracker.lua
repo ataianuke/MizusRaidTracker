@@ -1260,17 +1260,20 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     -- 2: EQDKP-Plus-XML
     elseif (MRT_Options["Export_ExportFormat"] == 2) then
         dkpstring = MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty);
-    -- 3: plain text export
+    -- 3: MLDKP 1.5
     elseif (MRT_Options["Export_ExportFormat"] == 3) then
-        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, nil);
-    -- 4: BBCode formated export
+        dkpstring = MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty);
+    -- 4: plain text export
     elseif (MRT_Options["Export_ExportFormat"] == 4) then
-        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 1);
-    -- 5: BBCode formated export with wowhead links
+        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, nil);
+    -- 5: BBCode formated export
     elseif (MRT_Options["Export_ExportFormat"] == 5) then
-        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 2);
-    -- 6: CSS based HTML with wowhead links
+        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 1);
+    -- 6: BBCode formated export with wowhead links
     elseif (MRT_Options["Export_ExportFormat"] == 6) then
+        dkpstring = MRT_CreateTextExport(raidID, bossID, difficulty, 2);
+    -- 7: CSS based HTML with wowhead links
+    elseif (MRT_Options["Export_ExportFormat"] == 7) then
         dkpstring = MRT_CreateHTMLExport(raidID, bossID, difficulty)
     end
     -- Show the data export
