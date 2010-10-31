@@ -1576,25 +1576,27 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     index = 1;
     for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
         if ((bossID == nil and difficulty == nil) or (val["BossNumber"] == bossID) or (MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"] < 3 and difficulty == "N") or (MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"] > 2 and difficulty == "H")) then
-            xml = xml.."<key"..index..">";
-            xml = xml.."<ItemName>"..val["ItemName"].."</ItemName>";
-            local itemIdLong = deformat(val["ItemString"], "item:%s");
-            xml = xml.."<ItemID>"..itemIdLong.."</ItemID>";
-            xml = xml.."<Color>"..val["ItemColor"].."</Color>";
-            xml = xml.."<Count>1</Count>";
-            xml = xml.."<Player>"..val["Looter"].."</Player>";
-            xml = xml.."<Costs>"..val["DKPValue"].."</Costs>";
-            xml = xml.."<Time>"..MRT_MakeEQDKP_Time((MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Date"]) + index).."</Time>";    -- add a few seconds to bosskill-time, different for each item | bugfix for an import-plugin (probably RaidTracker Import by d23)
-            xml = xml.."<Difficulty>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"].."</Difficulty>";
-            xml = xml.."<Boss>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].."</Boss>";
-            xml = xml.."<Note><![CDATA[";
-            if val["Note"] then
-                xml = xml..val["Note"];
-            end;
-            xml = xml.." - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].." - "..val["DKPValue"].." DKP]]>";
-            xml = xml.."</Note>";
-            xml = xml.."</key"..index..">";
-            index = index + 1;
+            if (val["Looter"] ~= "_deleted_") then
+                xml = xml.."<key"..index..">";
+                xml = xml.."<ItemName>"..val["ItemName"].."</ItemName>";
+                local itemIdLong = deformat(val["ItemString"], "item:%s");
+                xml = xml.."<ItemID>"..itemIdLong.."</ItemID>";
+                xml = xml.."<Color>"..val["ItemColor"].."</Color>";
+                xml = xml.."<Count>1</Count>";
+                xml = xml.."<Player>"..val["Looter"].."</Player>";
+                xml = xml.."<Costs>"..val["DKPValue"].."</Costs>";
+                xml = xml.."<Time>"..MRT_MakeEQDKP_Time((MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Date"]) + index).."</Time>";    -- add a few seconds to bosskill-time, different for each item | bugfix for an import-plugin (probably RaidTracker Import by d23)
+                xml = xml.."<Difficulty>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Difficulty"].."</Difficulty>";
+                xml = xml.."<Boss>"..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].."</Boss>";
+                xml = xml.."<Note><![CDATA[";
+                if val["Note"] then
+                    xml = xml..val["Note"];
+                end;
+                xml = xml.." - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..MRT_RaidLog[raidID]["Bosskills"][val["BossNumber"]]["Name"].." - "..val["DKPValue"].." DKP]]>";
+                xml = xml.."</Note>";
+                xml = xml.."</key"..index..">";
+                index = index + 1;
+            end
         end
     end
     -- EQDKP-CTRT-Import-Fix: If option is set, add one poor item to each boss
@@ -1809,12 +1811,14 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     -- and last, add items
     xml = xml.."<items>";
     for i, itemInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
-        if (not bossID and not difficulty) then
-            xml = xml..createItemInfoString(raidID, i);
-        elseif (bossID and itemInfo["BossNumber"] == bossID) then
-            xml = xml..createItemInfoString(raidID, i);
-        elseif ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] < 3) and difficulty == "N") or ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] > 2) and difficulty == "H") then
-            xml = xml..createItemInfoString(raidID, i);
+        if (itemInfo.Looter ~= "_deleted_") then
+            if (not bossID and not difficulty) then
+                xml = xml..createItemInfoString(raidID, i);
+            elseif (bossID and itemInfo["BossNumber"] == bossID) then
+                xml = xml..createItemInfoString(raidID, i);
+            elseif ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] < 3) and difficulty == "N") or ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] > 2) and difficulty == "H") then
+                xml = xml..createItemInfoString(raidID, i);
+            end
         end
     end
     -- finish
@@ -1860,7 +1864,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         bossData = bossData..table.concat(playerList, ", ");
         bossData = bossData.."\n\n";
         for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
-            if (val["BossNumber"] == bossID) then
+            if (val["BossNumber"] == bossID and val["Looter"] ~= "_deleted_") then
                 if (isFirstItem) then bossData = bossData..MRT_L.Core["Export_Loot"]..":\n"; isFirstItem = false; end
                 bossData = bossData.."- ";
                 if (addFormat == 2) then bossData = bossData.."[url=http://www.wowhead.com/?item="..val["ItemId"].."]"; end
@@ -1960,7 +1964,7 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
         bossData = bossData.."</div>";
         bossData = bossData.."<div class=\"loot\">";
         for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
-            if (val["BossNumber"] == bossID) then
+            if (val["BossNumber"] == bossID and val["Looter"] ~= "_deleted_") then
                 if (isFirstItem) then bossData = bossData.."<span class=\"label\">"..MRT_L.Core["Export_Loot"].."</span><ul>"; isFirstItem = false; end
                 bossData = bossData.."<li>";
                 bossData = bossData.."<a class=\"item\" href=\"http://www.wowhead.com/?item="..val["ItemId"].."\">";
