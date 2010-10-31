@@ -599,6 +599,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
         local UnitID = "raid"..tostring(i);
         local playerRaceL, playerRace = UnitRace(UnitID);
         local playerSex = UnitSex(UnitID);
+        local playerGuild = GetGuildInfo(UnitID);
         local playerInfo = {
             ["Name"] = playerName,
             ["Join"] = currentTime,
@@ -612,6 +613,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["ClassL"] = playerClassL,
             ["Level"] = playerLvl,
             ["Sex"] = playerSex,
+            ["Guild"] = playerGuild,
         };
         if ((playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25))) then
             tinsert(MRT_RaidInfo["Players"], playerInfo);
@@ -677,6 +679,7 @@ function MRT_RaidRosterUpdate(frame)
                 local UnitID = "raid"..tostring(i);
                 local playerRaceL, playerRace = UnitRace(UnitID);
                 local playerSex = UnitSex(UnitID);
+                local playerGuild = GetGuildInfo(UnitID);
                 local playerDBEntry = {
                     ["Name"] = playerName,
                     ["Race"] = playerRace,
@@ -685,6 +688,7 @@ function MRT_RaidRosterUpdate(frame)
                     ["ClassL"] = playerClassL,
                     ["Level"] = playerLvl,
                     ["Sex"] = playerSex,
+                    ["Guild"] = playerGuild,
                 };
                 MRT_PlayerDB[realm][playerName] = playerDBEntry;
             end
