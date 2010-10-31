@@ -309,6 +309,12 @@ function MRT_UpdateSavedOptions()
         end
         MRT_Options["General_OptionsVersion"] = 3;
     end
+    if MRT_Options["General_OptionsVersion"] == 3 then
+        if (MRT_Options["Export_ExportFormat"] > 2) then
+            MRT_Options["Export_ExportFormat"] = MRT_Options["Export_ExportFormat"] + 1;
+        end
+        MRT_Options["General_OptionsVersion"] = 4;
+    end
 end
 
 
@@ -1931,7 +1937,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     local function createLeaveString(name, leaveTimeStamp)
         local leaveXml = "<leave>";
         leaveXml = leaveXml.."<player>"..name.."</player>";
-        leaveXml = leaveXml.."<time>"..joinTimeStamp.."</time>";
+        leaveXml = leaveXml.."<time>"..leaveTimeStamp.."</time>";
         leaveXml = leaveXml.."</leave>";
         return leaveXml;
     end
@@ -2004,6 +2010,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     for name, joinLeaveTable in pairs(playerList) do
         xml = xml..createPlayerInfoString(name, realm);
     end
+    xml = xml.."</playerinfos>";
     -- now start creating bossinfo
     local isFirstBosskill = true;
     if (not bossID) then
@@ -2033,17 +2040,21 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         xml = xml.."</bosskills>";
     end
     -- next are the join-blocks
+    xml = xml.."<joins>";
     for name, joinLeaveTable in pairs(playerList) do
         for i, subTable in ipairs(joinLeaveTable) do
-            xml = xml..createJoinString(name, subtable.Join);
+            xml = xml..createJoinString(name, subTable.Join);
         end
     end
+    xml = xml.."</joins>";
     -- and now the leave blocks
+    xml = xml.."<leaves>";
     for name, joinLeaveTable in pairs(playerList) do
         for i, subTable in ipairs(joinLeaveTable) do
-            xml = xml..createLeaveString(name, subtable.Leave);
+            xml = xml..createLeaveString(name, subTable.Leave);
         end
     end
+    xml = xml.."</leaves>";
     -- now the loot list
     xml = xml.."<loots>";
     for i, itemInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
