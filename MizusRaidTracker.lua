@@ -1976,7 +1976,11 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
                 bossData = bossData.."</li>";
             end
         end
-        bossData = bossData.."</ul></div></div>";
+        if (isFirstItem) then
+            bossData = bossData.."</div></div>";
+        else
+            bossData = bossData.."</ul></div></div>";
+        end
         return bossData;
     end
     -- Start creating export data
