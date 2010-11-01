@@ -1,3 +1,34 @@
+<h4>0.23 Beta - Changelog:</h4>
+<strong>New:</strong>
+<ul>
+	<li>Added dropdown menu to the loot popup for changing the looter.</li>
+	<li>Added UI dialog for adding raid attendees</li>
+	<li>Added new export format: CSS based HTML with wowhead links (contributed by Kevin)</li>
+	<li>Added new export format: EQdkp-Plus XML</li>
+	<li>Added new export format: MLdkp 1.5</li>
+	<li>Added API for notifying other addons about loot changes (for API documentation, <a href="http://wow.curseforge.com/addons/mizusraidtracker/pages/api/">check the API-Pages at CurseForge.com</a>)</li>
+	<li>Added API to let other addons handle the loot cost (for API documentation, <a href="http://wow.curseforge.com/addons/mizusraidtracker/pages/api/">check the API-Pages at CurseForge.com</a>)</li>
+	<li>Added a workaround to the CTRT-compatible export for the EQdkp-Plus Raid-Log-Import 0.5.6.3 to enable correct importing of raid attendees tracked via the guild attendance check. (For DKP-systems based on per boss attendance)</li>
+	<li>Added the same workaround to the EQdkp-Plus XML export</li>
+	<li>Started ruRU UI translation (thanks to rinaline)</li>
+	<li>Added frFR UI translation (big thanks to Cinedelle)</li>
+	<li>Added koKR boss yells and UI translation (big thanks to 7destiny)</li>
+</ul>
+<strong>Changes:</strong>
+<ul>
+	<li>Revamped emote based boss kill detection. Iron Council kill detection is finally back.</li>
+	<li>The loot popup now reacts on keys 'Enter' (for Ok) and 'Esc' (for Cancel)</li>
+	<li>Removing a player from the raid attendee list will now also remove that player from the boss attendees lists for the corresponding time window.</li>
+	<li>The boss attendee table now also displays the number of boss attendees</li>
+	<li>Added 'bank' and 'disenchanted' as selectable items to the dropdown menu of the 'Add item'- and 'Modify item'-dialogs</li>
+	<li>All export functions now ignore items, which are marked as deleted</li>
+</ul>
+<strong>Bug Fixes:</strong>
+<ul>
+	<li> UI now correctly prevents deleting the current raid.</li>
+	<li>The CTRT-Export should now always export a valid raid end time, if a running raid is exported.</li>
+</ul>
+
 <h4>0.22 Beta - Changelog:</h4>
 <strong>New:</strong>
 <ul>
@@ -56,33 +87,3 @@
 	<li> Changed layout of the boss kill table slightly. The last column shouldn't cut off anymore.</li>
 </ul>
 
-<h4>0.19-3 Beta</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added very basic support for french EU-clients (Gunship Battle, Dreamwalker, Blood Prince Council and Halion kill detection will not work)</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li> The CTRT-compatible raid export shouldn't export duplicated player exports. This should fix an issue with the Raidlogimport-Plugin for EQDKP-Plus</li>
-	<li>Updated NPC ID conversion for Patch 4.0.1 (should fix boss detection)</li>
-	<li>Updated item string handling (Patch 4.0.1 issue)</li>
-	<li>Fixed positioning of a few strings in the options panel (Patch 4.0.1 issue)</li>
-</ul>
-
-<h4>0.18 Beta</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added support for loot notes. Extra input fields have been added to the loot dialog, the add item dialog and the modify item dialog.</li>
-	<li>The loot list of the raidlog browser got an extra column for a loot note symbol. The loot note itself will display as a tooltip on mouseover.</li>
-	<li>Added option for using server time instead of local time.</li>
-	<li>Added option for disabling the automatic creation of a new raid entry after changing raid zones.</li>
-	<li>Added item tooltip support for the loot dialog.</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li> Raidlog browser: Modifying and deleting items don't require a selected boss event anymore.</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li> When a running raid changes zone to Archavons Vault, MRT should now end tracking correctly, if tracking of AV is disabled.</li>
-</ul>
