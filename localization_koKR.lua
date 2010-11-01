@@ -63,11 +63,11 @@ MRT_L.Bossyells = {
         ["형제자매여, 전진"] = "얼음왕관 비행포격선 전투", -- Gunship Battle Muradin (A)
         ["리치 왕을 향해 전진하라"] = "얼음왕관 비행포격선 전투", -- Gunship Battle Saurfang (H)
         ["My queen, they... come."] = "피의 공작 의회", -- Prince Keleseth
-        ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "발리스리아 드림워커", -- Dreamwalker
+        ["다시 힘을 얻었다! 이세라여, 더러운 생명들에 안식을 내릴 수 있도록 은혜를 베푸소서!"] = "발리스리아 드림워커", -- Dreamwalker
     },
 
     ["The Ruby Sanctum"] = {
-        ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "할리온", -- Halion
+        ["필멸자들아, 승리를 만끽해라. 그것이 마지막일 테니. 주인님이 돌아오시면 이 세상은 불타버리리라!"] = "할리온", -- Halion
     },
 }
 
