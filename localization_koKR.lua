@@ -44,9 +44,9 @@ MRT_L.Bossyells = {
     },
     
     ["Ulduar"] = {
-        ["You rush headlong into the maw of madness!"] = "무쇠 평의회",  -- Normalmode - Stormcaller Brundir last
-        ["What have you gained from my defeat? You are no less doomed, mortals!"] = "무쇠 평의회",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Impossible..."] = "무쇠 평의회",  -- Hardmode - Steelbreaker last
+        ["네놈들은 광기의 도가니에 빠져들고 있을 뿐이야!"] = "무쇠 평의회",  -- Normalmode - Stormcaller Brundir last
+        ["날 쓰러뜨리면 나아질 줄 아느냐? 파멸은 조금도 없어지지 않았다..."] = "무쇠 평의회",  -- Semi-Hardmode - Runemaster Molgeim last
+        ["이런 일이..."] = "무쇠 평의회",  -- Hardmode - Steelbreaker last
         ["드디어... 드디어 그의 손아귀를... 벗어나는구나."] = "호디르",  -- Hodir
         ["무기를 거둬라! 내가 졌다!"] = "토림",  -- Thorim
         ["내게서 그의 지배력이 걷혔다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다."] = "프레이야",  -- Freya
@@ -56,13 +56,13 @@ MRT_L.Bossyells = {
     
     ["Trial of the Crusader"] = {
         ["상처뿐인 승리로군."] = "진영 대표 용사",  -- Faction Champions
-        ["The Scourge cannot be stopped..."] = "발키르 쌍둥이",  -- Val'kyr Twins
+        ["스컬지를 막을 수는 없다..."] = "발키르 쌍둥이",  -- Val'kyr Twins
     },
         
     ["Icecrown Citadel"] = {
         ["형제자매여, 전진"] = "얼음왕관 비행포격선 전투", -- Gunship Battle Muradin (A)
         ["리치 왕을 향해 전진하라"] = "얼음왕관 비행포격선 전투", -- Gunship Battle Saurfang (H)
-        ["My queen, they... come."] = "피의 공작 의회", -- Prince Keleseth
+        ["^여왕님, 저들이"] = "피의 공작 의회", -- Prince Keleseth
         ["다시 힘을 얻었다! 이세라여, 더러운 생명들에 안식을 내릴 수 있도록 은혜를 베푸소서!"] = "발리스리아 드림워커", -- Dreamwalker
     },
 
