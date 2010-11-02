@@ -5,4 +5,6 @@
   <Script file="libs\LibST\core.lua"/>
   <Script file="libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
   <Script file="libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
+  <Include file="libs\LibBabble-Boss-3.0\lib.xml"/>
+  <Include file="libs\LibBabble-Zone-3.0\lib.xml"/>
 </Ui>

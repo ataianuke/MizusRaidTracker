@@ -515,7 +515,7 @@ function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     --  II) If changed from 10 men to 25 men
     --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
     --  IV) If RaidZone changed and CreateNewRaidOnNewZone on
-    --  V) If RaidZone changed and CreateNewRaidOnNewZone on (check for raid size)
+    --  V) If RaidZone and RaidSize changed and CreateNewRaidOnNewZone off
     MRT_Debug("Match in MRT_L.Raidzones from GetInstanceInfo() fround.");
     -- Case: No active raidtracking:
     if (not MRT_NumOfCurrentRaid) then
@@ -931,7 +931,7 @@ end
 ---------------------------
 -- basic idea: add looted items to a little queue and ask cost for each item in the queue 
 --             this should avoid missing dialogs for fast looted items
--- note: standard dkpvalue is already 0 (unless EPGP-system-support enabled)
+-- note: standard dkpvalue is already 0 (unless EPGP-system-support enabled) (FIXME: EPGP NYI!)
 function MRT_DKPFrame_AddToItemCostQueue(raidnum, itemnum)
     local MRT_DKPCostQueueItem = {
         ["RaidNum"] = raidnum,
@@ -1197,7 +1197,7 @@ end
 function MRT_GetNPCID(GUID)
     local first3 = tonumber("0x"..strsub(GUID, 3, 5));
     local unitType = bit.band(first3, 0x007);
-    -- old: GUID, 9, 12
+    -- pre WoW 4.0.1: GUID, 9, 12 - if there is a demand for a chinese version, this part need to be checked against the client version
     if ((unitType == 0x003) or (unitType == 0x005)) then
         return tonumber("0x"..strsub(GUID, 7, 10));
     else
@@ -1457,7 +1457,7 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
         -- the goals should be to preserve boss attendance data and meet the 50% attendance threshold of the Raid-Log-Importer with as few additional raid entries as possible
         -- Note: the last part of the previous line is probably not implemented here ;)
         -- ok - first shot - brute force: add join/leave pair from raidstart till first boss with no attendance (-20 seconds) - then start 20 seconds after this boss until next boss without attendance, etc. 
-        -- FAIL! - RLI defines a counts a bosskill as attended, when a player has attended in 50% of the time between the last bosskill and the recent bosskill
+        -- FAIL! - RLI counts a bosskill as attended, when a player has attended in 50% of the time between the last bosskill and the recent bosskill
         -- second try: quick & dirty: when player attended a boss, let him join 20 sec after the last bosskill and let him leave 10 seconds after the current one
         local lastBossKillTimeStamp;
         for name, count in pairs(attendedBosses) do
