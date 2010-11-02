@@ -1682,6 +1682,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         itemXml = itemXml.."<time>"..MRT_RaidLog[raidID]["Loot"][itemID]["Time"].."</time>";
         itemXml = itemXml.."<member>"..MRT_RaidLog[raidID]["Loot"][itemID]["Looter"].."</member>";
         itemXml = itemXml.."<itemid>"..deformat(MRT_RaidLog[raidID]["Loot"][itemID]["ItemString"], "item:%s").."</itemid>";
+        itemXml = itemXml.."<cost>"..MRT_RaidLog[raidID]["Loot"][itemID]["DKPValue"].."</cost>";
         itemXml = itemXml.."</item>";
         return itemXml;
     end
