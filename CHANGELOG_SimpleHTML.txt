@@ -1,3 +1,10 @@
+<h4>0.23-2 Beta - Changelog:</h4>
+<strong>Bug Fixes:</strong>
+<ul>
+    <li>Fixed missing item costs in the EQdkp-Plus XML export</li>
+    <li>Updated a few koKR boss yell translations</li>
+</ul>
+
 <h4>0.23 Beta - Changelog:</h4>
 <strong>New:</strong>
 <ul>
