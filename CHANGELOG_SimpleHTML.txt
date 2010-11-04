@@ -1,3 +1,9 @@
+<h4>0.23-3 Beta - Changelog:</h4>
+<strong>Bug Fixes:</strong>
+<ul>
+    <li>Added workaround, which should prevent rare cases, where 25 player raids were tracked as 10 player raids.</li>
+</ul>
+
 <h4>0.23-2 Beta - Changelog:</h4>
 <strong>Bug Fixes:</strong>
 <ul>

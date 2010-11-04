@@ -1,5 +1,10 @@
 0.23-2 Beta - Changelog:
   Bug Fixes:
+    * Added workaround, which should prevent rare cases, where 25 player raids were tracked as 10 player raids.
+
+
+0.23-2 Beta - Changelog:
+  Bug Fixes:
     * Fixed missing item costs in the EQdkp-Plus XML export
     * Updated a few koKR boss yell translations
   
