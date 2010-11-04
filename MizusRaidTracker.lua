@@ -80,6 +80,7 @@ local ipairs = ipairs;
 local MRT_TimerFrame = CreateFrame("Frame");                -- Timer for Guild-Attendance-Checks
 local MRT_LoginTimer = CreateFrame("Frame");                -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
 local MRT_RaidRosterScanTimer = CreateFrame("Frame");       -- Timer for regular scanning for the raid roster (there is no event for disconnecting players)
+local MRT_RIWTimer = CreateFrame("Frame"); 
 
 local MRT_GuildRoster = {};
 local MRT_GuildRosterInitialUpdateDone = nil;
@@ -170,16 +171,19 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif (event == "RAID_INSTANCE_WELCOME") then
         if (not MRT_Options["General_MasterEnable"]) then return end;
-        -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
-        local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
-        if (MRT_L.Raidzones[instanceInfoName]) then
-            -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
-            if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then 
-                if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
-                return;
+        -- I've recieved reports, stating that 25 player raids were tracked as 10 player raids - I have no idea why, but this here is the only place, where this issue could occure
+        -- Wasn't able to reproduce this issue, so I think, I'll change it blindly...
+        -- Use the DBM approach: wait 3 seconds after RIW-Event and then check instanceInfo stuff. Hopefully this fixes the problem....
+        -- Can reuse the login-timer here - at least i hope, that noone hits a RIW 5 seconds after login...
+        -- second though: even if - it shouldn't matter
+        -- A generic function to schedule function would be nice! <- FIXME!
+        MRT_RIWTimer.riwTime = time()
+        MRT_RIWTimer:SetScript("OnUpdate", function (self)
+            if ((time() - self.riwTime) > 3) then
+                self:SetScript("OnUpdate", nil);
+                MRT_CheckZoneAndSizeStatus();
             end
-            MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
-        end
+        end);
     
     elseif (event == "RAID_ROSTER_UPDATE") then
         MRT_Debug("RAID_ROSTER_UPDATE fired!");
@@ -508,6 +512,21 @@ function MRT_CheckRaidStatusAfterLogin()
     end
 end
 
+function MRT_CheckZoneAndSizeStatus()
+    -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
+    local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+    local instanceInfoDifficulty2 = GetInstanceDifficulty();
+    MRT_Debug("RIW fired - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
+    if (MRT_L.Raidzones[instanceInfoName]) then
+        -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
+        if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then 
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty2);
+    end
+end
+
 function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
     --  I) If no active raid and 10 player tracking enabled
@@ -653,7 +672,7 @@ function MRT_RaidRosterUpdate(frame)
     local realm = GetRealmName();
     local raidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local activePlayerList = {};
-    MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
+    --MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
     --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
         local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
