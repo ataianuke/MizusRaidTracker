@@ -172,6 +172,8 @@ function MRT_OnEvent(frame, event, ...)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
         local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+        local instanceInfoDifficulty2 = GetInstanceDifficulty();
+        MRT_Debug("RIW fired - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
         if (MRT_L.Raidzones[instanceInfoName]) then
             -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
             if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then 
