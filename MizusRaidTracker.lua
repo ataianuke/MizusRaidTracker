@@ -1635,6 +1635,224 @@ function MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty)
     return xml;
 end
 
+-- complete rewrite of the old function based on the experience of newer functions
+function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
+    -- create generic functions for repeated blocks
+    local function createBossInfoString(index, bossInfo, attendeeList)
+        local bossXml = "<key"..index..">";
+        bossXml = bossXml.."<name>"..bossInfo.Name.."</name>";
+        bossXml = bossXml.."<difficulty>"..bossInfo.Difficulty.."</difficulty>";
+        bossXml = bossXml.."<time>"..MRT_MakeEQDKP_Time(bossInfo.Date).."</time>";
+        bossXml = bossXml.."<attendees>";
+        if attendeeList then
+            for i, name in ipairs(attendeeList) do
+                bossXml = bossXml.."<key"..i.."><name>"..name.."</name></key"..i..">";
+            end
+        else
+            for i, name in ipairs(bossInfo.Players) do
+                bossXml = bossXml.."<key"..i.."><name>"..name.."</name></key"..i..">";
+            end
+        end
+        bossXml = bossXml.."</attendees></key"..index..">";
+        return bossXml;
+    end
+    local function createPlayerInfoString(index, name, realm)
+        local playerInfoString = "<key"..index..">";
+        playerInfoString = playerInfoString.."<name>"..name.."</name>";
+        if (MRT_PlayerDB[realm][name]) then
+            if (MRT_PlayerDB[realm][name]["Race"]) then
+                playerInfoString = playerInfoString.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+            end
+            if (MRT_PlayerDB[realm][name]["Sex"]) then
+                playerInfoString = playerInfoString.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+            end
+            if (MRT_PlayerDB[realm][name]["Class"]) then
+                playerInfoString = playerInfoString.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+            end
+            if (MRT_PlayerDB[realm][name]["Level"]) then
+                playerInfoString = playerInfoString.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+            end
+        end
+        playerInfoString = playerInfoString.."</key"..index..">";
+        return playerInfoString;
+    end
+    local function createItemInfoString(index, itemInfo)
+        local bossInfo = MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber];
+        local itemXml = "<key"..index..">";
+        itemXml = itemXml.."<ItemName>"..itemInfo.ItemName.."</ItemName>";
+        itemXml = itemXml.."<ItemID>"..deformat(itemInfo.ItemString, "item:%s").."<ItemID>";
+        itemXml = itemXml.."<Color>"..itemInfo.ItemColor.."</Color>";
+        itemXml = itemXml.."<Count>"..itemInfo.ItemCount.."</Count>";
+        itemXml = itemXml.."<Player>"..itemInfo.Looter.."</Player>";
+        itemXml = itemXml.."<Costs>"..itemInfo.DKPValue.."</Costs>";
+        itemXml = itemXml.."<Time>"..MRT_MakeEQDKP_Time(bossInfo.Date + index).."</Time>";
+        itemXml = itemXml.."<Difficulty>"..bossInfo.Difficulty.."</Difficulty>";
+        itemXml = itemXml.."<Boss>"..bossInfo.Name.."</Boss>";
+        itemXml = itemXml.."<Note><![CDATA[";
+        if itemInfo.Note then
+            itemXml = itemXml..itemInfo.Note;
+        end
+        itemXml = itemXml.." - Zone: "..MRT_RaidLog[raidID]["RaidZone"].." - Boss: "..bossInfo.Name.." - "..itemInfo.DKPValue.." DKP]]>";
+        itemXml = itemXml.."</Note></key"..index..">";
+        return itemXml;
+    end
+    local function createJoinString(index, name, realm, joinTimeStamp)
+        local joinXml = "<key"..index..">";
+        joinXml = joinXml.."<player>"..name.."</player>";
+        if (MRT_PlayerDB[realm][name]) then
+            if (MRT_PlayerDB[realm][name]["Race"]) then
+                joinXml = joinXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
+            end
+            if (MRT_PlayerDB[realm][name]["Sex"]) then
+                joinXml = joinXml.."<sex>"..MRT_PlayerDB[realm][name]["Sex"].."</sex>";
+            end
+            if (MRT_PlayerDB[realm][name]["Class"]) then
+                joinXml = joinXml.."<class>"..MRT_PlayerDB[realm][name]["Class"].."</class>";
+            end
+            if (MRT_PlayerDB[realm][name]["Level"]) then
+                joinXml = joinXml.."<level>"..MRT_PlayerDB[realm][name]["Level"].."</level>";
+            end
+        end
+        joinXml = joinXml.."<time>"..MRT_MakeEQDKP_Time(joinTimeStamp).."</time>";
+        joinXml = joinXml.."</key"..index..">";
+        return joinXml;
+    end
+    local function createLeaveString(index, name, leaveTimeStamp)
+        local leaveString = leaveString.."<key"..index..">";
+        leaveString = leaveString.."<player>"..name.."</player>";
+        leaveString = leaveString.."<time>"..MRT_MakeEQDKP_Time(leaveTimeStamp).."</time>";
+        leaveString = leaveString.."</key"..index..">";
+        return leaveString;
+    end
+    -- set up a few locals
+    local now = MRT_GetCurrentTime();
+    local raidStart = MRT_RaidLog[raidID]["StartTime"];
+    local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
+    local realm = MRT_RaidLog[raidID]["Realm"];
+    local index = 1;
+    -- starte creating string - header first
+    local xml = "<RaidInfo>";
+    xml = xml.."<key>"..MRT_MakeEQDKP_Time(raidStart).."</key>";
+    xml = xml.."<realm>"..realm.."</realm>";
+    xml = xml.."<start>"..MRT_MakeEQDKP_Time(raidStart).."</start>";
+    xml = xml.."<end>"..MRT_MakeEQDKP_Time(raidStop).."</end>";
+    xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
+        xml = xml.."<difficulty>1</difficulty>";
+    elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
+        xml = xml.."<difficulty>2</difficulty>";
+    end
+    -- player infos: gather all players, sort them, create player info once per player
+    local playerList = {};
+    -- prepare player information and join/leave times
+    if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+        -- use raidstart/raidstop for everyone, so gather all players:
+        for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
+            if (not playerList[playerTimes.Name]) then
+                playerList[playerTimes.Name] = { { Join = raidStart, Leave = raidStop, }, };
+            end
+        end
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            for j, attendeeName in ipairs(bossInfo["Players"]) do
+                if (not playerList[attendeeName]) then
+                    playerList[attendeeName] = { { Join = raidStart, Leave = raidStop, }, };
+                end
+            end
+        end
+    elseif (MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]) then
+        -- in the "one raid per boss"-setting, the RLI slices the export in subraids.
+        -- each player needs to have 50% attendance in each raid slice to be a valid attendee
+        -- attendance fix solution:
+        -- export all players, who have attended all bosses, with 100% attendance time.
+        -- for all other players, create a set of join/leave-times for each time slice
+        -- so, lets start - scan raid attendees first
+        local attendanceCount = {};
+        local lastBossTimeStamp;
+        local joinLeavePair;
+        for key, playerInfo in pairs(MRT_RaidLog[raidID]["Players"]) do
+            if (not attendanceCount[playerInfo.Name]) then
+                attendanceCount[playerInfo.Name] = 0;
+            end
+        end
+        -- if we have no bosses, than #BossKills = 0 - convenient.
+        -- now count attendance for each boss
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            for j, playerName in ipairs(bossInfo["Players"]) do
+                if (not attendanceCount[playerName]) then
+                    attendanceCount[playerName] = 1;
+                else
+                    attendanceCount[playerName] = attendanceCount[playerName] + 1;
+                end
+            end
+        end
+        -- and the last step, create join/leave-pairs. if 100% attendance, create one join/leave-pair. if not, make one for each attended boss
+        for playerName, bossKillCount in pairs(attendanceCount) do
+            if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
+                playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
+            else
+                lastBossTimeStamp = raidStart;
+                for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                    for j, attendeeName in ipairs(bossInfo["Players"]) do
+                        if (attendeeName == playerName) then
+                            joinLeavePair = { Join = lastBossTimeStamp, Leave = (bossInfo.Date + 10), };
+                            if (not playerList[playerName]) then playerList[playerName] = {}; end
+                            tinsert(playerList[playerName], joinLeavePair);
+                        end
+                    end
+                    lastBossTimeStamp = bossInfo.Date + 20;
+                end
+                -- if enough time between last bosskill and raid end, add on last join/leave pair
+                if (lastBossTimeStamp < raidStop) then
+                    joinLeavePair = { Join = lastBossTimeStamp, Leave = raidStop, };
+                    if (not playerList[playerName]) then playerList[playerName] = {}; end
+                    tinsert(playerList[playerName], joinLeavePair);
+                end
+            end
+        end
+    else
+        -- use join/leave times - add a short join/leave-pair, if a player is only tracked as a boss attendee
+        local joinLeavePair = nil;
+        for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
+            if (not playerList[playerTimes.Name]) then playerList[playerTimes.Name] = {}; end
+            joinLeavePair = { Join = playerTimes.Join, Leave = (playerTimes.Leave or now), };
+            tinsert(playerList[playerTimes.Name], joinLeavePair);
+        end
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            local attendee;
+            for j, attendeeName in ipairs(bossInfo["Players"]) do
+                attendee = false;
+                if (not playerList[attendeeName]) then
+                    playerList[attendeeName] = {};
+                    joinLeavePair = { Join = (bossInfo.Date - 10), Leave = (bossInfo.Date + 10), };
+                else
+                    for k, joinLeaveTable in ipairs(playerList[attendeeName]) do
+                        if (joinLeaveTable.Join < bossInfo.Date and bossInfo.Date < joinLeaveTable.Leave) then
+                            attendee = true;
+                        end
+                    end
+                end
+                if (not attendee) then
+                    tinsert(playerList[attendeeName], joinLeavePair);
+                end
+            end
+        end
+    end
+    -- player data complete
+    -- prepare a list with sorted player names to fill the boss info
+    local sortedPlayerList = {};
+    for name, joinLeaveTable in pairs(playerList) do
+        tinsert(sortedPlayerList, name);
+    end
+    table.sort(sortedPlayerList);
+    -- player list sorted - create playerInfo data
+    xml = xml.."<PlayerInfos>";
+    for i, name in ipairs(sortedPlayerList) do
+        xml = xml..createPlayerInfoString(i, name, realm);
+    end
+    xml = xml.."</PlayerInfos>";
+    -- next: BossKillInfo
+end
+
 -- EQDLK-Plus-XML export format
 function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     -- start to create generic functions for repeated blocks
