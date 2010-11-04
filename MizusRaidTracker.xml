@@ -283,5 +283,5 @@
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
-  <GameTooltip name="MRT_Core_TT" inherits="GameTooltipTemplate" parent="UI_Parent" hidden="true"/>
+  <GameTooltip name="MRT_Core_TT" inherits="GameTooltipTemplate" parent="UIParent" hidden="true"/>
 </Ui>
