@@ -229,6 +229,20 @@
               </Anchors>
             </FontString>
           </Layer>
+          <Layer level="OVERLAY">
+            <FontString name="MRT_Options_TrackingPanel_OnlyTrackItemsAbove_Text" inherits="GameFontWhite" text="(L FIXME!)Only track items equal or above Itemlevel">
+              <Anchors>
+                <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider" x="0" y="-10"/>
+              </Anchors>
+            </FontString>
+            <!--
+              <FontString name="MRT_Options_TrackingPanel_OnlyTrackItemsBelow_Text" inherits="GameFontWhite" text="(L FIXME!)or equal or below Itemlevel">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="MRT_Options_TrackingPanel_OnlyTrackItemsAbove_Text" x="0" y="-5"/>
+                </Anchors>
+              </FontString>
+            -->
+          </Layer>
         </Layers>
         <Scripts>
           <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToGetCost_Slider(); end)</OnMouseDown>
@@ -240,9 +254,16 @@
           </Size>
         </ThumbTexture>
       </Slider>
+      <EditBox name="$parent_OnlyTrackItemsAbove_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="5" enableKeyboard="true" enableMouse="true">
+        <Size x="50" y="26"/>
+        <Anchors>
+          <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MRT_Options_TrackingPanel_OnlyTrackItemsAbove_Text" x="10" y="0"/>
+        </Anchors>
+        <FontString inherits="GameFontWhite"/>
+      </EditBox>
       <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToGetCost_Slider" relativePoint="BOTTOMLEFT" y="-25"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -511,9 +532,7 @@
           <Layer level="OVERLAY">
             <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
               <Anchors>
-                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
-                  <Offset x="-5"/>
-                </Anchor>
+                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="-5" y="0"/>
               </Anchors>
             </FontString>
           </Layer>

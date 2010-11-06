@@ -41,7 +41,7 @@ MRT_PlayerDB = {};
 local MRT_Defaults = {
     ["Options"] = {
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 2,                                             -- OptionsVersion - Counter, which increases after a new option has been added
+        ["General_OptionsVersion"] = 5,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["Attendance_GuildAttendanceCheckEnabled"] = false,                         -- 
@@ -55,8 +55,9 @@ local MRT_Defaults = {
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_CreateNewRaidOnNewZone"] = true,
+        ["Tracking_OnlyTrackItemsAboveILvl"] = 0,
         ["Tracking_UseServerTime"] = false,
-        ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: plain text, 3: BBCode
+        ["Export_ExportFormat"] = 1,                                                -- 1: CTRT compatible, 2: EQdkp-Plus XML, 3: MLdkp 1.5,  4: plain text, 5: BBCode, 6: BBCode with wowhead, 7: CSS based HTML
         ["Export_CTRT_AddPoorItem"] = false,                                        -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
         ["Export_CTRT_IgnorePerBossAttendance"] = false,                            -- This will create an export where each raid member has 100% attendance: true / nil
         ["Export_CTRT_RLIPerBossAttendanceFix"] = false,
@@ -318,6 +319,10 @@ function MRT_UpdateSavedOptions()
             MRT_Options["Export_ExportFormat"] = MRT_Options["Export_ExportFormat"] + 1;
         end
         MRT_Options["General_OptionsVersion"] = 4;
+    end
+    if MRT_Options["General_OptionsVersion"] == 4 then
+        MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] = 0;
+        MRT_Options["General_OptionsVersion"] = 5;
     end
 end
 
@@ -863,6 +868,7 @@ function MRT_AutoAddLoot(chatmsg)
     -- strip the itemlink into its parts / may change to use deformat with easier pattern ("|c%s|H%s|h[%s]|h|r")
     local _, _, itemString = string.find(itemLink, "^|c%x+|H(.+)|h%[.*%]");
     local _, _, itemColor, _, itemId, _, _, _, _, _, _, _, _, _, itemName = string.find(itemLink, "|?c?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
+    local _, _, itemRarity, itemLevel = GetItemInfo(itemLink);
     -- make the string a number
     itemId = tonumber(itemId);
     -- if major fuckup in first strip:
@@ -870,7 +876,8 @@ function MRT_AutoAddLoot(chatmsg)
     -- if major fuckup in second strip:
     -- if (itemId == nil) then MRT_Debug("ItemLink corrupted - no ItemId found."); return; end
     -- check options, if this item should be tracked
-    if (MRT_Options["Tracking_MinItemQualityToLog"] > MRT_ItemColorValues[itemColor]) then MRT_Debug("Item not tracked - quality is too low."); return; end
+    if (MRT_Options["Tracking_MinItemQualityToLog"] > itemRarity) then MRT_Debug("Item not tracked - quality is too low."); return; end
+    if (MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] > itemLevel) then MRT_Debug("Item not tracked - iLvl is too low."); return; end
     if (MRT_IgnoredItemIDList[itemId]) then return; end
     -- if an external function handles item data, notify it
     local dkpValue = 0;

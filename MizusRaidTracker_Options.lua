@@ -82,6 +82,9 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
     MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
+    MRT_Options_TrackingPanel_OnlyTrackItemsAbove_Text:SetText(MRT_L.Options["TP_OnlyTrackItemsAbove"]);
+    MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
+    MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
     MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
     MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
     -- AttendancePanel
@@ -140,6 +143,13 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_TrackingPanel_AskForDKPValue_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
+    local minILvl = tonumber(MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:GetText());
+    if minILvl then
+        MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] = minILvl;
+    else
+        MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
+        MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
+    end
     MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
     -- AttendancePanel
     MRT_Options["Attendance_GuildAttendanceCheckEnabled"] = MRT_Options_AttendancePanel_GA_CB:GetChecked();
