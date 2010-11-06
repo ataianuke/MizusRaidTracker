@@ -887,6 +887,7 @@ function MRT_AutoAddLoot(chatmsg)
             ["ItemCount"] = itemCount,
             ["Looter"] = playerName,
             ["DKPValue"] = dkpValue,
+            ["Time"] = MRT_GetCurrentTime(),
         };
         dkpValue, playerName, itemNote, lootAction, supressCostDialog = MRT_ExternalItemCostHandler.func(notifierInfo);
         if (lootAction == MRT_LOOTACTION_BANK) then
@@ -1281,7 +1282,8 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     local dkpstring;
     -- 1: CTRT-compatible export
     if (MRT_Options["Export_ExportFormat"] == 1) then
-        dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
+        -- dkpstring = MRT_CreateCtrtAttendeeDkpString(raidID, bossID, difficulty);
+        dkpstring = MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty);
     -- 2: EQDKP-Plus-XML
     elseif (MRT_Options["Export_ExportFormat"] == 2) then
         dkpstring = MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty);
@@ -1699,7 +1701,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         local bossInfo = MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber];
         local itemXml = "<key"..index..">";
         itemXml = itemXml.."<ItemName>"..itemInfo.ItemName.."</ItemName>";
-        itemXml = itemXml.."<ItemID>"..deformat(itemInfo.ItemString, "item:%s").."<ItemID>";
+        itemXml = itemXml.."<ItemID>"..deformat(itemInfo.ItemString, "item:%s").."</ItemID>";
         itemXml = itemXml.."<Color>"..itemInfo.ItemColor.."</Color>";
         itemXml = itemXml.."<Count>"..itemInfo.ItemCount.."</Count>";
         itemXml = itemXml.."<Player>"..itemInfo.Looter.."</Player>";
@@ -1838,11 +1840,11 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         end
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             local attendee;
+            joinLeavePair = { Join = (bossInfo.Date - 10), Leave = (bossInfo.Date + 10), };
             for j, attendeeName in ipairs(bossInfo["Players"]) do
                 attendee = false;
                 if (not playerList[attendeeName]) then
                     playerList[attendeeName] = {};
-                    joinLeavePair = { Join = (bossInfo.Date - 10), Leave = (bossInfo.Date + 10), };
                 else
                     for k, joinLeaveTable in ipairs(playerList[attendeeName]) do
                         if (joinLeaveTable.Join < bossInfo.Date and bossInfo.Date < joinLeaveTable.Leave) then
@@ -1870,6 +1872,96 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     end
     xml = xml.."</PlayerInfos>";
     -- next: BossKillInfo
+    local isFirstBoss = true;
+    local exportedBosses = {};
+    index = 1;
+    if (bossID) then
+        xml = xml.."<BossKills>";
+        if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+            xml = xml..createBossInfoString(1, MRT_RaidLog[raidID]["Bosskills"][bossID], sortedPlayerList);
+        else
+            xml = xml..createBossInfoString(1, MRT_RaidLog[raidID]["Bosskills"][bossID], nil);
+        end
+        isFirstBoss = false;
+        tinsert(exportedBosses, bossID);
+    else
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            if ( (not difficulty) or ((bossInfo["Difficulty"] < 3) and difficulty == "N") or ((bossInfo["Difficulty"] > 2) and difficulty == "H") ) then
+                if (isFirstBoss) then 
+                    xml = xml.."<BossKills>";
+                    isFirstBoss = false;
+                end
+                if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+                    xml = xml..createBossInfoString(index, bossInfo, sortedPlayerList);
+                else
+                    xml = xml..createBossInfoString(index, bossInfo, nil);
+                end
+                index = index + 1;
+                tinsert(exportedBosses, i);
+            end
+        end
+    end
+    if (not isFirstBoss) then
+        xml = xml.."</BossKills>";
+    end
+    -- extra note entry:
+    xml = xml.."<note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].."]]></note>";
+    -- next: Join data
+    index = 1;
+    xml = xml.."<Join>";
+    for name, joinLeaveTable in pairs(playerList) do
+        for i, joinLeaveEntry in ipairs(joinLeaveTable) do
+            xml = xml..createJoinString(index, name, realm, joinLeaveEntry.Join);
+            index = index + 1;
+        end
+    end
+    xml = xml.."</Join>";
+    -- next: Leave data
+    xml = xml.."<Leave>";
+    for name, joinLeaveTable in pairs(playerList) do
+        for i, joinLeaveEntry in ipairs(joinLeaveTable) do
+            xml = xml..createJoinString(index, name, realm, joinLeaveEntry.Leave);
+            index = index + 1;
+        end
+    end
+    xml = xml.."</Leave>";
+    -- and last: Loot
+    index = 1;
+    -- prepare a simple lookup-table:
+    local exportedBossesLookup = {};
+    for i, bossNum in ipairs(exportedBosses) do
+        exportedBossesLookup[bossNum] = true;
+    end
+    xml = xml.."<Loot>";
+    for lootId, lootInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
+        if (exportedBossesLookup[lootInfo.BossNumber]) then
+            xml = xml..createItemInfoString(index, lootInfo);
+            index = index + 1;
+        end
+    end
+    -- apply EQdkp CTRT-Import-Plugin-Fix if enabled
+    if (MRT_Options["Export_CTRT_AddPoorItem"]) then
+        local lootInfo = {
+            ["ItemLink"] = "|cff9d9d9d|Hitem:35788:0:0:0:0:0:0:0:0|h[Destroyed Magic Item]|h|r",
+            ["ItemString"] = "item:35788:0:0:0:0:0:0:0:0",
+            ["ItemId"] = 35788,
+            ["ItemName"] = "Destroyed Magic Item",
+            ["ItemColor"] = "ff9d9d9d",
+            ["ItemCount"] = 1,
+            ["Looter"] = "disenchanted",
+            ["DKPValue"] = 0,
+        };
+        for i, bossNum in ipairs(exportedBosses) do
+            lootInfo.BossNumber = bossNum;
+            lootInfo.Time = MRT_RaidLog[raidID]["Bosskills"][bossNum]["Date"] + index;              -- a little random seed to prevent an item with bosskill time
+            xml = xml..createItemInfoString(index, lootInfo);
+            index = index + 1;
+        end
+    end
+    xml = xml.."</Loot>";
+    -- end
+    xml = xml.."</RaidInfo>";
+    return xml;
 end
 
 -- EQDLK-Plus-XML export format
@@ -1949,7 +2041,9 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             if (not difficulty) then
                 xml = xml..createBossInfoString(raidID, i);
-            elseif ((bossInfo["Difficulty"] < 3) and difficulty == "N") or ((bossInfo["Difficulty"] > 2) and difficulty == "H") then
+            elseif ((bossInfo["Difficulty"] < 3) and difficulty == "N") then
+                xml = xml..createBossInfoString(raidID, i);
+            elseif ((bossInfo["Difficulty"] > 2) and difficulty == "H") then
                 xml = xml..createBossInfoString(raidID, i);
             end
         end
