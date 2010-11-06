@@ -48,9 +48,9 @@ local MRT_RaidLogTableColDef = {
 };
 local MRT_RaidAttendeesTableColDef = {
     {["name"] = "", ["width"] = 1},                            -- invisible column for storing the player number index from the raidlog-table
-    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 84},
-    {["name"] = MRT_L.GUI["Col_Join"], ["width"] = 40},
-    {["name"] = MRT_L.GUI["Col_Leave"], ["width"] = 40},
+    {["name"] = MRT_L.GUI["Col_Name"], ["width"] = 74},
+    {["name"] = MRT_L.GUI["Col_Join"], ["width"] = 45},
+    {["name"] = MRT_L.GUI["Col_Leave"], ["width"] = 45},
 };
 local MRT_RaidBosskillsTableColDef = {
     {["name"] = MRT_L.GUI["Col_Num"], ["width"] = 25, ["defaultsort"] = "dsc"},
