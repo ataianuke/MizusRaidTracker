@@ -68,7 +68,10 @@ MRT_RaidZones = {
 	["Icecrown Citadel"] = true,
     ["The Ruby Sanctum"] = true,
     -- Cataclysm
-    
+    ["Baradin Hold"] = true,                -- new PvP-Raid-Instance - missing in current LibBabble-Zone (11/07/2010)
+    ["Blackwing Descent"] = true,
+    ["The Bastion of Twilight"] = true,
+    ["Throne of the Four Winds"] = true,
 }
 
 MRT_LegacyRaidZones = {
@@ -85,6 +88,7 @@ MRT_LegacyRaidZones = {
 }
 
 MRT_PvPRaids = {
+    ["Baradin Hold"] = true,
     ["Vault of Archavon"] = true,
 }
 
@@ -149,7 +153,7 @@ MRT_BossIDList = {
     [34797] = "Icehowl",                  -- Northrend Beasts, third boss
     [34780] = "Lord Jaraxxus",
         -- Faction Champions will need bossyell
-        -- Val'kyr Twins will need bossyell for "correct" naming - each Val'kyr alone is trackable
+        -- Val'kyr Twins will need bossyell for "correct" naming - each Val'kyr alone is trackable - they die at same time - goal should be to change this to a detection on ID
     [34564] = "Anub'arak",    
     
     --  Icecrown Citadel
@@ -160,7 +164,7 @@ MRT_BossIDList = {
     [36626] = "Festergut",
     [36627] = "Rotface",
     [36678] = "Professor Putricide",       
-        -- Blood Prince Council will need bossyell for "correct" naming - Prince Keleseth alone is trackable
+        -- Blood Prince Council will need bossyell for "correct" naming - Prince Keleseth alone is trackable - they die at same time - goal should be to change this to a detection on ID
     [37955] = "Blood-Queen Lana'thel",
         -- Dreamwalker will need bossyell
     [36853] = "Sindragosa",
@@ -168,12 +172,31 @@ MRT_BossIDList = {
     
     --  The Ruby Sanctum
     -- Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
-    -- [39863] = "Halion",                     -- according to wowhead (possibly the true ID)
-    -- [39864] = "Halion",                     -- according to armory
+    -- [39863] = "Halion",                     -- according to wowhead
     
     -----------------
     --  Cataclysm  --
     -----------------
+    -- Baradin Hold
+    [47120] = "Argaloth",
+    
+    -- Blackwing Descent
+        -- Magmaw missing
+        -- Omitron Defense System will probably need a bossyell
+    [41378] = "Maloriak",
+    [41442] = "Atramedes",
+    [43296] = "Chimaeron",
+    [41376] = "Nefarian",
+    
+    -- The Bastion of Twilight
+        -- Valiona & Theralion - Twin drakes with sharde health pool
+    [44600] = "Halfus Wyrmbreaker",
+    [43735] = "Twilight Ascendant Council", -- ID is from the Elementium Monstrosity - this will need a rename after the boss kill
+    [43324] = "Cho'gall",
+    
+    -- Throne of the Four Winds
+        -- Conclave of Wind will need a bossyell (mobs are probably too far away to each other)
+    [46753] = "Al'Akir",
 }
 
 --------------------------------
