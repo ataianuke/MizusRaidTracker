@@ -73,6 +73,8 @@ local MRT_Defaults = {
 --------------
 local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
+local LBZ = LibStub("LibBabble-Zone-3.0");
+local LBZR = LBZ:GetReverseLookupTable();
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
 local pairs = pairs;
@@ -519,16 +521,17 @@ end
 
 function MRT_CheckZoneAndSizeStatus()
     -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
-    local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+    local localInstanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
     local instanceInfoDifficulty2 = GetInstanceDifficulty();
+    local instanceInfoName = LBZR[localInstanceInfoName];
     MRT_Debug("RIW fired - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
-    if (MRT_L.Raidzones[instanceInfoName]) then
+    if (MRT_RaidZones[instanceInfoName]) then
         -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
-        if (MRT_PvPRaids[MRT_L.Raidzones[instanceInfoName]] and not MRT_Options["Tracking_LogAVRaids"]) then 
+        if (MRT_PvPRaids[instanceInfoName] and not MRT_Options["Tracking_LogAVRaids"]) then 
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty2);
+        MRT_CheckTrackingStatus(localInstanceInfoName, instanceInfoDifficulty2);
     end
 end
 
