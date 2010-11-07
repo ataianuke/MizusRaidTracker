@@ -150,10 +150,10 @@ MRT_BossIDList = {
     [10184] = "Onyxia",
     
     -- Trial of the Crusader
-    [34797] = "Icehowl",                  -- Northrend Beasts, third boss
+    [34797] = "Icehowl",                        -- Northrend Beasts, third boss
     [34780] = "Lord Jaraxxus",
         -- Faction Champions will need bossyell
-    [34497] = "The Twin Val'kyr",         -- ID of Fjola Lightbane
+    [34497] = "The Twin Val'kyr",               -- ID of Fjola Lightbane
     [34564] = "Anub'arak",    
     
     -- Icecrown Citadel
@@ -164,7 +164,7 @@ MRT_BossIDList = {
     [36626] = "Festergut",
     [36627] = "Rotface",
     [36678] = "Professor Putricide",       
-    [37972] = "Blood Prince Council",     -- ID of Keleseth
+    [37972] = "Blood Prince Council",           -- ID of Keleseth
     [37955] = "Blood-Queen Lana'thel",
         -- Dreamwalker will need bossyell
     [36853] = "Sindragosa",
@@ -172,7 +172,7 @@ MRT_BossIDList = {
     
     -- The Ruby Sanctum
     -- Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
-    -- [39863] = "Halion",                     -- according to wowhead
+    -- [39863] = "Halion",                      -- according to wowhead
     
     -----------------
     --  Cataclysm  --
@@ -182,20 +182,20 @@ MRT_BossIDList = {
     
     -- Blackwing Descent
         -- Magmaw missing
-        -- Omitron Defense System will probably need a bossyell
+    [42180] = "Omnitron Defense System",        -- ID of Toxitron   - Omnitron Defense System may need bossyell
     [41378] = "Maloriak",
     [41442] = "Atramedes",
     [43296] = "Chimaeron",
     [41376] = "Nefarian",
     
     -- The Bastion of Twilight
-        -- Valiona & Theralion - Twin drakes with shared health pool
+    [45992] = "Valiona and Theralion",          -- ID of Valiona    - Valiona & Theralion - Twin drakes with shared health pool - may need boss yell
     [44600] = "Halfus Wyrmbreaker",
-    [43735] = "Twilight Ascendant Council", -- ID is from the Elementium Monstrosity - this will need a rename after the boss kill
+    [43735] = "Ascendant Council",              -- ID of Elementium Monstrosity
     [43324] = "Cho'gall",
     
     -- Throne of the Four Winds
-        -- Conclave of Wind will need a bossyell (mobs are probably too far away to each other)
+    [45871] = "Conclave of Wind",               -- ID of Nezir      - Conclave of Wind may need a bossyell (mobs are probably too far away to each other)
     [46753] = "Al'Akir",
 }
 
@@ -212,7 +212,12 @@ MRT_BossRenameList = {
     --  Cataclysm  --
     -----------------
     -- Blackwing Descent
+    [42180] = "Omnitron Defense System",
     -- The Bastion of Twilight
+    [45992] = "Valiona and Theralion",
+    [43735] = "Ascendant Council",
+    -- Throne of the Four Winds
+    [45871] = "Conclave of Wind",
 }
 
 --------------------------------
