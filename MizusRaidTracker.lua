@@ -75,6 +75,8 @@ local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
 local LBZ = LibStub("LibBabble-Zone-3.0");
 local LBZR = LBZ:GetReverseLookupTable();
+local LBB = LibStub("LibBabble-Boss-3.0");
+local LBBL = LBB:GetUnstrictLookupTable();
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
 local pairs = pairs;
@@ -200,9 +202,19 @@ function MRT_CombatLogHandler(...)
     local _, combatEvent, _, _, _, destGUID, destName = ...;
     if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
+        local englishBossName;
+        local localBossName = destName;
         local NPCID = MRT_GetNPCID(destGUID);
         if (MRT_BossIDList[NPCID]) then
-            MRT_AddBosskill(destName);
+            if (MRT_BossRenameList[NPCID]) then
+                englishBossName = MRT_BossRenameList[NPCID];
+                if (LBBL[englishBossName]) then
+                    localBossName = LBBL[englishBossName];
+                else
+                    localBossName = englishBossName;
+                end
+            end
+            MRT_AddBosskill(localBossName);
         end
     end
 end

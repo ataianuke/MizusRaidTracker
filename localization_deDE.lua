@@ -56,13 +56,13 @@ MRT_L.Bossyells = {
 
     ["Trial of the Crusader"] = {
         ["Ein tragischer Sieg. Wir wurden schw\195\164cher durch die heutigen Verluste. Wer au\195\159er dem Lichk\195\182nig profitiert von solchen Torheiten? Gro\195\159e Krieger gaben ihr Leben. Und wof\195\188r? Die wahre Bedrohung erwartet uns noch - der Lichk\195\182nig erwartet uns alle im Tod."] = "Fraktionschampions",
-        ["Die Gei\195\159el kann nicht aufgehalten werden..."] = "Val'kyr Zwillinge",
+        --["Die Gei\195\159el kann nicht aufgehalten werden..."] = "Val'kyr Zwillinge",
     },
         
     ["Icecrown Citadel"] = {
         ["Sagt nicht, ich h\195\164tte Euch nicht gewarnt, Ihr Schurken! Vorw\195\164rts, Br\195\188der und Schwestern!"] = "Eiskrone Luftschiffkampf", -- Muradin
         ["Die Allianz wankt. Vorw\195\164rts zum Lichk\195\182nig!"] = "Eiskrone Luftschiffkampf", -- Saurfang
-        ["Meine K\195\182nigin, sie... kommen."] = "Rat des Blutes", -- Prince Keleseth
+        --["Meine K\195\182nigin, sie... kommen."] = "Rat des Blutes", -- Prince Keleseth
         ["ICH BIN GEHEILT! Ysera, erlaubt mir, diese \195\188blen Kreaturen zu beseitigen!"] = "Valithria Traumwandler",
     },
 

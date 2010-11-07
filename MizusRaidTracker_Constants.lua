@@ -104,7 +104,7 @@ MRT_BossIDList = {
     --[721] = "Rabbit",
     --[32428] = "Underbelly Rat",
     
-    --  Naxxramas
+    -- Naxxramas
     [15956] = "Anub'Rekhan",
     [15953] = "Grand Widow Faerlina",
     [15952] = "Maexxna",
@@ -113,7 +113,7 @@ MRT_BossIDList = {
     [16011] = "Loatheb",
     [16061] = "Instructor Razuvious",
     [16060] = "Gothik the Harvester",
-        -- Four Horsemen will need bossyell
+        -- Four Horsemen not supported - boss event with multiple NPCs without shared health pool and without boss yell
     [16028] = "Patchwerk",
     [15931] = "Grobbulus",
     [15932] = "Gluth",
@@ -121,19 +121,19 @@ MRT_BossIDList = {
     [15989] = "Sapphiron",
     [15990] = "Kel'Thuzad",
     
-    --  The Obsidian Sanctum
+    -- The Obsidian Sanctum
     [28860] = "Sartharion",
     
-    --  Eye of Eternity
+    -- Eye of Eternity
     [28859] = "Malygos",
     
-    --  Archavon's Chamber
+    -- Archavon's Chamber
     [31125] = "Archavon the Stone Watcher",
     [33993] = "Emalon the Storm Watcher",
     [35013] = "Koralon the Flame Watcher",
     [38433] = "Toravon the Ice Watcher",
     
-    --  Ulduar
+    -- Ulduar
     [33113] = "Flame Leviathan",
     [33118] = "Ignis the Furnace Master",
     [33186] = "Razorscale",
@@ -146,17 +146,17 @@ MRT_BossIDList = {
     [33288] = "Yogg-Saron",
         -- Algalon needs a bossyell - he doesn't die
         
-    --  Onyxias Lair
+    -- Onyxias Lair
     [10184] = "Onyxia",
     
-    --  Trial of the Crusader
+    -- Trial of the Crusader
     [34797] = "Icehowl",                  -- Northrend Beasts, third boss
     [34780] = "Lord Jaraxxus",
         -- Faction Champions will need bossyell
-        -- Val'kyr Twins will need bossyell for "correct" naming - each Val'kyr alone is trackable - they die at same time - goal should be to change this to a detection on ID
+    [34497] = "The Twin Val'kyr",         -- ID of Fjola Lightbane
     [34564] = "Anub'arak",    
     
-    --  Icecrown Citadel
+    -- Icecrown Citadel
     [36612] = "Lord Marrowgar",
     [36855] = "Lady Deathwhisper",
         -- Gunship Battle will need bossyell
@@ -164,13 +164,13 @@ MRT_BossIDList = {
     [36626] = "Festergut",
     [36627] = "Rotface",
     [36678] = "Professor Putricide",       
-        -- Blood Prince Council will need bossyell for "correct" naming - Prince Keleseth alone is trackable - they die at same time - goal should be to change this to a detection on ID
+    [37972] = "Blood Prince Council",     -- ID of Keleseth
     [37955] = "Blood-Queen Lana'thel",
         -- Dreamwalker will need bossyell
     [36853] = "Sindragosa",
     [36597] = "The Lich King",
     
-    --  The Ruby Sanctum
+    -- The Ruby Sanctum
     -- Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
     -- [39863] = "Halion",                     -- according to wowhead
     
@@ -189,7 +189,7 @@ MRT_BossIDList = {
     [41376] = "Nefarian",
     
     -- The Bastion of Twilight
-        -- Valiona & Theralion - Twin drakes with sharde health pool
+        -- Valiona & Theralion - Twin drakes with shared health pool
     [44600] = "Halfus Wyrmbreaker",
     [43735] = "Twilight Ascendant Council", -- ID is from the Elementium Monstrosity - this will need a rename after the boss kill
     [43324] = "Cho'gall",
@@ -197,6 +197,22 @@ MRT_BossIDList = {
     -- Throne of the Four Winds
         -- Conclave of Wind will need a bossyell (mobs are probably too far away to each other)
     [46753] = "Al'Akir",
+}
+
+MRT_BossRenameList = {
+    ------------------------------
+    --  Wrath of the Lich King  --
+    ------------------------------
+    -- Trial of the Crusader
+    [34497] = "The Twin Val'kyr",
+    -- Icecrown Citadel
+    [37972] = "Blood Prince Council",
+    
+    -----------------
+    --  Cataclysm  --
+    -----------------
+    -- Blackwing Descent
+    -- The Bastion of Twilight
 }
 
 --------------------------------

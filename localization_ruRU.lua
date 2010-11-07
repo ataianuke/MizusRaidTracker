@@ -56,13 +56,13 @@ MRT_L.Bossyells = {
       
     ["Trial of the Crusader"] = {
         ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Чемпионы фракций",  -- Faction Champions
-        ["The Scourge cannot be stopped..."] = "Валь'киры-близнецы",  -- Val'kyr Twins
+        --["The Scourge cannot be stopped..."] = "Валь'киры-близнецы",  -- Val'kyr Twins
     },
         
     ["Icecrown Citadel"] = {
         ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Бой на кораблях", -- Gunship Battle Muradin (A)
         ["The Alliance falter. Onward to the Lich King!"] = "Бой на кораблях", -- Gunship Battle Saurfang (H)
-        ["My queen, they... come."] = "Совет Принцев Крови", -- Prince Keleseth
+        --["My queen, they... come."] = "Совет Принцев Крови", -- Prince Keleseth
         ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Валитрия Сноходица", -- Dreamwalker
     },
 

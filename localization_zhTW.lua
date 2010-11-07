@@ -56,13 +56,13 @@ MRT_L.Bossyells = {
     
     ["Trial of the Crusader"] = {
         ["膚淺而悲痛的勝利。今天痛失的生命反而令我們更加的頹弱。除了巫妖王之外，誰還能從中獲利?偉大的戰士失去了寶貴生命。為了什麼?真正的威脅就在前方 - 巫妖王在死亡的領域中等著我們。"] = "陣營勇士",  -- Faction Champions
-        ["誰也阻擋不了天譴軍團……"] = "華爾琪雙子",  -- Val'kyr Twins
+        --["誰也阻擋不了天譴軍團……"] = "華爾琪雙子",  -- Val'kyr Twins
     },
         
     ["Icecrown Citadel"] = {
         ["別說我沒警告過你，無賴!兄弟姊妹們，向前衝!"] = "寒冰皇冠空中艦艇戰", -- Gunship Battle Muradin (A)
         ["聯盟已經動搖了。向巫妖王前進!"] = "寒冰皇冠空中艦艇戰", -- Gunship Battle Saurfang (H)
-        ["女王陛下，他們…來了。"] = "血親王議會", -- Prince Keleseth
+        --["女王陛下，他們…來了。"] = "血親王議會", -- Prince Keleseth
         ["我重生了!伊瑟拉賦予我讓那些邪惡生物安眠的力量!"] = "瓦莉絲瑞雅·夢行者", -- Dreamwalker
     },
 

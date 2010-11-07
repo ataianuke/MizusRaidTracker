@@ -56,13 +56,13 @@ MRT_L.Bossyells = {
     
     ["Trial of the Crusader"] = {
         ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "阵营冠军",  -- Faction Champions
-        ["The Scourge cannot be stopped..."] = "瓦格里双子",  -- Val'kyr Twins
+        --["The Scourge cannot be stopped..."] = "瓦格里双子",  -- Val'kyr Twins
     },
         
     ["Icecrown Citadel"] = {
         ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "冰冠炮舰战斗", -- Gunship Battle Muradin (A)
         ["The Alliance falter. Onward to the Lich King!"] = "冰冠炮舰战斗", -- Gunship Battle Saurfang (H)
-        ["My queen, they... come."] = "鲜血王子议会", -- Prince Keleseth
+        --["My queen, they... come."] = "鲜血王子议会", -- Prince Keleseth
         ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "踏梦者瓦莉瑟瑞娅", -- Dreamwalker
     },
 
