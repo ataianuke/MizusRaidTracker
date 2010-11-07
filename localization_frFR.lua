@@ -46,7 +46,7 @@ MRT_L.Bossyells = {
     ["Ulduar"] = {
         ["You rush headlong into the maw of madness!"] = "Assemblée du Fer",  -- Normalmode - Stormcaller Brundir last
         ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Assemblée du Fer",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Imposible!"] = "Assemblée du Fer",  -- Hardmode - Steelbreaker last
+        ["Impossible..."] = "Assemblée du Fer",  -- Hardmode - Steelbreaker last
         ["Je suis... libéré de son emprise... enfin."] = "Hodir",
         ["Retenez vos coups ! Je me rends !"] = "Thorim",
         ["Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."] = "Freya",
@@ -56,7 +56,7 @@ MRT_L.Bossyells = {
       
     ["Trial of the Crusader"] = {
         ["Une victoire tragique et depourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait beneficier d'une telle folie?? De grands guerriers ont perdu la vie. Et pour quoi?? La vraie menace plane à l'horizon?: le roi-liche nous attend, tous, dans la mort."] = "Champions de faction",
-        ["Personne ne peut arr\195\170ter le Fl\195\169au…"] = "Soeurs Val'kyr",
+        ["Personne ne peux arrêter le fléau"] = "Soeurs Val'kyr",
     },
         
     ["Icecrown Citadel"] = {
@@ -67,7 +67,7 @@ MRT_L.Bossyells = {
     },
 
     ["The Ruby Sanctum"] = {
-        ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
+        ["Savourez bien cette victoire mortels car ce serra votre dernière. Ce monde brulera au retour du maitre !"] = "Halion", -- Halion
     },
 }
 
