@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This localization is written by:
---  Mizukichan
+--  wushiny
 --
 -- Note: 
 --  MRT requires a correct localization of RaidZones and Bossyells for working
@@ -44,30 +44,30 @@ MRT_L.Bossyells = {
     },
     
     ["Ulduar"] = {
-        ["You rush headlong into the maw of madness!"] = "鐵之集會",  -- Normalmode - Stormcaller Brundir last
-        ["What have you gained from my defeat? You are no less doomed, mortals!"] = "鐵之集會",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Impossible..."] = "鐵之集會",  -- Hardmode - Steelbreaker last
-        ["I... I am released from his grasp... at last."] = "霍迪爾",  -- Hodir
-        ["Stay your arms! I yield!"] = "索林姆",  -- Thorim
-        ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "芙蕾雅",  -- Freya
-        ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "彌米倫",  -- Mimiron
-        ["I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?"] = "『觀察者』艾爾加隆",  -- Algalon
+        ["你魯莽地闖入了瘋狂的禁地!"] = "鐵之集會",  -- Normalmode - Stormcaller Brundir last
+        ["擊敗我對你有什麼益處?你早已注定要滅亡，凡人。"] = "鐵之集會",  -- Semi-Hardmode - Runemaster Molgeim last
+        ["不可能......"] = "鐵之集會",  -- Hardmode - Steelbreaker last
+        ["我…我終於從他的掌控中…解脫了。"] = "霍迪爾",  -- Hodir
+        ["住手!我認輸了!"] = "索林姆",  -- Thorim
+        ["他對我的操控已然退散。我已再次恢復神智了。感激不盡，英雄們。"] = "芙蕾雅",  -- Freya
+        ["看來我還是產生了些許計算錯誤。任由我的心智受到囚牢中魔鬼的腐化，棄我的首要職責於不顧。所有的系統看起來都正常運作。報告完畢。"] = "彌米倫",  -- Mimiron
+        ["我曾經看過塵世沉浸在造物者的烈焰之中，眾生連一聲悲泣都無法呼出，就此凋零。整個星系在彈指之間歷經了毀滅與重生。然而在這段歷程之中，我的心卻無法感受到絲毫的…惻隱之念。我‧感‧受‧不‧到。成千上萬的生命就這麼消逝。他們是否擁有與你同樣堅韌的生命?他們是否與你同樣熱愛生命?"] = "『觀察者』艾爾加隆",  -- Algalon
     },
     
     ["Trial of the Crusader"] = {
-        ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "陣營勇士",  -- Faction Champions
-        ["The Scourge cannot be stopped..."] = "華爾琪雙子",  -- Val'kyr Twins
+        ["膚淺而悲痛的勝利。今天痛失的生命反而令我們更加的頹弱。除了巫妖王之外，誰還能從中獲利?偉大的戰士失去了寶貴生命。為了什麼?真正的威脅就在前方 - 巫妖王在死亡的領域中等著我們。"] = "陣營勇士",  -- Faction Champions
+        ["誰也阻擋不了天譴軍團……"] = "華爾琪雙子",  -- Val'kyr Twins
     },
         
     ["Icecrown Citadel"] = {
-        ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "寒冰皇冠空中艦艇戰", -- Gunship Battle Muradin (A)
-        ["The Alliance falter. Onward to the Lich King!"] = "寒冰皇冠空中艦艇戰", -- Gunship Battle Saurfang (H)
-        ["My queen, they... come."] = "血親王議會", -- Prince Keleseth
-        ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "瓦莉絲瑞雅·夢行者", -- Dreamwalker
+        ["別說我沒警告過你，無賴!兄弟姊妹們，向前衝!"] = "寒冰皇冠空中艦艇戰", -- Gunship Battle Muradin (A)
+        ["聯盟已經動搖了。向巫妖王前進!"] = "寒冰皇冠空中艦艇戰", -- Gunship Battle Saurfang (H)
+        ["女王陛下，他們…來了。"] = "血親王議會", -- Prince Keleseth
+        ["我重生了!伊瑟拉賦予我讓那些邪惡生物安眠的力量!"] = "瓦莉絲瑞雅·夢行者", -- Dreamwalker
     },
 
     ["The Ruby Sanctum"] = {
-        ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "海萊恩", -- Halion
+        ["享受這場勝利吧，凡人們，因為這是你們最後一次的勝利。這世界將會在主人回歸時化為火海!"] = "海萊恩", -- Halion
     },
 }
 
