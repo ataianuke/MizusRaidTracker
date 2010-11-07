@@ -11,6 +11,7 @@ MRT_InstanceDifficultyTable = {
     [4] = "25 Heroic",
 }
 
+-- these are probably not needed anymore
 MRT_ItemColorValues = {
     ["ff9d9d9d"] = 0,  -- poor
     ["ffffffff"] = 1,  -- common
@@ -177,15 +178,3 @@ MRT_IgnoredItemIDList = {
     -- Shards
     [34057] = true,  -- Abyss Crystal
 }
-
-----------------------------------
---  Iron Council Instancecheck  --
-----------------------------------
-function MRT_IsInstanceUlduar(boss)
-    local instanceInfoName = GetInstanceInfo();
-    if (MRT_L.Raidzones[instanceInfoName] == MRT_L.Raidzones["Ulduar"]) then
-        return boss;
-    else
-        return nil;
-    end
-end

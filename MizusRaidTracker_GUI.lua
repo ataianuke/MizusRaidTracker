@@ -1243,7 +1243,7 @@ function MRT_GUI_RaidAttendeesTableUpdate(raidnum)
             if (v["Leave"]) then
                 MRT_GUI_RaidAttendeesTableData[index] = {k, v["Name"], date("%H:%M", v["Join"]), date("%H:%M", v["Leave"])};
             else
-                MRT_GUI_RaidAttendeesTableData[index] = {k, v["Name"], date("%H:%M", v["Join"]), nil};
+                MRT_GUI_RaidAttendeesTableData[index] = {k, v["Name"], date("%H:%M", v["Join"]), ""};
             end
             index = index + 1;
         end
