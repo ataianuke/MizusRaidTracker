@@ -42,10 +42,6 @@ MRT_ItemColorsNonAlpha = {
     [7] = "e6cc80",  -- artifact / heirloom
 }
 
-MRT_PvPRaids = {
-    ["Vault of Archavon"] = true;
-}
-
 MRT_ItemValues = {
     [1] = ITEM_QUALITY0_DESC,
     [2] = ITEM_QUALITY1_DESC,
@@ -56,19 +52,55 @@ MRT_ItemValues = {
     [7] = ITEM_QUALITY6_DESC, 
 }
 
+
+----------------------
+--  Zone name list  --
+----------------------
+MRT_RaidZones = {
+    -- Wrath of the Lich King
+	["The Eye of Eternity"] = true,
+	["The Obsidian Sanctum"] = true,
+	["Vault of Archavon"] = true,
+	["Naxxramas"] = true,
+	["Ulduar"] = true,
+	["Trial of the Crusader"] = true,
+	["Onyxia's Lair"] = true,
+	["Icecrown Citadel"] = true,
+    ["The Ruby Sanctum"] = true,
+    -- Cataclysm
+    
+}
+
+MRT_LegacyRaidZones = {
+    -- Wrath of the Lich King
+	["The Eye of Eternity"] = true,
+	["The Obsidian Sanctum"] = true,
+	["Vault of Archavon"] = true,
+	["Naxxramas"] = true,
+	["Ulduar"] = true,
+	["Trial of the Crusader"] = true,
+	["Onyxia's Lair"] = true,
+	["Icecrown Citadel"] = true,
+    ["The Ruby Sanctum"] = true,
+}
+
+MRT_PvPRaids = {
+    ["Vault of Archavon"] = true,
+}
+
+
 -----------------------------------
 --  ID-List of trackable Bosses  --
 -----------------------------------
 MRT_BossIDList = {
-    ------------------------------------
-    --  Dalaran - Added for Debuging  --
-    ------------------------------------
+    ------------------------------
+    --  Wrath of the Lich King  --
+    ------------------------------
+    --  Dalaran - Added for Debuging
     --[721] = "Rabbit",
     --[32428] = "Underbelly Rat",
     
-    -----------------
-    --  Naxxramas  --
-    -----------------
+    --  Naxxramas
     [15956] = "Anub'Rekhan",
     [15953] = "Grand Widow Faerlina",
     [15952] = "Maexxna",
@@ -85,27 +117,19 @@ MRT_BossIDList = {
     [15989] = "Sapphiron",
     [15990] = "Kel'Thuzad",
     
-    ----------------------------
-    --  The Obsidian Sanctum  --
-    ----------------------------
+    --  The Obsidian Sanctum
     [28860] = "Sartharion",
     
-    -----------------------
-    --  Eye of Eternity  --
-    -----------------------
+    --  Eye of Eternity
     [28859] = "Malygos",
     
-    --------------------------
-    --  Archavon's Chamber  --
-    --------------------------
+    --  Archavon's Chamber
     [31125] = "Archavon the Stone Watcher",
     [33993] = "Emalon the Storm Watcher",
     [35013] = "Koralon the Flame Watcher",
     [38433] = "Toravon the Ice Watcher",
     
-    --------------
-    --  Ulduar  --
-    --------------
+    --  Ulduar
     [33113] = "Flame Leviathan",
     [33118] = "Ignis the Furnace Master",
     [33186] = "Razorscale",
@@ -118,23 +142,17 @@ MRT_BossIDList = {
     [33288] = "Yogg-Saron",
         -- Algalon needs a bossyell - he doesn't die
         
-    --------------------
-    --  Onyxias Lair  --
-    --------------------
+    --  Onyxias Lair
     [10184] = "Onyxia",
     
-    -----------------------------
-    --  Trial of the Crusader  --
-    -----------------------------
+    --  Trial of the Crusader
     [34797] = "Icehowl",                  -- Northrend Beasts, third boss
     [34780] = "Lord Jaraxxus",
         -- Faction Champions will need bossyell
         -- Val'kyr Twins will need bossyell for "correct" naming - each Val'kyr alone is trackable
     [34564] = "Anub'arak",    
     
-    ------------------------
-    --  Icecrown Citadel  --
-    ------------------------
+    --  Icecrown Citadel
     [36612] = "Lord Marrowgar",
     [36855] = "Lady Deathwhisper",
         -- Gunship Battle will need bossyell
@@ -148,12 +166,14 @@ MRT_BossIDList = {
     [36853] = "Sindragosa",
     [36597] = "The Lich King",
     
-    ------------------------
-    --  The Ruby Sanctum  --
-    ------------------------
---  Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
---    [39863] = "Halion",                     -- according to wowhead (possibly the true ID)
---    [39864] = "Halion",                     -- according to armory
+    --  The Ruby Sanctum
+    -- Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
+    -- [39863] = "Halion",                     -- according to wowhead (possibly the true ID)
+    -- [39864] = "Halion",                     -- according to armory
+    
+    -----------------
+    --  Cataclysm  --
+    -----------------
 }
 
 --------------------------------
