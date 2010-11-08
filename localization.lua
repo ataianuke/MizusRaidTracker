@@ -113,6 +113,7 @@ MRT_L.Core = {
     TakeSnapshot_CurrentRaidError = "Error: Active raid in progress. No snapshot taken.",
     TakeSnapshot_Done = "Snapshot taken.",
     TakeSnapshot_NotInRaidError = "Error: You are not in a raid. No snapshot taken.",
+    ["Trash Mob"] = "Trash Mob",
 }
 
 
