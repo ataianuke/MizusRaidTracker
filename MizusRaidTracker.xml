@@ -239,9 +239,6 @@
             <Offset x="-10" y="-40"/>
           </Anchor>
         </Anchors>
-        <Scripts>
-          <OnEscapePressed>MRT_ExportFrame_Hide();</OnEscapePressed>
-        </Scripts>
         <ScrollChild>
           <EditBox name="MRT_ExportFrame_EB" multiLine="true" enableKeyboard="true" letters="0" countInvisibleLetters="true">
             <Size x="350" y="150"/>
