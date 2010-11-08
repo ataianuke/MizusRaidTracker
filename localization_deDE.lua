@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This localization is written by:
---  Mizukichan, gOOvER
+--  Mizukichan, Enokra, gOOvER
 --
 -- Note: 
 --  MRT requires a correct localization of RaidZones and Bossyells for working

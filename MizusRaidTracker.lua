@@ -117,8 +117,8 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
     frame:RegisterEvent("CHAT_MSG_LOOT");
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-    --frame:RegisterEvent("CHAT_MSG_WHISPER");                  -- function moved to LibChatHandler-1.0
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    frame:RegisterEvent("PARTY_INVITE_REQUEST");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
@@ -151,20 +151,14 @@ function MRT_OnEvent(frame, event, ...)
             MRT_AddBosskill(MRT_L.Bossyells[instance][monsteryell]);
         end
     
-    elseif (event == "CHAT_MSG_WHISPER") then
-        if (MRT_TimerFrame.GARunning) then
-            local msg, source = ...;
-            if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
-                msg = source;
-            end
-            MRT_GuildAttendanceWhisper(msg, source);
-        end
-    
     elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then 
         MRT_CombatLogHandler(...);
     
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
+        
+    elseif (event == "PARTY_INVITE_REQUEST") then
+        MRT_Debug("PARTY_INVITE_REQUEST fired!");
         
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");

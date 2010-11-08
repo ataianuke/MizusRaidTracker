@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This localization is written by:
---  Cinedelle, Cyliah
+--  Cinedelle, Deepking, Cyliah
 --
 -- Note: 
 --  MRT requires a correct localization of RaidZones and Bossyells for working
@@ -44,8 +44,8 @@ MRT_L.Bossyells = {
     },
     
     ["Ulduar"] = {
-        ["You rush headlong into the maw of madness!"] = "Assemblée du Fer",  -- Normalmode - Stormcaller Brundir last
-        ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Assemblée du Fer",  -- Semi-Hardmode - Runemaster Molgeim last
+        ["Vous courez tout droit dans la gueule de la folie !"] = "Assemblée du Fer",  -- Normalmode - Stormcaller Brundir last
+        ["Que vous apporte ma chute? Votre destin n'en est pas moins scellé, mortels!"] = "Assemblée du Fer",  -- Semi-Hardmode - Runemaster Molgeim last
         ["Impossible..."] = "Assemblée du Fer",  -- Hardmode - Steelbreaker last
         ["Je suis... libéré de son emprise... enfin."] = "Hodir",
         ["Retenez vos coups ! Je me rends !"] = "Thorim",
