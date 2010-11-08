@@ -189,6 +189,7 @@ MRT_L.GUI = {
 	Button_Export = "Export",
 	Button_ExportHeroic = "Export H",
 	Button_ExportNormal = "Export N",
+    Button_MakeGuildAttendanceCheck = "Make guild attendance check",
 	Button_Modify = "Modify",
     Button_StartNewRaid = "Start new raid",
 	Button_TakeSnapshot = "Take Snapshot",

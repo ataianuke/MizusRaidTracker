@@ -218,6 +218,7 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_TakeSnapshot_Button:SetText(MRT_L.GUI["Button_TakeSnapshot"]);
     MRT_GUIFrame_TakeSnapshot_Button:SetPoint("TOPLEFT", MRT_GUI_BossLootTable.frame, "TOPLEFT", -215, 0);
     MRT_GUIFrame_StartNewRaid_Button:SetText(MRT_L.GUI["Button_StartNewRaid"]);
+    MRT_GUIFrame_MakeAttendanceCheck_Button:SetText(MRT_L.GUI["Button_MakeGuildAttendanceCheck"]);
     MRT_GUIFrame_EndCurrentRaid_Button:SetText(MRT_L.GUI["Button_EndCurrentRaid"]);
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
@@ -1139,6 +1140,22 @@ function MRT_GUI_StartNewRaidAccept()
     -- create new raid
     MRT_CreateNewRaid(zoneName, raidSize);
     MRT_GUI_CompleteTableUpdate();
+end
+
+function MRT_GUI_MakeAttendanceCheck()
+    if (not MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.GUI["No active raid"]);
+        return;
+    end
+    MRT_StartGuildAttendanceCheck("_attendancecheck_");
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (raidnum == MRT_NumOfCurrentRaid) then
+        MRT_GUI_RaidDetailsTableUpdate(raidnum);
+    end
 end
 
 function MRT_GUI_EndCurrentRaid()

@@ -535,7 +535,7 @@
           <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
-      <Button name="$parent_StartNewRaid_Button" inherits="MRT_GUI_Button_Template" text="FIXME: StartRaid">
+      <Button name="$parent_StartNewRaid_Button" inherits="MRT_GUI_Button_Template" text="(L) StartRaid">
         <Size x="180" y="22"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_TakeSnapshot_Button" x="0" y="-32"/>
@@ -546,10 +546,21 @@
           <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
-      <Button name="$parent_EndCurrentRaid_Button" inherits="MRT_GUI_Button_Template" text="FIXME: EndRaid">
+      <Button name="$parent_MakeAttendanceCheck_Button" inherits="MRT_GUI_Button_Template" text="(L) Make guild attendance check">
         <Size x="180" y="22"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_StartNewRaid_Button" x="0" y="-5"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_GUI_MakeAttendanceCheck();</OnClick>
+          <OnEnter></OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
+        </Scripts>
+      </Button>
+      <Button name="$parent_EndCurrentRaid_Button" inherits="MRT_GUI_Button_Template" text="FIXME: EndRaid">
+        <Size x="180" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_MakeAttendanceCheck_Button" x="0" y="-5"/>
         </Anchors>
         <Scripts>
           <OnClick>MRT_GUI_EndCurrentRaid();</OnClick>
