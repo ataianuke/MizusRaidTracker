@@ -40,6 +40,7 @@ MRT_PlayerDB = {};
 
 local MRT_Defaults = {
     ["Options"] = {
+        ["DB_Version"] = 2,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
         ["General_OptionsVersion"] = 5,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
@@ -80,7 +81,6 @@ local LBZR = LBZ:GetReverseLookupTable();
 local LBB = LibStub("LibBabble-Boss-3.0");
 local LBBL = LBB:GetUnstrictLookupTable();
 local ScrollingTable = LibStub("ScrollingTable");
-local libCH = LibStub("LibChatHandler-1.0");
 local tinsert = tinsert;
 local pairs = pairs;
 local ipairs = ipairs;
@@ -116,6 +116,7 @@ local MRT_DKPFrame_DropDownTableColDef = {
 function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
     frame:RegisterEvent("CHAT_MSG_LOOT");
+    frame:RegisterEvent("CHAT_MSG_WHISPER");
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
@@ -137,6 +138,17 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
             MRT_AutoAddLoot(...);
+        end
+        
+    elseif (event == "CHAT_MSG_WHISPER") then
+        if (not MRT_TimerFrame.GARunning) then return false; end
+        local msg, from = ...;
+        if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
+            MRT_GuildAttendanceWhisper(from, from);
+        elseif (not MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
+            local player = MRT_GuildRoster[string.lower(msg)];
+            if (not player) then return; end
+            MRT_GuildAttendanceWhisper(player, from);
         end
     
     elseif (event == "CHAT_MSG_MONSTER_YELL") then
@@ -244,26 +256,28 @@ function MRT_SlashCmdHandler(msg)
 end
 
 -- Chat handler
-local MRT_ChatHandler = libCH:NewDelegate();
-MRT_ChatHandler:RegisterChatEvent("CHAT_MSG_WHISPER");
-function MRT_ChatHandler:CHAT_MSG_WHISPER_CONTROLLER(eventController, msg, from, ...)
-    if (not MRT_TimerFrame.GARunning) then return; end
+local MRT_ChatHandler = {};
+function MRT_ChatHandler.CHAT_MSG_WHISPER_Filter(self, event, msg, from, ...)
+    if (not MRT_TimerFrame.GARunning) then return false; end
     if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
-        eventController:Block();
-        MRT_GuildAttendanceWhisper(from, from);
+        return true;
     elseif (not MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
         local player = MRT_GuildRoster[string.lower(msg)];
-        if (not player) then return; end
-        eventController:Block();
-        MRT_GuildAttendanceWhisper(player, from);
+        if (not player) then return false; end
+        return true;
     end
+    return false;
 end
-function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_CONTROLLER(eventController, msg, from, ...)
-    if (not MRT_TimerFrame.GARunning) then return; end
+
+function MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER(self, event, msg, from, ...)
+    if (not MRT_TimerFrame.GARunning) then return false; end
     if (msg == MRT_ChatHandler.MsgToBlock) then
-        eventController:Block();
+        return true;
     end
+    return false;
 end
+ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", MRT_ChatHandler.CHAT_MSG_WHISPER_Filter);
+ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER);
 
 
 ------------------
@@ -1199,7 +1213,6 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     MRT_TimerFrame.GABossKillText = bosskilltext;
     MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
     MRT_TimerFrame:SetScript("OnUpdate", function() MRT_GuildAttendanceCheckUpdate(); end);
-    MRT_ChatHandler:RegisterChatEvent("CHAT_MSG_WHISPER_INFORM");
 end
 
 function MRT_GuildAttendanceCheckUpdate()
@@ -1215,7 +1228,6 @@ function MRT_GuildAttendanceCheckUpdate()
             if (MRT_TimerFrame.GADuration == 0) then
                 SendChatMessage("MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"], targetChannel);
                 MRT_TimerFrame.GARunning = nil;
-                MRT_ChatHandler:UnregisterChatEvent("CHAT_MSG_WHISPER_INFORM");
             else
                 SendChatMessage("********************", targetChannel);
                 SendChatMessage(MRT_TimerFrame.GABossKillText, targetChannel);
