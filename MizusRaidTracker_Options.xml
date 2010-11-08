@@ -358,11 +358,41 @@
           </Layer>
         </Layers>
       </CheckButton>
+      <CheckButton name="$parent_GA_UseTrigger_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GA_NoAuto_CB" x="0" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Use trigger instead of character name (FIXME!)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <EditBox name="$parent_GA_Trigger_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
+        <Size x="200" y="26"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GA_UseTrigger_CB" x="5" y="-20"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Trigger: (FIXME!)">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="-5" y="0"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <FontString inherits="ChatFontNormal"/>
+      </EditBox>
       <Slider name="$parent_GADuration_Slider" enableMouse="true" defaultValue="0" minValue="1" maxValue="5" valueStep="1" orientation="HORIZONTAL">
         <Size x="200" y="20"/>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_GA_NoAuto_CB" relativePoint="BOTTOMLEFT">
-            <Offset x="-16" y="-20"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_GA_Trigger_EB" relativePoint="BOTTOMLEFT">
+            <Offset x="-21" y="-20"/>
           </Anchor>
         </Anchors>
         <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
@@ -524,9 +554,7 @@
       <EditBox name="$parent_SetDateFormat_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
         <Size x="200" y="26"/>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_TextExport_Title" relativePoint="BOTTOMLEFT">
-            <Offset x="5" y="-20"></Offset>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativeTo="$parent_TextExport_Title" relativePoint="BOTTOMLEFT" x="5" y="-20"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">

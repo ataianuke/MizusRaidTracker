@@ -94,6 +94,11 @@ function MRT_Options_ParseValues()
     MRT_Options_AttendancePanel_GA_CB_Text:SetText(MRT_L.Options["AP_GuildAttendance"]);
     MRT_Options_AttendancePanel_GA_NoAuto_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckNoAuto"]);
     MRT_Options_AttendancePanel_GA_NoAuto_CB_Text:SetText(MRT_L.Options["AP_GuildAttendanceNoAuto"]);
+    MRT_Options_AttendancePanel_GA_UseTrigger_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]);
+    MRT_Options_AttendancePanel_GA_UseTrigger_CB_Text:SetText(MRT_L.Options["AP_GuildAttendanceUseTrigger"]);
+    MRT_Options_AttendancePanel_GA_Trigger_EB:SetText(MRT_Options["Attendance_GuildAttendanceCheckTrigger"]);
+    MRT_Options_AttendancePanel_GA_Trigger_EB:SetCursorPosition(0);
+    MRT_Options_AttendancePanel_GA_Trigger_EB_Text:SetText(MRT_L.Options["AP_GuildAttendanceTrigger"]);
     MRT_Options_AttendancePanel_GADuration_Slider:SetValue(MRT_Options["Attendance_GuildAttendanceCheckDuration"]);
     MRT_Options_AttendancePanel_GADuration_SliderText:SetText(MRT_L.Options["AP_GuildAttendanceDuration"]);
     MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"].." "..MRT_L.Options["AP_Minutes"]);
@@ -152,11 +157,13 @@ function MRT_Options_OnOkay(panel)
     end
     MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
     -- AttendancePanel
-    MRT_Options["Attendance_GuildAttendanceCheckEnabled"] = MRT_Options_AttendancePanel_GA_CB:GetChecked();
-    MRT_Options["Attendance_GuildAttendanceCheckNoAuto"] = MRT_Options_AttendancePanel_GA_NoAuto_CB:GetChecked();
-    MRT_Options["Attendance_GuildAttendanceCheckDuration"] = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
     MRT_Options["Attendance_GroupRestriction"] = MRT_Options_AttendancePanel_GroupRestriction:GetChecked();
     MRT_Options["Attendance_TrackOffline"] = MRT_Options_AttendancePanel_OfflinePlayers:GetChecked();
+    MRT_Options["Attendance_GuildAttendanceCheckEnabled"] = MRT_Options_AttendancePanel_GA_CB:GetChecked();
+    MRT_Options["Attendance_GuildAttendanceCheckNoAuto"] = MRT_Options_AttendancePanel_GA_NoAuto_CB:GetChecked();
+    MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] = MRT_Options_AttendancePanel_GA_UseTrigger_CB:GetChecked();
+    MRT_Options["Attendance_GuildAttendanceCheckTrigger"] = MRT_Options_AttendancePanel_GA_Trigger_EB:GetText();
+    MRT_Options["Attendance_GuildAttendanceCheckDuration"] = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
     -- ExportPanel
     MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
     MRT_Options["Export_CTRT_IgnorePerBossAttendance"] = MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:GetChecked();

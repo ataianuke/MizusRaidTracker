@@ -46,6 +46,8 @@ local MRT_Defaults = {
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["Attendance_GuildAttendanceCheckEnabled"] = false,                         -- 
         ["Attendance_GuildAttendanceCheckNoAuto"] = true,                           --
+        ["Attendance_GuildAttendanceCheckUseTrigger"] = false,
+        ["Attendance_GuildAttendanceCheckTrigger"] = "!triggerexample",
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
         ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
@@ -151,6 +153,9 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "CHAT_MSG_WHISPER") then
         if (MRT_TimerFrame.GARunning) then
             local msg, source = ...;
+            if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
+                msg = source;
+            end
             MRT_GuildAttendanceWhisper(msg, source);
         end
     
@@ -337,6 +342,11 @@ function MRT_UpdateSavedOptions()
     if MRT_Options["General_OptionsVersion"] == 4 then
         MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] = 0;
         MRT_Options["General_OptionsVersion"] = 5;
+    end
+    if MRT_Options["General_OptionsVersion"] == 5 then
+        MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] = false;
+        MRT_Options["Attendance_GuildAttendanceCheckTrigger"] = "!triggerexample";
+        MRT_Options["General_OptionsVersion"] = 6;
     end
 end
 
@@ -1147,11 +1157,17 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     MRT_TimerFrame.GALastMsg = time();
     MRT_TimerFrame.GADuration = MRT_Options["Attendance_GuildAttendanceCheckDuration"];
     local bosskilltext = nil;
+    local triggertext = nil;
+    if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
+        triggertext = string.format(MRT_L.Core["GuildAttendanceAnnounceText2"], MRT_Options["Attendance_GuildAttendanceCheckTrigger"]);
+    else
+        triggertext = MRT_L.Core["GuildAttendanceAnnounceText"];
+    end
     if (bosskilled == "_attendancecheck_") then
         MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
-        bosskilltext = "MRT: "..MRT_L.Core["GuildAttendanceAnnounceText"];
+        bosskilltext = "MRT: "..triggertext;
     else
-        bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled).." "..MRT_L.Core["GuildAttendanceAnnounceText"];
+        bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled).." "..triggertext;
     end
     SendChatMessage("********************", "GUILD");
     SendChatMessage(bosskilltext, "GUILD");
