@@ -80,6 +80,7 @@ local LBZR = LBZ:GetReverseLookupTable();
 local LBB = LibStub("LibBabble-Boss-3.0");
 local LBBL = LBB:GetUnstrictLookupTable();
 local ScrollingTable = LibStub("ScrollingTable");
+local libCH = LibStub("LibChatHandler-1.0");
 local tinsert = tinsert;
 local pairs = pairs;
 local ipairs = ipairs;
@@ -116,7 +117,7 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
     frame:RegisterEvent("CHAT_MSG_LOOT");
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-    frame:RegisterEvent("CHAT_MSG_WHISPER");
+    --frame:RegisterEvent("CHAT_MSG_WHISPER");                  -- function moved to LibChatHandler-1.0
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
@@ -243,6 +244,28 @@ function MRT_SlashCmdHandler(msg)
         MRT_TakeSnapshot();
     else
         -- FIXME: print commands
+    end
+end
+
+-- Chat handler
+local MRT_ChatHandler = libCH:NewDelegate();
+MRT_ChatHandler:RegisterChatEvent("CHAT_MSG_WHISPER");
+function MRT_ChatHandler:CHAT_MSG_WHISPER_CONTROLLER(eventController, msg, from, ...)
+    if (not MRT_TimerFrame.GARunning) then return; end
+    if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
+        eventController:Block();
+        MRT_GuildAttendanceWhisper(from, from);
+    elseif (not MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
+        local player = MRT_GuildRoster[string.lower(msg)];
+        if (not player) then return; end
+        eventController:Block();
+        MRT_GuildAttendanceWhisper(player, from);
+    end
+end
+function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_CONTROLLER(eventController, msg, from, ...)
+    if (not MRT_TimerFrame.GARunning) then return; end
+    if (msg == MRT_ChatHandler.MsgToBlock) then
+        eventController:Block();
     end
 end
 
@@ -1169,29 +1192,39 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     else
         bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled).." "..triggertext;
     end
-    SendChatMessage("********************", "GUILD");
-    SendChatMessage(bosskilltext, "GUILD");
-    SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
-    SendChatMessage("********************", "GUILD");
+    local targetChannel = "GUILD";
+    --@debug@
+    if (MRT_Options["General_DebugEnabled"]) then targetChannel = "PARTY"; end
+    --@end-debug@
+    SendChatMessage("********************", targetChannel);
+    SendChatMessage(bosskilltext, targetChannel);
+    SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), targetChannel);
+    SendChatMessage("********************", targetChannel);
     MRT_TimerFrame.GABossKillText = bosskilltext;
     MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
     MRT_TimerFrame:SetScript("OnUpdate", function() MRT_GuildAttendanceCheckUpdate(); end);
+    MRT_ChatHandler:RegisterChatEvent("CHAT_MSG_WHISPER_INFORM");
 end
 
 function MRT_GuildAttendanceCheckUpdate()
     if (MRT_TimerFrame.GARunning) then
         -- is last message one minute ago?
         if ((time() - MRT_TimerFrame.GALastMsg) >= 60) then
+            local targetChannel = "GUILD";
+            --@debug@
+            if (MRT_Options["General_DebugEnabled"]) then targetChannel = "PARTY"; end
+            --@end-debug@
             MRT_TimerFrame.GALastMsg = time();
             -- is GACheck duration up?
             if (MRT_TimerFrame.GADuration == 0) then
-                SendChatMessage("MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"], "GUILD");
+                SendChatMessage("MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"], targetChannel);
                 MRT_TimerFrame.GARunning = nil;
+                MRT_ChatHandler:UnregisterChatEvent("CHAT_MSG_WHISPER_INFORM");
             else
-                SendChatMessage("********************", "GUILD");
-                SendChatMessage(MRT_TimerFrame.GABossKillText, "GUILD");
-                SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), "GUILD");
-                SendChatMessage("********************", "GUILD");
+                SendChatMessage("********************", targetChannel);
+                SendChatMessage(MRT_TimerFrame.GABossKillText, targetChannel);
+                SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), targetChannel);
+                SendChatMessage("********************", targetChannel);
                 MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
             end
         end
@@ -1201,15 +1234,10 @@ function MRT_GuildAttendanceCheckUpdate()
     end
 end
 
-function MRT_GuildAttendanceWhisper(msg, source)
-    if ((MRT_NumOfCurrentRaid ~= nil) and (MRT_GuildRoster[string.lower(msg)] ~= nil)) then
-        local player = MRT_GuildRoster[string.lower(msg)];
+function MRT_GuildAttendanceWhisper(player, source)
+    if (MRT_NumOfCurrentRaid ~= nil) then
+        local sendMsg = nil;
         local player_exist = nil;
---        for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Players"]) do
---            if (val["Name"] == player) then
---                if (not val["Leave"]) then player_exist = true; end
---            end
---        end
         if (MRT_NumOfLastBoss) then
             for i, v in ipairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"]) do
                 if (v == player) then player_exist = true; end;
@@ -1217,10 +1245,14 @@ function MRT_GuildAttendanceWhisper(msg, source)
             if (player_exist == nil) then tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"], player); end;
         end
         if (player_exist) then
-            SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceReplyFail"], player), "WHISPER", nil, source);
+            sendMsg = "MRT: "..string.format(MRT_L.Core.GuildAttendanceReplyFail, player);
+            MRT_Print(string.format(MRT_L.Core.GuildAttendanceFailNotice, source, player)); -- this line might just be deleted
         else
-            SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceReply"], player), "WHISPER", nil, source);
+            sendMsg = "MRT: "..string.format(MRT_L.Core.GuildAttendanceReply, player);
+            MRT_Print(string.format(MRT_L.Core.GuildAttendanceAddNotice, source, player));
         end
+        SendChatMessage(sendMsg, "WHISPER", nil, source);
+        MRT_ChatHandler.MsgToBlock = sendMsg;
     end
 end
 
