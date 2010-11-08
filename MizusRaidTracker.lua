@@ -226,6 +226,8 @@ function MRT_SlashCmdHandler(msg)
         InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
     elseif (msg == 'dkpcheck') then
         MRT_StartGuildAttendanceCheck("_attendancecheck_");
+    elseif (msg == 'deleteall now') then
+        MRT_DeleteRaidLog();
     elseif (msg == '') then
         MRT_GUI_Toggle();
     elseif (msg == 'dkpframe') then
@@ -1303,6 +1305,18 @@ end
 
 function MRT_MakeEQDKP_Time(timestamp)
     return date("%m/%d/%y %H:%M:%S", timestamp)
+end
+
+function MRT_DeleteRaidLog()
+    if (MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.GUI["Active raid in progress."]);
+        return;
+    end
+    MRT_RaidLog = {};
+    MRT_PlayerDB = {};
+    if (MRT_GUIFrame) then
+        MRT_GUI_CompleteTableUpdate();
+    end
 end
 
 

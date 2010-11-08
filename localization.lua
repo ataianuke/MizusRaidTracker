@@ -176,6 +176,7 @@ MRT_L.Options = {
 --  GUI strings  --
 -------------------
 MRT_L.GUI = { 
+    ["Active raid in progress."] = "Error: Active raid in progress. Please end the active raid first.",
     ["Active raid found. End current one first."] = "Error: Active raid found. Please end the active raid before starting a new one.",
 	["Add boss attendee"] = "Add boss attendee",
 	["Add bosskill"] = "Add bosskill",
