@@ -2240,9 +2240,15 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
             end
         end
     end
-    -- player data should now be complete - export it:
+    -- prepare a list with sorted player names to fill the boss info
+    local sortedPlayerList = {};
     for name, joinLeaveTable in pairs(playerList) do
-        xml = xml..createPlayerInfoString(name, realm, joinLeaveTable);
+        tinsert(sortedPlayerList, name);
+    end
+    table.sort(sortedPlayerList);
+    -- player data should now be complete - export it:
+    for i, name in ipairs(sortedPlayerList) do
+        xml = xml..createPlayerInfoString(name, realm, playerList[name]);
     end
     xml = xml.."</members>";
     -- and last, add items
