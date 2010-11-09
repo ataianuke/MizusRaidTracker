@@ -257,7 +257,7 @@ end
 
 -- Chat handler
 local MRT_ChatHandler = {};
-function MRT_ChatHandler.CHAT_MSG_WHISPER_Filter(self, event, msg, from, ...)
+function MRT_ChatHandler:CHAT_MSG_WHISPER_Filter(self, event, msg, from, ...)
     if (not MRT_TimerFrame.GARunning) then return false; end
     if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
         return true;
@@ -269,7 +269,7 @@ function MRT_ChatHandler.CHAT_MSG_WHISPER_Filter(self, event, msg, from, ...)
     return false;
 end
 
-function MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER(self, event, msg, from, ...)
+function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_FILTER(self, event, msg, from, ...)
     if (not MRT_TimerFrame.GARunning) then return false; end
     if (msg == MRT_ChatHandler.MsgToBlock) then
         return true;
