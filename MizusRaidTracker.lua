@@ -45,6 +45,8 @@ local MRT_Defaults = {
         ["General_OptionsVersion"] = 6,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
+        --["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
+        --["General_PrunningTime"] = 30,                                              -- Prunning time, after log shall be deleted (days)
         ["Attendance_GuildAttendanceCheckEnabled"] = false,                         -- 
         ["Attendance_GuildAttendanceCheckNoAuto"] = true,                           --
         ["Attendance_GuildAttendanceCheckUseTrigger"] = false,
@@ -460,12 +462,29 @@ end
 ----------------------------
 --  Periodic maintenance  --
 ----------------------------
--- delete unused PlayerDB-Entries
+-- delete unused PlayerDB-Entries and prun raidlog
 function MRT_PeriodicMaintenance()
     if (#MRT_RaidLog == 0) then return; end
+    local startTime = time();
+    -- process prunning - smaller raidIndex is older raid
+    if (MRT_Options["General_PrunnRaidLog"]) then
+        -- prunningTime in seconds
+        local prunningTime = MRT_Options["General_PrunningTime"] * 24 * 60 * 60;
+        local lastRaidOverPrunningTreshhold = nil;
+        for i, raidInfo in ipairs(MRT_RaidLog) do
+            if ( (startTime - MRT_RaidLog["StartTime"]) > prunningTime and i ~= MRT_NumOfCurrentRaid ) then
+                lastRaidOverPrunningTreshhold = i;
+            end
+        end
+        if (lastRaidOverPrunningTreshhold) then
+            for i = lastRaidOverPrunningTreshhold, 1, -1 do
+                tremove(MRT_RaidLog, i);
+            end
+        end
+    end
+    -- process playerDB
     local deletedEntries = 0;
     local usedPlayerList = {};
-    local startTime = time();
     for i, raidInfoTable in ipairs(MRT_RaidLog) do
         local name;
         local realm = raidInfoTable["Realm"];
