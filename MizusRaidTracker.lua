@@ -57,6 +57,7 @@ local MRT_Defaults = {
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
+        --["Tracking_AskCostAutoFocus"] = 1,                                          -- NYI - 1: always AutoFocus, 2: when not in combat, 3: never
         ["Tracking_CreateNewRaidOnNewZone"] = true,
         ["Tracking_OnlyTrackItemsAboveILvl"] = 0,
         ["Tracking_UseServerTime"] = false,
@@ -1069,6 +1070,15 @@ function MRT_DKPFrame_AskCost()
         MRT_GetDKPValueFrame_EB2:SetText("");
     end
     MRT_GetDKPValueFrame.Looter = MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"];
+    -- set autoFocus of EditBoxes
+    if (MRT_Options["Tracking_AskCostAutoFocus"] == 3 or (MRT_Options["Tracking_AskCostAutoFocus"] == 2 and not UnitAffectingCombat("player")) ) then
+        MRT_GetDKPValueFrame_EB:SetAutoFocus(false);
+        MRT_GetDKPValueFrame_EB2:SetAutoFocus(false);
+    else
+        MRT_GetDKPValueFrame_EB:SetAutoFocus(true);
+        MRT_GetDKPValueFrame_EB2:SetAutoFocus(true);
+    end
+    -- show DKPValue
     MRT_GetDKPValueFrame:Show();
 end
 
