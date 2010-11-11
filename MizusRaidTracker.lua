@@ -64,6 +64,7 @@ local MRT_Defaults = {
         ["Tracking_OnlyTrackItemsAboveILvl"] = 0,
         ["Tracking_UseServerTime"] = false,
         ["Export_ExportFormat"] = 2,                                                -- 1: CTRT compatible, 2: EQdkp-Plus XML, 3: MLdkp 1.5,  4: plain text, 5: BBCode, 6: BBCode with wowhead, 7: CSS based HTML
+        --["Export_ExportEnglish"] = false,                                           -- If activated, zone and boss names will be exported in english
         ["Export_CTRT_AddPoorItem"] = false,                                        -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
         ["Export_CTRT_IgnorePerBossAttendance"] = false,                            -- This will create an export where each raid member has 100% attendance: true / nil
         ["Export_CTRT_RLIPerBossAttendanceFix"] = false,
@@ -1429,10 +1430,16 @@ end
 
 -- complete rewrite of the old function based on the experience of newer functions
 function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
+    -- get reverse lookup table, if exports should be in english
+    local LBBR = LBB:GetReverseLookupTable();
     -- create generic functions for repeated blocks
     local function createBossInfoString(index, bossInfo, attendeeList)
         local bossXml = "<key"..index..">";
-        bossXml = bossXml.."<name>"..bossInfo.Name.."</name>";
+        if (MRT_Options["Export_ExportEnglish"]) then
+            bossXml = bossXml.."<name>"..(LBBR[bossInfo.Name] or bossInfo.Name).."</name>";
+        else
+            bossXml = bossXml.."<name>"..bossInfo.Name.."</name>";
+        end
         bossXml = bossXml.."<difficulty>"..bossInfo.Difficulty.."</difficulty>";
         bossXml = bossXml.."<time>"..MRT_MakeEQDKP_Time(bossInfo.Date).."</time>";
         bossXml = bossXml.."<attendees>";
@@ -1528,7 +1535,11 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     xml = xml.."<realm>"..realm.."</realm>";
     xml = xml.."<start>"..MRT_MakeEQDKP_Time(raidStart).."</start>";
     xml = xml.."<end>"..MRT_MakeEQDKP_Time(raidStop).."</end>";
-    xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    if (MRT_Options["Export_ExportEnglish"]) then
+        xml = xml.."<zone>"..(LBZR[MRT_RaidLog[raidID]["RaidZone"]] or MRT_RaidLog[raidID]["RaidZone"]).."</zone>";
+    else
+        xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    end
     if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
         xml = xml.."<difficulty>1</difficulty>";
     elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
@@ -1735,11 +1746,18 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     return xml;
 end
 
--- EQDLK-Plus-XML export format
+-- EQdkp-Plus-XML export format
 function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
+    -- get reverse lookup table, if exports should be in english
+    local LBBR = LBB:GetReverseLookupTable();
     -- start to create generic functions for repeated blocks
     local function createBossInfoString(raidID, bossID)
         local bossXml = "<bosskill>";
+        if (MRT_Options["Export_ExportEnglish"]) then
+            bossXml = bossXml.."<name>"..(LBBR[MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]] or MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]).."</name>";
+        else
+            bossXml = bossXml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
+        end
         bossXml = bossXml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
         bossXml = bossXml.."<time>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"].."</time>";
         bossXml = bossXml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
@@ -1798,7 +1816,11 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     -- head finished. now the raid data - first the zone information
     xml = xml.."<raiddata><zones><zone>";
     xml = xml.."<enter>"..raidStart.."</enter><leave>"..raidStop.."</leave>";
-    xml = xml.."<name>"..MRT_RaidLog[raidID]["RaidZone"].."</name>";
+    if (MRT_Options["Export_ExportEnglish"]) then
+        xml = xml.."<name>"..(LBZR[MRT_RaidLog[raidID]["RaidZone"]] or MRT_RaidLog[raidID]["RaidZone"]).."</name>";
+    else
+        xml = xml.."<name>"..MRT_RaidLog[raidID]["RaidZone"].."</name>";
+    end
     if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
         xml = xml.."<difficulty>1</difficulty>";
     elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
@@ -1977,23 +1999,16 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         ["Worgen"] = 11,        -- Cataclysm (FIXME: Is this string correct? - if not, the export will fail horribly)
         ["Goblin"] = 12,        -- Cataclysm (FIXME: Is this string correct? - if not, the export will fail horribly)
     };
+    local LBBR = LBB:GetReverseLookupTable();
     -- start to create generic functions for repeated blocks
     local function createBossInfoString(raidID, bossID)
         local bossXml = "<bosskill>";
-        bossXml = bossXml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
-        bossXml = bossXml.."<time>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"].."</time>";
-        -- is this nested instance information really necessary? This part isn't implemented in CTRT.
-        --[[
-        bossXml = bossXml.."<instance>";
-        bossXml = bossXml.."<name>"..MRT_RaidLog[raidID]["RaidZone"].."</name>";
-        bossXml = bossXml.."<type>raid</type>";
-        if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
-            bossXml = bossXml.."<difficulty>1</difficulty>";
-        elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
-            bossXml = bossXml.."<difficulty>2</difficulty>";
+        if (MRT_Options["Export_ExportEnglish"]) then
+            bossXml = bossXml.."<name>"..(LBBR[MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]] or MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]).."</name>";
+        else
+            bossXml = bossXml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
         end
-        bossXml = bossXml.."</instance>";
-        --]]
+        bossXml = bossXml.."<time>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"].."</time>";
         bossXml = bossXml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
         bossXml = bossXml.."</bosskill>";
         return bossXml;
@@ -2062,7 +2077,11 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     xml = xml.."<start>"..raidStart.."</start>";
     xml = xml.."<end>"..raidStop.."</end>";
     xml = xml.."<realm>"..realm.."</realm>";
-    xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    if (MRT_Options["Export_ExportEnglish"]) then
+        xml = xml.."<zone>"..(LBZR[MRT_RaidLog[raidID]["RaidZone"]] or MRT_RaidLog[raidID]["RaidZone"]).."</zone>";
+    else
+        xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
+    end
     if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
         xml = xml.."<difficulty>1</difficulty>";
     elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
@@ -2189,6 +2208,8 @@ end
 -- Planned format options:
 -- @param addFormat: nil = plainText, 1 = BBCode, 2 = BBCode with wowhead-links, 3 = ?
 function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
+    -- get reverse lookup table, if exports should be in english
+    local LBBR = LBB:GetReverseLookupTable();
     -- Generate generic getBossData-Function:
     local function getBossData(raidID, bossID)
         -- Set up vars, create sorted playerList
@@ -2203,7 +2224,11 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         elseif (addFormat == 3) then
         end
         -- Boss headline
-        bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].." - ";
+        if (MRT_Options["Export_ExportEnglish"]) then
+            bossData = bossData..(LBBR[MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]] or MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]).." - ";
+        else
+            bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].." - ";
+        end
         if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] < 3) then
             bossData = bossData..MRT_L.Core["Export_Normal"];
         else
@@ -2244,7 +2269,13 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
     end
     -- Begin headline text
     export = export..date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]);
-    export = export.." - "..MRT_RaidLog[raidID]["RaidZone"].." ("..MRT_RaidLog[raidID]["RaidSize"]..")";
+    export = export.." - ";
+    if (MRT_Options["Export_ExportEnglish"]) then
+        export = export..(LBZR[MRT_RaidLog[raidID]["RaidZone"]] or MRT_RaidLog[raidID]["RaidZone"]);
+    else
+        export = export..MRT_RaidLog[raidID]["RaidZone"];
+    end
+    export = export.." ("..MRT_RaidLog[raidID]["RaidSize"]..")";
     -- End headline formatting
     if (addFormat == 1 or addFormat == 2) then
         export = export.."[/b][/u]";
@@ -2294,6 +2325,8 @@ end
 
 -- CSS based HTML, including wowhead links (contributed by Kevin)
 function MRT_CreateHTMLExport(raidID, bossID, difficulty)
+    -- get reverse lookup table, if exports should be in english
+    local LBBR = LBB:GetReverseLookupTable();
     -- Generate generic getBossData-Function:
     local function getBossData(raidID, bossID)
         -- Set up vars, create sorted playerList
@@ -2305,7 +2338,13 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
         -- Begin boss headline formatting
         bossData = bossData.."<div class=\"boss\">";
         -- Boss headline
-        bossData = bossData.."<span class=\"name\">"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</span><span class=\"difficulty\">";
+        bossData = bossData.."<span class=\"name\">";
+        if (MRT_Options["Export_ExportEnglish"]) then
+            bossData = bossData..(LBBR[MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]] or MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]);
+        else
+            bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"];
+        end
+        bossData = bossData.."</span><span class=\"difficulty\">";
         if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] < 3) then
             bossData = bossData..MRT_L.Core["Export_Normal"];
         else
@@ -2344,7 +2383,13 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
     -- Begin headline formatting
     export = export.."<div class=\"headline\">";
     -- Begin headline text
-    export = export.."<span class=\"zone\">"..MRT_RaidLog[raidID]["RaidZone"].." ("..MRT_RaidLog[raidID]["RaidSize"]..")</span>";
+    export = export.."<span class=\"zone\">";
+    if (MRT_Options["Export_ExportEnglish"]) then
+        export = export..(LBZR[MRT_RaidLog[raidID]["RaidZone"]] or MRT_RaidLog[raidID]["RaidZone"]);
+    else
+        export = export..MRT_RaidLog[raidID]["RaidZone"];
+    end
+    export = export.." ("..MRT_RaidLog[raidID]["RaidSize"]..")</span>";
     export = export.."<span class=\"start\">"..date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]).."</span>";
     -- End headline formatting
     export = export.."</div>";
