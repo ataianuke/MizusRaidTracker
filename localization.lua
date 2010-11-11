@@ -7,32 +7,13 @@
 --  Mizukichan
 --
 -- Note: 
---  MRT requires a correct localization of RaidZones and Bossyells for working
+--  MRT requires a correct localization of bossyells for working
 --
 
 -----------------------------
 --  Create Tablestructure  --
 -----------------------------
 MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {} };
-
-
------------------
---  RaidZones  --
------------------
--- @Locals: Only change the zone names of the keys - NOT the values!
--- 'keys' = text in squared brackets
-MRT_L.Raidzones = {
-    -- Wrath of the Lich King
-	["The Eye of Eternity"] = "The Eye of Eternity",
-	["The Obsidian Sanctum"] = "The Obsidian Sanctum",
-	["Vault of Archavon"] = "Vault of Archavon",
-	["Naxxramas"] = "Naxxramas",
-	["Ulduar"] = "Ulduar",
-	["Trial of the Crusader"] = "Trial of the Crusader",
-	["Onyxia's Lair"] = "Onyxia's Lair",
-	["Icecrown Citadel"] = "Icecrown Citadel",
-    ["The Ruby Sanctum"] = "The Ruby Sanctum",
-}
 
 
 -----------------
@@ -56,13 +37,11 @@ MRT_L.Bossyells = {
     
     ["Trial of the Crusader"] = {
         ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Faction Champions",
-        --["The Scourge cannot be stopped..."] = "Val'kyr Twins",
     },
     
     ["Icecrown Citadel"] = {
-        ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Gunship Battle", -- Muradin
-        ["The Alliance falter. Onward to the Lich King!"] = "Gunship Battle", -- Saurfang
-        --["My queen, they... come."] = "Blood Prince Council", -- Prince Keleseth
+        ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "Icecrown Gunship Battle", -- Muradin
+        ["The Alliance falter. Onward to the Lich King!"] = "Icecrown Gunship Battle", -- Saurfang
         ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "Valithria Dreamwalker", -- Dreamwalker
     },
       
