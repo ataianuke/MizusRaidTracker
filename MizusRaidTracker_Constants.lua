@@ -68,7 +68,7 @@ MRT_RaidZones = {
 	["Icecrown Citadel"] = true,
     ["The Ruby Sanctum"] = true,
     -- Cataclysm
-    ["Baradin Hold"] = true,                -- new PvP-Raid-Instance - missing in current LibBabble-Zone (11/07/2010)
+    ["Baradin Hold"] = true,
     ["Blackwing Descent"] = true,
     ["The Bastion of Twilight"] = true,
     ["Throne of the Four Winds"] = true,
@@ -218,6 +218,23 @@ MRT_BossRenameList = {
     [43735] = "Ascendant Council",
     -- Throne of the Four Winds
     [45871] = "Conclave of Wind",
+}
+
+MRT_BossIDList = {
+    ------------------------------
+    --  Wrath of the Lich King  --
+    ------------------------------
+    -- Ulduar
+    ["Iron Council"] = 32857,
+    ["Hodir"] = 32845,
+    ["Thorim"] = 32865,
+    ["Freya"] = 32906,
+    ["Mimiron"] = 33350,
+    ["Algalon the Observer"] = 32871,
+    -- Icecrown Citadel
+    ["Valithria Dreamwalker"] = 36789,
+    -- Ruby Sanctum
+    ["Halion"] = 39863,
 }
 
 --------------------------------

@@ -165,7 +165,8 @@ function MRT_OnEvent(frame, event, ...)
         if (MRT_L.Bossyells[instance] and MRT_L.Bossyells[instance][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
             local bossName = LBBL[MRT_L.Bossyells[instance][monsteryell]] or MRT_L.Bossyells[instance][monsteryell];
-            MRT_AddBosskill(bossName);
+            local NPCID = MRT_BossIDList[MRT_L.Bossyells[instance][monsteryell]];
+            MRT_AddBosskill(bossName, nil, NPCID);
         end
     
     elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then 
@@ -227,7 +228,7 @@ function MRT_CombatLogHandler(...)
                 englishBossName = MRT_BossRenameList[NPCID];
                 localBossName = LBBL[englishBossName] or englishBossName;
             end
-            MRT_AddBosskill(localBossName);
+            MRT_AddBosskill(localBossName, nil, NPCID);
         end
     end
 end
@@ -821,7 +822,7 @@ end
 
 -- @param man_diff: used by GUI when a bosskill was added manually
 --                  valid values: "H", "N", nil
-function MRT_AddBosskill(bossname, man_diff)
+function MRT_AddBosskill(bossname, man_diff, bossID)
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
     local _, _, instanceDifficulty, _, _, dynDiff, isDyn = GetInstanceInfo();
@@ -854,6 +855,7 @@ function MRT_AddBosskill(bossname, man_diff)
         ["Name"] = bossname,
         ["Date"] = MRT_GetCurrentTime(),
         ["Difficulty"] = instanceDifficulty,
+        ["BossId"] = bossID,
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
     MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
