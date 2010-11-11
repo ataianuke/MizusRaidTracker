@@ -1525,6 +1525,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     -- set up a few locals
     local now = MRT_GetCurrentTime();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
+    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1] or MRT_RaidLog[raidID]["StartTime"]; end
     local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
     local index = 1;
@@ -1595,7 +1596,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
                 lastBossTimeStamp = raidStart;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
-                        if (attendeeName == playerName) then
+                        if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
                             joinLeavePair = { Join = lastBossTimeStamp, Leave = (bossInfo.Date + 10), };
                             if (not playerList[playerName]) then playerList[playerName] = {}; end
                             tinsert(playerList[playerName], joinLeavePair);
@@ -1612,12 +1613,17 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
             end
         end
     else
-        -- use join/leave times - add a short join/leave-pair, if a player is only tracked as a boss attendee
+        -- use join/leave times - add a short join/leave-pair, if a player is only tracked as a boss attendee - if only one boss is exported, watch out for changed raid start
         local joinLeavePair = nil;
         for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
             if (not playerList[playerTimes.Name]) then playerList[playerTimes.Name] = {}; end
-            joinLeavePair = { Join = playerTimes.Join, Leave = (playerTimes.Leave or now), };
-            tinsert(playerList[playerTimes.Name], joinLeavePair);
+            if (raidStart <= playerTimes.Join) then
+                joinLeavePair = { Join = playerTimes.Join, Leave = (playerTimes.Leave or now), };
+                tinsert(playerList[playerTimes.Name], joinLeavePair);
+            elseif (raidStart < (playerTimes.Leave or now) ) then
+                joinLeavePair = { Join = raidStart, Leave = (playerTimes.Leave or now), };
+                tinsert(playerList[playerTimes.Name], joinLeavePair);
+            end
         end
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             local attendee;
@@ -1633,7 +1639,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
                         end
                     end
                 end
-                if (not attendee) then
+                if (not attendee and raidStart <= bossInfo.Date) then
                     tinsert(playerList[attendeeName], joinLeavePair);
                 end
             end
@@ -1806,6 +1812,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     -- set up a few locals
     local now = MRT_GetCurrentTime();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
+    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1] or MRT_RaidLog[raidID]["StartTime"]; end
     local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
     -- start creating head
@@ -1896,7 +1903,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                 lastBossTimeStamp = raidStart;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
-                        if (attendeeName == playerName) then
+                        if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
                             joinLeavePair = { Join = lastBossTimeStamp, Leave = (bossInfo.Date + 10), };
                             if (not playerList[playerName]) then playerList[playerName] = {}; end
                             tinsert(playerList[playerName], joinLeavePair);
@@ -1917,8 +1924,13 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         local joinLeavePair = nil;
         for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
             if (not playerList[playerTimes.Name]) then playerList[playerTimes.Name] = {}; end
-            joinLeavePair = { Join = playerTimes.Join, Leave = (playerTimes.Leave or now), };
-            tinsert(playerList[playerTimes.Name], joinLeavePair);
+            if (raidStart <= playerTimes.Join) then
+                joinLeavePair = { Join = playerTimes.Join, Leave = (playerTimes.Leave or now), };
+                tinsert(playerList[playerTimes.Name], joinLeavePair);
+            elseif (raidStart < (playerTimes.Leave or now) ) then
+                joinLeavePair = { Join = raidStart, Leave = (playerTimes.Leave or now), };
+                tinsert(playerList[playerTimes.Name], joinLeavePair);
+            end
         end
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             local attendee;
@@ -1934,7 +1946,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                         end
                     end
                 end
-                if (not attendee) then
+                if (not attendee and raidStart <= bossInfo.Date) then
                     tinsert(playerList[attendeeName], joinLeavePair);
                 end
             end
