@@ -164,7 +164,8 @@ function MRT_OnEvent(frame, event, ...)
         if (not instance) then return; end
         if (MRT_L.Bossyells[instance] and MRT_L.Bossyells[instance][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
-            MRT_AddBosskill(MRT_L.Bossyells[instance][monsteryell]);
+            local bossName = LBBL[MRT_L.Bossyells[instance][monsteryell]] or MRT_L.Bossyells[instance][monsteryell];
+            MRT_AddBosskill(bossName);
         end
     
     elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then 
@@ -224,11 +225,7 @@ function MRT_CombatLogHandler(...)
         if (MRT_BossIDList[NPCID]) then
             if (MRT_BossRenameList[NPCID]) then
                 englishBossName = MRT_BossRenameList[NPCID];
-                if (LBBL[englishBossName]) then
-                    localBossName = LBBL[englishBossName];
-                else
-                    localBossName = englishBossName;
-                end
+                localBossName = LBBL[englishBossName] or englishBossName;
             end
             MRT_AddBosskill(localBossName);
         end
