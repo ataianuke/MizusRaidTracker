@@ -118,7 +118,6 @@ function MRT_Options_ParseValues()
     MRT_Options_AttendancePanel_OfflinePlayers_Text:SetText(MRT_L.Options["AP_TrackOfflinePlayers"]);
     -- ExportPanel
     MRT_Options_ExportPanel_Title:SetText(MRT_L.Options["EP_TitleText"]);
-    MRT_Options_ExportPanel_Description:SetText("");
     MRT_Options_ExportPanel_ChooseExport_Title:SetText(MRT_L.Options["EP_ChooseExport_Title"]);
     MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu();
     MRT_Options_ExportPanel_XMLExport_Title:SetText(MRT_L.Options["EP_AllXMLExportsTitle"]);
