@@ -167,6 +167,11 @@
             <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent" x="20" y="-20"/>
           </Anchors>
         </FontString>
+        <FontString name="$parent_ChooseAutoFocus_Title" inherits="GameFontWhite" text="AutoFocus on loot cost dialog (L)">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Title" x="0" y="-210"/>
+          </Anchors>
+        </FontString>
       </Layer>
     </Layers>
     <Frames>

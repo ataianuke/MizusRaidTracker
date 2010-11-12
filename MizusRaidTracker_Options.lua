@@ -95,6 +95,8 @@ function MRT_Options_ParseValues()
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_Text:SetText(MRT_L.Options["TP_OnlyTrackItemsAbove"]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
+    MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_Title:SetText(MRT_L.Options["ITP_AutoFocus_Title"]);
+    MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu();
     -- AttendancePanel
     MRT_Options_AttendancePanel_Title:SetText(MRT_L.Options["AP_TitleText"]);
     MRT_Options_AttendancePanel_Description:SetText("");
@@ -158,6 +160,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:GetValue();
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
+    MRT_Options["Tracking_AskCostAutoFocus"] = UIDropDownMenu_GetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu);
     local minILvl = tonumber(MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:GetText());
     if minILvl then
         MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] = minILvl;
@@ -235,6 +238,44 @@ end
 ------------------------
 --  Create functions  --
 ------------------------
+function MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu()
+    -- Create DropDownFrame
+    if (not MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu) then
+        CreateFrame("Frame", "MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu", MRT_Options_ItemsTrackingPanel, "UIDropDownMenuTemplate");
+    end
+    -- Anchor DropDownFrame
+    MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu:ClearAllPoints();
+    MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu:SetPoint("TOPLEFT", MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_Title, "BOTTOMLEFT", -15, -5);
+    MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu:Show();
+    -- List of DropDownMenuItems
+    local items = {
+        MRT_L.Options["ITP_AutoFocus_Always"],
+        MRT_L.Options["ITP_AutoFocus_NoCombat"],
+        MRT_L.Options["ITP_AutoFocus_Never"],
+    }
+    -- Click handler function
+    local function OnClick(self)
+       UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, self:GetID())
+    end
+    -- DropDownMenu initialize function
+    local function initialize(self, level)
+        local info = UIDropDownMenu_CreateInfo()
+        for k,v in pairs(items) do
+            info = UIDropDownMenu_CreateInfo()
+            info.text = v
+            info.value = v
+            info.func = OnClick
+            UIDropDownMenu_AddButton(info, level)
+        end
+    end
+    -- Setup DropDownMenu
+    UIDropDownMenu_Initialize(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, initialize);
+    UIDropDownMenu_SetWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 200);
+    UIDropDownMenu_SetButtonWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 224);
+    UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, MRT_Options["Tracking_AskCostAutoFocus"]);
+    UIDropDownMenu_JustifyText(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, "LEFT");
+end
+
 function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
     -- Create DropDownFrame
     if (not MRT_Options_ExportPanel_ChooseExport_DropDownMenu) then
