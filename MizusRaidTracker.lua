@@ -124,6 +124,7 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
+    frame:RegisterEvent("PARTY_MEMBERS_CHANGED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
@@ -178,11 +179,14 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "PARTY_INVITE_REQUEST") then
         MRT_Debug("PARTY_INVITE_REQUEST fired!");
         
+    elseif (event == "PARTY_MEMBERS_CHANGED") then
+        MRT_Debug("PARTY_MEMBERS_CHANGED");
+        
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
         MRT_LoginTimer.loginTime = time();
         -- Delay data gathering a bit to make sure, that data is available after login
-        -- aka: Dalaran latency fix
+        -- aka: ugly Dalaran latency fix
         MRT_LoginTimer:SetScript("OnUpdate", function (self)
             if ((time() - self.loginTime) > 5) then
                 self:SetScript("OnUpdate", nil);
@@ -1525,7 +1529,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     -- set up a few locals
     local now = MRT_GetCurrentTime();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
-    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1] or MRT_RaidLog[raidID]["StartTime"]; end
+    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1]["Date"] or MRT_RaidLog[raidID]["StartTime"]; end
     local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
     local index = 1;
@@ -1812,7 +1816,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     -- set up a few locals
     local now = MRT_GetCurrentTime();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
-    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1] or MRT_RaidLog[raidID]["StartTime"]; end
+    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1]["Date"] or MRT_RaidLog[raidID]["StartTime"]; end
     local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
     -- start creating head
