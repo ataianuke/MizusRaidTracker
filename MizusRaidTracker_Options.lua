@@ -38,6 +38,12 @@ function MRT_Options_TrackingPanel_OnLoad(panel)
     InterfaceOptions_AddCategory(panel);
 end
 
+function MRT_Options_ItemsTrackingPanel_OnLoad(panel)
+    panel.name = MRT_L.Options["ITP_Title"];
+    panel.parent = "Mizus RaidTracker";
+    InterfaceOptions_AddCategory(panel);
+end
+
 function MRT_Options_AttendancePanel_OnLoad(panel)
     panel.name = MRT_L.Options["AP_Title"];
     panel.parent = "Mizus RaidTracker";
@@ -74,19 +80,21 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToLog_Desc"]);
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
-    MRT_Options_TrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
-    MRT_Options_TrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);    
-    MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
-    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
-    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
-    MRT_Options_TrackingPanel_OnlyTrackItemsAbove_Text:SetText(MRT_L.Options["TP_OnlyTrackItemsAbove"]);
-    MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
-    MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
     MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
     MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
+    -- ItemsTrackingPanel
+    MRT_Options_ItemsTrackingPanel_Title:SetText(MRT_L.Options["ITP_TitleText"]);
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToLog_Desc"]);
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToLog"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToLog"]+1]);
+    MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB:SetChecked(MRT_Options["Tracking_AskForDKPValue"]);
+    MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);    
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToGetDKPValue"]);
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
+    MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_Text:SetText(MRT_L.Options["TP_OnlyTrackItemsAbove"]);
+    MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
+    MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
     -- AttendancePanel
     MRT_Options_AttendancePanel_Title:SetText(MRT_L.Options["AP_TitleText"]);
     MRT_Options_AttendancePanel_Description:SetText("");
@@ -145,17 +153,18 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
     MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
-    MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
-    MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_TrackingPanel_AskForDKPValue_CB:GetChecked();
-    MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
-    local minILvl = tonumber(MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:GetText());
+    MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
+    -- ItemsTrackingPanel
+    MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:GetValue();
+    MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB:GetChecked();
+    MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
+    local minILvl = tonumber(MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:GetText());
     if minILvl then
         MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] = minILvl;
     else
-        MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
-        MRT_Options_TrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
+        MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
+        MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
     end
-    MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
     -- AttendancePanel
     MRT_Options["Attendance_GroupRestriction"] = MRT_Options_AttendancePanel_GroupRestriction:GetChecked();
     MRT_Options["Attendance_TrackOffline"] = MRT_Options_AttendancePanel_OfflinePlayers:GetChecked();
@@ -205,15 +214,15 @@ end
 --  Slider functions  --
 ------------------------
 function MRT_Options_TP_MinItemQualityToLog_Slider()
-    local sliderValue = MRT_Options_TrackingPanel_MinItemQualityToLog_Slider:GetValue();
+    local sliderValue = MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:GetValue();
     local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_ItemValues[sliderValue+1];
-    MRT_Options_TrackingPanel_MinItemQualityToLog_SliderValue:SetText(sliderText);
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_SliderValue:SetText(sliderText);
 end
 
 function MRT_Options_TP_MinItemQualityToGetCost_Slider()
-    local sliderValue = MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
+    local sliderValue = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_ItemValues[sliderValue+1];
-    MRT_Options_TrackingPanel_MinItemQualityToGetCost_SliderValue:SetText(sliderText);
+    MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderValue:SetText(sliderText);
 end
 
 function MRT_Options_AP_GADuration_Slider()
@@ -223,9 +232,9 @@ function MRT_Options_AP_GADuration_Slider()
 end
 
 
------------------------
---  Create function  --
------------------------
+------------------------
+--  Create functions  --
+------------------------
 function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
     -- Create DropDownFrame
     if (not MRT_Options_ExportPanel_ChooseExport_DropDownMenu) then

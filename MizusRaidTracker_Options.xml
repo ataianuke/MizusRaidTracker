@@ -140,10 +140,40 @@
           </Layer>
         </Layers>
       </CheckButton>    
+      <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_LogAVRaids_CB" relativePoint="BOTTOMLEFT" y="-25"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="FIXME!">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+    </Frames>
+    <Scripts>
+      <OnLoad>MRT_Options_TrackingPanel_OnLoad(self);</OnLoad>
+    </Scripts>
+  </Frame>
+  <Frame name="MRT_Options_ItemsTrackingPanel">
+    <Layers>
+      <Layer level="OVERLAY">
+        <FontString name="$parent_Title" inherits="GameFontNormalLarge" text="Items tracking options (L)">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent" x="20" y="-20"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
       <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
         <Size x="200" y="20"/>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_LogAVRaids_CB" relativePoint="BOTTOMLEFT" y="-40"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT" y="-50"/>
         </Anchors>
         <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
           <EdgeSize>
@@ -230,9 +260,9 @@
             </FontString>
           </Layer>
           <Layer level="OVERLAY">
-            <FontString name="MRT_Options_TrackingPanel_OnlyTrackItemsAbove_Text" inherits="GameFontWhite" text="(L FIXME!)Only track items equal or above Itemlevel">
+            <FontString name="MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_Text" inherits="GameFontWhite" text="(L FIXME!)Only track items equal or above Itemlevel">
               <Anchors>
-                <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="MRT_Options_TrackingPanel_MinItemQualityToGetCost_Slider" x="0" y="-10"/>
+                <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider" x="0" y="-30"/>
               </Anchors>
             </FontString>
             <!--
@@ -257,27 +287,13 @@
       <EditBox name="$parent_OnlyTrackItemsAbove_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="5" enableKeyboard="true" enableMouse="true">
         <Size x="50" y="26"/>
         <Anchors>
-          <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MRT_Options_TrackingPanel_OnlyTrackItemsAbove_Text" x="10" y="0"/>
+          <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_Text" x="10" y="0"/>
         </Anchors>
         <FontString inherits="GameFontWhite"/>
       </EditBox>
-      <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" relativePoint="BOTTOMLEFT" y="-25"/>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" text="FIXME!">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-      </CheckButton>
     </Frames>
     <Scripts>
-      <OnLoad>MRT_Options_TrackingPanel_OnLoad(self);</OnLoad>
+      <OnLoad>MRT_Options_ItemsTrackingPanel_OnLoad(self);</OnLoad>
     </Scripts>
   </Frame>
   <Frame name="MRT_Options_AttendancePanel">
@@ -452,7 +468,7 @@
         </FontString>
         <FontString name="$parent_ChooseExport_Title" inherits="GameFontWhite">
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT" x="0" y="-20"/>
+            <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
           </Anchors>
         </FontString>
         <FontString name="$parent_XMLExport_Title" inherits="GameFontNormal" text="All XML-Exportformats - FIXME!">
