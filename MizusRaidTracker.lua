@@ -1119,15 +1119,14 @@ function MRT_DKPFrame_AskCost()
     end
     MRT_GetDKPValueFrame.Looter = MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"];
     -- set autoFocus of EditBoxes
-    if (MRT_Options["Tracking_AskCostAutoFocus"] == 3 or (MRT_Options["Tracking_AskCostAutoFocus"] == 2 and not UnitAffectingCombat("player")) ) then
+    if (MRT_Options["Tracking_AskCostAutoFocus"] == 3 or (MRT_Options["Tracking_AskCostAutoFocus"] == 2 and UnitAffectingCombat("player")) ) then
         MRT_GetDKPValueFrame_EB:SetAutoFocus(false);
-        MRT_GetDKPValueFrame_EB2:SetAutoFocus(false);
     else
         MRT_GetDKPValueFrame_EB:SetAutoFocus(true);
-        MRT_GetDKPValueFrame_EB2:SetAutoFocus(true);
     end
     -- show DKPValue
     MRT_GetDKPValueFrame:Show();
+    
 end
 
 -- Buttons: OK, Cancel, Delete, Bank, Disenchanted
