@@ -481,7 +481,7 @@
                 </FontString>
                 <FontString name="$parent_XMLExport_Title" inherits="GameFontNormal" text="All XML-Exportformats - FIXME!">
                   <Anchors>
-                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseExport_Title" x="0" y="-50"/>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseExport_Title" x="0" y="-80"/>
                   </Anchors>
                 </FontString>
                 <FontString name="$parent_CTRTExport_Title" inherits="GameFontNormal">
@@ -502,6 +502,20 @@
               </Layer>
             </Layers>
             <Frames>
+              <CheckButton name="$parent_EnglishExport_CB" inherits="OptionsCheckButtonTemplate">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseExport_Title" x="0" y="-40"/>
+                </Anchors>
+                <Layers>
+                  <Layer level="OVERLAY">
+                    <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Export raid zones and boss names in english (L)">
+                      <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+              </CheckButton>
               <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="OptionsCheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-5"/>

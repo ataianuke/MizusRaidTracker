@@ -120,6 +120,8 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_Title:SetText(MRT_L.Options["EP_TitleText"]);
     MRT_Options_ExportPanel_ChooseExport_Title:SetText(MRT_L.Options["EP_ChooseExport_Title"]);
     MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu();
+    MRT_Options_ExportPanel_EnglishExport_CB:SetChecked(MRT_Options["Export_ExportEnglish"]);
+    MRT_Options_ExportPanel_EnglishExport_CB_Text:SetText(MRT_L.Options["EP_EnglishExport"]);
     MRT_Options_ExportPanel_XMLExport_Title:SetText(MRT_L.Options["EP_AllXMLExportsTitle"]);
     MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(MRT_Options["Export_CTRT_IgnorePerBossAttendance"]);
     MRT_Options_ExportPanel_IgnorePerBossAttendance_CB_Text:SetText(MRT_L.Options["EP_CTRT_IgnorePerBossAttendance"]);
@@ -177,6 +179,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Attendance_GuildAttendanceCheckDuration"] = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
     -- ExportPanel
     MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
+    MRT_Options["Export_ExportEnglish"] = MRT_Options_ExportPanel_EnglishExport_CB:GetChecked();
     MRT_Options["Export_CTRT_IgnorePerBossAttendance"] = MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:GetChecked();
     MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
     MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"] = MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:GetChecked();

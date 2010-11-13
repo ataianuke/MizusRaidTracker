@@ -120,6 +120,7 @@ MRT_L.Options = {
     EP_CTRT_RLIAttendanceFix = "Enable attendance fix for the \nEQdkp-Plus Raid-Log-Import 0.5.6.3",
 	EP_CTRTTitleText = "CTRT compatible export settings",
     EP_Currency = "Currency",
+    EP_EnglishExport = "Export zone names and boss names in english",
     EP_EQDKP_Plus_XML = "EQdkp-Plus XML",
     EP_EQDKPTitleText = "EQdkp-Plus XML settings",
     EP_HTML = "CSS based HTML with wowhead links",
