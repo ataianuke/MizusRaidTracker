@@ -22,6 +22,14 @@
 --    along with Mizus RaidTracker.  
 --    If not, see <http://www.gnu.org/licenses/>.
 
+
+--------------
+--  Locals  --
+--------------
+-- I change settings for LibDBIcon here, so I'll need access to it
+local LDBIcon = LibStub("LibDBIcon-1.0");
+
+
 -----------------------
 --  Register panels  --
 -----------------------
@@ -71,6 +79,8 @@ function MRT_Options_ParseValues()
     MRT_Options_MainPanel_SlashCmd_EB_Text:SetText(MRT_L.Options["MP_SlashCmd"]);
     MRT_Options_MainPanel_SlashCmd_EB:SetText(MRT_Options["General_SlashCmdHandler"]);
     MRT_Options_MainPanel_SlashCmd_EB:SetCursorPosition(0);
+    MRT_Options_MainPanel_MinimapIcon_CB:SetChecked(MRT_Options["General_ShowMinimapIcon"]);
+    MRT_Options_MainPanel_MinimapIcon_CB_Text:SetText(MRT_L.Options["MP_MinimapIcon"]);
     MRT_Options_MainPanel_Prunning_CB:SetChecked(MRT_Options["General_PrunnRaidLog"]);
     MRT_Options_MainPanel_Prunning_CB_Text:SetText(MRT_L.Options["MP_AutoPrunning"]);
     MRT_Options_MP_Prunning_Slider(MRT_Options_MainPanel_Prunning_Slider);
@@ -155,8 +165,17 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["General_MasterEnable"] = MRT_Options_MainPanel_Enabled_CB:GetChecked();
     MRT_Options["General_DebugEnabled"] = MRT_Options_MainPanel_Debug_CB:GetChecked();
     MRT_Options["General_SlashCmdHandler"] = MRT_Options_MainPanel_SlashCmd_EB:GetText();
+    MRT_Options["General_ShowMinimapIcon"] = MRT_Options_MainPanel_MinimapIcon_CB:GetChecked();
     MRT_Options["General_PrunnRaidLog"] = MRT_Options_MainPanel_Prunning_CB:GetChecked();
     MRT_Options["General_PrunningTime"] = MRT_Options_MainPanel_Prunning_Slider:GetValue();
+    -- update minimap icon
+    if (MRT_Options["General_ShowMinimapIcon"]) then
+        MRT_Options.MiniMap_SV.hide = false;
+        LDBIcon:Show("Mizus RaidTracker");
+    else
+        MRT_Options.MiniMap_SV.hide = true;
+        LDBIcon:Hide("Mizus RaidTracker");
+    end
     -- TrackingPanel
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
@@ -167,6 +186,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     MRT_Options["Tracking_AskCostAutoFocus"] = UIDropDownMenu_GetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu);
+    -- sanity check min item level
     local minILvl = tonumber(MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:GetText());
     if minILvl then
         MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] = minILvl;

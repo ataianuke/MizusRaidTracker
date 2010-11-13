@@ -77,9 +77,23 @@
         </Scripts>
         <FontString inherits="ChatFontNormal"/>
       </EditBox>
-      <CheckButton name="$parent_Prunning_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_MinimapIcon_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_SlashCmd_EB" x="-5" y="-30"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Show minimap icon (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <CheckButton name="$parent_Prunning_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_MinimapIcon_CB" x="0" y="-20"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">

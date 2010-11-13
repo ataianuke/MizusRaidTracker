@@ -42,11 +42,12 @@ local MRT_Defaults = {
     ["Options"] = {
         ["DB_Version"] = 2,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 7,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
+        ["General_OptionsVersion"] = 8,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
         ["General_PrunningTime"] = 90,                                              -- Prunning time, after log shall be deleted (days)
+        ["General_ShowMinimapIcon"] = false,                                        --
         ["Attendance_GuildAttendanceCheckEnabled"] = false,                         -- 
         ["Attendance_GuildAttendanceCheckNoAuto"] = true,                           --
         ["Attendance_GuildAttendanceCheckUseTrigger"] = false,
@@ -71,6 +72,9 @@ local MRT_Defaults = {
         ["Export_EQDKP_RLIPerBossAttendanceFix"] = false,
         ["Export_DateTimeFormat"] = "%m/%d/%Y",                                     -- lua date syntax - http://www.lua.org/pil/22.1.html
         ["Export_Currency"] = "DKP",
+        ["MiniMap_SV"] = {                                                          -- Saved Variables for LibDBIcon
+            hide = true,
+        },
     },
 };
 
@@ -80,6 +84,7 @@ local MRT_Defaults = {
 --------------
 local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
+local LDBIcon = LibStub("LibDBIcon-1.0");
 local LBZ = LibStub("LibBabble-Zone-3.0");
 local LBZR = LBZ:GetReverseLookupTable();
 local LBB = LibStub("LibBabble-Boss-3.0");
@@ -322,6 +327,8 @@ function MRT_Initialize()
             tooltip:AddLine(MRT_L.Core["LDB Right-click to open the options menu"]);
         end,
     });
+    -- set up minimap icon
+    LDBIcon:Register("Mizus RaidTracker", MRT_LDB_DS, MRT_Options["MiniMap_SV"]);
     -- set up drop down menu for the DKPFrame
     MRT_DKPFrame_DropDownTable = ScrollingTable:CreateST(MRT_DKPFrame_DropDownTableColDef, 9, nil, nil, MRT_GetDKPValueFrame);
     MRT_DKPFrame_DropDownTable.head:SetHeight(1);
@@ -393,6 +400,13 @@ function MRT_UpdateSavedOptions()
         MRT_Options["Tracking_AskCostAutoFocus"] = 1;
         MRT_Options["Export_ExportEnglish"] = false;
         MRT_Options["General_OptionsVersion"] = 7;
+    end
+    if MRT_Options["General_OptionsVersion"] == 7 then
+        MRT_Options["General_ShowMinimapIcon"] = false;
+        MRT_Options["MiniMap_SV"] = {
+            hide = true,
+        };
+        MRT_Options["General_OptionsVersion"] = 8;
     end
 end
 
