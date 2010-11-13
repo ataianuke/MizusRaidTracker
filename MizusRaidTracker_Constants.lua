@@ -101,8 +101,11 @@ MRT_BossIDList = {
     --  Wrath of the Lich King  --
     ------------------------------
     --  Dalaran - Added for Debuging
-    --[721] = "Rabbit",
-    --[32428] = "Underbelly Rat",
+    [721] = "Rabbit",
+    [32428] = "Underbelly Rat",
+    ["32428"] = "Underbelly Rat - String",
+    [32470] = "Sewer Frog",
+    ["32470"] = "Sewer Frog - String",
     
     -- Naxxramas
     [15956] = "Anub'Rekhan",
@@ -220,7 +223,7 @@ MRT_BossRenameList = {
     [45871] = "Conclave of Wind",
 }
 
-MRT_BossIDList = {
+MRT_ReverseBossIDList = {
     ------------------------------
     --  Wrath of the Lich King  --
     ------------------------------

@@ -171,7 +171,7 @@ function MRT_OnEvent(frame, event, ...)
         if (MRT_L.Bossyells[instance] and MRT_L.Bossyells[instance][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
             local bossName = LBBL[MRT_L.Bossyells[instance][monsteryell]] or MRT_L.Bossyells[instance][monsteryell];
-            local NPCID = MRT_BossIDList[MRT_L.Bossyells[instance][monsteryell]];
+            local NPCID = MRT_ReverseBossIDList[MRT_L.Bossyells[instance][monsteryell]];
             MRT_AddBosskill(bossName, nil, NPCID);
         end
     
@@ -232,10 +232,14 @@ function MRT_CombatLogHandler(...)
         local englishBossName;
         local localBossName = destName;
         local NPCID = MRT_GetNPCID(destGUID);
+        --MRT_Debug("localBossName: "..localBossName.." - NPCID: "..NPCID);
         if (MRT_BossIDList[NPCID]) then
+            --MRT_Debug("Valid NPCID found... - Match on "..MRT_BossIDList[NPCID]);
             if (MRT_BossRenameList[NPCID]) then
+                --MRT_Debug("Rename entry for NPCID found...");
                 englishBossName = MRT_BossRenameList[NPCID];
                 localBossName = LBBL[englishBossName] or englishBossName;
+                --MRT_Debug("New local bossname is "..localBossName);
             end
             MRT_AddBosskill(localBossName, nil, NPCID);
         end
