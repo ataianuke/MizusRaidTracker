@@ -166,7 +166,7 @@ function MRT_OnEvent(frame, event, ...)
         local monsteryell, sourceName = ...;
         local localInstance = GetInstanceInfo();
         if (not localInstance) then return; end
-        local instance = MRT_L.Raidzones[localInstance];
+        local instance = LBZR[localInstance];
         if (not instance) then return; end
         if (MRT_L.Bossyells[instance] and MRT_L.Bossyells[instance][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
@@ -641,14 +641,14 @@ function MRT_CheckZoneAndSizeStatus()
 end
 
 function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
-    -- Create a new raidentry if MRT_L.Raidzones match and MRT enabled and: 
+    -- Create a new raidentry if MRT_Raidzones match and MRT enabled and: 
     --  I) If no active raid and 10 player tracking enabled
     --  if 10 player tracking disabled, check for 25 player
     --  II) If changed from 10 men to 25 men
     --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
     --  IV) If RaidZone changed and CreateNewRaidOnNewZone on
     --  V) If RaidZone and RaidSize changed and CreateNewRaidOnNewZone off
-    MRT_Debug("Match in MRT_L.Raidzones from GetInstanceInfo() fround.");
+    MRT_Debug("Match in MRT_Raidzones from GetInstanceInfo() fround.");
     -- Case: No active raidtracking:
     if (not MRT_NumOfCurrentRaid) then
         if (MRT_Options["Tracking_Log10MenRaids"] and (instanceInfoDifficulty == 1 or instanceInfoDifficulty == 3)) then 
