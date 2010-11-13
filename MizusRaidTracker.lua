@@ -42,11 +42,11 @@ local MRT_Defaults = {
     ["Options"] = {
         ["DB_Version"] = 2,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 6,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
+        ["General_OptionsVersion"] = 7,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
-        --["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
-        --["General_PrunningTime"] = 30,                                              -- Prunning time, after log shall be deleted (days)
+        ["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
+        ["General_PrunningTime"] = 90,                                              -- Prunning time, after log shall be deleted (days)
         ["Attendance_GuildAttendanceCheckEnabled"] = false,                         -- 
         ["Attendance_GuildAttendanceCheckNoAuto"] = true,                           --
         ["Attendance_GuildAttendanceCheckUseTrigger"] = false,
@@ -59,12 +59,12 @@ local MRT_Defaults = {
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
-        --["Tracking_AskCostAutoFocus"] = 1,                                          -- NYI - 1: always AutoFocus, 2: when not in combat, 3: never
+        ["Tracking_AskCostAutoFocus"] = 1,                                          -- NYI - 1: always AutoFocus, 2: when not in combat, 3: never
         ["Tracking_CreateNewRaidOnNewZone"] = true,
         ["Tracking_OnlyTrackItemsAboveILvl"] = 0,
         ["Tracking_UseServerTime"] = false,
         ["Export_ExportFormat"] = 2,                                                -- 1: CTRT compatible, 2: EQdkp-Plus XML, 3: MLdkp 1.5,  4: plain text, 5: BBCode, 6: BBCode with wowhead, 7: CSS based HTML
-        --["Export_ExportEnglish"] = false,                                           -- If activated, zone and boss names will be exported in english
+        ["Export_ExportEnglish"] = false,                                           -- If activated, zone and boss names will be exported in english
         ["Export_CTRT_AddPoorItem"] = false,                                        -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
         ["Export_CTRT_IgnorePerBossAttendance"] = false,                            -- This will create an export where each raid member has 100% attendance: true / nil
         ["Export_CTRT_RLIPerBossAttendanceFix"] = false,
@@ -386,6 +386,13 @@ function MRT_UpdateSavedOptions()
         MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] = false;
         MRT_Options["Attendance_GuildAttendanceCheckTrigger"] = "!triggerexample";
         MRT_Options["General_OptionsVersion"] = 6;
+    end
+    if MRT_Options["General_OptionsVersion"] == 6 then
+        MRT_Options["General_PrunnRaidLog"] = false;
+        MRT_Options["General_PrunningTime"] = 90;
+        MRT_Options["Tracking_AskCostAutoFocus"] = 1;
+        MRT_Options["Export_ExportEnglish"] = false;
+        MRT_Options["General_OptionsVersion"] = 7;
     end
 end
 
