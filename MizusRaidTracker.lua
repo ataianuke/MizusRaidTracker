@@ -475,7 +475,7 @@ function MRT_PeriodicMaintenance()
         local prunningTime = MRT_Options["General_PrunningTime"] * 24 * 60 * 60;
         local lastRaidOverPrunningTreshhold = nil;
         for i, raidInfo in ipairs(MRT_RaidLog) do
-            if ( (startTime - MRT_RaidLog["StartTime"]) > prunningTime and i ~= MRT_NumOfCurrentRaid ) then
+            if ( (startTime - raidInfo["StartTime"]) > prunningTime and i ~= MRT_NumOfCurrentRaid ) then
                 lastRaidOverPrunningTreshhold = i;
             end
         end

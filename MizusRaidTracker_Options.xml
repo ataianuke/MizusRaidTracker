@@ -39,7 +39,7 @@
       </CheckButton>
       <CheckButton name="$parent_Debug_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOP" relativeTo="$parent_Enabled_CB" relativePoint="BOTTOM">
+          <Anchor point="TOPLEFT" relativeTo="$parent_Enabled_CB" relativePoint="BOTTOMLEFT">
             <Offset y="-5"></Offset>
           </Anchor>
         </Anchors>
@@ -77,6 +77,57 @@
         </Scripts>
         <FontString inherits="ChatFontNormal"/>
       </EditBox>
+      <CheckButton name="$parent_Prunning_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_SlashCmd_EB" x="-5" y="-30"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Automatically delete raids older than (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <Slider name="$parent_Prunning_Slider" enableMouse="true" valueStep="1" orientation="HORIZONTAL" defaultValue="90" minValue="30" maxValue="120">
+        <Size x="200" y="20"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Prunning_CB" relativePoint="BOTTOMLEFT" y="-5"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
+          <EdgeSize>
+            <AbsValue val="8"/>
+          </EdgeSize>
+          <TileSize>
+            <AbsValue val="8"/>
+          </TileSize>
+          <BackgroundInsets>
+            <AbsInset left="3" right="3" top="6" bottom="6"/>
+          </BackgroundInsets>
+        </Backdrop>
+        <Layers>
+          <Layer level="ARTWORK">
+            <FontString name="$parentValue" inherits="GameFontWhite" text="xx days (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+                  <Offset x="10"/>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_MP_Prunning_Slider(self); end)</OnMouseDown>
+          <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
+        </Scripts>
+        <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
+          <Size>
+            <AbsDimension x="32" y="32" />
+          </Size>
+        </ThumbTexture>
+      </Slider>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_MainPanel_OnLoad(self);</OnLoad>
@@ -187,7 +238,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
+      <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" valueStep="1" orientation="HORIZONTAL" defaultValue="0" minValue="0" maxValue="6">
         <Size x="200" y="20"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT" y="-50"/>
@@ -220,7 +271,7 @@
           </Layer>
         </Layers>
         <Scripts>
-          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToLog_Slider(); end)</OnMouseDown>
+          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToLog_Slider(self); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>
         <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">
@@ -278,7 +329,7 @@
           </Layer>
         </Layers>
         <Scripts>
-          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToGetCost_Slider(); end)</OnMouseDown>
+          <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToGetCost_Slider(self); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>
         <ThumbTexture name="$parentThumb" file="Interface\Buttons\UI-SliderBar-Button-Horizontal">

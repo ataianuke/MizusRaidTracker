@@ -71,6 +71,9 @@ function MRT_Options_ParseValues()
     MRT_Options_MainPanel_SlashCmd_EB_Text:SetText(MRT_L.Options["MP_SlashCmd"]);
     MRT_Options_MainPanel_SlashCmd_EB:SetText(MRT_Options["General_SlashCmdHandler"]);
     MRT_Options_MainPanel_SlashCmd_EB:SetCursorPosition(0);
+    MRT_Options_MainPanel_Prunning_CB:SetChecked(MRT_Options["General_PrunnRaidLog"]);
+    MRT_Options_MainPanel_Prunning_CB_Text:SetText(MRT_L.Options["MP_AutoPrunning"]);
+    MRT_Options_MP_Prunning_Slider(MRT_Options_MainPanel_Prunning_Slider);
     -- TrackingPanel
     MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
     MRT_Options_TrackingPanel_Description:SetText("");
@@ -152,6 +155,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["General_MasterEnable"] = MRT_Options_MainPanel_Enabled_CB:GetChecked();
     MRT_Options["General_DebugEnabled"] = MRT_Options_MainPanel_Debug_CB:GetChecked();
     MRT_Options["General_SlashCmdHandler"] = MRT_Options_MainPanel_SlashCmd_EB:GetText();
+    MRT_Options["General_PrunnRaidLog"] = MRT_Options_MainPanel_Prunning_CB:GetChecked();
+    MRT_Options["General_PrunningTime"] = MRT_Options_MainPanel_Prunning_Slider:GetValue();
     -- TrackingPanel
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
@@ -218,14 +223,19 @@ end
 ------------------------
 --  Slider functions  --
 ------------------------
-function MRT_Options_TP_MinItemQualityToLog_Slider()
-    local sliderValue = MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:GetValue();
+function MRT_Options_MP_Prunning_Slider(slider)
+    local sliderValue = slider:GetValue();
+    MRT_Options_MainPanel_Prunning_SliderValue:SetText(sliderValue.." "..MRT_L.Options["MP_Days"]);
+end
+
+function MRT_Options_TP_MinItemQualityToLog_Slider(slider)
+    local sliderValue = slider:GetValue();
     local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_ItemValues[sliderValue+1];
     MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_SliderValue:SetText(sliderText);
 end
 
-function MRT_Options_TP_MinItemQualityToGetCost_Slider()
-    local sliderValue = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
+function MRT_Options_TP_MinItemQualityToGetCost_Slider(slider)
+    local sliderValue = slider:GetValue();
     local sliderText = "|c"..MRT_ItemColors[sliderValue+1]..MRT_ItemValues[sliderValue+1];
     MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderValue:SetText(sliderText);
 end
