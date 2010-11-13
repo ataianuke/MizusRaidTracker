@@ -139,7 +139,7 @@
             </FontString>
           </Layer>
         </Layers>
-      </CheckButton>    
+      </CheckButton>
       <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_LogAVRaids_CB" relativePoint="BOTTOMLEFT" y="-25"/>
@@ -456,153 +456,167 @@
       <OnLoad>MRT_Options_AttendancePanel_OnLoad(self);</OnLoad>
     </Scripts>
   </Frame>
-  <Frame name="MRT_Options_ExportPanel">
-    <Layers>
-      <Layer level="OVERLAY">
-        <FontString name="$parent_Title" inherits="GameFontNormalLarge">
-          <Anchors>
-            <Anchor point="TOPLEFT" x="20" y="-20"/>
-          </Anchors>
-        </FontString>
-        <FontString name="$parent_ChooseExport_Title" inherits="GameFontWhite">
-          <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
-          </Anchors>
-        </FontString>
-        <FontString name="$parent_XMLExport_Title" inherits="GameFontNormal" text="All XML-Exportformats - FIXME!">
-          <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseExport_Title" x="0" y="-50"/>
-          </Anchors>
-        </FontString>
-        <FontString name="$parent_CTRTExport_Title" inherits="GameFontNormal">
-          <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-40"/>
-          </Anchors>
-        </FontString>
-        <FontString name="$parent_EQDKPExport_Title" inherits="GameFontNormal" text="EQDKP-Plus XML settings - FIXME!">
-          <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CTRTExport_Title" x="0" y="-70"/>
-          </Anchors>
-        </FontString>
-        <FontString name="$parent_TextExport_Title" inherits="GameFontNormal">
-          <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parent_EQDKPExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-40"/>
-          </Anchors>
-        </FontString>
-      </Layer>
-    </Layers>
+  <Frame name="MRT_Options_ExportPanel_ScrollFrame_Parent">
     <Frames>
-      <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="OptionsCheckButtonTemplate">
+      <ScrollFrame name="MRT_Options_ExportPanel_ScrollFrame" inherits="UIPanelScrollFrameTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent" x="0" y="-5"/>
+          <Anchor point="BOTTOMLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent" x="0" y="5"/>
+          <Anchor point="RIGHT" relativePoint="RIGHT" relativeTo="$parent" x="-28"/>
         </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="FIXME!">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnClick>MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(false);MRT_Options_ExportPanel_EQDKP_RLIPerBossAttendanceFix_CB:SetChecked(false);</OnClick>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CTRTExport_Title" x="0" y="-5"/>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Enable attendance fix for the EQDKP RLI 0.5.x (FIXME!)">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnClick>MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(false);</OnClick>
-          <OnEnter>MRT_Options_SetTT(self, "EP_RLIAttendanceFix");</OnEnter>
-          <OnLeave>MRT_Options_HideTT();</OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_AddPoorItemToEachBoss_CB" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_RLIPerBossAttendanceFix_CB" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnEnter>MRT_Options_SetTT(self, "EP_AddPoorItem");</OnEnter>
-          <OnLeave>MRT_Options_HideTT();</OnLeave>
-        </Scripts>
-      </CheckButton>
-      <CheckButton name="$parent_EQDKP_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EQDKPExport_Title" x="0" y="-5"/>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Enable attendance fix for the EQDKP RLI 0.5.x (FIXME!)">
-              <Anchors>
-                <Anchor point="LEFT" relativePoint="RIGHT"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnClick>MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(false);</OnClick>
-          <OnEnter>MRT_Options_SetTT(self, "EP_RLIAttendanceFix");</OnEnter>
-          <OnLeave>MRT_Options_HideTT();</OnLeave>
-        </Scripts>
-      </CheckButton>
-      <EditBox name="$parent_SetDateFormat_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
-        <Size x="200" y="26"/>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_TextExport_Title" relativePoint="BOTTOMLEFT" x="5" y="-20"/>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
-              <Anchors>
-                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="-5" y="0"/>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnEnter>MRT_Options_SetTT(self, "EP_DateTimeTT");</OnEnter>
-          <OnLeave>MRT_Options_HideTT();</OnLeave>
-        </Scripts>
-        <FontString inherits="ChatFontNormal"/>
-      </EditBox>
-      <EditBox name="$parent_Currency_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="100" enableKeyboard="true" enableMouse="true">
-        <Size x="200" y="26"/>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_SetDateFormat_EB" x="0" y="-20"/>
-        </Anchors>
-        <Layers>
-          <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Currency - FIXME!">
-              <Anchors>
-                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
-                  <Offset x="-5"/>
-                </Anchor>
-              </Anchors>
-            </FontString>
-          </Layer>
-        </Layers>
-        <FontString inherits="ChatFontNormal"/>
-      </EditBox>
+        <ScrollChild>
+          <Frame name="MRT_Options_ExportPanel">
+            <Size x="350" y="450"/>
+            <Layers>
+              <Layer level="OVERLAY">
+                <FontString name="$parent_Title" inherits="GameFontNormalLarge">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" x="20" y="-15"/>
+                  </Anchors>
+                </FontString>
+                <FontString name="$parent_ChooseExport_Title" inherits="GameFontWhite">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
+                  </Anchors>
+                </FontString>
+                <FontString name="$parent_XMLExport_Title" inherits="GameFontNormal" text="All XML-Exportformats - FIXME!">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseExport_Title" x="0" y="-50"/>
+                  </Anchors>
+                </FontString>
+                <FontString name="$parent_CTRTExport_Title" inherits="GameFontNormal">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-40"/>
+                  </Anchors>
+                </FontString>
+                <FontString name="$parent_EQDKPExport_Title" inherits="GameFontNormal" text="EQDKP-Plus XML settings - FIXME!">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CTRTExport_Title" x="0" y="-70"/>
+                  </Anchors>
+                </FontString>
+                <FontString name="$parent_TextExport_Title" inherits="GameFontNormal">
+                  <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parent_EQDKPExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-40"/>
+                  </Anchors>
+                </FontString>
+              </Layer>
+            </Layers>
+            <Frames>
+              <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="OptionsCheckButtonTemplate">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+                </Anchors>
+                <Layers>
+                  <Layer level="OVERLAY">
+                    <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="FIXME!">
+                      <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT"/>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnClick>MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(false);MRT_Options_ExportPanel_EQDKP_RLIPerBossAttendanceFix_CB:SetChecked(false);</OnClick>
+                </Scripts>
+              </CheckButton>
+              <CheckButton name="$parent_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CTRTExport_Title" x="0" y="-5"/>
+                </Anchors>
+                <Layers>
+                  <Layer level="OVERLAY">
+                    <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Enable attendance fix for the EQDKP RLI 0.5.x (FIXME!)">
+                      <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT"/>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnClick>MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(false);</OnClick>
+                  <OnEnter>MRT_Options_SetTT(self, "EP_RLIAttendanceFix");</OnEnter>
+                  <OnLeave>MRT_Options_HideTT();</OnLeave>
+                </Scripts>
+              </CheckButton>
+              <CheckButton name="$parent_AddPoorItemToEachBoss_CB" inherits="OptionsCheckButtonTemplate">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativeTo="$parent_RLIPerBossAttendanceFix_CB" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+                </Anchors>
+                <Layers>
+                  <Layer level="OVERLAY">
+                    <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
+                      <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT"/>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnEnter>MRT_Options_SetTT(self, "EP_AddPoorItem");</OnEnter>
+                  <OnLeave>MRT_Options_HideTT();</OnLeave>
+                </Scripts>
+              </CheckButton>
+              <CheckButton name="$parent_EQDKP_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EQDKPExport_Title" x="0" y="-5"/>
+                </Anchors>
+                <Layers>
+                  <Layer level="OVERLAY">
+                    <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Enable attendance fix for the EQDKP RLI 0.5.x (FIXME!)">
+                      <Anchors>
+                        <Anchor point="LEFT" relativePoint="RIGHT"/>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnClick>MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(false);</OnClick>
+                  <OnEnter>MRT_Options_SetTT(self, "EP_RLIAttendanceFix");</OnEnter>
+                  <OnLeave>MRT_Options_HideTT();</OnLeave>
+                </Scripts>
+              </CheckButton>
+              <EditBox name="$parent_SetDateFormat_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="50" enableKeyboard="true" enableMouse="true">
+                <Size x="200" y="26"/>
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativeTo="$parent_TextExport_Title" relativePoint="BOTTOMLEFT" x="5" y="-20"/>
+                </Anchors>
+                <Layers>
+                  <Layer level="OVERLAY">
+                    <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT">
+                      <Anchors>
+                        <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="-5" y="0"/>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+                <Scripts>
+                  <OnEnter>MRT_Options_SetTT(self, "EP_DateTimeTT");</OnEnter>
+                  <OnLeave>MRT_Options_HideTT();</OnLeave>
+                </Scripts>
+                <FontString inherits="ChatFontNormal"/>
+              </EditBox>
+              <EditBox name="$parent_Currency_EB" inherits="InputBoxTemplate" hidden="false" autoFocus="false" letters="100" enableKeyboard="true" enableMouse="true">
+                <Size x="200" y="26"/>
+                <Anchors>
+                  <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_SetDateFormat_EB" x="0" y="-20"/>
+                </Anchors>
+                <Layers>
+                  <Layer level="OVERLAY">
+                    <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Currency - FIXME!">
+                      <Anchors>
+                        <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
+                          <Offset x="-5"/>
+                        </Anchor>
+                      </Anchors>
+                    </FontString>
+                  </Layer>
+                </Layers>
+                <FontString inherits="ChatFontNormal"/>
+              </EditBox>
+            </Frames>
+          </Frame>
+        </ScrollChild>
+      </ScrollFrame>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_ExportPanel_OnLoad(self);</OnLoad>
