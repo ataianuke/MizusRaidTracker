@@ -1667,11 +1667,13 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
                     lastBossTimeStamp = bossInfo.Date + 20;
                 end
                 -- if enough time between last bosskill and raid end, add on last join/leave pair
+                --[[
                 if (lastBossTimeStamp < raidStop) then
                     joinLeavePair = { Join = lastBossTimeStamp, Leave = raidStop, };
                     if (not playerList[playerName]) then playerList[playerName] = {}; end
                     tinsert(playerList[playerName], joinLeavePair);
                 end
+                --]]
             end
         end
     else
@@ -1974,11 +1976,13 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                     lastBossTimeStamp = bossInfo.Date + 20;
                 end
                 -- if enough time between last bosskill and raid end, add on last join/leave pair
+                --[[
                 if (lastBossTimeStamp < raidStop) then
                     joinLeavePair = { Join = lastBossTimeStamp, Leave = raidStop, };
                     if (not playerList[playerName]) then playerList[playerName] = {}; end
                     tinsert(playerList[playerName], joinLeavePair);
                 end
+                --]]
             end
         end
     else
