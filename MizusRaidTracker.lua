@@ -188,7 +188,6 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "PARTY_CONVERTED_TO_RAID") then
         MRT_Debug("PARTY_CONVERTED_TO_RAID fired!");
         if (MRT_UnknownRelogStatus) then
-            MRT_LoginTimer:SetScript("OnUpdate", nil);
             MRT_UnknownRelogStatus = false;
             MRT_EndActiveRaid();            
         end
@@ -196,7 +195,6 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "PARTY_INVITE_REQUEST") then
         MRT_Debug("PARTY_INVITE_REQUEST fired!");
         if (MRT_UnknownRelogStatus) then
-            MRT_LoginTimer:SetScript("OnUpdate", nil);
             MRT_UnknownRelogStatus = false;
             MRT_EndActiveRaid();            
         end
@@ -204,17 +202,21 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
         MRT_LoginTimer.loginTime = time();
-        MRT_GuildRosterUpdate(frame, nil, true)        
-        MRT_GuildRosterInitialUpdateDone = true;
         -- Delay data gathering a bit to make sure, that data is available after login
         -- aka: ugly Dalaran latency fix - this is the part, which needs rework
         if (MRT_UnknownRelogStatus) then
             MRT_LoginTimer:SetScript("OnUpdate", function (self)
+                if ((time() - self.loginTime) > 5) then
+                    if (not MRT_GuildRosterInitialUpdateDone) then
+                        MRT_GuildRosterUpdate(frame, nil, true);
+                    end
+                    MRT_GuildRosterInitialUpdateDone = true;
+                end
                 if ((time() - self.loginTime) > 15) then
                     MRT_Debug("Relog Timer: 15 seconds threshold reached...");
                     self:SetScript("OnUpdate", nil);
+                    if (MRT_UnknownRelogStatus) then MRT_CheckRaidStatusAfterLogin(); end
                     MRT_UnknownRelogStatus = false;
-                    MRT_CheckRaidStatusAfterLogin();
                 end
             end);
         end
@@ -239,7 +241,6 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "RAID_ROSTER_UPDATE") then
         MRT_Debug("RAID_ROSTER_UPDATE fired!");
         if (MRT_UnknownRelogStatus) then
-            MRT_LoginTimer:SetScript("OnUpdate", nil);
             MRT_UnknownRelogStatus = false;
             MRT_CheckRaidStatusAfterLogin();
         end
@@ -304,24 +305,27 @@ end
 
 -- Chat handler
 local MRT_ChatHandler = {};
-function MRT_ChatHandler:CHAT_MSG_WHISPER_Filter(self, event, msg, from, ...)
+function MRT_ChatHandler:CHAT_MSG_WHISPER_Filter(event, msg, from, ...)
     if (not MRT_TimerFrame.GARunning) then return false; end
     if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
+        MRT_Debug("Message filtered... - Msg was '"..msg.."' from '"..from.."'");
         return true;
     elseif (not MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
         local player = MRT_GuildRoster[string.lower(msg)];
         if (not player) then return false; end
+        MRT_Debug("Message filtered... - Msg was '"..msg.."' from '"..from.."'");
         return true;
     end
-    return false, msg, from, ...;
+    return false;
 end
 
-function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_FILTER(self, event, msg, from, ...)
+function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_FILTER(event, msg, from, ...)
     if (not MRT_TimerFrame.GARunning) then return false; end
     if (msg == MRT_ChatHandler.MsgToBlock) then
+        MRT_Debug("Message filtered... - Msg was '"..msg.."' from '"..from.."'");
         return true;
     end
-    return false, msg, from, ...;
+    return false;
 end
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", MRT_ChatHandler.CHAT_MSG_WHISPER_Filter);
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER);
