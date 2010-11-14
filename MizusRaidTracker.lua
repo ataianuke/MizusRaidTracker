@@ -313,7 +313,7 @@ function MRT_ChatHandler:CHAT_MSG_WHISPER_Filter(self, event, msg, from, ...)
         if (not player) then return false; end
         return true;
     end
-    return false;
+    return false, msg, from, ...;
 end
 
 function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_FILTER(self, event, msg, from, ...)
@@ -321,7 +321,7 @@ function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_FILTER(self, event, msg, from, 
     if (msg == MRT_ChatHandler.MsgToBlock) then
         return true;
     end
-    return false;
+    return false, msg, from, ...;
 end
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", MRT_ChatHandler.CHAT_MSG_WHISPER_Filter);
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER);
@@ -1829,7 +1829,6 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         else
             bossXml = bossXml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
         end
-        bossXml = bossXml.."<name>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</name>";
         bossXml = bossXml.."<time>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"].."</time>";
         bossXml = bossXml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
         bossXml = bossXml.."</bosskill>";

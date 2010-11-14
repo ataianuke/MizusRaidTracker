@@ -74,8 +74,7 @@ MRT_RaidZones = {
     ["Throne of the Four Winds"] = true,
 }
 
-MRT_LegacyRaidZones = {
-    -- Wrath of the Lich King
+MRT_LegacyRaidZonesWotLK = {
 	["The Eye of Eternity"] = true,
 	["The Obsidian Sanctum"] = true,
 	["Vault of Archavon"] = true,
@@ -85,6 +84,9 @@ MRT_LegacyRaidZones = {
 	["Onyxia's Lair"] = true,
 	["Icecrown Citadel"] = true,
     ["The Ruby Sanctum"] = true,
+}
+
+MRT_LegacyRaidZonesBC = {
 }
 
 MRT_PvPRaids = {
