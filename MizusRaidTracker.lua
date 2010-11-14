@@ -105,6 +105,8 @@ local MRT_GuildRosterUpdating = nil;
 local MRT_AskCostQueue = {};
 local MRT_AskCostQueueRunning = nil;
 
+local MRT_UnknownRelogStatus = true;
+
 -- Vars for API
 local MRT_ExternalItemCostHandler = {
     func = nil,
@@ -128,8 +130,8 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("CHAT_MSG_WHISPER");
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
-    frame:RegisterEvent("PARTY_MEMBERS_CHANGED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
@@ -143,7 +145,7 @@ end
 function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
         frame:UnregisterEvent("ADDON_LOADED");
-        MRT_Initialize();
+        MRT_Initialize(frame);
     
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
@@ -181,25 +183,40 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
         
+    elseif (event == "PARTY_CONVERTED_TO_RAID") then
+        MRT_Debug("PARTY_CONVERTED_TO_RAID fired!");
+        if (MRT_UnknownRelogStatus) then
+            MRT_LoginTimer:SetScript("OnUpdate", nil);
+            MRT_UnknownRelogStatus = false;
+            MRT_EndActiveRaid();            
+        end
+        
     elseif (event == "PARTY_INVITE_REQUEST") then
         MRT_Debug("PARTY_INVITE_REQUEST fired!");
-        
-    elseif (event == "PARTY_MEMBERS_CHANGED") then
-        MRT_Debug("PARTY_MEMBERS_CHANGED");
+        if (MRT_UnknownRelogStatus) then
+            MRT_LoginTimer:SetScript("OnUpdate", nil);
+            MRT_UnknownRelogStatus = false;
+            MRT_EndActiveRaid();            
+        end
         
     elseif (event == "PLAYER_ENTERING_WORLD") then
         frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
         MRT_LoginTimer.loginTime = time();
+        MRT_GuildRosterUpdate(frame, nil, true)        
+        MRT_GuildRosterInitialUpdateDone = true;
         -- Delay data gathering a bit to make sure, that data is available after login
-        -- aka: ugly Dalaran latency fix
-        MRT_LoginTimer:SetScript("OnUpdate", function (self)
-            if ((time() - self.loginTime) > 5) then
-                self:SetScript("OnUpdate", nil);
-                MRT_CheckRaidStatusAfterLogin();
-                MRT_GuildRosterUpdate(frame, nil, true)
-                MRT_GuildRosterInitialUpdateDone = true;
-            end
-        end);
+        -- aka: ugly Dalaran latency fix - this is the part, which needs rework
+        if (MRT_UnknownRelogStatus) then
+            MRT_LoginTimer:SetScript("OnUpdate", function (self)
+                if ((time() - self.loginTime) > 15) then
+                    MRT_Debug("Relog Timer: 15 seconds threshold reached...");
+                    self:SetScript("OnUpdate", nil);
+                    MRT_UnknownRelogStatus = false;
+                    MRT_CheckRaidStatusAfterLogin();
+                end
+            end);
+        end
+        
     
     elseif (event == "RAID_INSTANCE_WELCOME") then
         if (not MRT_Options["General_MasterEnable"]) then return end;
@@ -219,9 +236,22 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif (event == "RAID_ROSTER_UPDATE") then
         MRT_Debug("RAID_ROSTER_UPDATE fired!");
+        if (MRT_UnknownRelogStatus) then
+            MRT_LoginTimer:SetScript("OnUpdate", nil);
+            MRT_UnknownRelogStatus = false;
+            MRT_CheckRaidStatusAfterLogin();
+        end
         MRT_RaidRosterUpdate(frame);
     
     end
+end
+
+function MRT_PrintGR()
+    local concatTable = "";
+    for key, val in pairs(MRT_GuildRoster) do
+        concatTable = concatTable..val..", ";
+    end
+    MRT_Debug(concatTable);
 end
 
 -- Combatlog handler
@@ -298,7 +328,7 @@ ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_
 ------------------
 --  Initialize  --
 ------------------
-function MRT_Initialize()
+function MRT_Initialize(frame)
     -- Update settings and DB
     MRT_UpdateSavedOptions();
     MRT_VersionUpdate();
@@ -352,6 +382,10 @@ function MRT_Initialize()
         end
     });
     MRT_DKPFrame_DropDownTable.head:SetHeight(1);
+    -- check for open raids
+    if (not MRT_NumOfCurrentRaid) then
+        MRT_UnknownRelogStatus = false;
+    end
     -- update version number in saved vars
     MRT_Options["General_Version"] = MRT_ADDON_VERSION;
     MRT_Options["General_ClientLocale"] = GetLocale();
