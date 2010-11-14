@@ -82,6 +82,8 @@ local MRT_Defaults = {
 --------------
 --  Locals  --
 --------------
+local MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA = 60;
+
 local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
 local LDBIcon = LibStub("LibDBIcon-1.0");
@@ -1655,7 +1657,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
             if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
                 playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
             else
-                lastBossTimeStamp = raidStart;
+                lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
                         if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
@@ -1964,7 +1966,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
             if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
                 playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
             else
-                lastBossTimeStamp = raidStart;
+                lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
                         if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
