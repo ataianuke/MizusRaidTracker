@@ -1593,7 +1593,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     -- set up a few locals
     local now = MRT_GetCurrentTime();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
-    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1]["Date"] or MRT_RaidLog[raidID]["StartTime"]; end
+    if (bossID and bossID > 1) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1]["Date"] or MRT_RaidLog[raidID]["StartTime"]; end
     local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
     local index = 1;
@@ -1881,7 +1881,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     -- set up a few locals
     local now = MRT_GetCurrentTime();
     local raidStart = MRT_RaidLog[raidID]["StartTime"];
-    if (bossID) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1]["Date"] or MRT_RaidLog[raidID]["StartTime"]; end
+    if (bossID and bossID > 1) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1]["Date"] or MRT_RaidLog[raidID]["StartTime"]; end
     local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
     local realm = MRT_RaidLog[raidID]["Realm"];
     -- start creating head
