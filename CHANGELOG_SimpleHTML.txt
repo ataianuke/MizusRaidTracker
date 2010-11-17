@@ -1,3 +1,44 @@
+<h4>0.24 Beta - Changelog:</h4>
+<strong>New:</strong>
+<ul>
+	<li>Added zhTW translation (big thanks to wushiny)</li>
+	<li>Added Cataclysm raid zone names and boss IDs</li>
+	<li>Added option to use a trigger for the guild attendance check instead of the character name</li>
+	<li>Added basic chat filtering. MRT will now supress any whispers, which are handled by the guild attendance check. MRT will print a status message, when anyone added someone as a boss attendee. This should reduce whisper spam and make MRT compatible with WIM.</li>
+	<li>Added UI button for starting a guild attendance check. (Same effect as '/mrt dkpcheck')</li>
+	<li>Added new slash command '/mrt deleteall now' for deleting the raid log. (Use with caution - there is no extra "Are you sure?"-dialog)</li>
+	<li>Added option to disable AutoFocus of the loot popup dialog. (Three options: Enable always, disable when in combat, disable always)</li>
+	<li>Added option for automatic deleting of old raid entries. (Use with caution)</li>
+	<li>Added option to export boss names and zone names in english.</li>
+	<li>Added a minimap icon (disabled by default - use the options panel to activate it)</li>
+</ul>
+<strong>Changes:</strong>
+<ul>
+	<li>The tracking options panel were split up into two new panels ('Raid tracking' and 'Item tracking')</li>
+	<li>Rewritten the CTRT-compatible export once again. It should be a bit faster. (but not by much)</li>
+	<li>Renamed CTRT-compatible export to "EQdkp / MLdkp 1.1 (CTRT compatible)"</li>
+	<li>Raid zone translations are now handled by LibBabble-Zone-3.0 - they shouldn't need a manual translation anymore.</li>
+	<li>Enhanced boss ID based kill detection: Boss events with multiple mobs and a shared health pool are now trackable with a boss ID. An automatic rename system have been implemented in order to provide correct naming for such boss events (e.g. Prince Keleseth -&gt; Blood Prince Council)</li>
+	<li>Localized boss event for trash mob loot before the first boss</li>
+	<li>EQdkp-Plus XML is now the default export format</li>
+	<li>The player information of the EQdkp-Plus XML export is now sorted by player name</li>
+	<li>EQdkp-Plus XML Export and CTRT-Export: When exporting a single boss, MRT will now set the timestamp of the previous boss (if not available, then the raid start) as raid start.</li>
+	<li>Revamped functions for recovering a tracked raid after a relog or normal disconnect. It should be now more fault tolerant regarding lags.</li>
+</ul>
+<strong>Updates:</strong>
+<ul>
+	<li>Updated frFR translation and boss yells (thanks to Cindelle and deepking)</li>
+	<li>Updated koKR translation (thanks to 7destiny)</li>
+</ul>
+<strong>Bug Fixes:</strong>
+<ul>
+	<li>Fixed sorting error of the raid attendees list (Ticket #16)</li>
+	<li>Fixed missing parent for a tooltip (Ticket #18)</li>
+	<li>Deleted an old, invalid script handler (Ticket #21)</li>
+	<li>Fixed enUS boss yell of Runemaster Molgeim (Iron Council - semi mode)</li>
+	<li>EQdkp-Plus XML Export and CTRT-Export: Fixed a bug in the code for the code in the boss attendee fix for the Raid-Log-Importer</li>
+</ul>
+
 <h4>0.23-3 Beta - Changelog:</h4>
 <strong>Bug Fixes:</strong>
 <ul>
@@ -64,39 +105,3 @@
 	<li>Fixed an issue with the CTRT-Export, which produced a wrong time format on Mac system. (Ticket ID 6)</li>
 	<li>Fixed a lua-error, which occured, if data of a raidmember wasn't available at scan time.</li>
 </ul>
-
-<h4>0.21 Beta - Changelog:</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added support and a complete UI translation for spanish (esES) clients (a big thanks to Hestrall, who translated 90% of the addon).
-(Note: Boss yells for Halion, Horde Gunship Battle, TotC bosses and Ulduar bosses are still missing. For specific boss support, see <a href="http://wow.curseforge.com/addons/mizusraidtracker/pages/translation-status/">the translation status page at CurseForge.com</a>).</li>
-	<li>Added buttons to the GUI for starting and ending raid tracking manually.</li>
-	<li>CTRT-Export: added a workaround for a problem with an unknown EQDKP-RaidImport-Plugin (probably the "RaidTracker Import"-Plugin by d23)</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li>Updated german (deDE) translation (thanks to gOOvER)</li>
-    <li>The localization files are now created automatically by the CurseForge-Packager. If there are any issues, please report them.</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li>Fixed Algalon kill detection for english (enUS / enGB) clients</li>
-	<li>Fixed Iron Council - Steelbraker last kill detection. Again. Hopefully.</li>
-</ul>
-
-<h4>0.20 Beta</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added regularly check for PlayerDB and delete unused entries.</li>
-	<li>Added a LibDataBroker data source for opening the raidlog and the options panel</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li> 'Add Bosskill' dialog: Deleted the user dialog, which asked, if raid attendees should be copied to the boss attendees list. This is now done by default. Since raid attendee data takes priority over boss attendee data since v0.17, having this optional didn't make sense anymore.</li>
-	<li>Updated deDE translation.</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li> Changed layout of the boss kill table slightly. The last column shouldn't cut off anymore.</li>
-</ul>
-

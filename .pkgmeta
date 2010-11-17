@@ -20,7 +20,7 @@ externals:
     libs/LibDBIcon-1.0:
         url: svn://svn.wowace.com/wow/libdbicon-1-0/mainline/trunk/LibDBIcon-1.0
         tag: latest
-#manual-changelog: 
-#    filename: CHANGELOG_SimpleHTML.txt
-#    markup-type: html
+manual-changelog: 
+    filename: CHANGELOG_SimpleHTML.txt
+    markup-type: html
 enable-nolib-creation: no

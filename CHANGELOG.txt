@@ -1,4 +1,38 @@
-0.23-2 Beta - Changelog:
+0.24 Beta - Changelog:
+  New:
+    * Added zhTW translation (big thanks to wushiny)
+    * Added Cataclysm raid zone names and boss IDs
+    * Added option to use a trigger for the guild attendance check instead of the character name
+    * Added basic chat filtering. MRT will now supress any whispers, which are handled by the guild attendance check. MRT will print a status message, when anyone added someone as a boss attendee. This should reduce whisper spam and make MRT compatible with WIM.
+    * Added UI button for starting a guild attendance check. (Same effect as '/mrt dkpcheck')
+    * Added new slash command '/mrt deleteall now' for deleting the raid log. (Use with caution - there is no extra "Are you sure?"-dialog)
+    * Added option to disable AutoFocus of the loot popup dialog. (Three options: Enable always, disable when in combat, disable always)
+    * Added option for automatic deleting of old raid entries. (Use with caution)
+    * Added option to export boss names and zone names in english.
+    * Added a minimap icon (disabled by default - use the options panel to activate it)
+  Changes:
+    * The tracking options panel were split up into two new panels ('Raid tracking' and 'Item tracking')
+    * Rewritten the CTRT-compatible export once again. It should be a bit faster. (but not by much)
+    * Renamed CTRT-compatible export to "EQdkp / MLdkp 1.1 (CTRT compatible)"
+    * Raid zone translations are now handled by LibBabble-Zone-3.0 - they shouldn't need a manual translation anymore.
+    * Enhanced boss ID based kill detection: Boss events with multiple mobs and a shared health pool are now trackable with a boss ID. An automatic rename system have been implemented in order to provide correct naming for such boss events (e.g. Prince Keleseth -> Blood Prince Council)
+    * Localized boss event for trash mob loot before the first boss
+    * EQdkp-Plus XML is now the default export format
+    * The player information of the EQdkp-Plus XML export is now sorted by player name
+    * EQdkp-Plus XML Export and CTRT-Export: When exporting a single boss, MRT will now set the timestamp of the previous boss (if not available, then the raid start) as raid start.
+    * Revamped functions for recovering a tracked raid after a relog or normal disconnect. It should be now more fault tolerant regarding lags.
+  Updates:
+    * Updated frFR translation and boss yells (thanks to Cindelle and deepking)
+    * Updated koKR translation (thanks to 7destiny)
+  Bug Fixes:
+    * Fixed sorting error of the raid attendees list (Ticket #16)
+    * Fixed missing parent for a tooltip (Ticket #18)
+    * Deleted an old, invalid script handler (Ticket #21)
+    * Fixed enUS boss yell of Runemaster Molgeim (Iron Council - semi mode)
+    * EQdkp-Plus XML Export and CTRT-Export: Fixed a bug in the code for the code in the boss attendee fix for the Raid-Log-Importer
+
+
+0.23-3 Beta - Changelog:
   Bug Fixes:
     * Added workaround, which should prevent rare cases, where 25 player raids were tracked as 10 player raids.
 
@@ -7,7 +41,7 @@
   Bug Fixes:
     * Fixed missing item costs in the EQdkp-Plus XML export
     * Updated a few koKR boss yell translations
-  
+
 
 0.23 Beta - Changelog:
   New:
