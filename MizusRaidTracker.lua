@@ -146,6 +146,7 @@ end
 -- Event handler
 function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
+        MRT_Debug("Initializing MRT...");
         frame:UnregisterEvent("ADDON_LOADED");
         MRT_Initialize(frame);
     
@@ -204,22 +205,20 @@ function MRT_OnEvent(frame, event, ...)
         MRT_LoginTimer.loginTime = time();
         -- Delay data gathering a bit to make sure, that data is available after login
         -- aka: ugly Dalaran latency fix - this is the part, which needs rework
-        if (MRT_UnknownRelogStatus) then
-            MRT_LoginTimer:SetScript("OnUpdate", function (self)
-                if ((time() - self.loginTime) > 5) then
-                    if (not MRT_GuildRosterInitialUpdateDone) then
-                        MRT_GuildRosterUpdate(frame, nil, true);
-                    end
-                    MRT_GuildRosterInitialUpdateDone = true;
+        MRT_LoginTimer:SetScript("OnUpdate", function (self)
+            if ((time() - self.loginTime) > 5) then
+                if (not MRT_GuildRosterInitialUpdateDone) then
+                    MRT_GuildRosterUpdate(frame, nil, true);
                 end
-                if ((time() - self.loginTime) > 15) then
-                    MRT_Debug("Relog Timer: 15 seconds threshold reached...");
-                    self:SetScript("OnUpdate", nil);
-                    if (MRT_UnknownRelogStatus) then MRT_CheckRaidStatusAfterLogin(); end
-                    MRT_UnknownRelogStatus = false;
-                end
-            end);
-        end
+                MRT_GuildRosterInitialUpdateDone = true;
+            end
+            if ((time() - self.loginTime) > 15) then
+                MRT_Debug("Relog Timer: 15 seconds threshold reached...");
+                self:SetScript("OnUpdate", nil);
+                if (MRT_UnknownRelogStatus) then MRT_CheckRaidStatusAfterLogin(); end
+                MRT_UnknownRelogStatus = false;
+            end
+        end);
         
     
     elseif (event == "RAID_INSTANCE_WELCOME") then
