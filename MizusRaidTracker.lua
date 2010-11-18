@@ -146,9 +146,12 @@ end
 -- Event handler
 function MRT_OnEvent(frame, event, ...)
     if (event == "ADDON_LOADED") then
-        MRT_Debug("Initializing MRT...");
-        frame:UnregisterEvent("ADDON_LOADED");
-        MRT_Initialize(frame);
+        local addonName = ...;
+        if (addonName == "MizusRaidTracker") then
+            MRT_Debug("Initializing MRT...");
+            frame:UnregisterEvent("ADDON_LOADED");
+            MRT_Initialize(frame);
+        end
     
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
