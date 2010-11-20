@@ -1436,7 +1436,6 @@ end
 ------------------------------
 function MRT_ExportFrame_Show(export)
     MRT_ExportFrame_EB:SetText(export)
-    MRT_ExportFrame_EB:SetCursorPosition(MRT_ExportFrame_EB:GetNumLetters());
     MRT_ExportFrame_EB:HighlightText();
     MRT_ExportFrame:Show();
 end
