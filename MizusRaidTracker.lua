@@ -1394,9 +1394,15 @@ end
 function MRT_GetNPCID(GUID)
     local first3 = tonumber("0x"..strsub(GUID, 3, 5));
     local unitType = bit.band(first3, 0x007);
-    -- pre WoW 4.0.1: GUID, 9, 12 - if there is a demand for a chinese version, this part need to be checked against the client version
     if ((unitType == 0x003) or (unitType == 0x005)) then
-        return tonumber("0x"..strsub(GUID, 7, 10));
+        local _, _, _, uiVersion = GetBuildInfo();
+        if (uiVersion < 40000) then
+            -- WoW client previous to 4.0.1 (China)
+            return tonumber("0x"..strsub(GUID, 9, 12));
+        else
+            -- WoW client 4.0.x (rest of the world)
+            return tonumber("0x"..strsub(GUID, 7, 10));
+        end
     else
         return nil;
     end
