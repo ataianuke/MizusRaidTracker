@@ -775,7 +775,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
     local numRaidMembers = GetNumRaidMembers();
     local realm = GetRealmName();
-    if (numRaidMembers == 0) then return end
+    if (numRaidMembers == 0) then return; end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
     local currentTime = MRT_GetCurrentTime();
     local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = currentTime};
@@ -790,7 +790,7 @@ function MRT_CreateNewRaid(zoneName, raidSize)
             ["Name"] = playerName,
             ["Join"] = currentTime,
             ["Leave"] = nil,
-        }
+        };
         local playerDBEntry = {
             ["Name"] = playerName,
             ["Race"] = playerRace,
@@ -821,6 +821,87 @@ function MRT_CreateNewRaid(zoneName, raidSize)
     end);
     -- update LDB text and icon
     MRT_LDB_DS.icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_enabled";
+end
+
+function MRT_ResumeLastRaid()
+    -- if there is a running raid, then there is nothing to resume
+    if (MRT_NumOfCurrentRaid) then return false; end
+    -- if the player is not in a raid, then there is no reason to resume
+    local numRaidMembers = GetNumRaidMembers();
+    if (numRaidMembers == 0) then return false; end
+    -- sanity checks: Is there a last raid? Was the last raid on the same realm as this raid?
+    local numOfLastRaid = #MRT_RaidLog;
+    if (not numOfLastRaid or numOfLastRaid == 0) then return false; end
+    local realm = GetRealmName();
+    if (MRT_RaidLog[numOfLastRaid]["Realm"] ~= realm) then return false; end
+    -- scan RaidRoster and create a list with current valid attendees (valid in the sense should be tracked according to the current setting (check subgroup and onlinestatus))
+    -- also, update PlayerDB
+    local currentAttendeesList = {};
+    for i = 1, numRaidMembers do
+        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        local UnitID = "raid"..tostring(i);
+        local playerRaceL, playerRace = UnitRace(UnitID);
+        local playerSex = UnitSex(UnitID);
+        local playerGuild = GetGuildInfo(UnitID);
+        local playerInfo = {
+            ["Name"] = playerName,
+            ["Join"] = currentTime,
+            ["Leave"] = nil,
+        }
+        local playerDBEntry = {
+            ["Name"] = playerName,
+            ["Race"] = playerRace,
+            ["RaceL"] = playerRaceL,
+            ["Class"] = playerClass,
+            ["ClassL"] = playerClassL,
+            ["Level"] = playerLvl,
+            ["Sex"] = playerSex,
+            ["Guild"] = playerGuild,
+        };
+        if (MRT_PlayerDB[realm] == nil) then
+            MRT_PlayerDB[realm] = {};
+        end
+        MRT_PlayerDB[realm][playerName] = playerDBEntry;
+        -- is this a valid attendee?
+        if ((playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and raidSize == 10) or (playerSubGroup <= 5 and raidSize == 25))) then
+            currentAttendeesList[playerName] = true;
+        end
+    end
+    -- next step: check raid roster of last raid - if there is an entry of an valid raid member with leaveTime == end of last raid, then just resume this entry (-> set leave-time to nil)
+    local endOfLastRaid = MRT_RaidLog[numOfLastRaid]["StopTime"];
+    for i, attendeeDataSet in ipairs(MRT_RaidLog[numOfLastRaid]["Players"]) do
+        if (attendeeDataSet.Leave and attendeeDataSet.Leave == endOfLastRaid and currentAttendeesList[attendeeDataSet.Name]) then
+            attendeeDataSet.Leave = nil;
+            currentAttendeesList[attendeeDataSet.Name] = nil;
+        end
+    end
+    -- at this point, currentAttendeesList should only contain players, which were not in the last raid when tracking of the last raid ended. Add new raid attendee entries for these players
+    local now = MRT_GetCurrentTime();
+    for playerName, val in pairs(currentAttendeesList) do
+        local playerInfo = {
+            ["Name"] = playerName,
+            ["Join"] = now,
+            ["Leave"] = nil,
+        };
+        tinsert(MRT_RaidLog[numOfLastRaid]["Players"], playerInfo);
+    end
+    -- set up timer for regular raid roster scanning
+    MRT_RaidRosterScanTimer.lastCheck = time()
+    MRT_RaidRosterScanTimer:SetScript("OnUpdate", function (self)
+        if ((time() - self.lastCheck) > 5) then
+            self.lastCheck = time();
+            MRT_RaidRosterUpdate();
+        end
+    end);
+    -- update LDB text and icon
+    MRT_LDB_DS.icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_enabled";
+    -- update status variables
+    MRT_NumOfCurrentRaid = numOfLastRaid;
+    if (#MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"] > 0) then
+        MRT_NumOfLastBoss = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"];
+    end
+    -- done - last raid is resumed and tracking is enabled
+    return true;
 end
 
 function MRT_RaidRosterUpdate(frame)
