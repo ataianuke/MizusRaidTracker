@@ -836,11 +836,8 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
     cost = tonumber(cost);
     if (lootNote == nil or lootNote == "" or lootNote == " ") then lootNote = nil; end
     -- sanity-check values here - especially the itemlink / looter is free text / cost has to be a number
-    -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
-    -- strip the itemlink into its parts / may change to use deformat with easier pattern ("|c%s|H%s|h[%s]|h|r")
-    local _, _, itemString = string.find(itemLink, "^|c%x+|H(.+)|h%[.*%]");
-    local _, _, itemColor, _, itemId, _, _, _, _, _, _, _, _, _, itemName = string.find(itemLink, "|?c?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
-    if (not itemString or not itemColor or not itemId or not itemName) then
+    local itemName, itemLink, itemId, itemString, itemRarity, itemColor, _, _, _, _, _, _, _, _ = MRT_GetDetailedItemInformation(itemLink);
+    if (not itemName) then
         MRT_Print(MRT_L.GUI["No itemLink found"]);
         return;
     end
@@ -848,7 +845,6 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         MRT_Print(MRT_L.GUI["Item cost invalid"]);
         return;
     end
-    itemId = tonumber(itemId);
     MRT_GUI_HideDialogs();
     -- insert new values here / if (lootnum == nil) then treat as a newly added item
     if (looter == "") then looter = "disenchanted"; end

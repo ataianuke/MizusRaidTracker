@@ -1022,16 +1022,8 @@ function MRT_AutoAddLoot(chatmsg)
     -- if code reach this point, we should have a valid looter and a valid itemLink
     MRT_Debug("Item looted - Looter is "..playerName.." and loot is "..itemLink);
     -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
-    -- strip the itemlink into its parts / may change to use deformat with easier pattern ("|c%s|H%s|h[%s]|h|r")
-    local _, _, itemString = string.find(itemLink, "^|c%x+|H(.+)|h%[.*%]");
-    local _, _, itemColor, _, itemId, _, _, _, _, _, _, _, _, _, itemName = string.find(itemLink, "|?c?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
-    local _, _, itemRarity, itemLevel = GetItemInfo(itemLink);
-    -- make the string a number
-    itemId = tonumber(itemId);
-    -- if major fuckup in first strip:
-    -- if (itemString == nil) then MRT_Debug("ItemLink corrupted - no ItemString found."); return; end
-    -- if major fuckup in second strip:
-    -- if (itemId == nil) then MRT_Debug("ItemLink corrupted - no ItemId found."); return; end
+    local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, _, _, _, _, _, _ = MRT_GetDetailedItemInformation(itemLink);
+    if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLoot()"); return; end
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > itemRarity) then MRT_Debug("Item not tracked - quality is too low."); return; end
     if (MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] > itemLevel) then MRT_Debug("Item not tracked - iLvl is too low."); return; end
