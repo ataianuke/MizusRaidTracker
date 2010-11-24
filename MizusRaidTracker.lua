@@ -1410,6 +1410,20 @@ function MRT_GetNPCID(GUID)
     end
 end
 
+-- @param itemIdentifer: Either itemLink or itemID and under special circumstances itemName
+-- @usage local itemName, itemLink, itemId, itemString, itemRarity, itemColor, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = MRT_GetDetailedItemInformation(itemIdentifier)
+-- If itemIdentifier is not valid, the return value will be nil
+-- otherwise, it will be a long tuple of item information
+-- this function should be compatible with 3.x and 4.0.x clients
+function MRT_GetDetailedItemInformation(itemIdentifier)
+    local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(itemIdentifier);
+    if (not itemLink) then return nil; end
+    local _, itemString, _ = deformat(itemLink, "|c%s|H%s|h%s|h|r");
+    local itemId, _ = deformat(itemString, "item:%d:%s");
+    local itemColor = MRT_ItemColors[itemRarity + 1];
+    return itemName, itemLink, itemId, itemString, itemRarity, itemColor, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice;
+end
+
 function MRT_GetCurrentTime()
     if MRT_Options["Tracking_UseServerTime"] then
         local _, month, day, year = CalendarGetDate();

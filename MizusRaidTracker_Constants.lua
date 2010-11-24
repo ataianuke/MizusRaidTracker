@@ -30,6 +30,7 @@ MRT_ItemColors = {
     [5] = "ffa335ee",  -- epic
     [6] = "ffff8000",  -- legendary
     [7] = "ffe6cc80",  -- artifact / heirloom
+    [8] = "ffe6cc80",
 }
 
 MRT_ItemColorsNonAlpha = {
