@@ -228,7 +228,7 @@ function MRT_Options_RestoreValues()
     MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderValue:SetText("|c"..MRT_ItemColors[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]..MRT_ItemValues[MRT_Options["Tracking_MinItemQualityToGetDKPValue"]+1]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
-    UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, MRT_Options["Tracking_AskCostAutoFocus"]);
+    MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu();
     -- AttendancePanel
     MRT_Options_AttendancePanel_GA_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckEnabled"]);
     MRT_Options_AttendancePanel_GA_NoAuto_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceCheckNoAuto"]);
@@ -240,7 +240,7 @@ function MRT_Options_RestoreValues()
     MRT_Options_AttendancePanel_GroupRestriction:SetChecked(MRT_Options["Attendance_GroupRestriction"]);
     MRT_Options_AttendancePanel_OfflinePlayers:SetChecked(MRT_Options["Attendance_TrackOffline"]);
     -- ExportPanel
-    UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
+    MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu();
     MRT_Options_ExportPanel_EnglishExport_CB:SetChecked(MRT_Options["Export_ExportEnglish"]);
     MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:SetChecked(MRT_Options["Export_CTRT_IgnorePerBossAttendance"]);
     MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:SetChecked(MRT_Options["Export_CTRT_AddPoorItem"]);
