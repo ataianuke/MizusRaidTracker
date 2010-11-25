@@ -538,7 +538,7 @@
       <Button name="$parent_StartNewRaid_Button" inherits="MRT_GUI_Button_Template" text="(L) StartRaid">
         <Size x="180" y="22"/>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_TakeSnapshot_Button" x="0" y="-32"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_TakeSnapshot_Button" x="0" y="-15"/>
         </Anchors>
         <Scripts>
           <OnClick>MRT_GUI_StartNewRaid();</OnClick>
@@ -564,6 +564,17 @@
         </Anchors>
         <Scripts>
           <OnClick>MRT_GUI_EndCurrentRaid();</OnClick>
+          <OnEnter></OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
+        </Scripts>
+      </Button>
+      <Button name="$parent_ResumeLastRaid_Button" inherits="MRT_GUI_Button_Template" text="Resume last raid (L)">
+        <Size x="180" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EndCurrentRaid_Button" x="0" y="-15"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_GUI_ResumeLastRaid();</OnClick>
           <OnEnter></OnEnter>
           <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>

@@ -220,6 +220,7 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_StartNewRaid_Button:SetText(MRT_L.GUI["Button_StartNewRaid"]);
     MRT_GUIFrame_MakeAttendanceCheck_Button:SetText(MRT_L.GUI["Button_MakeGuildAttendanceCheck"]);
     MRT_GUIFrame_EndCurrentRaid_Button:SetText(MRT_L.GUI["Button_EndCurrentRaid"]);
+    MRT_GUIFrame_ResumeLastRaid_Button:SetText(MRT_L.GUI["Button_ResumeLastRaid"]);
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
     -- Create and anchor drop down menu table for add/modify loot dialog
@@ -1160,6 +1161,30 @@ function MRT_GUI_EndCurrentRaid()
         return;
     end
     MRT_EndActiveRaid();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    MRT_GUI_RaidAttendeesTableUpdate(raidnum);
+end
+
+function MRT_GUI_ResumeLastRaid()
+    if (MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L.GUI["Active raid in progress."]);
+        return;
+    end
+    if (GetNumRaidMembers() == 0) then
+        MRT_Print(MRT_L.GUI["Player not in raid."]);
+        return; 
+    end
+    local success = MRT_ResumeLastRaid();
+    if (not success) then
+        MRT_Print(MRT_L.GUI["Resuming last raid failed"]);
+        return;
+    else
+        MRT_Print(MRT_L.GUI["Resuming last raid successful"]);
+    end
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then
         return;
