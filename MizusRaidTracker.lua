@@ -677,11 +677,12 @@ function MRT_CheckZoneAndSizeStatus()
     local localInstanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
     local instanceInfoDifficulty2 = GetInstanceDifficulty();
     local instanceInfoName = LBZR[localInstanceInfoName];
-    -- if no english name available, returen
+    -- if no english name available, return
     if (instanceInfoName == nil) then MRT_Debug("No LBZ-entry for this zone found. Zone is "..localInstanceInfoName); return; end
     MRT_Debug("RIW fired - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
     if (MRT_RaidZones[instanceInfoName]) then
         -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
+        -- This is the point where to check if the current raidZone is a zone, which should be tracked
         if (MRT_PvPRaids[instanceInfoName] and not MRT_Options["Tracking_LogAVRaids"]) then 
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;

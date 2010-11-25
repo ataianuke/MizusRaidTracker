@@ -179,20 +179,9 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Export_Currency"] = MRT_Options_ExportPanel_Currency_EB:GetText();
     -- Set slash command to new value
     SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
-    -- Check tracking status and adjust to new settings
-    local currentRaidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
-    local currentRaidZoneEN = MRT_L.Raidzones[MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidZone"]];
-    if (not MRT_Options["General_MasterEnable"]) then 
-        MRT_EndActiveRaid();
-    elseif (not MRT_NumOfCurrentRaid) then
-        local instanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
-        if (MRT_L.Raidzones[instanceInfoName]) then
-            MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty);
-        end
-    elseif ((currentRaidSize == 10) and not MRT_Options["Tracking_Log10MenRaids"]) then
-        MRT_EndActiveRaid();
-    elseif (MRT_PvPRaids[currentRaidZoneEN] and not MRT_Options["Tracking_LogAVRaids"]) then
-        MRT_EndActiveRaid();
+    -- If MRT is enabled, check tracking status and adjust to new settings
+    if (MRT_Options["General_MasterEnable"]) then 
+        MRT_CheckZoneAndSizeStatus();
     end
 end
 
