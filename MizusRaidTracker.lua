@@ -2471,7 +2471,11 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
         itemXml = itemXml.."<Color>"..itemInfo.ItemColor.."</Color>";
         itemXml = itemXml.."<ItemID>"..itemInfo.ItemId.."</ItemID>";
         itemXml = itemXml.."<Count>"..itemInfo.ItemCount.."</Count>";
-        itemXml = itemXml.."<Buyer>"..itemInfo.Looter.."</Buyer>";
+        if (itemInfo.Looter == "disenchanted") then
+            itemXml = itemXml.."<Buyer>Disenchanted</Buyer>";
+        else
+            itemXml = itemXml.."<Buyer>"..itemInfo.Looter.."</Buyer>";
+        end
         itemXml = itemXml.."<Cost>"..itemInfo.DKPValue.."</Cost>";
         itemXml = itemXml.."<Time>"..MRT_MakeEQDKP_Time(bossInfo.Date).."</Time>";
         itemXml = itemXml.."<Drop>"..bossInfo.Name.."</Drop>";
