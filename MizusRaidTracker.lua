@@ -1419,13 +1419,13 @@ function MRT_GuildAttendanceSendAnnouncement(unformattedText, boss, timer)
     -- format text
     local announcement = unformattedText;
     if (boss) then 
-        announcement = string.gsub(announcement, "%BOSS%", boss); 
+        announcement = string.gsub(announcement, "<<BOSS>>", boss); 
     end
     if (timer) then 
-        announcement = string.gsub(announcement, "%TIMER%", timer); 
+        announcement = string.gsub(announcement, "<<TIMER>>", timer); 
     end
     if (MRT_Options["Attendance_GuildAttendanceCheckTrigger"]) then 
-        announcement = string.gsub(announcement, "%TRIGGER%", MRT_Options["Attendance_GuildAttendanceCheckTrigger"]); 
+        announcement = string.gsub(announcement, "<<TRIGGER>>", MRT_Options["Attendance_GuildAttendanceCheckTrigger"]); 
     end
     -- split announcement text block into multiple lines
     local textlineList = { string.split("\n", announcement) };
