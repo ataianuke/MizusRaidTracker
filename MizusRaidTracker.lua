@@ -1370,28 +1370,26 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     MRT_TimerFrame.GAStart = time();
     MRT_TimerFrame.GALastMsg = time();
     MRT_TimerFrame.GADuration = MRT_Options["Attendance_GuildAttendanceCheckDuration"];
-    local bosskilltext = nil;
-    local triggertext = nil;
-    if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
-        triggertext = string.format(MRT_L.Core["GuildAttendanceAnnounceText2"], MRT_Options["Attendance_GuildAttendanceCheckTrigger"]);
-    else
-        triggertext = MRT_L.Core["GuildAttendanceAnnounceText"];
-    end
+    -- Put decider here: Which textblock should be used for the attendance check?
+    local unformattedAnnouncement = nil;
     if (bosskilled == "_attendancecheck_") then
-        MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
-        bosskilltext = "MRT: "..triggertext;
+        if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
+            unformattedAnnouncement = MRT_GA_TEXT_TRIGGER_NOBOSS;
+        else
+            unformattedAnnouncement = MRT_GA_TEXT_CHARNAME_NOBOSS;
+        end
     else
-        bosskilltext = "MRT: "..string.format(MRT_L.Core["GuildAttendanceBossDownText"], bosskilled).." "..triggertext;
+        if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
+            unformattedAnnouncement = MRT_GA_TEXT_TRIGGER_BOSS;
+        else
+            unformattedAnnouncement = MRT_GA_TEXT_CHARNAME_BOSS;
+        end
     end
-    local targetChannel = "GUILD";
-    --@debug@
-    if (MRT_Options["General_DebugEnabled"]) then targetChannel = "PARTY"; end
-    --@end-debug@
-    SendChatMessage("********************", targetChannel);
-    SendChatMessage(bosskilltext, targetChannel);
-    SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), targetChannel);
-    SendChatMessage("********************", targetChannel);
-    MRT_TimerFrame.GABossKillText = bosskilltext;
+    -- send announcement text
+    MRT_GuildAttendanceSendAnnouncement(unformattedAnnouncement, bosskilled, MRT_TimerFrame.GADuration);
+    -- start GA timer frame
+    MRT_TimerFrame.GAText = unformattedAnnouncement;
+    MRT_TimerFrame.GABoss = bosskilled;
     MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
     MRT_TimerFrame:SetScript("OnUpdate", function() MRT_GuildAttendanceCheckUpdate(); end);
 end
@@ -1400,26 +1398,44 @@ function MRT_GuildAttendanceCheckUpdate()
     if (MRT_TimerFrame.GARunning) then
         -- is last message one minute ago?
         if ((time() - MRT_TimerFrame.GALastMsg) >= 60) then
-            local targetChannel = "GUILD";
-            --@debug@
-            if (MRT_Options["General_DebugEnabled"]) then targetChannel = "PARTY"; end
-            --@end-debug@
             MRT_TimerFrame.GALastMsg = time();
             -- is GACheck duration up?
             if (MRT_TimerFrame.GADuration == 0) then
-                SendChatMessage("MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"], targetChannel);
+                local timerUpText = "MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"];
+                MRT_GuildAttendanceSendAnnouncement(timerUpText, nil, nil);
                 MRT_TimerFrame.GARunning = nil;
             else
-                SendChatMessage("********************", targetChannel);
-                SendChatMessage(MRT_TimerFrame.GABossKillText, targetChannel);
-                SendChatMessage("MRT: "..string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], MRT_TimerFrame.GADuration), targetChannel);
-                SendChatMessage("********************", targetChannel);
+                MRT_GuildAttendanceSendAnnouncement(MRT_TimerFrame.GAText, MRT_TimerFrame.GABoss, MRT_TimerFrame.GADuration);
                 MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
             end
         end
     end
     if (not MRT_TimerFrame.GARunning) then
         MRT_TimerFrame:SetScript("OnUpdate", nil);
+    end
+end
+
+function MRT_GuildAttendanceSendAnnouncement(unformattedText, boss, timer)
+    -- format text
+    local announcement = unformattedText;
+    if (boss) then 
+        announcement = string.gsub(announcement, "%BOSS%", boss); 
+    end
+    if (timer) then 
+        announcement = string.gsub(announcement, "%TIMER%", timer); 
+    end
+    if (MRT_Options["Attendance_GuildAttendanceCheckTrigger"]) then 
+        announcement = string.gsub(announcement, "%TRIGGER%", MRT_Options["Attendance_GuildAttendanceCheckTrigger"]); 
+    end
+    -- split announcement text block into multiple lines
+    local textlineList = { string.split("\n", announcement) };
+    -- send announcement
+    local targetChannel = "GUILD";
+    --@debug@
+    if (MRT_Options["General_DebugEnabled"]) then targetChannel = "PARTY"; end
+    --@end-debug@
+    for index, textline in ipairs(textlineList) do
+        SendChatMessage(textline, targetChannel);
     end
 end
 
