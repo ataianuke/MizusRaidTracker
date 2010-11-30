@@ -42,7 +42,7 @@ local MRT_Defaults = {
     ["Options"] = {
         ["DB_Version"] = 2,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 9,                                             -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
+        ["General_OptionsVersion"] = 10,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
@@ -53,8 +53,8 @@ local MRT_Defaults = {
         ["Attendance_GuildAttendanceCheckUseTrigger"] = false,
         ["Attendance_GuildAttendanceCheckTrigger"] = "!triggerexample",
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
-        --["Attendance_GuildAttendanceUseCustomText"] = false,
-        --["Attendance_GuildAttendanceCustomText"] = MRT_GA_TEXT_CHARNAME_BOSS,
+        ["Attendance_GuildAttendanceUseCustomText"] = false,
+        ["Attendance_GuildAttendanceCustomText"] = MRT_GA_TEXT_CHARNAME_BOSS,
         ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
         ["Tracking_Log10MenRaids"] = false,                                         -- Track 10 player raids: true / nil
@@ -463,6 +463,11 @@ function MRT_UpdateSavedOptions()
             MRT_Options["Export_ExportFormat"] = MRT_Options["Export_ExportFormat"] + 1;
         end
         MRT_Options["General_OptionsVersion"] = 9;
+    end
+    if MRT_Options["General_OptionsVersion"] == 9 then
+        MRT_Options["Attendance_GuildAttendanceUseCustomText"] = false;
+        MRT_Options["Attendance_GuildAttendanceCustomText"] = MRT_GA_TEXT_CHARNAME_BOSS;
+        MRT_Options["General_OptionsVersion"] = 10;
     end
 end
 

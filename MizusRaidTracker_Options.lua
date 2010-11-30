@@ -231,7 +231,7 @@ function MRT_Options_RestoreValues()
     MRT_Options_AttendancePanel_GADuration_Slider:SetValue(MRT_Options["Attendance_GuildAttendanceCheckDuration"]);
     MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(MRT_Options["Attendance_GuildAttendanceCheckDuration"].." "..MRT_L.Options["AP_Minutes"]);
     MRT_Options_AttendancePanel_GA_UseCustomText_CB:SetChecked(MRT_Options["Attendance_GuildAttendanceUseCustomText"]);
-    MRT_Options_AttendancePanel_GA_CustomText_EB:SetText("This is a test text with the following vars: \n1: <<BOSS>> - 2: <<TIME>> - 3: <<TRIGGER>>");
+    MRT_Options_AttendancePanel_GA_CustomText_EB:SetText(MRT_Options["Attendance_GuildAttendanceCustomText"]);
     -- ExportPanel
     MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu();
     MRT_Options_ExportPanel_EnglishExport_CB:SetChecked(MRT_Options["Export_ExportEnglish"]);
