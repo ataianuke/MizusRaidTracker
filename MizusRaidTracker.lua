@@ -53,6 +53,8 @@ local MRT_Defaults = {
         ["Attendance_GuildAttendanceCheckUseTrigger"] = false,
         ["Attendance_GuildAttendanceCheckTrigger"] = "!triggerexample",
         ["Attendance_GuildAttendanceCheckDuration"] = 3,                            -- in minutes - 0..5
+        --["Attendance_GuildAttendanceUseCustomText"] = false,
+        --["Attendance_GuildAttendanceCustomText"] = MRT_GA_TEXT_CHARNAME_BOSS,
         ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
         ["Tracking_Log10MenRaids"] = false,                                         -- Track 10 player raids: true / nil
@@ -1249,8 +1251,7 @@ function MRT_DKPFrame_AskCost()
         MRT_GetDKPValueFrame_EB:SetAutoFocus(true);
     end
     -- show DKPValue
-    MRT_GetDKPValueFrame:Show();
-    
+    MRT_GetDKPValueFrame:Show();  
 end
 
 -- Buttons: OK, Cancel, Delete, Bank, Disenchanted
@@ -1372,24 +1373,31 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     MRT_TimerFrame.GADuration = MRT_Options["Attendance_GuildAttendanceCheckDuration"];
     -- Put decider here: Which textblock should be used for the attendance check?
     local unformattedAnnouncement = nil;
-    if (bosskilled == "_attendancecheck_") then
-        if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
-            unformattedAnnouncement = MRT_GA_TEXT_TRIGGER_NOBOSS;
-        else
-            unformattedAnnouncement = MRT_GA_TEXT_CHARNAME_NOBOSS;
-        end
+    local bossName = bosskilled;
+    if (bosskilled == "_attendancecheck_") then bossName = MRT_L.Core["GuildAttendanceBossEntry"]; end
+    if (MRT_Options["Attendance_GuildAttendanceUseCustomText"]) then
+        unformattedAnnouncement = MRT_Options["Attendance_GuildAttendanceCustomText"];
     else
-        if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
-            unformattedAnnouncement = MRT_GA_TEXT_TRIGGER_BOSS;
+        if (bosskilled == "_attendancecheck_") then
+            MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
+            if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
+                unformattedAnnouncement = MRT_GA_TEXT_TRIGGER_NOBOSS;
+            else
+                unformattedAnnouncement = MRT_GA_TEXT_CHARNAME_NOBOSS;
+            end
         else
-            unformattedAnnouncement = MRT_GA_TEXT_CHARNAME_BOSS;
+            if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
+                unformattedAnnouncement = MRT_GA_TEXT_TRIGGER_BOSS;
+            else
+                unformattedAnnouncement = MRT_GA_TEXT_CHARNAME_BOSS;
+            end
         end
     end
     -- send announcement text
-    MRT_GuildAttendanceSendAnnouncement(unformattedAnnouncement, bosskilled, MRT_TimerFrame.GADuration);
+    MRT_GuildAttendanceSendAnnouncement(unformattedAnnouncement, bossName, MRT_TimerFrame.GADuration);
     -- start GA timer frame
     MRT_TimerFrame.GAText = unformattedAnnouncement;
-    MRT_TimerFrame.GABoss = bosskilled;
+    MRT_TimerFrame.GABoss = bossName;
     MRT_TimerFrame.GADuration = MRT_TimerFrame.GADuration - 1;
     MRT_TimerFrame:SetScript("OnUpdate", function() MRT_GuildAttendanceCheckUpdate(); end);
 end
@@ -1422,7 +1430,7 @@ function MRT_GuildAttendanceSendAnnouncement(unformattedText, boss, timer)
         announcement = string.gsub(announcement, "<<BOSS>>", boss); 
     end
     if (timer) then 
-        announcement = string.gsub(announcement, "<<TIMER>>", timer); 
+        announcement = string.gsub(announcement, "<<TIME>>", timer); 
     end
     if (MRT_Options["Attendance_GuildAttendanceCheckTrigger"]) then 
         announcement = string.gsub(announcement, "<<TRIGGER>>", MRT_Options["Attendance_GuildAttendanceCheckTrigger"]); 
@@ -1432,7 +1440,7 @@ function MRT_GuildAttendanceSendAnnouncement(unformattedText, boss, timer)
     -- send announcement
     local targetChannel = "GUILD";
     --@debug@
-    if (MRT_Options["General_DebugEnabled"]) then targetChannel = "PARTY"; end
+    if (MRT_Options["General_DebugEnabled"]) then targetChannel = "RAID"; end
     --@end-debug@
     for index, textline in ipairs(textlineList) do
         SendChatMessage(textline, targetChannel);

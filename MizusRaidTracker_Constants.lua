@@ -269,7 +269,7 @@ MRT_IgnoredItemIDList = {
 --------------------------------------------------
 --  Localized text blocks for attendance check  --
 --------------------------------------------------
-local MRT_PreformattedTimerText = string.format(MRT_L.Core["GuildAttendanceRemainingTimeText"], "<<TIME>>");
+local MRT_PreformattedTimerText = string.gsub(MRT_L.Core["GuildAttendanceRemainingTimeText"], "%%d", "<<TIME>>");
 local MRT_PreformattedTriggerText = string.format(MRT_L.Core["GuildAttendanceAnnounceText2"], "<<TRIGGER>>");
 local MRT_PreformattedBossText = string.format(MRT_L.Core["GuildAttendanceBossDownText"], "<<BOSS>>");
 MRT_GA_TEXT_CHARNAME_BOSS = "********************".."\n".."MRT: "..MRT_PreformattedBossText.." "..MRT_L.Core["GuildAttendanceAnnounceText"].."\n".."MRT: "..MRT_PreformattedTimerText.."\n".."********************"

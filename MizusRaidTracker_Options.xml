@@ -463,7 +463,7 @@
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
-            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Trigger: (FIXME!)">
+            <FontString name="$parent_Text" inherits="GameFontWhite" justifyH="LEFT" text="Trigger: (L)">
               <Anchors>
                 <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="-5" y="0"/>
               </Anchors>
@@ -516,6 +516,56 @@
           </Size>
         </ThumbTexture>
       </Slider>
+      <CheckButton name="$parent_GA_UseCustomText_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GADuration_Slider" x="0" y="-10"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Use custom guild attendance text (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <ScrollFrame name="$parent_GA_CustomText_EB_Scrollframe" inherits="UIPanelScrollFrameTemplate">
+        <Size x="300" y="80"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GA_UseCustomText_CB" x="5" y="-25"/>
+        </Anchors>
+        <Backdrop bgFile="Interface\Common\Common-Input-Border-M" tile="true">
+          <Color r="0.0" b="0.0" g="0.0" a="1.0"/>
+          <BackgroundInsets left="-5" right="-26" top="-5" bottom="-5"/>
+        </Backdrop>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="MRT_Options_AttendancePanel_GA_CustomText_EB_Title" inherits="GameFontWhite" justifyH="LEFT" text="Custom guild attendance text: (L)">
+              <Anchors>
+                <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT" x="0" y="5"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <ScrollChild>
+          <EditBox name="MRT_Options_AttendancePanel_GA_CustomText_EB" hidden="false" autoFocus="false" multiLine="true" enableKeyboard="true" letters="1023" countInvisibleLetters="true">
+            <Size x="300" y="80"/>          
+            <FontString inherits="ChatFontNormal"/>
+          </EditBox>
+        </ScrollChild>
+      </ScrollFrame>
+      <Frame name="$parent_GA_CustomText_EB_Scrollframe_Background">
+        <Size x="336" y="90"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_GA_CustomText_EB_Scrollframe" x="-8" y="5"/>
+        </Anchors>
+        <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+          <EdgeSize val="16"/>
+          <TileSize val="16"/>
+          <BackgroundInsets left="5" right="5" top="5" bottom="5"/>
+        </Backdrop>
+      </Frame>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_AttendancePanel_OnLoad(self);</OnLoad>
