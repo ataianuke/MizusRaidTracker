@@ -92,6 +92,8 @@ function MRT_Options_ParseValues()
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_Text:SetText(MRT_L.Options["TP_OnlyTrackItemsAbove"]);
     MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_Title:SetText(MRT_L.Options["ITP_AutoFocus_Title"]);
     MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu();
+    MRT_Options_ItemsTrackingPanel_IgnoreEnchantingMats_CB_Text:SetText(MRT_L.Options["ITP_IgnoreEnchantingMats"]);
+    MRT_Options_ItemsTrackingPanel_IgnoreGems_CB_Text:SetText(MRT_L.Options["ITP_IgnoreGems"]);
     -- AttendancePanel
     MRT_Options_AttendancePanel_Title:SetText(MRT_L.Options["AP_TitleText"]);
     MRT_Options_AttendancePanel_Description:SetText("");
@@ -154,6 +156,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_AskForDKPValue"] = MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     MRT_Options["Tracking_AskCostAutoFocus"] = UIDropDownMenu_GetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu);
+    MRT_Options["ItemTracking_IgnoreEnchantingMats"] = MRT_Options_ItemsTrackingPanel_IgnoreEnchantingMats_CB:GetChecked();
+    MRT_Options["ItemTracking_IgnoreGems"] = MRT_Options_ItemsTrackingPanel_IgnoreGems_CB:GetChecked();
     -- sanity check min item level
     local minILvl = tonumber(MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:GetText());
     if minILvl then
@@ -222,6 +226,8 @@ function MRT_Options_RestoreValues()
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetText(MRT_Options["Tracking_OnlyTrackItemsAboveILvl"]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_EB:SetCursorPosition(0);
     MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu();
+    MRT_Options_ItemsTrackingPanel_IgnoreEnchantingMats_CB:SetChecked(MRT_Options["ItemTracking_IgnoreEnchantingMats"]);
+    MRT_Options_ItemsTrackingPanel_IgnoreGems_CB:SetChecked(MRT_Options["ItemTracking_IgnoreGems"]);
     -- AttendancePanel
     MRT_Options_AttendancePanel_GroupRestriction:SetChecked(MRT_Options["Attendance_GroupRestriction"]);
     MRT_Options_AttendancePanel_OfflinePlayers:SetChecked(MRT_Options["Attendance_TrackOffline"]);

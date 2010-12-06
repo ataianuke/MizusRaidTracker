@@ -246,7 +246,7 @@
         -->
         <FontString name="$parent_ChooseAutoFocus_Title" inherits="GameFontWhite" text="AutoFocus on loot cost dialog (L)">
           <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" x="0" y="-20"/>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" x="0" y="-30"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -359,6 +359,34 @@
         </Anchors>
         <FontString inherits="GameFontWhite"/>
       </EditBox>
+      <CheckButton name="$parent_IgnoreEnchantingMats_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseAutoFocus_Title" x="0" y="-52"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Ignore enchanting mats (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <CheckButton name="$parent_IgnoreGems_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_IgnoreEnchantingMats_CB" x="0" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Ignore gems (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_ItemsTrackingPanel_OnLoad(self);</OnLoad>

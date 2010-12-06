@@ -91,10 +91,12 @@ local MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA = 60;
 local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
 local LDBIcon = LibStub("LibDBIcon-1.0");
-local LBZ = LibStub("LibBabble-Zone-3.0");
-local LBZR = LBZ:GetReverseLookupTable();
 local LBB = LibStub("LibBabble-Boss-3.0");
 local LBBL = LBB:GetUnstrictLookupTable();
+local LBI = LibStub("LibBabble-Inventory-3.0");
+local LBIR = LBI:GetReverseLookupTable();
+local LBZ = LibStub("LibBabble-Zone-3.0");
+local LBZR = LBZ:GetReverseLookupTable();
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
 local pairs = pairs;
@@ -1115,12 +1117,14 @@ function MRT_AutoAddLoot(chatmsg)
     -- if code reach this point, we should have a valid looter and a valid itemLink
     MRT_Debug("Item looted - Looter is "..playerName.." and loot is "..itemLink);
     -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
-    local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, _, _, _, _, _, _ = MRT_GetDetailedItemInformation(itemLink);
+    local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _ = MRT_GetDetailedItemInformation(itemLink);
     if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLoot()"); return; end
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > itemRarity) then MRT_Debug("Item not tracked - quality is too low."); return; end
     if (MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] > itemLevel) then MRT_Debug("Item not tracked - iLvl is too low."); return; end
-    if (MRT_IgnoredItemIDList[itemId]) then return; end
+    if (MRT_Options["ItemTracking_IgnoreGems"] and LBIR[itemType] == "Gem") then MRT_Debug("Item not tracked - it is a gem and the corresponding ignore option is on."); return; end
+    if (MRT_Options["ItemTracking_IgnoreEnchantingMats"] and LBIR[itemType] == "Trade Goods" and LBIR[itemSubType] == "Enchanting") then MRT_Debug("Item not tracked - it is a enchanting material and the corresponding ignore option is on."); return; end
+    if (MRT_IgnoredItemIDList[itemId]) then MRT_Debug("Item not tracked - ItemID is listed on the ignore list"); return; end
     -- if an external function handles item data, notify it
     local dkpValue = 0;
     local lootAction = nil;
