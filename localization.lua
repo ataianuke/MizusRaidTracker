@@ -157,6 +157,7 @@ MRT_L.Options = {
 	TP_Title = "Raid tracking",
 	TP_TitleText = "MRT - Raid tracking options",
     TP_UseServerTime = "Use server time",
+    TT_AP_GA_CustomText = " Available variables: \n <<BOSS>> - Name of the boss event \n <<TIME>> - Remaining time of the guild attendance check \n <<TRIGGER>> - The custom trigger command",
     TT_EP_AddPoorItem = "This option changes the loot export a bit to fix the boss encounter detection \nof the CT_RaidTrackerImport. Use this, if you have boss events \nin your raid without loot associated to it. (e.g. attendance checks).",
 	TT_EP_DateTimeTT = " %d - day of the month [01-31] \n %m - month [01-12] \n %y - two-digit year [00-99] \n %Y - full year \n\n %H - hour, using a 24-hour clock [00-23] \n %I - hour, using a 12-hour clock [01-12] \n %M - minute [00-59] \n %S - second [00-59] \n %p - either 'am' or 'pm'",
     TT_EP_RLIAttendanceFix = "This option changes the export of timestamps a bit to pass \nthe 50% attendance threshold of the Raid-Log-Importer. \nOnly use this option, if your DKP system is based on per boss attendance.",

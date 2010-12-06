@@ -561,6 +561,10 @@
                 <ScrollChild>
                   <EditBox name="MRT_Options_AttendancePanel_GA_CustomText_EB" hidden="false" autoFocus="false" multiLine="true" enableKeyboard="true" letters="1023" countInvisibleLetters="true">
                     <Size x="300" y="80"/>
+                    <Scripts>
+                      <OnEnter>MRT_Options_SetTT(self, "AP_GA_CustomText");</OnEnter>
+                      <OnLeave>MRT_Options_HideTT();</OnLeave>
+                    </Scripts>
                     <FontString inherits="ChatFontNormal"/>
                   </EditBox>
                 </ScrollChild>
