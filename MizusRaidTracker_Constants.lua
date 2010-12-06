@@ -187,7 +187,7 @@ MRT_BossIDList = {
     [47120] = "Argaloth",
     
     -- Blackwing Descent
-        -- Magmaw missing
+    [41570] = "Magmaw",
     [42180] = "Omnitron Defense System",        -- ID of Toxitron   - Omnitron Defense System may need bossyell
     [41378] = "Maloriak",
     [41442] = "Atramedes",
