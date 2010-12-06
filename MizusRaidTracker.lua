@@ -174,6 +174,7 @@ function MRT_OnEvent(frame, event, ...)
         end
     
     elseif (event == "CHAT_MSG_MONSTER_YELL") then
+        if (not MRT_Options["General_MasterEnable"]) then return end;
         if (not MRT_NumOfCurrentRaid) then return; end
         local monsteryell, sourceName = ...;
         local localInstance = GetInstanceInfo();
@@ -188,6 +189,7 @@ function MRT_OnEvent(frame, event, ...)
         end
     
     elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then 
+        if (not MRT_Options["General_MasterEnable"]) then return end;
         MRT_CombatLogHandler(...);
     
     elseif (event == "GUILD_ROSTER_UPDATE") then 
