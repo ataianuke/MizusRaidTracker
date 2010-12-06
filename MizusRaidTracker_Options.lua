@@ -102,6 +102,8 @@ function MRT_Options_ParseValues()
     MRT_Options_AttendancePanel_GA_UseTrigger_CB_Text:SetText(MRT_L.Options["AP_GuildAttendanceUseTrigger"]);
     MRT_Options_AttendancePanel_GA_Trigger_EB_Text:SetText(MRT_L.Options["AP_GuildAttendanceTrigger"]);
     MRT_Options_AttendancePanel_GADuration_SliderText:SetText(MRT_L.Options["AP_GuildAttendanceDuration"]);
+    MRT_Options_AttendancePanel_GA_UseCustomText_CB_Text:SetText(MRT_L.Options["AP_GuildAttendanceUseCustomText"]);
+    MRT_Options_AttendancePanel_GA_CustomText_EB_Title:SetText(MRT_L.Options["AP_GuildAttendanceCustomTextTitle"]);
     -- ExportPanel
     MRT_Options_ExportPanel_Title:SetText(MRT_L.Options["EP_TitleText"]);
     MRT_Options_ExportPanel_ChooseExport_Title:SetText(MRT_L.Options["EP_ChooseExport_Title"]);
