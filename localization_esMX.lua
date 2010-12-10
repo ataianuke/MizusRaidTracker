@@ -56,18 +56,20 @@ MRT_L.Bossyells = {
     
     ["Trial of the Crusader"] = {
         ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "Campeones de Facción",  -- Faction Champions
-        --["The Scourge cannot be stopped..."] = "las Gemelas Val'kyr", -- Val'kyr Twins
     },
         
     ["Icecrown Citadel"] = {
         ["¡No digáis que no lo avisé, sinvergüenzas! Adelante, hermanos."] = "Batalla de las Aeronaves de Corona de Hielo", -- Muradin
         ["The Alliance falter. Onward to the Lich King!"] = "Batalla de las Aeronaves de Corona de Hielo", -- Saurfang
-        --["Mi reina, se... acercan."] = "Consejo de Príncipes de Sangre", -- Prince Keleseth
         ["¡ESTOY RENOVADA! Ysera, haz que estas asquerosas criaturas descansen."] = "Valithria Caminasueños", -- Dreamwalker
     },
 
     ["The Ruby Sanctum"] = {
         ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
+    },
+    
+    ["Throne of the Four Winds"] = {
+        ["The Conclave of Wind has dissipated. Your honorable conduct and determination have earned you the right to face me in battle, mortals. I await your assault on my platform! Come!"] = "Conclave of Wind", -- Conclave of Wind
     },
 }
 

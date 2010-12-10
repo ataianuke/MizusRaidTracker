@@ -201,7 +201,7 @@ MRT_BossIDList = {
     [43324] = "Cho'gall",
     
     -- Throne of the Four Winds
-    [45871] = "Conclave of Wind",               -- ID of Nezir      - Conclave of Wind may need a bossyell (mobs are probably too far away to each other)
+        -- Conclave of Wind needs bossyell
     [46753] = "Al'Akir",
 }
 

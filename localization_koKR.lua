@@ -56,18 +56,20 @@ MRT_L.Bossyells = {
     
     ["Trial of the Crusader"] = {
         ["상처뿐인 승리로군."] = "진영 대표 용사",  -- Faction Champions
-        --["스컬지를 막을 수는 없다..."] = "발키르 쌍둥이",  -- Val'kyr Twins
     },
         
     ["Icecrown Citadel"] = {
         ["악당 놈들, 분명히 경고했다! 형제자매여, 전진!"] = "얼음왕관 비행포격선 전투", -- Gunship Battle Muradin (A)
         ["얼라이언스는 기가 꺾였다. 리치 왕을 향해 전진하라!"] = "얼음왕관 비행포격선 전투", -- Gunship Battle Saurfang (H)
-        --["여왕님, 저들이... 옵니다."] = "피의 공작 의회", -- Prince Keleseth
         ["다시 힘을 얻었다! 이세라여, 더러운 생명들에 안식을 내릴 수 있도록 은혜를 베푸소서!"] = "발리스리아 드림워커", -- Dreamwalker
     },
 
     ["The Ruby Sanctum"] = {
         ["필멸자들아, 승리를 만끽해라. 그것이 마지막일 테니. 주인님이 돌아오시면 이 세상은 불타버리리라!"] = "할리온", -- Halion
+    },
+    
+    ["Throne of the Four Winds"] = {
+        ["The Conclave of Wind has dissipated. Your honorable conduct and determination have earned you the right to face me in battle, mortals. I await your assault on my platform! Come!"] = "Conclave of Wind", -- Conclave of Wind
     },
 }
 

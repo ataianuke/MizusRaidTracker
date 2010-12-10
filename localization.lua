@@ -48,6 +48,10 @@ MRT_L.Bossyells = {
     ["The Ruby Sanctum"] = {
         ["Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"] = "Halion", -- Halion
     },
+    
+    ["Throne of the Four Winds"] = {
+        ["The Conclave of Wind has dissipated. Your honorable conduct and determination have earned you the right to face me in battle, mortals. I await your assault on my platform! Come!"] = "Conclave of Wind", -- Conclave of Wind
+    },
 }
 
 

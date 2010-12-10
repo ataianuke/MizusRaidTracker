@@ -56,18 +56,20 @@ MRT_L.Bossyells = {
       
     ["Trial of the Crusader"] = {
         ["Une victoire tragique et depourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait beneficier d'une telle folie?? De grands guerriers ont perdu la vie. Et pour quoi?? La vraie menace plane à l'horizon?: le roi-liche nous attend, tous, dans la mort."] = "Champions de faction",
-        --["Personne ne peux arrêter le fléau"] = "Soeurs Val'kyr",
     },
         
     ["Icecrown Citadel"] = {
         ["Vous direz pas que j'vous avais pas prévenus, canailles ! Mes frères et sœurs, en avant !"] = "Bataille des canonnières", -- Muradin
         ["L'Alliance baisse pavillon. Sus au roi-liche !"] = "Bataille des canonnières", -- Saurfang
-        --["Ma reine, ils"] = "Conseil des princes de sang", -- Prince Keleseth
         ["JE REVIS !"] = "Valithria Marcherêve", -- Dreamwalker
     },
 
     ["The Ruby Sanctum"] = {
         ["Savourez bien cette victoire mortels car ce serra votre dernière. Ce monde brulera au retour du maitre !"] = "Halion", -- Halion
+    },
+    
+    ["Throne of the Four Winds"] = {
+        ["The Conclave of Wind has dissipated. Your honorable conduct and determination have earned you the right to face me in battle, mortals. I await your assault on my platform! Come!"] = "Conclave of Wind", -- Conclave of Wind
     },
 }
 
