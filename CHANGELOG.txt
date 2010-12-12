@@ -1,3 +1,22 @@
+0.25 Beta - Changelog:
+  New:
+    * Added new export format: DKPBoard
+    * Added backwards compatibility to older WoW clients (Version 3.x). MRT should now work on chinese clients
+    * Added functions to resume the last raid. You can finde the resume button in the raidlog browser
+    * The guild attendance check text is now customizable
+    * The EQdkp-Plus XML export now additionally exports item notes
+    * Added options for automatically ignoring enchanting materials and gems
+    * Added BossID of Magmaw
+  Changes:
+    * Renamed option "Enable MRT" to "Enable automatic tracking" to clarify its use
+    * Changed boss kill detection of the Conclave of Wind from BossID based to bossyell. Bossyells for english and german clients are available (Thanks to Rhial for the german yell).
+  Updates:
+    * Updated frFR translation (Thanks to Cindelle and Deepking)
+    * Updated zhTW translation (Thanks to wushiny)
+  Bug Fixes:
+    * Fixed a bug, which may caused a reset of the "delete raids older than x days"-slider back to 90 days
+    
+    
 0.24-2 Beta - Changelog:
   Bug Fixes:
     * Fixed starting conditions for scanning of the guild roster. The guild attendance check should now work correctly again.

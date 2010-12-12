@@ -1,3 +1,29 @@
+<h4>0.25 Beta - Changelog:</h4>
+<strong>New:</strong>
+<ul>
+	<li>Added new export format: DKPBoard</li>
+	<li>Added backwards compatibility to older WoW clients (Version 3.x). MRT should now work on chinese clients</li>
+	<li>Added functions to resume the last raid. You can finde the resume button in the raidlog browser</li>
+	<li>The guild attendance check text is now customizable</li>
+	<li>The EQdkp-Plus XML export now additionally exports item notes</li>
+	<li>Added options for automatically ignoring enchanting materials and gems</li>
+	<li>Added BossID of Magmaw</li>
+</ul>
+<strong>Changes:</strong>
+<ul>
+	<li>Renamed option "Enable MRT" to "Enable automatic tracking" to clarify its use</li>
+	<li>Changed boss kill detection of the Conclave of Wind from BossID based to bossyell. Bossyells for english and german clients are available (Thanks to Rhial for the german yell).</li>
+</ul>
+<strong>Updates:</strong>
+<ul>
+	<li>Updated frFR translation (Thanks to Cindelle and Deepking)</li>
+	<li>Updated zhTW translation (Thanks to wushiny)</li>
+</ul>
+<strong>Bug Fixes:</strong>
+<ul>
+	<li>Fixed a bug, which may caused a reset of the "delete raids older than x days"-slider back to 90 days</li>
+</ul>
+
 <h4>0.24-2 Beta - Changelog:</h4>
 <strong>Bug Fixes:</strong>
 <ul>
