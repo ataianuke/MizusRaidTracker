@@ -42,7 +42,7 @@ local MRT_Defaults = {
     ["Options"] = {
         ["DB_Version"] = 2,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 10,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
+        ["General_OptionsVersion"] = 11,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
@@ -66,8 +66,8 @@ local MRT_Defaults = {
         ["Tracking_CreateNewRaidOnNewZone"] = true,
         ["Tracking_OnlyTrackItemsAboveILvl"] = 0,
         ["Tracking_UseServerTime"] = false,
-        --["ItemTracking_IgnoreEnchantingMats"] = true,
-        --["ItemTracking_IgnoreGems"] = true,
+        ["ItemTracking_IgnoreEnchantingMats"] = true,
+        ["ItemTracking_IgnoreGems"] = true,
         ["Export_ExportFormat"] = 2,                                                -- 1: CTRT compatible, 2: EQdkp-Plus XML, 3: MLdkp 1.5,  4: plain text, 5: BBCode, 6: BBCode with wowhead, 7: CSS based HTML
         ["Export_ExportEnglish"] = false,                                           -- If activated, zone and boss names will be exported in english
         ["Export_CTRT_AddPoorItem"] = false,                                        -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
@@ -472,6 +472,11 @@ function MRT_UpdateSavedOptions()
         MRT_Options["Attendance_GuildAttendanceUseCustomText"] = false;
         MRT_Options["Attendance_GuildAttendanceCustomText"] = MRT_GA_TEXT_CHARNAME_BOSS;
         MRT_Options["General_OptionsVersion"] = 10;
+    end
+    if MRT_Options["General_OptionsVersion"] == 10 then
+        MRT_Options["ItemTracking_IgnoreEnchantingMats"] = true;
+        MRT_Options["ItemTracking_IgnoreGems"] = true;
+        MRT_Options["General_OptionsVersion"] = 11;
     end
 end
 
