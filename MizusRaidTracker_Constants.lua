@@ -218,7 +218,7 @@ MRT_BossRenameList = {
     --  Cataclysm  --
     -----------------
     -- Blackwing Descent
-    [42180] = "Omnitron Defense System",
+    [42180] = "Omnotron Defense System",
     -- The Bastion of Twilight
     [45992] = "Valiona and Theralion",
     [43735] = "Ascendant Council",
