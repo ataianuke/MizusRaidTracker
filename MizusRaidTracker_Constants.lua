@@ -196,7 +196,7 @@ MRT_BossIDList = {
     
     -- The Bastion of Twilight
     [44600] = "Halfus Wyrmbreaker",
-    [45992] = "Valiona and Theralion",          -- ID of Valiona    - Valiona & Theralion - Twin drakes with shared health pool - may need boss yell
+    [45992] = "Valiona and Theralion",          -- ID of Valiona    - Valiona & Theralion - Twin drakes with shared health pool
     [43735] = "Ascendant Council",              -- ID of Elementium Monstrosity
     [43324] = "Cho'gall",
     

@@ -2015,6 +2015,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         return playerXml;
     end
     local function createItemInfoString(raidID, itemID)
+        local bossID = MRT_RaidLog[raidID]["Loot"][itemID]["BossNumber"];
         local itemXml = "<item>";
         itemXml = itemXml.."<name>"..MRT_RaidLog[raidID]["Loot"][itemID]["ItemName"].."</name>";
         itemXml = itemXml.."<time>"..MRT_RaidLog[raidID]["Loot"][itemID]["Time"].."</time>";
@@ -2024,6 +2025,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         if MRT_RaidLog[raidID]["Loot"][itemID]["Note"] then
             itemXml = itemXml.."<note>"..MRT_RaidLog[raidID]["Loot"][itemID]["Note"].."</note>";
         end
+        itemXml = itemXml.."<boss>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."</boss>";
         itemXml = itemXml.."</item>";
         return itemXml;
     end

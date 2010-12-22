@@ -1,3 +1,13 @@
+<h4>0.25-2 Beta - Changelog:</h4>
+<strong>New:</strong>
+<ul>
+	<li>The EQdkp-Plus XML export now additionally exports boss names</li>
+</ul>  
+<strong>Changes:</strong>
+<ul>
+	<li>Changed LibBabble-Boss-3.0 reference for Omnitron Defense System to Omnotron Defense System</li>
+</ul>
+
 <h4>0.25 Beta - Changelog:</h4>
 <strong>New:</strong>
 <ul>

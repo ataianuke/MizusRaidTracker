@@ -1,3 +1,10 @@
+0.25-2 Beta - Changelog:
+  New:
+    * The EQdkp-Plus XML export now additionally exports boss names
+  Changes:
+    * Changed LibBabble-Boss-3.0 reference for Omnitron Defense System to Omnotron Defense System
+
+
 0.25 Beta - Changelog:
   New:
     * Added new export format: DKPBoard
