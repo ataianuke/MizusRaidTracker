@@ -2144,6 +2144,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     else
         -- use join/leave times - add a short join/leave-pair, if a player is only tracked as a boss attendee
         local joinLeavePair = nil;
+        -- create join/leave-timestamps for raid attendees
         for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
             if (not playerList[playerTimes.Name]) then playerList[playerTimes.Name] = {}; end
             if (raidStart <= playerTimes.Join) then
@@ -2154,14 +2155,17 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                 tinsert(playerList[playerTimes.Name], joinLeavePair);
             end
         end
+        -- create join/leave-timestamps for boss attendees
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             local attendee;
             for j, attendeeName in ipairs(bossInfo["Players"]) do
                 attendee = false;
-                if (not playerList[attendeeName]) then
+                if (not playerList[attendeeName]) then 
+                    -- if the player is not in the playerList right now, create an entry. 
+                    -- Since the player didn't show up until now, this isn't a raid attendee
                     playerList[attendeeName] = {};
-                    joinLeavePair = { Join = (bossInfo.Date - 10), Leave = (bossInfo.Date + 10), };
                 else
+                    -- check if the player is a raid attendee at this point
                     for k, joinLeaveTable in ipairs(playerList[attendeeName]) do
                         if (joinLeaveTable.Join < bossInfo.Date and bossInfo.Date < joinLeaveTable.Leave) then
                             attendee = true;
@@ -2169,6 +2173,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                     end
                 end
                 if (not attendee and raidStart <= bossInfo.Date) then
+                    joinLeavePair = { Join = (bossInfo.Date - 10), Leave = (bossInfo.Date + 10), };
                     tinsert(playerList[attendeeName], joinLeavePair);
                 end
             end

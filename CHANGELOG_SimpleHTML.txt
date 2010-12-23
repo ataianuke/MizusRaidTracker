@@ -7,6 +7,10 @@
 <ul>
 	<li>Changed LibBabble-Boss-3.0 reference for Omnitron Defense System to Omnotron Defense System</li>
 </ul>
+<strong>Bug Fixes:</strong>
+<ul>
+	<li>EQdkp-Plus XML export: Fixed a bug which may produced wrong timestamps for boss attendees, if the attendance fix for the RLI was disabled</li>
+</ul>
 
 <h4>0.25 Beta - Changelog:</h4>
 <strong>New:</strong>

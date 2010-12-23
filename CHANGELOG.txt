@@ -3,6 +3,8 @@
     * The EQdkp-Plus XML export now additionally exports boss names
   Changes:
     * Changed LibBabble-Boss-3.0 reference for Omnitron Defense System to Omnotron Defense System
+  Bug Fixes:
+    * EQdkp-Plus XML export: Fixed a bug which may produced wrong timestamps for boss attendees, if the attendance fix for the RLI was disabled
 
 
 0.25 Beta - Changelog:
