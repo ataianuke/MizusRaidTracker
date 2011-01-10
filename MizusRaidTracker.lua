@@ -1811,7 +1811,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
                 -- if the first bosskill was in the delay time, then ignore delay time
                 if ( MRT_RaidLog[raidID]["Bosskills"][1]["Date"] > (raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA) ) then
                     lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
-                elseif (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] == raidStart)
+                elseif (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] == raidStart) then
                     lastBossTimeStamp = raidStart;
                     raidStart = raidStart - 1;
                 else
@@ -2136,7 +2136,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                 -- if the first bosskill was in the delay time, then ignore delay time
                 if ( MRT_RaidLog[raidID]["Bosskills"][1]["Date"] > (raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA) ) then
                     lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
-                elseif (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] == raidStart)
+                elseif (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] == raidStart) then
                     lastBossTimeStamp = raidStart;
                     raidStart = raidStart - 1;
                 else
