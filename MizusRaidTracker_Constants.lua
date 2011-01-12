@@ -88,6 +88,15 @@ MRT_LegacyRaidZonesWotLK = {
 }
 
 MRT_LegacyRaidZonesBC = {
+    ["Karazhan"] = true,
+    ["Gruul's Lair"] = true,
+    ["Magtheridon's Lair"] = true,
+    ["Zul'Aman"] = true,
+    ["Serpentshrine Cavern"] = true,
+    ["Tempest Keep"] = true,
+    ["Hyjal Summit"] = true,
+    ["Black Temple"] = true,
+    ["Sunwell Plateau"] = true,
 }
 
 MRT_PvPRaids = {
