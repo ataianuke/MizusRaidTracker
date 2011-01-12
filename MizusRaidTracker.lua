@@ -1807,16 +1807,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
             if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
                 playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
             else
-                -- if this else-part is reached, we have at least one boss entry
-                -- if the first bosskill was in the delay time, then ignore delay time
-                if ( MRT_RaidLog[raidID]["Bosskills"][1]["Date"] > (raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA) ) then
-                    lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
-                elseif (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] == raidStart) then
-                    lastBossTimeStamp = raidStart;
-                    raidStart = raidStart - 1;
-                else
-                    lastBossTimeStamp = raidStart;
-                end
+                lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
                         if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
@@ -2104,7 +2095,6 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         -- attendance fix solution:
         -- export all players, who have attended all bosses, with 100% attendance time.
         -- for all other players, create a set of join/leave-times for each time slice
-        -- btw - the hole need for this option and workaround sucks
         -- so, lets start - scan raid attendees first
         local attendanceCount = {};
         local lastBossTimeStamp;
@@ -2128,20 +2118,9 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         -- and the last step, create join/leave-pairs. if 100% attendance, create one join/leave-pair. if not, make one for each attended boss
         for playerName, bossKillCount in pairs(attendanceCount) do
             if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
-                -- was the player available from the start? then use raidStart. Else use first boss timestamp... - NYI - this stuff needs a lot more refinement :/
-                -- possible workaround for this damn option: add a temporary first bosskill and add all players, who were there in the first MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA seconds
                 playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
             else
-                -- if this else-part is reached, we have at least one boss entry
-                -- if the first bosskill was in the delay time, then ignore delay time
-                if ( MRT_RaidLog[raidID]["Bosskills"][1]["Date"] > (raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA) ) then
-                    lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
-                elseif (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] == raidStart) then
-                    lastBossTimeStamp = raidStart;
-                    raidStart = raidStart - 1;
-                else
-                    lastBossTimeStamp = raidStart;
-                end
+                lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
                         if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
