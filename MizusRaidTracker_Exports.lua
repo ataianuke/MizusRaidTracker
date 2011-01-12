@@ -24,6 +24,16 @@
 
 
 
+--------------
+--  Locals  --
+--------------
+local deformat = LibStub("LibDeformat-3.0");
+local LBB = LibStub("LibBabble-Boss-3.0");
+local LBBL = LBB:GetUnstrictLookupTable();
+local LBZ = LibStub("LibBabble-Zone-3.0");
+local LBZR = LBZ:GetReverseLookupTable();
+
+
 ------------------------------
 --  export frame functions  --
 ------------------------------
