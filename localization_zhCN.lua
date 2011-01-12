@@ -17,25 +17,6 @@ if GetLocale() ~= "zhCN" then return end
 
 
 -----------------
---  RaidZones  --
------------------
--- @Locals: Only change the zone names of the keys - NOT the values!
--- 'keys' = text in squared brackets
-MRT_L.Raidzones = {
-    -- Wrath of the Lich King
-	["永恒之眼"] = "The Eye of Eternity",
-	["黑曜石圣殿"] = "The Obsidian Sanctum",
-	["阿尔卡冯的宝库"] = "Vault of Archavon",
-	["纳克萨玛斯"] = "Naxxramas",
-	["奥杜尔"] = "Ulduar",
-	["十字军的试炼"] = "Trial of the Crusader",
-	["奥妮克希亚的巢穴"] = "Onyxia's Lair",
-	["冰冠堡垒"] = "Icecrown Citadel",
-    ["红玉圣殿"] = "The Ruby Sanctum",
-}
-
-
------------------
 --  Bossyells  --
 -----------------
 MRT_L.Bossyells = {

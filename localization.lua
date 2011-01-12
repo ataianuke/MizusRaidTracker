@@ -13,7 +13,7 @@
 -----------------------------
 --  Create Tablestructure  --
 -----------------------------
-MRT_L = { ["RaidZones"] = {}, ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {} };
+MRT_L = { ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {} };
 
 
 -----------------
