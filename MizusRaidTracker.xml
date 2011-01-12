@@ -1,6 +1,7 @@
 ﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
  http://wowprogramming.com/FrameXML/UI.xsd">
   <Script file="MizusRaidTracker.lua"/>
+  <Script file="MizusRaidTracker_Exports.lua"/>
   <Frame name="MRT_MainFrame">
     <Scripts>
       <OnLoad>MRT_MainFrame_OnLoad(self);</OnLoad>
