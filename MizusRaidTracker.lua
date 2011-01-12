@@ -42,7 +42,7 @@ local MRT_Defaults = {
     ["Options"] = {
         ["DB_Version"] = 2,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 11,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
+        ["General_OptionsVersion"] = 12,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
@@ -58,7 +58,8 @@ local MRT_Defaults = {
         ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
         ["Tracking_Log10MenRaids"] = false,                                         -- Track 10 player raids: true / nil
-        ["Tracking_LogAVRaids"] = false,                                            -- Track Archavons Vault: true / nil
+        ["Tracking_LogAVRaids"] = false,                                            -- Track PvP raids: true / nil
+        ["Tracking_LogWotLKRaids"] = false,                                         -- Track WotLK raid: true / nil
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
@@ -477,6 +478,10 @@ function MRT_UpdateSavedOptions()
         MRT_Options["ItemTracking_IgnoreEnchantingMats"] = true;
         MRT_Options["ItemTracking_IgnoreGems"] = true;
         MRT_Options["General_OptionsVersion"] = 11;
+    end 
+    if MRT_Options["General_OptionsVersion"] == 11 then
+        MRT_Options["Tracking_LogWotLKRaids"] = false;
+        MRT_Options["General_OptionsVersion"] = 12;
     end
 end
 
@@ -703,6 +708,13 @@ function MRT_CheckZoneAndSizeStatus()
         if (MRT_PvPRaids[instanceInfoName] and not MRT_Options["Tracking_LogAVRaids"]) then 
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
+        end
+        if (MRT_LegacyRaidZonesWotLK[instanceInfoName] and not MRT_Options["Tracking_LogWotLKRaids"]) then
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        if (MRT_LegacyRaidZonesBC[instanceInfoName] and not MRT_Options["Tracking_LogBCRaids"]) then
+            -- FIXME!
         end
         MRT_CheckTrackingStatus(localInstanceInfoName, instanceInfoDifficulty2);
     end

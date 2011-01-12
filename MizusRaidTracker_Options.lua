@@ -82,6 +82,7 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_Description:SetText("");
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
+    MRT_Options_TrackingPanel_LogWotLKRaids_CB_Text:SetText(MRT_L.Options["TP_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
     -- ItemsTrackingPanel
@@ -149,6 +150,7 @@ function MRT_Options_OnOkay(panel)
     -- TrackingPanel
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogWotLKRaids"] = MRT_Options_TrackingPanel_LogWotLKRaids_CB:GetChecked();
     MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
     MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
     -- ItemsTrackingPanel
@@ -215,6 +217,7 @@ function MRT_Options_RestoreValues()
     -- TrackingPanel
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
+    MRT_Options_TrackingPanel_LogWotLKRaids_CB:SetChecked(MRT_Options["Tracking_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
     -- ItemsTrackingPanel
