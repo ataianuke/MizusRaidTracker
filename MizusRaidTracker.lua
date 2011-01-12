@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010)
+--    * Mizukichan @ EU-Thrall (2010-2011)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -1818,14 +1818,6 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
                     end
                     lastBossTimeStamp = bossInfo.Date + 20;
                 end
-                -- if enough time between last bosskill and raid end, add on last join/leave pair
-                --[[
-                if (lastBossTimeStamp < raidStop) then
-                    joinLeavePair = { Join = lastBossTimeStamp, Leave = raidStop, };
-                    if (not playerList[playerName]) then playerList[playerName] = {}; end
-                    tinsert(playerList[playerName], joinLeavePair);
-                end
-                --]]
             end
         end
     else
@@ -2090,11 +2082,38 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
             end
         end
     elseif (MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"]) then
-        -- in the "one raid per boss"-setting, the RLI slices the export in subraids.
-        -- each player needs to have 50% attendance in each raid slice to be a valid attendee
-        -- attendance fix solution:
-        -- export all players, who have attended all bosses, with 100% attendance time.
-        -- for all other players, create a set of join/leave-times for each time slice
+        --[[
+        in the "one raid per boss"-setting, the RLI slices the export in subraids.
+        each player needs to have 50% attendance in each raid slice to be a valid attendee
+        attendance fix solution:
+        export all players, who have attended all bosses, with 100% attendance time.
+        for all other players, create a set of join/leave-times for each time slice
+        --]]
+        --[[
+        additionally (01/12/2011):
+        If the time between raidStart and the first bosskill is large enough, add a temporary first bosskill to allow for an extra
+        MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA seconds attendance window for extra start DKP.
+        --]]
+        local tempBossExists = false;
+        if (#MRT_RaidLog[raidID]["Bosskills"] > 0 and raidStart + (MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA * 3) < MRT_RaidLog[raidID]["Bosskills"][1]["Date"]) then
+            local tempBossAttendeesByName = {}
+            for key, playerInfo in pairs(MRT_RaidLog[raidID]["Players"]) do
+                if (playerInfo.Join <= raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA) then
+                    tempBossAttendeesByName[playerInfo.Name] = true;
+                end
+            end
+            local tempBossAttendees = {}
+            for name, bool in pairs(tempBossAttendeesByName) do
+                tinsert(tempBossAttendees, name);
+            end
+            local tempBossInfo = {
+                Players = tempBossAttendees,
+                Name = "TempExportBossEntry",
+                Date = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA,
+            }
+            tinsert(MRT_RaidLog[raidID]["Bosskills"], 1, tempBossInfo);
+            tempBossExists = true;
+        end
         -- so, lets start - scan raid attendees first
         local attendanceCount = {};
         local lastBossTimeStamp;
@@ -2120,7 +2139,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
             if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
                 playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
             else
-                lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
+                lastBossTimeStamp = raidStart;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
                         if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
@@ -2131,15 +2150,14 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                     end
                     lastBossTimeStamp = bossInfo.Date + 20;
                 end
-                -- if enough time between last bosskill and raid end, add on last join/leave pair
-                --[[
-                if (lastBossTimeStamp < raidStop) then
-                    joinLeavePair = { Join = lastBossTimeStamp, Leave = raidStop, };
-                    if (not playerList[playerName]) then playerList[playerName] = {}; end
-                    tinsert(playerList[playerName], joinLeavePair);
-                end
-                --]]
             end
+        end
+        --[[
+        additionally (01/12/2011):
+        And remove the TempBoss, if it exists
+        --]]
+        if (tempBossExists == true) then
+            tremove(MRT_RaidLog[raidID]["Bosskills"], 1);
         end
     else
         -- use join/leave times - add a short join/leave-pair, if a player is only tracked as a boss attendee
