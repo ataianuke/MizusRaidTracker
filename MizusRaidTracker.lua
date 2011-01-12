@@ -87,7 +87,7 @@ local MRT_Defaults = {
 --------------
 --  Locals  --
 --------------
-local MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA = 60;
+MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA = 60;
 
 local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
