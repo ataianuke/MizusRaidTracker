@@ -179,7 +179,7 @@ function MRT_OnEvent(frame, event, ...)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         if (not MRT_NumOfCurrentRaid) then return; end
         local monsteryell, sourceName = ...;
-        local localInstance = GetInstanceInfo();
+        local localInstance = GetZoneText();
         if (not localInstance) then return; end
         local instance = LBZR[localInstance];
         if (not instance) then return; end
@@ -690,7 +690,8 @@ end
 
 function MRT_CheckZoneAndSizeStatus()
     -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
-    local localInstanceInfoName, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+    local _, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+    local localInstanceInfoName = GetZoneText();
     local instanceInfoDifficulty2 = GetInstanceDifficulty();
     local instanceInfoName = LBZR[localInstanceInfoName];
     -- if no english name available, return
