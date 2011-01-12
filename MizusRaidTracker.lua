@@ -1807,7 +1807,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
             if (bossKillCount == #MRT_RaidLog[raidID]["Bosskills"]) then
                 playerList[playerName] = { { Join = raidStart, Leave = raidStop, }, };
             else
-                lastBossTimeStamp = raidStart + MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA;
+                lastBossTimeStamp = raidStart;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
                         if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
