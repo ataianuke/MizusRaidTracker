@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010)
+--    * Mizukichan @ EU-Thrall (2010-2011)
 --
 --    This file is part of Mizus RaidTracker.
 --
