@@ -576,6 +576,12 @@ function MRT_PeriodicMaintenance()
             end
         end
         if (lastRaidOverPrunningTreshhold) then
+            -- if MRT_NumOfCurrentRaid not nil, then reduce it by the number of deleted raids
+            if (MRT_NumOfCurrentRaid) then
+                MRT_NumOfCurrentRaid = MRT_NumOfCurrentRaid - lastRaidOverPrunningTreshhold
+                if (MRT_NumOfCurrentRaid < 1) then MRT_NumOfCurrentRaid = nil; end
+            end
+            -- delete raid entries, that are too old
             for i = lastRaidOverPrunningTreshhold, 1, -1 do
                 tremove(MRT_RaidLog, i);
             end
