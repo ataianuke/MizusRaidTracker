@@ -237,11 +237,15 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
             end
         end
     elseif (MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]) then
+        -- This option for the CTRT-Export is deprecated!!!! Use the EQdkp-Plus-XML-Export!
+        --
         -- in the "one raid per boss"-setting, the RLI slices the export in subraids.
         -- each player needs to have 50% attendance in each raid slice to be a valid attendee
+        --
         -- attendance fix solution:
         -- export all players, who have attended all bosses, with 100% attendance time.
         -- for all other players, create a set of join/leave-times for each time slice
+        --
         -- so, lets start - scan raid attendees first
         local attendanceCount = {};
         local lastBossTimeStamp;
@@ -470,7 +474,13 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         local bossID = MRT_RaidLog[raidID]["Loot"][itemID]["BossNumber"];
         local itemXml = "<item>";
         itemXml = itemXml.."<name>"..MRT_RaidLog[raidID]["Loot"][itemID]["ItemName"].."</name>";
-        itemXml = itemXml.."<time>"..MRT_RaidLog[raidID]["Loot"][itemID]["Time"].."</time>";
+        -- If the attendance check is enabled, modify the loot time to guarantee that it is in the borders of the RLI raid time window
+        if (MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"]) then
+            local bossKillTime = MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"];
+            itemXml = itemXml.."<time>"..(bossKillTime + itemID).."</time>";
+        else
+            itemXml = itemXml.."<time>"..MRT_RaidLog[raidID]["Loot"][itemID]["Time"].."</time>";
+        end
         itemXml = itemXml.."<member>"..MRT_RaidLog[raidID]["Loot"][itemID]["Looter"].."</member>";
         itemXml = itemXml.."<itemid>"..deformat(MRT_RaidLog[raidID]["Loot"][itemID]["ItemString"], "item:%s").."</itemid>";
         itemXml = itemXml.."<cost>"..MRT_RaidLog[raidID]["Loot"][itemID]["DKPValue"].."</cost>";
