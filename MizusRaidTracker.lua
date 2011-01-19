@@ -104,7 +104,7 @@ local pairs = pairs;
 local ipairs = ipairs;
 
 local MRT_TimerFrame = CreateFrame("Frame");                -- Timer for Guild-Attendance-Checks
-local MRT_LoginTimer = CreateFrame("Frame");                -- Timer for Login (Wait 10 secs after Login - then check Raisstatus)
+local MRT_LoginTimer = CreateFrame("Frame");                -- Timer for Login (Wait 10 secs after Login - then check Raidstatus)
 local MRT_RaidRosterScanTimer = CreateFrame("Frame");       -- Timer for regular scanning for the raid roster (there is no event for disconnecting players)
 local MRT_RIWTimer = CreateFrame("Frame"); 
 
@@ -238,9 +238,7 @@ function MRT_OnEvent(frame, event, ...)
         -- I've recieved reports, stating that 25 player raids were tracked as 10 player raids - I have no idea why, but this here is the only place, where this issue could occure
         -- Wasn't able to reproduce this issue, so I think, I'll change it blindly...
         -- Use the DBM approach: wait 3 seconds after RIW-Event and then check instanceInfo stuff. Hopefully this fixes the problem....
-        -- Can reuse the login-timer here - at least i hope, that noone hits a RIW 5 seconds after login...
-        -- second though: even if - it shouldn't matter
-        -- A generic function to schedule function would be nice! <- FIXME!
+        -- A generic function to schedule functions would be nice! <- FIXME!
         MRT_RIWTimer.riwTime = time()
         MRT_RIWTimer:SetScript("OnUpdate", function (self)
             if ((time() - self.riwTime) > 3) then

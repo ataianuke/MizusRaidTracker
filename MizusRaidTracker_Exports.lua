@@ -97,6 +97,12 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     elseif (MRT_Options["Export_ExportFormat"] == 8) then
         dkpstring = MRT_CreateHTMLExport(raidID, bossID, difficulty)
     end
+    -- Prepare possible explanation test
+    if ( (MRT_Options["Export_ExportFormat"] == 1 and MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]) or (MRT_Options["Export_ExportFormat"] == 2 and MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"]) ) then
+        MRT_ExportFrame_ExplanationText:SetText(MRT_L.Core["Export_Explanation"].."\n\n"..MRT_L.Core["Export_AttendanceNote"]);
+    else
+        MRT_ExportFrame_ExplanationText:SetText(MRT_L.Core["Export_Explanation"]);
+    end
     -- Show the data export
     MRT_ExportFrame_Show(dkpstring);
 end

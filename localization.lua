@@ -72,6 +72,7 @@ MRT_L.Core = {
     Export_Attendees = "Attendees",
     Export_Button = "Close",
     Export_Explanation = "Press Ctrl+C to copy the data to the clipboard.\nPress Ctrl+V to import data in your webbrowser.",
+    Export_AttendanceNote = "In the Raid-Log-Import-Settings, please set the option \n\"Time in seconds, the loot belongs to the boss before.\"\nto or below 240 seconds to avoid attendance issues.",
     Export_Frame_Title = "Data export",
     Export_Heroic = "Heroic",
     Export_Loot = "Loot",

@@ -195,7 +195,7 @@
     </Scripts>
   </Frame>
   <Frame name="MRT_ExportFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableKeyboard="true" enableMouse="true" parent="UIParent">
-    <Size x="450" y="300"/>
+    <Size x="450" y="348"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
@@ -225,8 +225,8 @@
         </FontString>
         <FontString name="$parent_ExplanationText" inherits="GameFontWhite" justifyH="CENTER" justifyV="MIDDLE" text="MRT_ExportFrame_ExplanationText">
           <Anchors>
-            <Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="$parent">
-              <Offset x="0" y="72"/>
+            <Anchor point="CENTER" relativePoint="BOTTOM" relativeTo="$parent">
+              <Offset x="0" y="100"/>
             </Anchor>
           </Anchors>
         </FontString>
