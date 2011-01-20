@@ -142,13 +142,27 @@ function lib:GetItemGP(item, class, spec, slot)
         if itemEquipLoc == "INVTYPE_WEAPONOFFHAND" then
             return { lib:GetGP(itemLevel, itemRarity, 0.5) }
         end
-        -- 2H weapon is 2, except for Warrior OH (1) or Hunter (1)
+        -- 1H weapon is 1.5, except for hunters and tanks - or if used as offhand (0.5 then)
+        if itemEquipLoc == "INVTYPE_WEAPON" then
+            if class == "HUNTER" or spec == "TANK" or slot == "INVTYPE_WEAPONOFFHAND" then
+                return { lib:GetGP(itemLevel, itemRarity, 0.5) }
+            elseif class ~= nil or spec ~= nil then
+                return { lib:GetGP(itemLevel, itemRarity, 1.5) }
+            else
+                local GPValues = { lib:GetGP(itemLevel, itemRarity, 1.5), lib:GetGP(itemLevel, itemRarity, 0.5) }
+                local GPValueText = ("Either %d GP (for Hunter or Tank or if used as Offhand) or %d GP (for anything else)"):format(GPValues[2], GPValues[1])
+                local GPListType = "1HWEAPON"
+                local GPList = { ["OTHER"] = GPValues[1], ["OFFHAND"] = GPValues[2], ["TANK"] = GPValues[2], ["HUNTER"] = GPValues[2], }
+                return GPValues, GPValueText, GPListType, GPList
+            end
+        end
+        -- 2H weapon is 2, except for warrior OH (1) or hunter (1)
         -- Possible extension: If the weapon has Int on it, it is not for a warrior or hunter -> mod 2!
         if itemEquipLoc == "INVTYPE_2HWEAPON" then
-            -- 1, if used for Offhand or class is Hunter
+            -- 1, if used for Offhand or class is hunter
             if class == "HUNTER" or slot == "INVTYPE_WEAPONOFFHAND" then
                 return { lib:GetGP(itemLevel, itemRarity, 1) }
-            -- 2, if class is not Warrior and not Hunter and not nil
+            -- 2, if class is not Warrior and not hunter and not nil
             elseif class ~= nil and class ~= "WARRIOR" and class ~= "HUNTER" then
                 return { lib:GetGP(itemLevel, itemRarity, 2) }
             -- if nothing matches, return both values
@@ -160,7 +174,41 @@ function lib:GetItemGP(item, class, spec, slot)
                 return GPValues, GPValueText, GPListType, GPList
             end
         end
-        -- Thrown weapons are ranged weapons, which have a mod of 0.5 except for Hunters. 
+        -- Bows are mod 0.5, except for hunters (1.5 then)
+        if itemEquipLoc == "INVTYPE_RANGED" then
+            -- 1.5, if used by hunter
+            if class == "HUNTER" then
+                return { lib:GetGP(itemLevel, itemRarity, 1.5) }
+            -- 0.5, if not used by hunter
+            elseif class ~= nil then
+                return { lib:GetGP(itemLevel, itemRarity, 0.5) }
+            -- if nothing matches, return both values
+            else
+                local GPValues = { lib:GetGP(itemLevel, itemRarity, 1.5), lib:GetGP(itemLevel, itemRarity, 0.5) }
+                local GPValueText = ("Either %d GP (for Hunter) or %d GP (for any other class)"):format(GPValues[2], GPValues[1])
+                local GPListType = "RANGED"
+                local GPList = { ["OTHER"] = GPValues[1], ["HUNTER"] = GPValues[2], }
+                return GPValues, GPValueText, GPListType, GPList
+            end
+        end
+        -- INVTYPE_RANGEDRIGHT covers wands, crossbows and guns. Wands are always 0.5. Crossbows and guns are under the same rules as bows.
+        if itemEquipLoc == "INVTYPE_RANGEDRIGHT" then
+            -- 1.5, if used by hunter
+            if class == "HUNTER" then
+                return { lib:GetGP(itemLevel, itemRarity, 1.5) }
+            -- 0.5, if other class or item is a wand
+            elseif class ~= nil or LBIR[itemSubType] == "Wands" then
+                return { lib:GetGP(itemLevel, itemRarity, 0.5) }
+            -- if nothing matches, return both values
+            else
+                local GPValues = { lib:GetGP(itemLevel, itemRarity, 1.5), lib:GetGP(itemLevel, itemRarity, 0.5) }
+                local GPValueText = ("Either %d GP (for Hunter) or %d GP (for any other class)"):format(GPValues[2], GPValues[1])
+                local GPListType = "RANGED"
+                local GPList = { ["OTHER"] = GPValues[1], ["HUNTER"] = GPValues[2], }
+                return GPValues, GPValueText, GPListType, GPList
+            end
+        end
+        -- Thrown weapons are ranged weapons, which have a mod of 0.5 except for hunters. 
         -- However, in WoW it does not make sense for a Hunter to carry thrown weapons, so this case can be ignored. 
         -- ... I think. At least I hope... Why do I have this strange feeling that there is at least one Hunter out there that will prove me wrong some day?
         if itemEquipLoc == "INVTYPE_THROWN" then
