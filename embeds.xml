@@ -9,4 +9,5 @@
   <Include file="libs\LibBabble-Boss-3.0\lib.xml"/>
   <Include file="libs\LibBabble-Inventory-3.0\lib.xml"/>
   <Include file="libs\LibBabble-Zone-3.0\lib.xml"/>
+  <Script file="libs\LibEPGP-GPCalculator-1.0\LibEPGP-GPCalculator-1.0.lua"/>
 </Ui>

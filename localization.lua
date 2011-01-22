@@ -146,6 +146,7 @@ MRT_L.Options = {
     ITP_AutoFocus_Never = "Never",
     ITP_IgnoreEnchantingMats = "Ignore enchanting materials",
     ITP_IgnoreGems = "Ignore gems",
+    ITP_UseEPGP_GP_Values = "Use EPGP GP Values",
 	MP_Debug = "Enable debug messages",
 	MP_Description = "Tracks raids, loot and attendance",
 	MP_Enabled = "Enable automatic tracking",

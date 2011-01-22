@@ -65,7 +65,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox name="$parent_EB" inherits="InputBoxTemplate" historyLines="0" enableKeyboard="true" letters="100" autoFocus="false">
+      <EditBox name="$parent_EB" inherits="InputBoxTemplate" historyLines="0" enableKeyboard="true" letters="200" autoFocus="false">
         <Size x="250" y="32"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CostString" x="8"/>
@@ -77,7 +77,7 @@
         </Scripts>
         <FontString inherits="ChatFontNormal"/>
       </EditBox>
-      <EditBox name="$parent_EB2" inherits="InputBoxTemplate" historyLines="0" enableKeyboard="true" letters="150" autoFocus="false">
+      <EditBox name="$parent_EB2" inherits="InputBoxTemplate" historyLines="0" enableKeyboard="true" letters="256" autoFocus="false">
         <Size x="250" y="32"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_NoteString" x="8"/>

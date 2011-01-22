@@ -246,7 +246,7 @@
             <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent" x="20" y="-20"/>
           </Anchors>
         </FontString>
-        <FontString name="$parent_OnlyTrackItemsAbove_Text" inherits="GameFontWhite" text="(L FIXME!)Only track items equal or above Itemlevel">
+        <FontString name="$parent_OnlyTrackItemsAbove_Text" inherits="GameFontWhite" text="(L)Only track items equal or above Itemlevel">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Title" x="0" y="-160"/>
           </Anchors>
@@ -260,7 +260,7 @@
         -->
         <FontString name="$parent_ChooseAutoFocus_Title" inherits="GameFontWhite" text="AutoFocus on loot cost dialog (L)">
           <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" x="0" y="-30"/>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" x="0" y="-45"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -373,6 +373,20 @@
         </Anchors>
         <FontString inherits="GameFontWhite"/>
       </EditBox>
+      <CheckButton name="$parent_UseEPGPValues_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" x="0" y="-10"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Use EPGP GP values (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
       <CheckButton name="$parent_IgnoreEnchantingMats_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseAutoFocus_Title" x="0" y="-52"/>

@@ -42,7 +42,7 @@ local MRT_Defaults = {
     ["Options"] = {
         ["DB_Version"] = 2,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 12,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
+        ["General_OptionsVersion"] = 13,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
@@ -69,6 +69,7 @@ local MRT_Defaults = {
         ["Tracking_UseServerTime"] = false,
         ["ItemTracking_IgnoreEnchantingMats"] = true,
         ["ItemTracking_IgnoreGems"] = true,
+        ["ItemTracking_UseEPGPValues"] = false,
         ["Export_ExportFormat"] = 2,                                                -- 1: CTRT compatible, 2: EQdkp-Plus XML, 3: MLdkp 1.5,  4: plain text, 5: BBCode, 6: BBCode with wowhead, 7: CSS based HTML
         ["Export_ExportEnglish"] = false,                                           -- If activated, zone and boss names will be exported in english
         ["Export_CTRT_AddPoorItem"] = false,                                        -- Add a poor item as loot to each boss - Fixes encounter detection for CTRT-Import for EQDKP: true / nil
@@ -98,6 +99,7 @@ local LBI = LibStub("LibBabble-Inventory-3.0");
 local LBIR = LBI:GetReverseLookupTable();
 local LBZ = LibStub("LibBabble-Zone-3.0");
 local LBZR = LBZ:GetReverseLookupTable();
+local EPGPCalc = LibStub("LibEPGP-GPCalculator-1.0");
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
 local pairs = pairs;
@@ -480,6 +482,10 @@ function MRT_UpdateSavedOptions()
     if MRT_Options["General_OptionsVersion"] == 11 then
         MRT_Options["Tracking_LogWotLKRaids"] = false;
         MRT_Options["General_OptionsVersion"] = 12;
+    end
+    if MRT_Options["General_OptionsVersion"] == 12 then
+        MRT_Options["ItemTracking_UseEPGPValues"] = false;
+        MRT_Options["General_OptionsVersion"] = 13;
     end
 end
 
@@ -1147,11 +1153,20 @@ function MRT_AutoAddLoot(chatmsg)
     if (MRT_Options["ItemTracking_IgnoreGems"] and LBIR[itemType] == "Gem") then MRT_Debug("Item not tracked - it is a gem and the corresponding ignore option is on."); return; end
     if (MRT_Options["ItemTracking_IgnoreEnchantingMats"] and LBIR[itemType] == "Trade Goods" and LBIR[itemSubType] == "Enchanting") then MRT_Debug("Item not tracked - it is a enchanting material and the corresponding ignore option is on."); return; end
     if (MRT_IgnoredItemIDList[itemId]) then MRT_Debug("Item not tracked - ItemID is listed on the ignore list"); return; end
-    -- if an external function handles item data, notify it
     local dkpValue = 0;
     local lootAction = nil;
     local itemNote = nil;
     local supressCostDialog = nil;
+    local GPValues, GPValueText, GPListType, GPList = nil, nil, nil, nil;
+    -- if EPGP GP system is enabled, get GP values
+    if (MRT_Options["ItemTracking_UseEPGPValues"]) then
+        local realm = GetRealmName();
+        local lootClass = MRT_PlayerDB[realm][playerName]["Class"];
+        GPValues, GPValueText, GPListType, GPList = EPGPCalc:GetItemGP(itemLink, lootClass);
+        dkpValue = GPValues[1];
+        itemNote = GPValueText;
+    end
+    -- if an external function handles item data, notify it
     if (MRT_ExternalItemCostHandler.func) then
         local notifierInfo = {
             ["ItemLink"] = itemLink,
@@ -1226,7 +1241,7 @@ end
 ---------------------------
 -- basic idea: add looted items to a little queue and ask cost for each item in the queue 
 --             this should avoid missing dialogs for fast looted items
--- note: standard dkpvalue is already 0 (unless EPGP-system-support enabled) (FIXME: EPGP NYI!)
+-- note: standard dkpvalue is already 0 (unless EPGP-system-support enabled)
 function MRT_DKPFrame_AddToItemCostQueue(raidnum, itemnum)
     local MRT_DKPCostQueueItem = {
         ["RaidNum"] = raidnum,
@@ -1319,12 +1334,15 @@ function MRT_DKPFrame_Handler(button)
     elseif (button == "Cancel") then
     elseif (button == "Delete") then
         MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = "_deleted_";
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["DKPValue"] = 0;
     elseif (button == "Bank") then
         MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = "bank";
         MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"] = lootNote;
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["DKPValue"] = 0;
     elseif (button == "Disenchanted") then
         MRT_RaidLog[raidNum]["Loot"][itemNum]["Looter"] = "disenchanted";
         MRT_RaidLog[raidNum]["Loot"][itemNum]["Note"] = lootNote;
+        MRT_RaidLog[raidNum]["Loot"][itemNum]["DKPValue"] = 0;
     end
     -- notify registered, external functions
     if (#MRT_ExternalLootNotifier > 0) then
