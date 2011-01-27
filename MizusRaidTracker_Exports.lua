@@ -340,8 +340,8 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     local isFirstBoss = true;
     local exportedBosses = {};
     index = 1;
+    xml = xml.."<BossKills>";
     if (bossID) then
-        xml = xml.."<BossKills>";
         if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
             xml = xml..createBossInfoString(1, MRT_RaidLog[raidID]["Bosskills"][bossID], sortedPlayerList);
         else
@@ -352,10 +352,6 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     else
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             if ( (not difficulty) or ((bossInfo["Difficulty"] < 3) and difficulty == "N") or ((bossInfo["Difficulty"] > 2) and difficulty == "H") ) then
-                if (isFirstBoss) then 
-                    xml = xml.."<BossKills>";
-                    isFirstBoss = false;
-                end
                 if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
                     xml = xml..createBossInfoString(index, bossInfo, sortedPlayerList);
                 else
@@ -366,9 +362,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
             end
         end
     end
-    if (not isFirstBoss) then
-        xml = xml.."</BossKills>";
-    end
+    xml = xml.."</BossKills>";
     -- extra note entry:
     xml = xml.."<note><![CDATA[ - Zone: "..MRT_RaidLog[raidID]["RaidZone"].."]]></note>";
     -- next: Join data
