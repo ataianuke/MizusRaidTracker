@@ -897,7 +897,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
                 itemInfo.Action = MRT_LOOTACTION_NORMAL;
             end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
-                val(itemInfo, MRT_NOTIFYSOURCE_EDIT_GUI, raidnum, lootnum, oldItemInfoTable);
+                pcall(val, itemInfo, MRT_NOTIFYSOURCE_EDIT_GUI, raidnum, lootnum, oldItemInfoTable);
             end
         end
     else
@@ -921,7 +921,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
                 itemInfo.Action = MRT_LOOTACTION_NORMAL;
             end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
-                val(itemInfo, MRT_NOTIFYSOURCE_ADD_GUI, raidnum, itemNum);
+                pcall(val, itemInfo, MRT_NOTIFYSOURCE_ADD_GUI, raidnum, itemNum);
             end
         end
     end
@@ -979,7 +979,7 @@ function MRT_GUI_LootDeleteAccept(raidnum, bossnum, lootnum)
             itemInfo.Action = MRT_LOOTACTION_NORMAL;
         end
         for i, val in ipairs(MRT_ExternalLootNotifier) do
-            val(itemInfo, MRT_NOTIFYSOURCE_DELETE_GUI, raidnum, lootnum);
+            pcall(val, itemInfo, MRT_NOTIFYSOURCE_DELETE_GUI, raidnum, lootnum);
         end
     end
     tremove(MRT_RaidLog[raidnum]["Loot"], lootnum);

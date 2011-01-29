@@ -1179,7 +1179,14 @@ function MRT_AutoAddLoot(chatmsg)
             ["DKPValue"] = dkpValue,
             ["Time"] = MRT_GetCurrentTime(),
         };
-        dkpValue, playerName, itemNote, lootAction, supressCostDialog = MRT_ExternalItemCostHandler.func(notifierInfo);
+        local retOK, dkpValue_tmp, playerName_tmp, itemNote_tmp, lootAction_tmp, supressCostDialog_tmp = pcall(MRT_ExternalItemCostHandler.func, notifierInfo);
+        if (retOK) then
+            dkpValue = dkpValue_tmp;
+            playerName = playerName_tmp;
+            itemNote = itemNote_tmp;
+            lootAction = lootAction_tmp;
+            supressCostDialog = supressCostDialog_tmp;
+        end
         if (lootAction == MRT_LOOTACTION_BANK) then
             playerName = "bank";
         elseif (lootAction == MRT_LOOTACTION_DISENCHANT) then
@@ -1226,7 +1233,7 @@ function MRT_AutoAddLoot(chatmsg)
                 itemInfo.Action = MRT_LOOTACTION_NORMAL;
             end
             for i, val in ipairs(MRT_ExternalLootNotifier) do
-                val(itemInfo, MRT_NOTIFYSOURCE_ADD_SILENT, MRT_NumOfCurrentRaid, itemNum);
+                pcall(val, itemInfo, MRT_NOTIFYSOURCE_ADD_SILENT, MRT_NumOfCurrentRaid, itemNum);
             end
         end
         return; 
@@ -1360,7 +1367,7 @@ function MRT_DKPFrame_Handler(button)
             itemInfo.Action = MRT_LOOTACTION_NORMAL;
         end
         for i, val in ipairs(MRT_ExternalLootNotifier) do
-            val(itemInfo, MRT_NOTIFYSOURCE_ADD_POPUP, raidNum, itemNum);
+            pcall(val, itemInfo, MRT_NOTIFYSOURCE_ADD_POPUP, raidNum, itemNum);
         end
     end
     -- done with handling item - proceed to next one
