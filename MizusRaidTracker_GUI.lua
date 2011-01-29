@@ -784,6 +784,8 @@ function MRT_GUI_LootModify()
     local lootnum = MRT_GUI_BossLootTable:GetCell(loot_select, 1);
     local bossnum = MRT_RaidLog[raidnum]["Loot"][lootnum]["BossNumber"];
     local lootnote = MRT_RaidLog[raidnum]["Loot"][lootnum]["Note"];
+    -- Force item into cache:
+    GetItemInfo(MRT_RaidLog[raidnum]["Loot"][lootnum]["ItemLink"]);
     -- gather playerdata and fill drop down menu
     local playerData = {};
     for i, val in ipairs(MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Players"]) do
