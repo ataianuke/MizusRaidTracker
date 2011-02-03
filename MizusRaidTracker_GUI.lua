@@ -336,12 +336,16 @@ function MRT_GUI_BossAdd()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local raidDiff = GetCurrentRaidDifficulty();
     MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Add bosskill"]);
     MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Bossname"]);
     MRT_GUI_ThreeRowDialog_EB1:SetText("");
     MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Difficulty N or H"]);
-    -- Prefill stuff here! *FIXME*
-    MRT_GUI_ThreeRowDialog_EB2:SetText("");
+    if (raidDiff < 3) then
+        MRT_GUI_ThreeRowDialog_EB2:SetText("N");
+    else
+        MRT_GUI_ThreeRowDialog_EB2:SetText("H");
+    end
     MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Time"]);
     MRT_GUI_ThreeRowDialog_EB3:SetText("");
     MRT_GUI_ThreeRowDialog_EB3:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_ThreeRowDialog_EB3, "Boss_Add_TimeEB"); end);
