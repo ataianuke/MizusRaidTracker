@@ -299,6 +299,8 @@ function MRT_SlashCmdHandler(msg)
         MRT_StartGuildAttendanceCheck("_attendancecheck_");
     elseif (msg == 'deleteall now') then
         MRT_DeleteRaidLog();
+    elseif (msg == 'snapshot') then
+        MRT_TakeSnapshot();
     elseif (msg == '') then
         MRT_GUI_Toggle();
     elseif (msg == 'dkpframe') then
@@ -307,8 +309,6 @@ function MRT_SlashCmdHandler(msg)
         else
             MRT_GetDKPValueFrame:Show();
         end
-    elseif (msg == 'snapshot') then
-        MRT_TakeSnapshot();
     else
         -- FIXME: print commands
     end

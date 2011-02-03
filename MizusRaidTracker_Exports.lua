@@ -571,9 +571,9 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         local joinLeavePair;
         local firstBossFiftyPercentThreshold;
         if (#MRT_RaidLog[raidID]["Bosskills"] == 0) then
-            firstBossFiftyPercentThreshold = raidStart + ( (raidStop - raidStart) / 2 ) - 10;
+            firstBossFiftyPercentThreshold = raidStart + floor( (raidStop - raidStart) / 2 ) - 10;
         else
-            firstBossFiftyPercentThreshold = raidStart + ( (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] - raidStart) / 2 );
+            firstBossFiftyPercentThreshold = raidStart + floor( (MRT_RaidLog[raidID]["Bosskills"][1]["Date"] - raidStart) / 2 );
             if ( (firstBossFiftyPercentThreshold - raidStart) > 10 ) then firstBossFiftyPercentThreshold = firstBossFiftyPercentThreshold - 5; end
         end
         for key, playerInfo in pairs(MRT_RaidLog[raidID]["Players"]) do
@@ -609,16 +609,27 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
             else
                 lastBossTimeStamp = raidStart;
                 for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+                    -- leavetimestamp == 40% of time between this boss and next boss, but not more than 4 minutes.
+                    local leaveTimeStamp;
+                    if (MRT_RaidLog[raidID]["Bosskills"][i+1]) then
+                        if ( (MRT_RaidLog[raidID]["Bosskills"][i+1]["Date"] - bossInfo.Date) > 600 ) then
+                            leaveTimeStamp = bossInfo.Date + 240;
+                        else
+                            leaveTimeStamp = bossInfo.Date + floor( (MRT_RaidLog[raidID]["Bosskills"][i+1]["Date"] - bossInfo.Date) * 0.4 );
+                        end
+                    else
+                        leaveTimeStamp = bossInfo.Date + 10;
+                    end
                     for j, attendeeName in ipairs(bossInfo["Players"]) do
                         if (attendeeName == playerName and raidStart <= lastBossTimeStamp) then
                             if (i == 1) then
                                 if (firstJoins[playerName] < firstBossFiftyPercentThreshold) then
-                                    joinLeavePair = { Join = firstJoins[playerName], Leave = (bossInfo.Date + 10), };
+                                    joinLeavePair = { Join = firstJoins[playerName], Leave = leaveTimeStamp, };
                                 else
-                                    joinLeavePair = { Join = firstBossFiftyPercentThreshold, Leave = (bossInfo.Date + 10), };
+                                    joinLeavePair = { Join = firstBossFiftyPercentThreshold, Leave = leaveTimeStamp, };
                                 end
                             else
-                                joinLeavePair = { Join = lastBossTimeStamp, Leave = (bossInfo.Date + 10), };
+                                joinLeavePair = { Join = lastBossTimeStamp, Leave = leaveTimeStamp, };
                             end
                             if (not playerList[playerName]) then playerList[playerName] = {}; end
                             tinsert(playerList[playerName], joinLeavePair);
