@@ -340,6 +340,7 @@ function MRT_GUI_BossAdd()
     MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Bossname"]);
     MRT_GUI_ThreeRowDialog_EB1:SetText("");
     MRT_GUI_ThreeRowDialog_EB2_Text:SetText(MRT_L.GUI["Difficulty N or H"]);
+    -- Prefill stuff here! *FIXME*
     MRT_GUI_ThreeRowDialog_EB2:SetText("");
     MRT_GUI_ThreeRowDialog_EB3_Text:SetText(MRT_L.GUI["Time"]);
     MRT_GUI_ThreeRowDialog_EB3:SetText("");
