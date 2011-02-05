@@ -292,26 +292,49 @@ end
 
 -- Slashcommand handler
 function MRT_SlashCmdHandler(msg)
-    msg = string.lower(msg);
-    if (msg == 'options' or msg == 'o') then
+    msg_lower = string.lower(msg);
+    if (msg_lower == 'options' or msg_lower == 'o') then
         InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
-    elseif (msg == 'dkpcheck') then
+        return;
+    elseif (msg_lower == 'dkpcheck') then
         MRT_StartGuildAttendanceCheck("_attendancecheck_");
-    elseif (msg == 'deleteall now') then
+        return;
+    elseif (msg_lower == 'deleteall now') then
         MRT_DeleteRaidLog();
-    elseif (msg == 'snapshot') then
+        return;
+    elseif (msg_lower == 'snapshot') then
         MRT_TakeSnapshot();
-    elseif (msg == '') then
+        return;
+    elseif (msg_lower == '') then
         MRT_GUI_Toggle();
-    elseif (msg == 'dkpframe') then
+        return;
+    elseif (msg_lower == 'dkpframe') then
         if (MRT_GetDKPValueFrame:IsShown()) then
             MRT_GetDKPValueFrame:Hide();
         else
             MRT_GetDKPValueFrame:Show();
         end
-    else
-        -- FIXME: print commands
+        return;
+    elseif (string.match(msg, 'additem')) then
+        local itemLink, looter, cost = string.match(msg, 'additem%s+(|c.+|r)%s+(%a+)%s+(%d*)');
+        if (not itemLink) then 
+            itemLink, looter = string.match(msg, 'additem%s+(|c.+|r)%s+(%a+)');
+            cost = 0;
+        end
+        if (itemLink) then
+            MRT_ManualAddLoot(itemLink, looter, cost);
+            return;
+        end
     end
+    local slashCmd = '/'..MRT_Options.General_SlashCmdHandler;
+    MRT_Print("Slash commands:");
+    MRT_Print("'"..slashCmd.."' opens the raid log broser.");
+    MRT_Print("'"..slashCmd.." options' opens the options menu.");
+    MRT_Print("'"..slashCmd.." dkpcheck' creates a new boss entry and starts an attendance check.");
+    MRT_Print("'"..slashCmd.." additem <ItemLink> <Looter> [<Costs>]' adds an item to the last boss kill.");
+    MRT_Print("Example: "..slashCmd.." additem \124cffffffff\124Hitem:6948:0:0:0:0:0:0:0:0\124h[Hearthstone]\124h\124r Mizukichan 10");
+    MRT_Print("'"..slashCmd.." snapshot' creates a snapshot of the current raid composition.");
+    MRT_Print("'"..slashCmd.." deleteall now' deletes the complete raid log. USE WITH CAUTION!");
 end
 
 -- Chat handler
@@ -1200,7 +1223,6 @@ function MRT_AutoAddLoot(chatmsg)
         MRT_AddBosskill(MRT_L.Core["Trash Mob"]);
     end
     -- if code reach this point, we should have valid item information, an active raid and at least one bosskill entry - make a table!
-    -- Note: If a CT-Raidtracker-compatible export need more iteminfo, check GetItemInfo() for more data
     local MRT_LootInfo = {
         ["ItemLink"] = itemLink,
         ["ItemString"] = itemString,
@@ -1213,7 +1235,7 @@ function MRT_AutoAddLoot(chatmsg)
         ["BossNumber"] = MRT_NumOfLastBoss,
         ["Time"] = MRT_GetCurrentTime(),
         ["Note"] = itemNote,
-    }
+    };
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
     if ((not MRT_Options["Tracking_AskForDKPValue"]) or supressCostDialog) then 
         -- notify registered, external functions
@@ -1240,6 +1262,52 @@ function MRT_AutoAddLoot(chatmsg)
     end
     if (MRT_Options["Tracking_MinItemQualityToGetDKPValue"] > MRT_ItemColorValues[itemColor]) then return; end
     MRT_DKPFrame_AddToItemCostQueue(MRT_NumOfCurrentRaid, #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"]);
+end
+
+function MRT_ManualAddLoot(itemLink, looter, cost)
+    if (not MRT_NumOfCurrentRaid) then
+        MRT_Print(MRT_L["GUI"]["No active raid"]);
+        return; 
+    end
+    if (not MRT_NumOfLastBoss) then MRT_AddBosskill(MRT_L.Core["Trash Mob"]); end
+    local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _ = MRT_GetDetailedItemInformation(itemLink);
+    if (not itemName) then 
+        MRT_Debug("MRT_ManualAddLoot(): Failed horribly when trying to get item informations.");
+        return; 
+    end
+    local lootInfo = {
+        ["ItemLink"] = itemLink,
+        ["ItemString"] = itemString,
+        ["ItemId"] = itemId,
+        ["ItemName"] = itemName,
+        ["ItemColor"] = itemColor,
+        ["ItemCount"] = 1,
+        ["Looter"] = looter,
+        ["DKPValue"] = cost,
+        ["BossNumber"] = MRT_NumOfLastBoss,
+        ["Time"] = MRT_GetCurrentTime(),
+    };
+    tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], lootInfo);
+    local itemNum = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"];
+    if (#MRT_ExternalLootNotifier > 0) then
+        local itemInfo = {};
+        for key, val in pairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"][itemNum]) do
+            itemInfo[key] = val;
+        end
+        if (itemInfo.Looter == "bank") then
+            itemInfo.Action = MRT_LOOTACTION_BANK;
+        elseif (itemInfo.Looter == "disenchanted") then
+            itemInfo.Action = MRT_LOOTACTION_DISENCHANT;
+        elseif (itemInfo.Looter == "_deleted_") then
+            itemInfo.Action = MRT_LOOTACTION_DELETE;
+        else
+            itemInfo.Action = MRT_LOOTACTION_NORMAL;
+        end
+        for i, val in ipairs(MRT_ExternalLootNotifier) do
+            pcall(val, itemInfo, MRT_NOTIFYSOURCE_ADD_GUI, MRT_NumOfCurrentRaid, itemNum);
+        end
+    end
+    return;
 end
 
 
