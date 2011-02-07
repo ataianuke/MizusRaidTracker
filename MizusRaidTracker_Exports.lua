@@ -375,6 +375,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     end
     xml = xml.."</Join>";
     -- next: Leave data
+    index = 1;
     xml = xml.."<Leave>";
     for name, joinLeaveTable in pairs(playerList) do
         for i, joinLeaveEntry in ipairs(joinLeaveTable) do
