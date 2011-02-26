@@ -633,7 +633,8 @@ function MRT_PeriodicMaintenance()
     end
     for realm, playerInfoList in pairs(MRT_PlayerDB) do
         for player, playerInfo in pairs(MRT_PlayerDB[realm]) do
-            if (not usedPlayerList[realm][player]) then
+            -- realm-check is neccessary, because there may be PlayerDB-entries for realms, whose corresponding raids are deleted
+            if (not usedPlayerList[realm] or not usedPlayerList[realm][player]) then
                 MRT_PlayerDB[realm][player] = nil;
                 deletedEntries = deletedEntries + 1;
             end
