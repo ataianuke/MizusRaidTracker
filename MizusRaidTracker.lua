@@ -1221,7 +1221,7 @@ function MRT_AutoAddLoot(chatmsg)
     end
     -- Quick&Dirty for Trashdrops before first bosskill
     if (MRT_NumOfLastBoss == nil) then 
-        MRT_AddBosskill(MRT_L.Core["Trash Mob"]);
+        MRT_AddBosskill(MRT_L.Core["Trash Mob"], "N");
     end
     -- if code reach this point, we should have valid item information, an active raid and at least one bosskill entry - make a table!
     local MRT_LootInfo = {
