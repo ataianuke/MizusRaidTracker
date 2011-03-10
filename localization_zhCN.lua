@@ -25,24 +25,24 @@ MRT_L.Bossyells = {
     },
     
     ["Ulduar"] = {
-        ["You rush headlong into the maw of madness!"] = "钢铁议会",  -- Normalmode - Stormcaller Brundir last
-        ["What have you gained from my defeat? You are no less doomed, mortals!"] = "钢铁议会",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Impossible..."] = "钢铁议会",  -- Hardmode - Steelbreaker last
-        ["I... I am released from his grasp... at last."] = "霍迪尔",  -- Hodir
-        ["Stay your arms! I yield!"] = "托里姆",  -- Thorim
-        ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "弗蕾亚",  -- Freya
-        ["It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."] = "米米尔隆",  -- Mimiron
-        ["I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?"] = "观察者奥尔加隆",  -- Algalon
+        ["你们盲目地冲进了疯狂的深渊！"] = "钢铁议会",  -- Normalmode - Stormcaller Brundir last
+        ["你们能从我的失败中得到什么？你们终究会被平等地毁灭，凡人！"] = "钢铁议会",  -- Semi-Hardmode - Runemaster Molgeim last
+        ["这不可能……"] = "钢铁议会",  -- Hardmode - Steelbreaker last
+        ["我……我终于从他的魔掌中……解脱了。"] = "霍迪尔",  -- Hodir
+        ["住手！我认输了！"] = "托里姆",  -- Thorim
+        ["他对我的控制已经不复存在了。我又一次恢复了理智。谢谢你们，英雄们。"] = "弗蕾亚",  -- Freya
+        ["看起来我的计算有一点小小的偏差。"] = "米米尔隆",  -- Mimiron
+        ["我曾经看过尘世沉浸在造物者的烈焰之中，众生连一声悲泣都无法呼出，就此凋零。整个星系在弹指之间历经了毁灭与重生。然而在这段历程之中，我的心却无法感受到丝毫的…恻隐之念。我‧感‧受‧不‧到。成千上万的生命就这么消逝。他们是否拥有与你同样坚韧的生命?他们是否与你同样热爱生命?"] = "观察者奥尔加隆",  -- Algalon
     },
     
     ["Trial of the Crusader"] = {
-        ["A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."] = "阵营冠军",  -- Faction Champions
+        ["肤浅且可悲的胜利。今天的内耗让我们又一次被削弱了。这种愚蠢的行为只能让巫妖王受益！伟大的战士们就这样白白牺牲，而真正的威胁却步步逼近。巫妖王正计算着我们的死期。"] = "阵营冠军",  -- Faction Champions
     },
         
     ["Icecrown Citadel"] = {
-        ["Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"] = "冰冠炮舰战斗", -- Gunship Battle Muradin (A)
-        ["The Alliance falter. Onward to the Lich King!"] = "冰冠炮舰战斗", -- Gunship Battle Saurfang (H)
-        ["I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"] = "踏梦者瓦莉瑟瑞娅", -- Dreamwalker
+        ["我早就警告过你，恶棍！兄弟姐妹们，前进！"] = "冰冠炮舰战斗", -- Gunship Battle Muradin (A)
+        ["联盟不行了。向巫妖王进攻！"] = "冰冠炮舰战斗", -- Gunship Battle Saurfang (H)
+        ["我获得了新生！伊瑟拉的恩泽赐予我消灭邪恶的力量！"] = "踏梦者瓦莉瑟瑞娅", -- Dreamwalker
     },
 
     ["The Ruby Sanctum"] = {
