@@ -1,3 +1,17 @@
+<h4>0.26-2 Beta - Changelog:</h4>
+<strong>New:</strong>
+<ul>
+	<li>Added zhCN translation (big thanks to luomoon)</li>
+</ul>
+<strong>Changes:</strong>
+<ul>
+	<li>A few people reported, that MRT did not create a new raid after entering or changing raid zones. Turned out, that the WoW-Client reports wrong zone information for a few seconds after a zone change. MRT will now wait 10 seconds before checking the raid zone. The recognition of a raid zone will be delayed by these 10 seconds, but MRT should then be able to start a new raid accordingly. (Ticket #33 - Big thanks to gOOvER)</li>
+</ul>
+<strong>Updates:</strong>
+<ul>
+	<li>Updated ruRU translation (thanks to YOti)</li>
+</ul>
+
 <h4>0.26 Beta - Changelog:</h4>
 <strong>Deprecation Warning:</strong>
 <ul>
@@ -78,8 +92,3 @@
 	<li>Fixed a bug, which may caused a reset of the "delete raids older than x days"-slider back to 90 days</li>
 </ul>
 
-<h4>0.24-2 Beta - Changelog:</h4>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li>Fixed starting conditions for scanning of the guild roster. The guild attendance check should now work correctly again.</li>
-</ul>

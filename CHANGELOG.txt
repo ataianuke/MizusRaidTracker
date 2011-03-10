@@ -1,3 +1,12 @@
+0.26-2 Beta - Changelog:
+  New:
+    * Added zhCN translation (big thanks to luomoon)
+  Changes:
+    * A few people reported, that MRT did not create a new raid after entering or changing raid zones. Turned out, that the WoW-Client reports wrong zone information for a few seconds after a zone change. MRT will now wait 10 seconds before checking the raid zone. The recognition of a raid zone will be delayed by these 10 seconds, but MRT should then be able to start a new raid accordingly. (Ticket #33 - Big thanks to gOOvER)
+  Updates:
+    * Updated ruRU translation (thanks to YOti)
+
+    
 0.26 Beta - Changelog:
   Deprecation Warning:
     * The old CTRT compatible export won't receive any more compatibility updates for the EQDkp-Plus Raid-Log-Import-Plugin. Especially the attendance features. If you run into attendance issues, please change to the EQDkp-Plus-XML-Export.

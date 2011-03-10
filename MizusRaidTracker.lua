@@ -236,14 +236,18 @@ function MRT_OnEvent(frame, event, ...)
         
     
     elseif (event == "RAID_INSTANCE_WELCOME") then
-        if (not MRT_Options["General_MasterEnable"]) then return end;
-        -- I've recieved reports, stating that 25 player raids were tracked as 10 player raids - I have no idea why, but this here is the only place, where this issue could occure
-        -- Wasn't able to reproduce this issue, so I think, I'll change it blindly...
-        -- Use the DBM approach: wait 3 seconds after RIW-Event and then check instanceInfo stuff. Hopefully this fixes the problem....
+        MRT_Debug("Event RAID_INSTANCE_WELCOME fired.");
+        if (not MRT_Options["General_MasterEnable"]) then 
+            MRT_Debug("MRT seems to be disabled. Ignoring Event.");
+            return; 
+        end;
+        -- The WoW-Client randomly returns wrong zone information directly after a zone change for a relativly long period of time.
+        -- Use the DBM approach: wait 10 seconds after RIW-Event and then check instanceInfo stuff. Hopefully this fixes the problem....
         -- A generic function to schedule functions would be nice! <- FIXME!
-        MRT_RIWTimer.riwTime = time()
+        MRT_Debug("Setting up instance check timer - raid status will be checked in 10 seconds.");
+        MRT_RIWTimer.riwTime = time();
         MRT_RIWTimer:SetScript("OnUpdate", function (self)
-            if ((time() - self.riwTime) > 3) then
+            if ((time() - self.riwTime) > 10) then
                 self:SetScript("OnUpdate", nil);
                 MRT_CheckZoneAndSizeStatus();
             end
@@ -734,23 +738,28 @@ function MRT_CheckZoneAndSizeStatus()
     local instanceInfoDifficulty2 = GetInstanceDifficulty();
     local instanceInfoName = LBZR[localInstanceInfoName];
     -- if no english name available, return
-    if (instanceInfoName == nil) then MRT_Debug("No LBZ-entry for this zone found. Zone is "..localInstanceInfoName); return; end
-    MRT_Debug("RIW fired - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
+    if (instanceInfoName == nil) then MRT_Debug("MRT_CheckZoneAndSizeStatus called - No LBZ-entry for this zone found. Zone is "..localInstanceInfoName); return; end
+    MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
     if (MRT_RaidZones[instanceInfoName]) then
         -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
         -- This is the point where to check if the current raidZone is a zone, which should be tracked
         if (MRT_PvPRaids[instanceInfoName] and not MRT_Options["Tracking_LogAVRaids"]) then 
+            MRT_Debug("This instance is a PvP-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
         if (MRT_LegacyRaidZonesWotLK[instanceInfoName] and not MRT_Options["Tracking_LogWotLKRaids"]) then
+            MRT_Debug("This instance is a WotLK-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
         if (MRT_LegacyRaidZonesBC[instanceInfoName] and not MRT_Options["Tracking_LogBCRaids"]) then
+            MRT_Debug("This instance is a BC-Raid and tracking of those is disabled.");
             -- FIXME!
         end
         MRT_CheckTrackingStatus(localInstanceInfoName, instanceInfoDifficulty2);
+    else
+        MRT_Debug("This instance is not on the tracking list.");
     end
 end
 
