@@ -208,6 +208,7 @@ MRT_BossIDList = {
     [45992] = "Valiona and Theralion",          -- ID of Valiona    - Valiona & Theralion - Twin drakes with shared health pool
     [43735] = "Ascendant Council",              -- ID of Elementium Monstrosity
     [43324] = "Cho'gall",
+    [45213] = "Sinestra",
     
     -- Throne of the Four Winds
         -- Conclave of Wind needs bossyell

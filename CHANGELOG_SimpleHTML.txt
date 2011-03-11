@@ -1,3 +1,9 @@
+<h4>0.26-3 Beta - Changelog:</h4>
+<strong>New:</strong>
+<ul>
+	<li>Added boss kill detection for Sinestra</li>
+</ul>
+
 <h4>0.26-2 Beta - Changelog:</h4>
 <strong>New:</strong>
 <ul>

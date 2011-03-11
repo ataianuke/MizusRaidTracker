@@ -1,3 +1,8 @@
+0.26-3 Beta - Changelog:
+  New:
+    * Added boss kill detection for Sinestra
+
+
 0.26-2 Beta - Changelog:
   New:
     * Added zhCN translation (big thanks to luomoon)
