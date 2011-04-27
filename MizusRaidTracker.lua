@@ -274,7 +274,7 @@ end
 
 -- Combatlog handler
 function MRT_CombatLogHandler(...)
-    local _, combatEvent, _, _, _, destGUID, destName = ...;
+    local _, combatEvent, _, _, _, _, destGUID, destName = ...;
     if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
         local englishBossName;
