@@ -112,7 +112,7 @@ MRT_BossIDList = {
     ------------------------------
     --  Wrath of the Lich King  --
     ------------------------------
-    --  Dalaran - Added for Debuging
+    --  Stormwind - Added for Debuging
     --[[
     [721] = "Rabbit",
     [32428] = "Underbelly Rat",
@@ -215,6 +215,9 @@ MRT_BossIDList = {
     [46753] = "Al'Akir",
 }
 
+-- Boss rename list - When a boss kill with one of the below mentioned IDs is detected, then MRT will change the boss name given by
+-- the combat log with the corresponding name entered below (e.g.: 37972: Prince Keleseth -> Blood Prince Council)
+-- The resulting english name will be run through LibBabble-Boss-3.0 in order to get an localized name.
 MRT_BossRenameList = {
     ------------------------------
     --  Wrath of the Lich King  --
@@ -236,6 +239,7 @@ MRT_BossRenameList = {
     [45871] = "Conclave of Wind",
 }
 
+-- The reverse boss ID list is needed for bosses, that are tracked by a boss yell.
 MRT_ReverseBossIDList = {
     ------------------------------
     --  Wrath of the Lich King  --
@@ -251,6 +255,11 @@ MRT_ReverseBossIDList = {
     ["Valithria Dreamwalker"] = 36789,
     -- Ruby Sanctum
     ["Halion"] = 39863,
+    
+    -----------------
+    --  Cataclysm  --
+    -----------------
+    ["Conclave of Wind"] = 45871,
 }
 
 --------------------------------

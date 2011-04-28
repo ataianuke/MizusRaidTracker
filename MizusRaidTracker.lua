@@ -118,6 +118,8 @@ local MRT_AskCostQueueRunning = nil;
 
 local MRT_UnknownRelogStatus = true;
 
+local _, _, _, uiVersion = GetBuildInfo();
+
 -- Vars for API
 local MRT_ExternalItemCostHandler = {
     func = nil,
@@ -274,7 +276,14 @@ end
 
 -- Combatlog handler
 function MRT_CombatLogHandler(...)
-    local _, combatEvent, _, _, _, _, destGUID, destName = ...;
+    local combatEvent, destGUID, destName;
+    if (uiVersion < 40100) then
+        -- WoW client previous to 4.1.0 (China)
+        _, combatEvent, _, _, _, destGUID, destName = ...;
+    else
+        -- WoW client >= 4.1.0 (rest of the world)
+        _, combatEvent, _, _, _, _, destGUID, destName = ...;
+    end
     if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
         local englishBossName;
@@ -1639,12 +1648,11 @@ function MRT_GetNPCID(GUID)
     local first3 = tonumber("0x"..strsub(GUID, 3, 5));
     local unitType = bit.band(first3, 0x007);
     if ((unitType == 0x003) or (unitType == 0x005)) then
-        local _, _, _, uiVersion = GetBuildInfo();
         if (uiVersion < 40000) then
             -- WoW client previous to 4.0.1 (China)
             return tonumber("0x"..strsub(GUID, 9, 12));
         else
-            -- WoW client 4.0.x (rest of the world)
+            -- WoW client >= 4.0.1 (rest of the world)
             return tonumber("0x"..strsub(GUID, 7, 10));
         end
     else
