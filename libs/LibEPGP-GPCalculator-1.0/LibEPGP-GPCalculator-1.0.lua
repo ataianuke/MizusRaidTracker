@@ -22,6 +22,16 @@ do
     -- set up a copy of LBI for handling the different item types
     local LBI = LibStub("LibBabble-Inventory-3.0")
     local LBIR = LBI:GetReverseLookupTable()
+    
+    local _, _, _, uiVersion = GetBuildInfo()
+    local epgpCoefficient = 0
+
+    -- The coefficient seems to have changed in Cataclysm to 0.06974 - this isn't in the official web documentation but in the EPGP-Addon-Code
+    if (uiVersion < 40000) then
+        epgpCoefficient = 0.483
+    else
+        epgpCoefficient = 0.06974
+    end
 
     -- List of various ItemIDs of token and their corresponding item level:
     -- List of tokens, which can be traded for a helm
@@ -410,12 +420,13 @@ do
     -- @return a number, representing the GP value for the given variables
     function libGP:GetGP(itemLevel, rarity, slotMod)
         --[[
-        The basic GP formular is: GP = 0.483 x 2^(ilvl/26 + (rarity - 4)) x slot mod (http://www.epgpweb.com/help/gearpoints)
+        The basic GP formular was: GP = 0.483 x 2^(ilvl/26 + (rarity - 4)) x slot mod (http://www.epgpweb.com/help/gearpoints)
+        The coefficient seems to have changed in Cataclysm to 0.06974 - this isn't in the official web documentation but in the EPGP-Addon-Code
         The rarity is defined as: Uncommon (Green) = 2 / Rare (Blue) = 3 / Epic (Purple) = 4 / Legendary (Orange) = 5
         The slot modifier depends on the gearslot and may additionally depends on the class and spec of the character who will use the item
         --]]
         -- sanity check inputs here
         -- calculate the GP value
-        return floor( 0.483 * 2 ^ ( itemLevel/26 + (rarity - 4) ) * slotMod )
+        return floor( epgpCoefficient * 2 ^ ( itemLevel/26 + (rarity - 4) ) * slotMod )
     end
 end
