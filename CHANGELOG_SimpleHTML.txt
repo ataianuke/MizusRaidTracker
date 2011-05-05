@@ -1,3 +1,10 @@
+<h4>0.27 Beta - Changelog:</h4>
+<strong>Changes:</strong>
+<ul>
+    <li>Updated code that handles the COMBAT_LOG_EVENT_UNFILTERED in order to be compatible with WoW 4.1. This change is backwards compatible with older clients (for WoW-China)</li>
+    <li>Changed EPGP Gearpoint coefficient to the new one of the EPGP system: 0.06974. This change is backwards compatible with older clients (for WoW-China, once again)</li>
+</ul>
+
 <h4>0.26-3 Beta - Changelog:</h4>
 <strong>New:</strong>
 <ul>
@@ -56,45 +63,5 @@
 <ul>
 	<li>Attendance whispers may not work when using TukUI.</li>
 	<li>With WoW 4.0.6, Blizzard added a chat tab feature for whispers. When doing an attendance check, MRT may not prevent WoW from opening new tabs, leaving you with new, unnecessary (and possibly empty) chat tabs.</li>
-</ul>
-
-<h4>0.25-2 Beta - Changelog:</h4>
-<strong>New:</strong>
-<ul>
-	<li>The EQdkp-Plus XML export now additionally exports boss names</li>
-</ul>  
-<strong>Changes:</strong>
-<ul>
-	<li>Changed LibBabble-Boss-3.0 reference for Omnitron Defense System to Omnotron Defense System</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li>EQdkp-Plus XML export: Fixed a bug which may produced wrong timestamps for boss attendees, if the attendance fix for the RLI was disabled</li>
-</ul>
-
-<h4>0.25 Beta - Changelog:</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added new export format: DKPBoard</li>
-	<li>Added backwards compatibility to older WoW clients (Version 3.x). MRT should now work on chinese clients</li>
-	<li>Added functions to resume the last raid. You can finde the resume button in the raidlog browser</li>
-	<li>The guild attendance check text is now customizable</li>
-	<li>The EQdkp-Plus XML export now additionally exports item notes</li>
-	<li>Added options for automatically ignoring enchanting materials and gems</li>
-	<li>Added BossID of Magmaw</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li>Renamed option "Enable MRT" to "Enable automatic tracking" to clarify its use</li>
-	<li>Changed boss kill detection of the Conclave of Wind from BossID based to bossyell. Bossyells for english and german clients are available (Thanks to Rhial for the german yell).</li>
-</ul>
-<strong>Updates:</strong>
-<ul>
-	<li>Updated frFR translation (Thanks to Cindelle and Deepking)</li>
-	<li>Updated zhTW translation (Thanks to wushiny)</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li>Fixed a bug, which may caused a reset of the "delete raids older than x days"-slider back to 90 days</li>
 </ul>
 

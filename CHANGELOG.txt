@@ -1,3 +1,9 @@
+0.27 Beta - Changelog:
+  Changes:
+    * Updated code that handles the COMBAT_LOG_EVENT_UNFILTERED in order to be compatible with WoW 4.1. This change is backwards compatible with older clients (for WoW-China)
+    * Changed EPGP Gearpoint coefficient to the new one of the EPGP system: 0.06974. This change is backwards compatible with older clients (for WoW-China, once again)
+
+
 0.26-3 Beta - Changelog:
   New:
     * Added boss kill detection for Sinestra
