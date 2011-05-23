@@ -73,6 +73,7 @@ MRT_RaidZones = {
     ["Blackwing Descent"] = true,
     ["The Bastion of Twilight"] = true,
     ["Throne of the Four Winds"] = true,
+    ["Firelands"] = true,
 }
 
 MRT_LegacyRaidZonesWotLK = {
@@ -213,6 +214,15 @@ MRT_BossIDList = {
     -- Throne of the Four Winds
         -- Conclave of Wind needs bossyell
     [46753] = "Al'Akir",
+    
+    -- Firelands
+    [52498] = "Beth'tilac",
+    [52558] = "Lord Rhyolith",
+    [52530] = "Alysrazor",
+    [53691] = "Shannox",
+    [53494] = "Baleroc",
+    [52571] = "Majordomo Staghelm",
+    [52409] = "Ragnaros",
 }
 
 -- Boss rename list - When a boss kill with one of the below mentioned IDs is detected, then MRT will change the boss name given by
