@@ -37,168 +37,182 @@ do
     -- List of tokens, which can be traded for a helm
     local TOKEN_HEAD = {
         [29759] = 120,              -- T4-Head Hunter/Mage/Warlock
-        [29760] = 120,              -- T4-Head Paladin/Rouge/Shaman
+        [29760] = 120,              -- T4-Head Paladin/Rogue/Shaman
         [29761] = 120,              -- T4-Head Druid/Priest/Warrior
-        [30242] = 133,              -- T5-Head Paladin/Rouge/Shaman
+        [30242] = 133,              -- T5-Head Paladin/Rogue/Shaman
         [30243] = 133,              -- T5-Head Druid/Priest/Warrior
         [30244] = 133,              -- T5-Head Hunter/Mage/Warlock
         [31095] = 146,              -- T6-Head Hunter/Shaman/Warrior
-        [31096] = 146,              -- T6-Head Druid/Mage/Rouge
+        [31096] = 146,              -- T6-Head Druid/Mage/Rogue
         [31097] = 146,              -- T6-Head Paladin/Priest/Warlock
         [40616] = 200,              -- T7/10-Head Paladin/Priest/Warlock
         [40617] = 200,              -- T7/10-Head Hunter/Shaman/Warrior
-        [40618] = 200,              -- T7/10-Head Death Knight/Druid/Mage/Rouge
+        [40618] = 200,              -- T7/10-Head Death Knight/Druid/Mage/Rogue
         [40631] = 213,              -- T7/25-Head Paladin/Priest/Warlock
         [40632] = 213,              -- T7/25-Head Hunter/Shaman/Warrior
-        [40633] = 213,              -- T7/25-Head Death Knight/Druid/Mage/Rouge
+        [40633] = 213,              -- T7/25-Head Death Knight/Druid/Mage/Rogue
         [45638] = 226,              -- T8/25-Head Paladin/Priest/Warlock
         [45639] = 226,              -- T8/25-Head Hunter/Shaman/Warrior
-        [45640] = 226,              -- T8/25-Head Death Knight/Druid/Mage/Rouge
+        [45640] = 226,              -- T8/25-Head Death Knight/Druid/Mage/Rogue
         [45647] = 219,              -- T8/10-Head Paladin/Priest/Warlock
         [45648] = 219,              -- T8/10-Head Hunter/Shaman/Warrior
-        [45649] = 219,              -- T8/10-Head Death Knight/Druid/Mage/Rouge
+        [45649] = 219,              -- T8/10-Head Death Knight/Druid/Mage/Rogue
         [63683] = 359,              -- T11-Head Paladin/Priest/Warlock
         [63684] = 359,              -- T11-Head Hunter/Shaman/Warrior
-        [63682] = 359,              -- T11-Head Death Knight/Druid/Mage/Rouge
+        [63682] = 359,              -- T11-Head Death Knight/Druid/Mage/Rogue
         [65000] = 372,              -- T11-Heroic-Head Hunter/Shaman/Warrior
         [65001] = 372,              -- T11-Heroic-Head Paladin/Priest/Warlock
-        [65002] = 372,              -- T11-Heroic-Head Death Knight/Druid/Mage/Rouge
+        [65002] = 372,              -- T11-Heroic-Head Death Knight/Druid/Mage/Rogue
+        [71675] = 378,              -- T12-Head Paladin/Priest/Warlock
+        [71668] = 378,              -- T12-Head Death Knight/Druid/Mage/Rogue
+        [71677] = 391,              -- T12-Heroic-Head Paladin/Priest/Warlock
+        [71670] = 391,              -- T12-Heroic-Head Death Knight/Druid/Mage/Rogue
     }
 
     -- List of tokens, which can be traded for a set of shoulder pads
     local TOKEN_SHOULDERS = {
         [29762] = 120,              -- T4-Shoulder pads Hunter/Mage/Warlock
-        [29763] = 120,              -- T4-Shoulder pads Paladin/Rouge/Shaman
+        [29763] = 120,              -- T4-Shoulder pads Paladin/Rogue/Shaman
         [29764] = 120,              -- T4-Shoulder pads Druid/Priest/Warrior
-        [30248] = 133,              -- T5-Shoulder pads Paladin/Rouge/Shaman
+        [30248] = 133,              -- T5-Shoulder pads Paladin/Rogue/Shaman
         [30249] = 133,              -- T5-Shoulder pads Druid/Priest/Warrior
         [30250] = 133,              -- T5-Shoulder pads Hunter/Mage/Warlock
         [31101] = 146,              -- T6-Shoulder pads Paladin/Priest/Warlock
-        [31102] = 146,              -- T6-Shoulder pads Druid/Mage/Rouge
+        [31102] = 146,              -- T6-Shoulder pads Druid/Mage/Rogue
         [31103] = 146,              -- T6-Shoulder pads Hunter/Shaman/Warrior
         [40622] = 200,              -- T7/10-Shoulder pads Paladin/Priest/Warlock
         [40623] = 200,              -- T7/10-Shoulder pads Hunter/Shaman/Warrior
-        [40624] = 200,              -- T7/10-Shoulder pads Death Knight/Druid/Mage/Rouge
+        [40624] = 200,              -- T7/10-Shoulder pads Death Knight/Druid/Mage/Rogue
         [40637] = 213,              -- T7/25-Shoulder pads Paladin/Priest/Warlock
         [40638] = 213,              -- T7/25-Shoulder pads Hunter/Shaman/Warrior
-        [40639] = 213,              -- T7/25-Shoulder pads Death Knight/Druid/Mage/Rouge
+        [40639] = 213,              -- T7/25-Shoulder pads Death Knight/Druid/Mage/Rogue
         [45656] = 226,              -- T8/25-Shoulder pads Paladin/Priest/Warlock
         [45657] = 226,              -- T8/25-Shoulder pads Hunter/Shaman/Warrior
-        [45658] = 226,              -- T8/25-Shoulder pads Death Knight/Druid/Mage/Rouge
+        [45658] = 226,              -- T8/25-Shoulder pads Death Knight/Druid/Mage/Rogue
         [45659] = 219,              -- T8/10-Shoulder pads Paladin/Priest/Warlock
         [45660] = 219,              -- T8/10-Shoulder pads Hunter/Shaman/Warrior
-        [45661] = 219,              -- T8/10-Shoulder pads Death Knight/Druid/Mage/Rouge
-        [64314] = 359,              -- T11-Shoulder pads Death Knight/Druid/Mage/Rouge
+        [45661] = 219,              -- T8/10-Shoulder pads Death Knight/Druid/Mage/Rogue
+        [64314] = 359,              -- T11-Shoulder pads Death Knight/Druid/Mage/Rogue
         [64315] = 359,              -- T11-Shoulder pads Paladin/Priest/Warlock
         [64316] = 359,              -- T11-Shoulder pads Hunter/Shaman/Warrior
         [65087] = 372,              -- T11-Heroic-Shoulder pads Hunter/Shaman/Warrior
         [65088] = 372,              -- T11-Heroic-Shoulder pads Paladin/Priest/Warlock
-        [65089] = 372,              -- T11-Heroic-Shoulder pads Death Knight/Druid/Mage/Rouge
+        [65089] = 372,              -- T11-Heroic-Shoulder pads Death Knight/Druid/Mage/Rogue
+        [71681] = 378,              -- T12-Shoulder pads Paladin/Priest/Warlock
+        [71674] = 378,              -- T12-Shoulder pads Death Knight/Druid/Mage/Rogue
+        [71680] = 391,              -- T12-Heroic-Shoulder pads Paladin/Priest/Warlock
+        [71673] = 391,              -- T12-Heroic-Shoulder pads Death Knight/Druid/Mage/Rogue
     }
 
     -- List of tokens, which can be traded for a chest piece
     local TOKEN_CHEST = {
         [29753] = 120,              -- T4-Chest Druid/Priest/Warrior
-        [29754] = 120,              -- T4-Chest Paladin/Rouge/Shaman
+        [29754] = 120,              -- T4-Chest Paladin/Rogue/Shaman
         [29755] = 120,              -- T4-Chest Hunter/Mage/Warlock
-        [30236] = 133,              -- T5-Chest Paladin/Rouge/Shaman
+        [30236] = 133,              -- T5-Chest Paladin/Rogue/Shaman
         [30237] = 133,              -- T5-Chest Druid/Priest/Warrior
         [30238] = 133,              -- T5-Chest Hunter/Mage/Warlock
         [31089] = 146,              -- T6-Chest Paladin/Priest/Warlock
-        [31090] = 146,              -- T6-Chest Druid/Mage/Rouge
+        [31090] = 146,              -- T6-Chest Druid/Mage/Rogue
         [31091] = 146,              -- T6-Chest Hunter/Shaman/Warrior
         [40610] = 200,              -- T7/10-Chest Paladin/Priest/Warlock
         [40611] = 200,              -- T7/10-Chest Hunter/Shaman/Warrior
-        [40612] = 200,              -- T7/10-Chest Death Knight/Druid/Mage/Rouge
+        [40612] = 200,              -- T7/10-Chest Death Knight/Druid/Mage/Rogue
         [40625] = 213,              -- T7/25-Chest Paladin/Priest/Warlock
         [40626] = 213,              -- T7/25-Chest Hunter/Shaman/Warrior
-        [40627] = 213,              -- T7/25-Chest Death Knight/Druid/Mage/Rouge
+        [40627] = 213,              -- T7/25-Chest Death Knight/Druid/Mage/Rogue
         [45632] = 226,              -- T8/25-Chest Paladin/Priest/Warlock
         [45633] = 226,              -- T8/25-Chest Hunter/Shaman/Warrior
-        [45634] = 226,              -- T8/25-Chest Death Knight/Druid/Mage/Rouge
+        [45634] = 226,              -- T8/25-Chest Death Knight/Druid/Mage/Rogue
         [45635] = 219,              -- T8/10-Chest Paladin/Priest/Warlock
         [45636] = 219,              -- T8/10-Chest Hunter/Shaman/Warrior
-        [45637] = 219,              -- T8/10-Chest Death Knight/Druid/Mage/Rouge
+        [45637] = 219,              -- T8/10-Chest Death Knight/Druid/Mage/Rogue
         [67423] = 372,              -- T11-Heroic-Chest Paladin/Priest/Warlock
         [67424] = 372,              -- T11-Heroic-Chest Hunter/Shaman/Warrior
-        [67425] = 372,              -- T11-Heroic-Chest Death Knight/Druid/Mage/Rouge
+        [67425] = 372,              -- T11-Heroic-Chest Death Knight/Druid/Mage/Rogue
+        [71679] = 391,              -- T12-Heroic-Chest Paladin/Priest/Warlock
+        [71672] = 391,              -- T12-Heroic-Chest Death Knight/Druid/Mage/Rogue
     }
 
     -- List of tokens, which can be traded for a set of bracers
     local TOKEN_WRISTS = {
         [34848] = 154,              -- T6-Bracers Paladin/Priest/Warlock
         [34851] = 154,              -- T6-Bracers Hunter/Shaman/Warrior
-        [34852] = 154,              -- T6-Bracers Rouge/Mage/Druid
+        [34852] = 154,              -- T6-Bracers Rogue/Mage/Druid
     }
 
     -- List of tokens, which can be traded for a set of gloves
     local TOKEN_HANDS = {
         [29756] = 120,              -- T4-Gloves Hunter/Mage/Warlock
         [29757] = 120,              -- T4-Gloves Druid/Priest/Warrior
-        [29758] = 120,              -- T4-Gloves Paladin/Rouge/Shaman
-        [30239] = 133,              -- T5-Gloves Paladin/Rouge/Shaman
+        [29758] = 120,              -- T4-Gloves Paladin/Rogue/Shaman
+        [30239] = 133,              -- T5-Gloves Paladin/Rogue/Shaman
         [30240] = 133,              -- T5-Gloves Druid/Priest/Warrior
         [30241] = 133,              -- T5-Gloves Hunter/Mage/Warlock
         [31092] = 146,              -- T6-Gloves Paladin/Priest/Warlock
-        [31093] = 146,              -- T6-Gloves Druid/Mage/Rouge
+        [31093] = 146,              -- T6-Gloves Druid/Mage/Rogue
         [31094] = 146,              -- T6-Gloves Hunter/Shaman/Warrior
         [40613] = 200,              -- T7/10-Gloves Paladin/Priest/Warlock
         [40614] = 200,              -- T7/10-Gloves Hunter/Shaman/Warrior
-        [40615] = 200,              -- T7/10-Gloves Death Knight/Druid/Mage/Rouge
+        [40615] = 200,              -- T7/10-Gloves Death Knight/Druid/Mage/Rogue
         [40628] = 213,              -- T7/25-Gloves Paladin/Priest/Warlock
         [40629] = 213,              -- T7/25-Gloves Hunter/Shaman/Warrior
-        [40630] = 213,              -- T7/25-Gloves Death Knight/Druid/Mage/Rouge
+        [40630] = 213,              -- T7/25-Gloves Death Knight/Druid/Mage/Rogue
         [45641] = 226,              -- T8/25-Gloves Paladin/Priest/Warlock
         [45642] = 226,              -- T8/25-Gloves Hunter/Shaman/Warrior
-        [45643] = 226,              -- T8/25-Gloves Death Knight/Druid/Mage/Rouge
+        [45643] = 226,              -- T8/25-Gloves Death Knight/Druid/Mage/Rogue
         [45644] = 219,              -- T8/10-Gloves Paladin/Priest/Warlock
         [45645] = 219,              -- T8/10-Gloves Hunter/Shaman/Warrior
-        [45646] = 219,              -- T8/10-Gloves Death Knight/Druid/Mage/Rouge
+        [45646] = 219,              -- T8/10-Gloves Death Knight/Druid/Mage/Rogue
         [67429] = 372,              -- T11-Heroic-Gloves Paladin/Priest/Warlock
         [67430] = 372,              -- T11-Heroic-Gloves Hunter/Shaman/Warrior
-        [67431] = 372,              -- T11-Heroic-Gloves Death Knight/Druid/Mage/Rouge
+        [67431] = 372,              -- T11-Heroic-Gloves Death Knight/Druid/Mage/Rogue
+        [71676] = 391,              -- T12-Heroic-Gloves Paladin/Priest/Warlock
+        [71669] = 391,              -- T12-Heroic-Gloves Death Knight/Druid/Mage/Rogue
     }
 
     -- List of tokens, which can be traded for a waist piece
     local TOKEN_WAIST = {
         [34853] = 154,              -- T6-Belt Paladin/Priest/Warlock
         [34854] = 154,              -- T6-Belt Hunter/Shaman/Warrior
-        [34855] = 154,              -- T6-Belt Rouge/Mage/Druid
+        [34855] = 154,              -- T6-Belt Rogue/Mage/Druid
     }
 
     -- List of tokens, which can be traded for a leg piece
     local TOKEN_LEGS = {
         [29765] = 120,              -- T4-Leggings Hunter/Mage/Warlock
-        [29766] = 120,              -- T4-Leggings Paladin/Rouge/Shaman
+        [29766] = 120,              -- T4-Leggings Paladin/Rogue/Shaman
         [29767] = 120,              -- T4-Leggings Druid/Priest/Warrior
-        [30245] = 133,              -- T5-Leggings Paladin/Rouge/Shaman
+        [30245] = 133,              -- T5-Leggings Paladin/Rogue/Shaman
         [30246] = 133,              -- T5-Leggings Druid/Priest/Warrior
         [30247] = 133,              -- T5-Leggings Hunter/Mage/Warlock
         [31098] = 146,              -- T6-Leggings Paladin/Priest/Warlock
-        [31099] = 146,              -- T6-Leggings Druid/Mage/Rouge
+        [31099] = 146,              -- T6-Leggings Druid/Mage/Rogue
         [31100] = 146,              -- T6-Leggings Hunter/Shaman/Warrior
         [40619] = 200,              -- T7/10-Leggings Paladin/Priest/Warlock
         [40620] = 200,              -- T7/10-Leggings Hunter/Shaman/Warrior
-        [40621] = 200,              -- T7/10-Leggings Death Knight/Druid/Mage/Rouge
+        [40621] = 200,              -- T7/10-Leggings Death Knight/Druid/Mage/Rogue
         [40634] = 213,              -- T7/25-Leggings Paladin/Priest/Warlock
         [40635] = 213,              -- T7/25-Leggings Hunter/Shaman/Warrior
-        [40636] = 213,              -- T7/25-Leggings Death Knight/Druid/Mage/Rouge
+        [40636] = 213,              -- T7/25-Leggings Death Knight/Druid/Mage/Rogue
         [45653] = 226,              -- T8/25-Leggings Paladin/Priest/Warlock
         [45654] = 226,              -- T8/25-Leggings Hunter/Shaman/Warrior
-        [45655] = 226,              -- T8/25-Leggings Death Knight/Druid/Mage/Rouge
+        [45655] = 226,              -- T8/25-Leggings Death Knight/Druid/Mage/Rogue
         [45647] = 219,              -- T8/10-Leggings Paladin/Priest/Warlock
         [45648] = 219,              -- T8/10-Leggings Hunter/Shaman/Warrior
-        [45649] = 219,              -- T8/10-Leggings Death Knight/Druid/Mage/Rouge
-        [67426] = 372,              -- T11-Heroic-Leggings Death Knight/Druid/Mage/Rouge
+        [45649] = 219,              -- T8/10-Leggings Death Knight/Druid/Mage/Rogue
+        [67426] = 372,              -- T11-Heroic-Leggings Death Knight/Druid/Mage/Rogue
         [67427] = 372,              -- T11-Heroic-Leggings Hunter/Shaman/Warrior
         [67428] = 372,              -- T11-Heroic-Leggings Paladin/Priest/Warlock
+        [71678] = 391,              -- T12-Heroic-Leggings Paladin/Priest/Warlock
+        [71671] = 391,              -- T12-Heroic-Leggings Death Knight/Druid/Mage/Rogue
     }
 
     -- List of tokens, which can be traded for a pair of shoes
     local TOKEN_FEET = {
         [34856] = 154,              -- T6-Shoes Paladin/Priest/Warlock
         [34857] = 154,              -- T6-Shoes Hunter/Shaman/Warrior
-        [34858] = 154,              -- T6-Shoes Rouge/Mage/Druid
+        [34858] = 154,              -- T6-Shoes Rogue/Mage/Druid
     }
 
     -- List of tokens, which can be traded for a head, shoulder, chest, hands or legs slot item
@@ -206,11 +220,11 @@ do
         [47242] = 245,              -- T9/25-Token universal (Trophy of the Crusade)
         [47557] = 258,              -- T9-Heroic-Token Paladin/Priest/Warlock
         [47558] = 258,              -- T9-Heroic-Token Hunter/Shaman/Warrior
-        [47559] = 258,              -- T9-Heroic-Token Death Knight/Druid/Mage/Rouge
-        [52025] = 264,              -- T10-Token Death Knight/Druid/Mage/Rouge
+        [47559] = 258,              -- T9-Heroic-Token Death Knight/Druid/Mage/Rogue
+        [52025] = 264,              -- T10-Token Death Knight/Druid/Mage/Rogue
         [52026] = 264,              -- T10-Token Hunter/Shaman/Warrior
         [52027] = 264,              -- T10-Token Paladin/Priest/Warlock
-        [52028] = 277,              -- T10-Heroic-Token Death Knight/Druid/Mage/Rouge
+        [52028] = 277,              -- T10-Heroic-Token Death Knight/Druid/Mage/Rogue
         [52029] = 277,              -- T10-Heroic-Token Hunter/Shaman/Warrior
         [52030] = 277,              -- T10-Heroic-Token Paladin/Priest/Warlock
         [66998] = 372,              -- T11-Heroic-Token universal (Essence of the Forlorn)
