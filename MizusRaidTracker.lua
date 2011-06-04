@@ -280,9 +280,12 @@ function MRT_CombatLogHandler(...)
     if (uiVersion < 40100) then
         -- WoW client previous to 4.1.0 (China)
         _, combatEvent, _, _, _, destGUID, destName = ...;
-    else
-        -- WoW client >= 4.1.0 (rest of the world)
+    elseif (uiVersion < 40200) then
+        -- WoW client = 4.1.0
         _, combatEvent, _, _, _, _, destGUID, destName = ...;
+    else
+        -- WoW client >= 4.2.0
+        _, combatEvent, _, _, _, _, _, destGUID, destName = ...;
     end
     if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
