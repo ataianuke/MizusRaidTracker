@@ -195,6 +195,7 @@ MRT_BossIDList = {
     -----------------
     -- Baradin Hold
     [47120] = "Argaloth",
+    [52363] = "Occu'thar",
     
     -- Blackwing Descent
     [41570] = "Magmaw",
