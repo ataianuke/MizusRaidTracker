@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This localization is written by:
---  7destiny
+--  7destiny, Eldanus
 --
 -- Note: 
 --  MRT requires a correct localization of RaidZones and Bossyells for working
@@ -50,7 +50,7 @@ MRT_L.Bossyells = {
     },
     
     ["Throne of the Four Winds"] = {
-        ["The Conclave of Wind has dissipated. Your honorable conduct and determination have earned you the right to face me in battle, mortals. I await your assault on my platform! Come!"] = "Conclave of Wind", -- Conclave of Wind
+        ["바람의 비밀의회가 패배했군. 필멸자들이여, 너희의 명예로운 전투와 투지가 가상하여 나를 직접 상대할 기회를 주겠다. 내 너희의 공격을 기다리고 있다! 오너라!"] = "Conclave of Wind", -- Conclave of Wind
     },
 }
 
