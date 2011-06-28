@@ -1,3 +1,9 @@
+0.28 - Changelog:
+    * Added Firelands as a new raid zone and added IDs of the new bosses of WoW 4.2
+    * Updated koKR translations (thanks to Eldanus)
+    * Added compatibility code for handling the changes made to the COMBAT_LOG_EVENT_UNFILTERED event in WoW 4.2
+
+
 0.27 Beta - Changelog:
   Changes:
     * Updated code that handles the COMBAT_LOG_EVENT_UNFILTERED in order to be compatible with WoW 4.1. This change is backwards compatible with older clients (for WoW-China)

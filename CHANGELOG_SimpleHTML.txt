@@ -1,3 +1,10 @@
+<h4>0.28 - Changelog:</h4>
+<ul>
+    <li>Added Firelands as a new raid zone and added IDs of the new bosses of WoW 4.2</li>
+    <li>Updated koKR translations (thanks to Eldanus)</li>
+    <li>Added compatibility code for handling the changes made to the COMBAT_LOG_EVENT_UNFILTERED event in WoW 4.2</li>
+</ul>
+
 <h4>0.27 Beta - Changelog:</h4>
 <strong>Changes:</strong>
 <ul>
