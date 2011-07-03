@@ -52,6 +52,10 @@ MRT_L.Bossyells = {
     ["Throne of the Four Winds"] = {
         ["바람의 비밀의회가 패배했군. 필멸자들이여, 너희의 명예로운 전투와 투지가 가상하여 나를 직접 상대할 기회를 주겠다. 내 너희의 공격을 기다리고 있다! 오너라!"] = "Conclave of Wind", -- Conclave of Wind
     },
+    
+    ["Firelands"] = {
+        ["Too soon! ... You have come too soon..."] = "Ragnaros",
+    },
 }
 
 

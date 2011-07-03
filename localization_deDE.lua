@@ -52,6 +52,10 @@ MRT_L.Bossyells = {
     ["Throne of the Four Winds"] = {
         ["Das Konklave des Windes hat sich aufgelöst. Euer ehrenvolles Betragen sowie eure Entschlossenheit haben euch das Recht verschafft, mir in der Schlacht gegenüberzutreten, Sterbliche. Ich erwarte Euren Angriff auf meiner Plattform! Kommt!"] = "Conclave of Wind", -- Conclave of Wind
     },
+    
+    ["Firelands"] = {
+        ["Too soon! ... You have come too soon..."] = "Ragnaros",
+    }
 }
 
 
