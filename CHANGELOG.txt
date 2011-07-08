@@ -1,3 +1,7 @@
+0.28.1 - Changelog:
+    * Changed boss detection of Ragnaros normal mode to boss yell (drycoded and untested - English only)
+    
+
 0.28 - Changelog:
     * Added Firelands as a new raid zone and added IDs of the new bosses of WoW 4.2
     * Updated koKR translations (thanks to Eldanus)
