@@ -1,3 +1,8 @@
+0.28.2 - Changelog:
+    * Added deDE boss yell of Ragnaros (Thanks to Früchtchen)
+    * Tracking of 10 player raids is now enabled by default
+    
+
 0.28.1 - Changelog:
     * Changed boss detection of Ragnaros normal mode to boss yell (drycoded and untested - English only)
     

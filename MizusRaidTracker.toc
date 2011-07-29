@@ -1,6 +1,6 @@
 ## Interface: 40200
 ## Title: Mizus RaidTracker
-## Version: 0.28.1
+## Version: 0.28.2
 ## Notes: Tracks raid, loot and attendance
 ## Author: Mizukichan@EU-Thrall
 ## LoadOnDemand: 0
