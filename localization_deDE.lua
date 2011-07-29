@@ -54,7 +54,7 @@ MRT_L.Bossyells = {
     },
     
     ["Firelands"] = {
-        ["Too soon! ... You have come too soon..."] = "Ragnaros",
+        ["Zu fr\195\188h!... Ihr kommt zu fr\195\188h..."] = "Ragnaros",
     }
 }
 
