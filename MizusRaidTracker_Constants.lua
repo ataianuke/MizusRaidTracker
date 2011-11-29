@@ -74,6 +74,7 @@ MRT_RaidZones = {
     ["The Bastion of Twilight"] = true,
     ["Throne of the Four Winds"] = true,
     ["Firelands"] = true,
+    ["Dragon Soul"] = true,
 }
 
 MRT_LegacyRaidZonesWotLK = {
@@ -224,6 +225,17 @@ MRT_BossIDList = {
     [53494] = "Baleroc",
     [52571] = "Majordomo Staghelm",
     [52409] = "Ragnaros",
+    
+    -- Dragon Soul
+    [55265] = "Morchok",
+    [55308] = "Warlord Zonozz",
+    [55312] = "Yor'sahj the Unsleeping",
+    [55689] = "Hagara the Stormbinder",
+    [55294] = "Ultraxion",
+    [56427] = "Warmaster Blackhorn",
+    [53879] = "Spine of Deathwing",   -- Deathwing's Spine will probably need a bossyell
+    [57962] = "Deathwing",                      -- Final Encounter
+    
 }
 
 -- Boss rename list - When a boss kill with one of the below mentioned IDs is detected, then MRT will change the boss name given by

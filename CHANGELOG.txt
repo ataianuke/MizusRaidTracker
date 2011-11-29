@@ -1,3 +1,8 @@
+0.29.1 - Changelog:
+    * TOC-Bump for WoW 4.3
+    * Added BossIDs of the Dragon Soul raid instance
+
+
 0.28.2 - Changelog:
     * Added deDE boss yell of Ragnaros (Thanks to Früchtchen)
     * Tracking of 10 player raids is now enabled by default

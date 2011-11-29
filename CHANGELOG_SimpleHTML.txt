@@ -1,3 +1,9 @@
+<h4>0.29.1 - Changelog:</h4>
+<ul>
+    <li>TOC-Bump for WoW 4.3</li>
+    <li>Added BossIDs of the Dragon Soul raid instance</li>
+</ul>
+
 <h4>0.28.2 - Changelog:</h4>
 <ul>
     <li>Added deDE boss yell of Ragnaros (Thanks to Früchtchen)</li>
