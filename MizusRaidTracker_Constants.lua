@@ -233,14 +233,14 @@ MRT_BossIDList = {
     [55689] = "Hagara the Stormbinder",
     [55294] = "Ultraxion",
     [56427] = "Warmaster Blackhorn",
-    [53879] = "Spine of Deathwing",   -- Deathwing's Spine will probably need a bossyell
-    [57962] = "Deathwing",                      -- Final Encounter
+    [53879] = "Spine of Deathwing",   
+    [57962] = "Madness of Deathwing",                      -- Final Encounter
     
 }
 
 -- Boss rename list - When a boss kill with one of the below mentioned IDs is detected, then MRT will change the boss name given by
 -- the combat log with the corresponding name entered below (e.g.: 37972: Prince Keleseth -> Blood Prince Council)
--- The resulting english name will be run through LibBabble-Boss-3.0 in order to get an localized name.
+-- The resulting english name will be run through LibBabble-Boss-3.0 in order to get a localized name.
 MRT_BossRenameList = {
     ------------------------------
     --  Wrath of the Lich King  --
@@ -260,6 +260,9 @@ MRT_BossRenameList = {
     [43735] = "Ascendant Council",
     -- Throne of the Four Winds
     [45871] = "Conclave of Wind",
+    -- Dragon Soul
+    [53879] = "Spine of Deathwing",   
+    [57962] = "Madness of Deathwing",
 }
 
 -- The reverse boss ID list is needed for bosses, that are tracked by a boss yell.

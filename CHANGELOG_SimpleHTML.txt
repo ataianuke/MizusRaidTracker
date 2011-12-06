@@ -1,3 +1,8 @@
+<h4>0.29.2 - Changelog:</h4>
+<ul>
+    <li>Renamed the final boss encounters of Dragon Soul</li>
+</ul>
+
 <h4>0.29.1 - Changelog:</h4>
 <ul>
     <li>TOC-Bump for WoW 4.3</li>
@@ -27,65 +32,5 @@
 <ul>
     <li>Updated code that handles the COMBAT_LOG_EVENT_UNFILTERED in order to be compatible with WoW 4.1. This change is backwards compatible with older clients (for WoW-China)</li>
     <li>Changed EPGP Gearpoint coefficient to the new one of the EPGP system: 0.06974. This change is backwards compatible with older clients (for WoW-China, once again)</li>
-</ul>
-
-<h4>0.26-3 Beta - Changelog:</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added boss kill detection for Sinestra</li>
-</ul>
-
-<h4>0.26-2 Beta - Changelog:</h4>
-<strong>New:</strong>
-<ul>
-	<li>Added zhCN translation (big thanks to luomoon)</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li>A few people reported, that MRT did not create a new raid after entering or changing raid zones. Turned out, that the WoW-Client reports wrong zone information for a few seconds after a zone change. MRT will now wait 10 seconds before checking the raid zone. The recognition of a raid zone will be delayed by these 10 seconds, but MRT should then be able to start a new raid accordingly. (Ticket #33 - Big thanks to gOOvER)</li>
-</ul>
-<strong>Updates:</strong>
-<ul>
-	<li>Updated ruRU translation (thanks to YOti)</li>
-</ul>
-
-<h4>0.26 Beta - Changelog:</h4>
-<strong>Deprecation Warning:</strong>
-<ul>
-	<li>The old CTRT compatible export won't receive any more compatibility updates for the EQDkp-Plus Raid-Log-Import-Plugin. Especially the attendance features. If you run into attendance issues, please change to the EQDkp-Plus-XML-Export.</li>
-</ul>
-<strong>New:</strong>
-<ul>
-	<li>Added frFR translation of the Conclave of Wind win yell. (Thanks to Adama)</li>
-	<li>New option to disable raid tracking in WotLK instances. (Tracking of old instances is disabled by default)</li>
-	<li>If an export with an activated attendance fix for the EQDkp RLI is used, the export frame will now show a little note about setting the value of a RLI option to a lower value in order to avoid attendance issues.</li>
-	<li>Added experimental support for EPGP GP calculation.</li>
-	<li>Added new slash command: '/mrt additem &lt;ItemLink&gt; &lt;Looter&gt; [&lt;Cost&gt;]' adds an item to the loot list of the last boss.</li>
-</ul>
-<strong>Changes:</strong>
-<ul>
-	<li>"Trash mob" boss entries are now always saved as a normal mode encounters. (Reason: They don't drop any heroic loot)</li>
-	<li>Zone name is now retrieved using GetZoneText() instead of GetInstanceInfo(). This should fix BWD detection on frFR clients.</li>
-	<li>When manually adding a boss, MRT will fill in a default value for the difficulty depending on the current raid difficulty setting.</li>
-	<li>EQDkp-Plus-XML-Export: If the attendance fix is enabled, the loot timestamps will now be modified to be closer to the corresponding boss kill. This should make room to adjust the 'Time in seconds, the loot belongs to the boss before.'-setting in the EQDkp-Plus RLI to smaller values and prevent wrong loot assignments.</li>
-	<li>EQDkp-Plus-XML-Export: Rewritten a few parts of the attendance fix code. It should be now more suitable for mixed DKP systems which awards Invite-DKP and are also based around attendance checks for boss kills.</li>
-	<li>Registered functions are now called using pcall() to prevent MRT from failing, if one of the registered function failed.</li>
-</ul>
-<strong>Updates:</strong>
-<ul>
-	<li>Updated zhTW translation.</li>
-</ul>
-<strong>Bug Fixes:</strong>
-<ul>
-	<li>Added client cache request when modifying item information in the GUI.   This should prevent the dialog to fail with an "Item not valid" error.</li>
-	<li>Fixed a bug which may corrupt the data of an active raid in a specific situation, if the tracker relogs and the automatic deletion of old raids is enabled.</li>
-	<li>Fixed a bug which caused the automatic playerDB pruning to fail, if all raids for a specific realm were deleted.</li>
-	<li>The CTRT-Export will now always have a &lt;BossKills&gt;-Tag, even if no bosses were in the current raid. This should prevent some issues with a few importers.</li>
-	<li>CTRT-Export: Fixed indexing of leave elements</li>
-</ul>
-<strong>Known Issues (working on it):</strong>
-<ul>
-	<li>Attendance whispers may not work when using TukUI.</li>
-	<li>With WoW 4.0.6, Blizzard added a chat tab feature for whispers. When doing an attendance check, MRT may not prevent WoW from opening new tabs, leaving you with new, unnecessary (and possibly empty) chat tabs.</li>
 </ul>
 

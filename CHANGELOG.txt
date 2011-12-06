@@ -1,3 +1,7 @@
+0.29.2 - Changelog:
+    * Renamed the final boss encounters of Dragon Soul
+    
+
 0.29.1 - Changelog:
     * TOC-Bump for WoW 4.3
     * Added BossIDs of the Dragon Soul raid instance
