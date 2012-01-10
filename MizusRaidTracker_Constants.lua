@@ -234,7 +234,7 @@ MRT_BossIDList = {
     [55294] = "Ultraxion",
     [56427] = "Warmaster Blackhorn",
     [53879] = "Spine of Deathwing",   
-    [57962] = "Madness of Deathwing",                      -- Final Encounter
+    [56173] = "Madness of Deathwing",                      -- Final Encounter
     
 }
 
@@ -262,7 +262,7 @@ MRT_BossRenameList = {
     [45871] = "Conclave of Wind",
     -- Dragon Soul
     [53879] = "Spine of Deathwing",   
-    [57962] = "Madness of Deathwing",
+    [56173] = "Madness of Deathwing",
 }
 
 -- The reverse boss ID list is needed for bosses, that are tracked by a boss yell.
