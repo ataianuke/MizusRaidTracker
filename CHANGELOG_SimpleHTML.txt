@@ -1,3 +1,8 @@
+<h4>0.29.3 - Changelog:</h4>
+<ul>
+    <li>Changed BossID for Madness of Deathwing</li>
+</ul>
+
 <h4>0.29.2 - Changelog:</h4>
 <ul>
     <li>Renamed the final boss encounters of Dragon Soul</li>
