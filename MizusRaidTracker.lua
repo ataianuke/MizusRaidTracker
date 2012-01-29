@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010-2011)
+--    * Mizukichan @ EU-Thrall (2010-2012)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -276,16 +276,16 @@ end
 
 -- Combatlog handler
 function MRT_CombatLogHandler(...)
-    local combatEvent, destGUID, destName;
+    local combatEvent, destGUID, destName, spellID;
     if (uiVersion < 40100) then
         -- WoW client previous to 4.1.0 (China)
-        _, combatEvent, _, _, _, destGUID, destName = ...;
+        _, combatEvent, _, _, _, destGUID, destName, _, spellID = ...;
     elseif (uiVersion < 40200) then
         -- WoW client = 4.1.0
-        _, combatEvent, _, _, _, _, destGUID, destName = ...;
+        _, combatEvent, _, _, _, _, destGUID, destName, _, spellID = ...;
     else
         -- WoW client >= 4.2.0
-        _, combatEvent, _, _, _, _, _, destGUID, destName = ...;
+        _, combatEvent, _, _, _, _, _, destGUID, destName, _, _, spellID = ...;
     end
     if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
@@ -303,6 +303,17 @@ function MRT_CombatLogHandler(...)
             end
             MRT_AddBosskill(localBossName, nil, NPCID);
         end
+    end
+    if (combatEvent == "SPELL_CAST_SUCCESS") then
+        MRT_Debug("SPELL_CAST_SUCCESS event found - SpellID is " .. spellID);
+    end
+    if (combatEvent == "SPELL_CAST_SUCCESS" and MRT_BossSpellIDTriggerList[spellID]) then
+        MRT_Debug("Matching SpellID in trigger list found - Processing...");
+        -- Get NPCID provided by the constants file
+        local NPCID = MRT_BossSpellIDTriggerList[spellID][2]
+        -- Get localized boss name, if available - else use english one supplied in the constants file
+        local localBossName = LBBL[MRT_BossSpellIDTriggerList[spellID][1]] or MRT_BossSpellIDTriggerList[spellID][1];
+        MRT_AddBosskill(localBossName, nil, NPCID);
     end
 end
 

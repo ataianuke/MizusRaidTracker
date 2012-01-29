@@ -197,6 +197,7 @@ MRT_BossIDList = {
     -- Baradin Hold
     [47120] = "Argaloth",
     [52363] = "Occu'thar",
+    [55869] = "Alizabal",
     
     -- Blackwing Descent
     [41570] = "Magmaw",
@@ -234,9 +235,25 @@ MRT_BossIDList = {
     [55294] = "Ultraxion",
     [56427] = "Warmaster Blackhorn",
     [53879] = "Spine of Deathwing",   
-    [56173] = "Madness of Deathwing",                      -- Final Encounter
+        -- Madness of Deathwing needs SpellID
     
 }
+
+
+-- SpellID list - A list of spell IDs which indicates a dead boss
+-- Format: [<SpellID>] = { "<English boss name>", <BossID> }
+MRT_BossSpellIDTriggerList = {
+    -----------------
+    --  Cataclysm  --
+    -----------------
+    -- Mizukichan - for debugging purposes
+    --[139] = { "Mizukichan - Renew" , 1 },
+    
+    -- Dragon Soul
+    [110063] = { "Madness of Deathwing", 56173 },       -- ID of "Astral Recall", cast by Thrall when the fight is won
+
+}
+
 
 -- Boss rename list - When a boss kill with one of the below mentioned IDs is detected, then MRT will change the boss name given by
 -- the combat log with the corresponding name entered below (e.g.: 37972: Prince Keleseth -> Blood Prince Council)
@@ -265,6 +282,7 @@ MRT_BossRenameList = {
     [56173] = "Madness of Deathwing",
 }
 
+
 -- The reverse boss ID list is needed for bosses, that are tracked by a boss yell.
 MRT_ReverseBossIDList = {
     ------------------------------
@@ -288,6 +306,7 @@ MRT_ReverseBossIDList = {
     ["Conclave of Wind"] = 45871,
 }
 
+
 --------------------------------
 --  ID-List of ignored Items  --
 --------------------------------
@@ -310,6 +329,7 @@ MRT_IgnoredItemIDList = {
     -- Shards
     [34057] = true,  -- Abyss Crystal
 }
+
 
 --------------------------------------------------
 --  Localized text blocks for attendance check  --
