@@ -1,3 +1,9 @@
+<h4>0.30 - Changelog:</h4>
+<ul>
+    <li>SpellIDs can now be used a triggers for bosskill events.</li>
+    <li>Added spellID 110063 as "Madness of Deathwing"-trigger</li>
+</ul>
+
 <h4>0.29.3 - Changelog:</h4>
 <ul>
     <li>Changed BossID for Madness of Deathwing</li>
@@ -30,12 +36,5 @@
     <li>Added Firelands as a new raid zone and added IDs of the new bosses of WoW 4.2</li>
     <li>Updated koKR translations (thanks to Eldanus)</li>
     <li>Added compatibility code for handling the changes made to the COMBAT_LOG_EVENT_UNFILTERED event in WoW 4.2</li>
-</ul>
-
-<h4>0.27 Beta - Changelog:</h4>
-<strong>Changes:</strong>
-<ul>
-    <li>Updated code that handles the COMBAT_LOG_EVENT_UNFILTERED in order to be compatible with WoW 4.1. This change is backwards compatible with older clients (for WoW-China)</li>
-    <li>Changed EPGP Gearpoint coefficient to the new one of the EPGP system: 0.06974. This change is backwards compatible with older clients (for WoW-China, once again)</li>
 </ul>
 
