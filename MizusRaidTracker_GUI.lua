@@ -1097,7 +1097,7 @@ function MRT_GUI_StartNewRaid()
         MRT_Print(MRT_L.GUI["Active raid found. End current one first."]);
         return;
     end
-    if (GetNumRaidMembers() == 0) then
+    if (not MRT_IsInRaid()) then
         MRT_Print(MRT_L.GUI["Player not in raid."]);
         return;
     end
@@ -1133,7 +1133,7 @@ function MRT_GUI_StartNewRaidAccept()
         MRT_Print(MRT_L.GUI["Active raid found. End current one first."]);
         return;
     end
-    if (GetNumRaidMembers() == 0) then
+    if (not MRT_IsInRaid()) then
         MRT_Print(MRT_L.GUI["Player not in raid."]);
         return;
     end
@@ -1181,7 +1181,7 @@ function MRT_GUI_ResumeLastRaid()
         MRT_Print(MRT_L.GUI["Active raid in progress."]);
         return;
     end
-    if (GetNumRaidMembers() == 0) then
+    if (not MRT_IsInRaid()) then
         MRT_Print(MRT_L.GUI["Player not in raid."]);
         return; 
     end

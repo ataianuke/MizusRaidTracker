@@ -143,11 +143,16 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("CHAT_MSG_WHISPER");
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    if (uiVersion < 50001) then
+        frame:RegisterEvent("GROUP_ROSTER_UPDATE");
+    end
     frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
-    frame:RegisterEvent("RAID_ROSTER_UPDATE");
+    if (uiVersion >= 50001) then
+        frame:RegisterEvent("RAID_ROSTER_UPDATE");
+    end
 end
 
 
@@ -255,8 +260,8 @@ function MRT_OnEvent(frame, event, ...)
             end
         end);
     
-    elseif (event == "RAID_ROSTER_UPDATE") then
-        MRT_Debug("RAID_ROSTER_UPDATE fired!");
+    elseif (event == "GROUP_ROSTER_UPDATE" or event == "RAID_ROSTER_UPDATE") then
+        MRT_Debug("GROUP_ROSTER_UPDATE or RAID_ROSTER_UPDATE fired!");
         if (MRT_UnknownRelogStatus) then
             MRT_UnknownRelogStatus = false;
             MRT_CheckRaidStatusAfterLogin();
@@ -735,7 +740,7 @@ end
 --  basic raid tracking functions  --
 -------------------------------------
 function MRT_CheckRaidStatusAfterLogin()
-    if (GetNumRaidMembers() == 0) then
+    if (not MRT_IsInRaid()) then
         MRT_EndActiveRaid();
         MRT_LDB_DS.icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_disabled";
         return;
@@ -871,7 +876,7 @@ end
 
 function MRT_CreateNewRaid(zoneName, raidSize)
     if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
-    local numRaidMembers = GetNumRaidMembers();
+    local numRaidMembers = MRT_GetNumRaidMembers();
     local realm = GetRealmName();
     if (numRaidMembers == 0) then return; end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
@@ -925,7 +930,7 @@ function MRT_ResumeLastRaid()
     -- if there is a running raid, then there is nothing to resume
     if (MRT_NumOfCurrentRaid) then return false; end
     -- if the player is not in a raid, then there is no reason to resume
-    local numRaidMembers = GetNumRaidMembers();
+    local numRaidMembers = MRT_GetNumRaidMembers();
     if (numRaidMembers == 0) then return false; end
     -- sanity checks: Is there a last raid? Was the last raid on the same realm as this raid?
     local numOfLastRaid = #MRT_RaidLog;
@@ -1004,11 +1009,11 @@ end
 
 function MRT_RaidRosterUpdate(frame)
     if (not MRT_NumOfCurrentRaid) then return; end
-    if (GetNumRaidMembers() == 0) then 
+    if (not MRT_IsInRaid()) then 
         MRT_EndActiveRaid();
         return;
     end
-    local numRaidMembers = GetNumRaidMembers();
+    local numRaidMembers = MRT_GetNumRaidMembers();
     local realm = GetRealmName();
     local raidSize = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
     local activePlayerList = {};
@@ -1095,7 +1100,7 @@ function MRT_AddBosskill(bossname, man_diff, bossID)
         if (isDyn) then instanceDifficulty = instanceDifficulty + (2 * dynDiff); end;
     end;
     local trackedPlayers = {};
-    local numRaidMembers = GetNumRaidMembers();
+    local numRaidMembers = MRT_GetNumRaidMembers();
     for i = 1, numRaidMembers do
         local playerName, _, playerSubGroup, _, _, _, _, playerOnline = GetRaidRosterInfo(i);
         -- check group number and group related tracking options
@@ -1158,7 +1163,7 @@ function MRT_TakeSnapshot()
         MRT_Print(MRT_L.Core["TakeSnapshot_CurrentRaidError"]);
         return false; 
     end
-    if (GetNumRaidMembers() == 0) then
+    if (not MRT_IsInRaid()) then
         MRT_Print(MRT_L.Core["TakeSnapshot_NotInRaidError"]);
         return false; 
     end
@@ -1711,5 +1716,31 @@ function MRT_DeleteRaidLog()
     MRT_PlayerDB = {};
     if (MRT_GUIFrame) then
         MRT_GUI_CompleteTableUpdate();
+    end
+end
+
+-- Adding generic function for counting raid members in order to deal with WoW MoP changes
+function MRT_GetNumRaidMembers()
+    if (uiVersion < 50001) then
+        return GetNumRaidMembers()
+    else
+        if (IsInRaid()) then
+            return GetNumGroupMembers()
+        else
+            return 0
+        end
+    end
+end
+
+-- Adding generic function in order to deal with WoW MoP changes
+function MRT_IsInRaid()
+    if (uiVersion < 50001) then
+        if (GetNumRaidMembers() > 0) then
+            return true
+        else
+            return false
+        end
+    else
+        return IsInRaid()
     end
 end
