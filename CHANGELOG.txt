@@ -1,3 +1,8 @@
+0.31 - Changelog:
+    * Updated frFR translation (thanks to Dohkoken)
+    * Updated deDE translation (thanks to sebfle)
+
+
 0.30 - Changelog:
     * SpellIDs can now be used a triggers for bosskill events.
     * Added spellID 110063 as "Madness of Deathwing"-trigger

@@ -1,3 +1,9 @@
+<h4>0.31 - Changelog:</h4>
+<ul>
+    <li>Updated frFR translation (thanks to Dohkoken)</li>
+    <li>Updated deDE translation (thanks to sebfle)</li>
+</ul>
+
 <h4>0.30 - Changelog:</h4>
 <ul>
     <li>SpellIDs can now be used a triggers for bosskill events.</li>
