@@ -10,10 +10,10 @@
 --  MRT requires a correct localization of bossyells for working
 --
 
------------------------------
---  Create Tablestructure  --
------------------------------
-MRT_L = { ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {} };
+----------------------
+--  Are you local?  --
+----------------------
+if GetLocale() ~= "ptBR" then return end
 
 
 -----------------
