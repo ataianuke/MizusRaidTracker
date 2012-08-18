@@ -412,8 +412,10 @@ function MRT_Initialize(frame)
     MRT_GUI_ParseValues();
     MRT_Core_Frames_ParseLocal();
     -- set up slash command
-    SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
-    SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
+    if (MRT_Options["General_SlashCmdHandler"] and MRT_Options["General_SlashCmdHandler"] ~= "") then
+        SLASH_MIZUSRAIDTRACKER1 = "/"..MRT_Options["General_SlashCmdHandler"];
+        SlashCmdList["MIZUSRAIDTRACKER"] = function(msg) MRT_SlashCmdHandler(msg); end
+    end
     -- set up LDB data source
     MRT_LDB_DS = LDB:NewDataObject("Mizus RaidTracker", {
         icon = "Interface\\AddOns\\MizusRaidTracker\\icons\\icon_disabled",
@@ -1136,6 +1138,7 @@ function MRT_AddBosskill(bossname, man_diff, bossID)
     if (bossname ~= MRT_L.Core["GuildAttendanceBossEntry"] and MRT_Options["Attendance_GuildAttendanceCheckEnabled"]) then
         if (MRT_Options["Attendance_GuildAttendanceCheckNoAuto"]) then
             StaticPopupDialogs["MRT_GA_MSGBOX"] = {
+                preferredIndex = 3,
                 text = string.format("MRT: "..MRT_L.Core["GuildAttendanceMsgBox"], bossname),
                 button1 = MRT_L.Core["MB_Yes"],
                 button2 = MRT_L.Core["MB_No"],

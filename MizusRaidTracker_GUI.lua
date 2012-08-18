@@ -1449,6 +1449,7 @@ hooksecurefunc("ChatEdit_InsertLink", MRT_GUI_Hook_ChatEdit_InsertLink);
 -------------------------------------
 -- To show/hide this dialog: StaticPopup_Show("Popup name") / StaticPopup_Hide("Popup name")
 StaticPopupDialogs["MRT_GUI_ZeroRowDialog"] = {
+    preferredIndex = 3,
     text = "FIXME!",
     button1 = MRT_L.Core["MB_Yes"],
     button2 = MRT_L.Core["MB_No"],
