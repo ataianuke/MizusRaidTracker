@@ -191,9 +191,23 @@
           </Layer>
         </Layers>
       </CheckButton>
-      <CheckButton name="$parent_LogAVRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogLFRRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Log10MenRaids_CB" relativePoint="BOTTOMLEFT" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <CheckButton name="$parent_LogAVRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_LogLFRRaids_CB" relativePoint="BOTTOMLEFT" y="-5"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">

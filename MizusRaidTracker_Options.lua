@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010-2011)
+--    * Mizukichan @ EU-Thrall (2010-2012)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -81,6 +81,7 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
     MRT_Options_TrackingPanel_Description:SetText("");
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
+    MRT_Options_TrackingPanel_LogLFRRaids_CB_Text:SetText(MRT_L.Options["TP_LogLFRRaids"].." (untested!)");
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB_Text:SetText(MRT_L.Options["TP_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
@@ -150,6 +151,7 @@ function MRT_Options_OnOkay(panel)
     end
     -- TrackingPanel
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogLFRRaids"] = MRT_Options_TrackingPanel_LogLFRRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
     MRT_Options["Tracking_LogWotLKRaids"] = MRT_Options_TrackingPanel_LogWotLKRaids_CB:GetChecked();
     MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
@@ -218,6 +220,7 @@ function MRT_Options_RestoreValues()
     MRT_Options_MainPanel_Prunning_SliderValue:SetText(tostring(MRT_Options["General_PrunningTime"]).." "..MRT_L.Options["MP_Days"]);
     -- TrackingPanel
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
+    MRT_Options_TrackingPanel_LogLFRRaids_CB:SetChecked(MRT_Options["Tracking_LogLFRRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB:SetChecked(MRT_Options["Tracking_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);

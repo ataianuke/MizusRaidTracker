@@ -58,6 +58,7 @@ local MRT_Defaults = {
         ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
         ["Tracking_Log10MenRaids"] = true,                                          -- Track 10 player raids: true / nil
+        ["Tracking_LogLFRRaids"] = true,                                            -- Track LFR raids: true / nil
         ["Tracking_LogAVRaids"] = false,                                            -- Track PvP raids: true / nil
         ["Tracking_LogWotLKRaids"] = false,                                         -- Track WotLK raid: true / nil
         ["Tracking_AskForDKPValue"] = true,                                         -- 
@@ -542,6 +543,10 @@ function MRT_UpdateSavedOptions()
         MRT_Options["ItemTracking_UseEPGPValues"] = false;
         MRT_Options["General_OptionsVersion"] = 13;
     end
+    if MRT_Options["General_OptionsVersion"] == 13 then
+        MRT_Options["Tracking_LogLFRRaids"] = true;
+        MRT_Options["General_OptionsVersion"] = 14;
+    end
 end
 
 
@@ -769,6 +774,14 @@ function MRT_CheckZoneAndSizeStatus()
     if (instanceInfoName == nil) then MRT_Debug("MRT_CheckZoneAndSizeStatus called - No LBZ-entry for this zone found. Zone is "..localInstanceInfoName); return; end
     MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
     if (MRT_RaidZones[instanceInfoName]) then
+        if (uiVersion >= 40300) then
+            _, isInLFG = GetLFGInfoServer();
+            if (MRT_IsInRaid() and isInLFG and not MRT_Options["Tracking_LogLFRRaids"]) then
+                MRT_Debug("This instance is an LFR-Raid and tracking of those is disabled.");
+                if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+                return;
+            end
+        end
         -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
         -- This is the point where to check if the current raidZone is a zone, which should be tracked
         if (MRT_PvPRaids[instanceInfoName] and not MRT_Options["Tracking_LogAVRaids"]) then 
@@ -792,7 +805,7 @@ function MRT_CheckZoneAndSizeStatus()
 end
 
 function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
-    -- Create a new raidentry if MRT_Raidzones match and MRT enabled and: 
+    -- Create a new raidentry if MRT_Raidzones match and MRT enabled and:
     --  I) If no active raid and 10 player tracking enabled
     --  if 10 player tracking disabled, check for 25 player
     --  II) If changed from 10 men to 25 men
@@ -1722,12 +1735,12 @@ end
 -- Adding generic function for counting raid members in order to deal with WoW MoP changes
 function MRT_GetNumRaidMembers()
     if (uiVersion < 50001) then
-        return GetNumRaidMembers()
+        return GetNumRaidMembers();
     else
         if (IsInRaid()) then
-            return GetNumGroupMembers()
+            return GetNumGroupMembers();
         else
-            return 0
+            return 0;
         end
     end
 end
@@ -1736,11 +1749,11 @@ end
 function MRT_IsInRaid()
     if (uiVersion < 50001) then
         if (GetNumRaidMembers() > 0) then
-            return true
+            return true;
         else
-            return false
+            return false;
         end
     else
-        return IsInRaid()
+        return IsInRaid();
     end
 end
