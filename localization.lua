@@ -162,6 +162,7 @@ MRT_L.Options = {
     TP_CreateNewRaidOnNewZone = "Create new raid on new zone",
 	TP_Log10MenRaids = "Track 10 player raids",
 	TP_LogAVRaids = "Track PVP raids (VoA, BH)",
+    TP_LogLFRRaids = "Track LFR raids",
     TP_LogWotLKRaids = "Track WotLK raids",
 	TP_MinItemQualityToGetCost_Desc = "Min item quality to ask cost for",
 	TP_MinItemQualityToLog_Desc = "Min item quality to log",

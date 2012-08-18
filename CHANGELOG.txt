@@ -1,6 +1,7 @@
 0.31 - Changelog:
     * Updated frFR translation (thanks to Dohkoken)
     * Updated deDE translation (thanks to sebfle)
+    * Updated zhTW translation (thanks to wushiny)
 
 
 0.30 - Changelog:
