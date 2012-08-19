@@ -75,6 +75,19 @@ MRT_RaidZones = {
     ["Throne of the Four Winds"] = true,
     ["Firelands"] = true,
     ["Dragon Soul"] = true,
+    -- Mists of Pandaria
+    ["Mogu'shan Vaults"] = true,
+    ["Terrace of the Endless Spring"] = true,
+    ["Heart of Fear"] = true,
+}
+
+MRT_LegacyRaidZonesCataclysm = {
+    ["Baradin Hold"] = true,
+    ["Blackwing Descent"] = true,
+    ["The Bastion of Twilight"] = true,
+    ["Throne of the Four Winds"] = true,
+    ["Firelands"] = true,
+    ["Dragon Soul"] = true,
 }
 
 MRT_LegacyRaidZonesWotLK = {
@@ -236,7 +249,33 @@ MRT_BossIDList = {
     [56427] = "Warmaster Blackhorn",
     [53879] = "Spine of Deathwing",   
         -- Madness of Deathwing needs SpellID
+        
+    -------------------------
+    --  Mists of Pandaria  --
+    -------------------------
+    -- Mogu'shan Vaults
+    [60047] = "Stone Guard",                    -- Council type - will probably need bossyell
+    [60009] = "Feng the Accursed",
+    [60143] = "Gara'jal the Spriritbinder",
+    [61429] = "The Spirit Kings",               -- Council type - will probably need bossyell
+    [60410] = "Elegon",
+    [60400] = "Will of the Emperor",            -- Council type, shared HP pool
     
+    -- Terrace of the Endless Spring
+    [60583] = "Protectors of the Endless",      -- Like Atramedes dwarf trash - will need bossyell
+    [60491] = "Sha of Anger",
+    [62346] = "Salyis's Warband",               -- unsure, FIXME
+    [62442] = "Tsulong",
+    [63099] = "Lei Shi",
+    [60999] = "Sha of Fear",
+    
+    -- Heart of Fear
+    [66791] = "Imperial Vizier Zor'lok",
+    [62543] = "Blade Lord Ta'yak",
+    [62164] = "Garalon",
+    [65501] = "Wind Lord Mel'jarak",
+    [63666] = "Amber-Shaper Un'sok",
+    [62837] = "Grand Empress Shek'zeer",
 }
 
 
@@ -280,6 +319,13 @@ MRT_BossRenameList = {
     -- Dragon Soul
     [53879] = "Spine of Deathwing",   
     [56173] = "Madness of Deathwing",
+    
+    -------------------------
+    --  Mists of Pandaria  --
+    -------------------------
+    [60047] = "The Stone Guard",
+    [61429] = "The Spirit Kings",
+    [60400] = "Will of the Emperor",
 }
 
 
