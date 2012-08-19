@@ -23,6 +23,9 @@ externals:
     libs/LibDBIcon-1.0:
         url: svn://svn.wowace.com/wow/libdbicon-1-0/mainline/trunk/LibDBIcon-1.0
         tag: latest
+    libs/LibDialog-1.0:
+        url: http://hg.wowace.com/wow/libdialog-1-0/mainline
+        tag: latest
 enable-nolib-creation: no
 #manual-changelog: 
 #    filename: CHANGELOG_SimpleHTML.txt

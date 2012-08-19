@@ -94,6 +94,7 @@ MRT_DELAY_FIRST_RAID_ENTRY_FOR_RLI_BOSSATTENDANCE_FIX_DATA = 60;
 local deformat = LibStub("LibDeformat-3.0");
 local LDB = LibStub("LibDataBroker-1.1");
 local LDBIcon = LibStub("LibDBIcon-1.0");
+local LDialog = LibStub("LibDialog-1.0");
 local LBB = LibStub("LibBabble-Boss-3.0");
 local LBBL = LBB:GetUnstrictLookupTable();
 local LBI = LibStub("LibBabble-Inventory-3.0");
