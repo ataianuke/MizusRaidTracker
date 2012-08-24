@@ -331,6 +331,7 @@ function MRT_SlashCmdHandler(msg)
         InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
         return;
     elseif (msg_lower == 'dkpcheck') then
+        MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
         MRT_StartGuildAttendanceCheck("_attendancecheck_");
         return;
     elseif (msg_lower == 'deleteall now') then
@@ -1555,12 +1556,13 @@ function MRT_StartGuildAttendanceCheck(bosskilled)
     -- Put decider here: Which textblock should be used for the attendance check?
     local unformattedAnnouncement = nil;
     local bossName = bosskilled;
-    if (bosskilled == "_attendancecheck_") then bossName = MRT_L.Core["GuildAttendanceBossEntry"]; end
+    if (bosskilled == "_attendancecheck_") then 
+        bossName = MRT_L.Core["GuildAttendanceBossEntry"];        
+    end
     if (MRT_Options["Attendance_GuildAttendanceUseCustomText"]) then
         unformattedAnnouncement = MRT_Options["Attendance_GuildAttendanceCustomText"];
     else
         if (bosskilled == "_attendancecheck_") then
-            MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
             if (MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
                 unformattedAnnouncement = MRT_GA_TEXT_TRIGGER_NOBOSS;
             else
@@ -1589,7 +1591,7 @@ function MRT_GuildAttendanceCheckUpdate()
         if ((time() - MRT_TimerFrame.GALastMsg) >= 60) then
             MRT_TimerFrame.GALastMsg = time();
             -- is GACheck duration up?
-            if (MRT_TimerFrame.GADuration == 0) then
+            if (MRT_TimerFrame.GADuration <= 0) then
                 local timerUpText = "MRT: "..MRT_L.Core["GuildAttendanceTimeUpText"];
                 MRT_GuildAttendanceSendAnnouncement(timerUpText, nil, nil);
                 MRT_TimerFrame.GARunning = nil;

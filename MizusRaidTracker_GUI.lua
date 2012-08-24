@@ -1151,6 +1151,7 @@ function MRT_GUI_MakeAttendanceCheck()
         MRT_Print(MRT_L.GUI["No active raid"]);
         return;
     end
+    MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
     MRT_StartGuildAttendanceCheck("_attendancecheck_");
     local raid_select = MRT_GUI_RaidLogTable:GetSelection();
     if (raid_select == nil) then
