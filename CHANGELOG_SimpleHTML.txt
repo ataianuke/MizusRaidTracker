@@ -1,3 +1,13 @@
+<h4>0.32 - Changelog:</h4>
+<ul>
+    <li>Updated codebase for WoW 5.0.4 (not fully tested)</li>
+    <li>Added base data for MoP raid instances</li>
+    <li>Added localization templates for itIT and ptBR</li>
+    <li>Added option to disable tracking in LFR raids (untested)</li>
+    <li>Added option to disable slash command</li>
+    <li>Fixed a bug that prevented the creation of an attendance check event if a custom trigger is enabled</li>
+</ul>
+
 <h4>0.31 - Changelog:</h4>
 <ul>
     <li>Updated frFR translation (thanks to Dohkoken)</li>
@@ -24,23 +34,5 @@
 <ul>
     <li>TOC-Bump for WoW 4.3</li>
     <li>Added BossIDs of the Dragon Soul raid instance</li>
-</ul>
-
-<h4>0.28.2 - Changelog:</h4>
-<ul>
-    <li>Added deDE boss yell of Ragnaros (Thanks to Früchtchen)</li>
-    <li>Tracking of 10 player raids is now enabled by default</li>
-</ul>
-    
-<h4>0.28.1 - Changelog:</h4>
-<ul>
-    <li>Changed boss detection of Ragnaros normal mode to boss yell (drycoded and untested - English only)</li>
-</ul>
-    
-<h4>0.28 - Changelog:</h4>
-<ul>
-    <li>Added Firelands as a new raid zone and added IDs of the new bosses of WoW 4.2</li>
-    <li>Updated koKR translations (thanks to Eldanus)</li>
-    <li>Added compatibility code for handling the changes made to the COMBAT_LOG_EVENT_UNFILTERED event in WoW 4.2</li>
 </ul>
 
