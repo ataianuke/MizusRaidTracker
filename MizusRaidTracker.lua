@@ -779,7 +779,12 @@ function MRT_CheckZoneAndSizeStatus()
     MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
     if (MRT_RaidZones[instanceInfoName]) then
         if (uiVersion >= 40300) then
-            _, isInLFG = GetLFGInfoServer();
+            local isInLFG = nil;
+            if (uiVersion >= 50001) then
+                _, isInLFG = GetLFGInfoServer(LE_LFG_CATEGORY_LFR);
+            else
+                _, isInLFG = GetLFGInfoServer();
+            end
             if (MRT_IsInRaid() and isInLFG and not MRT_Options["Tracking_LogLFRRaids"]) then
                 MRT_Debug("This instance is an LFR-Raid and tracking of those is disabled.");
                 if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end

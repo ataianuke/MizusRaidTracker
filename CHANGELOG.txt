@@ -1,3 +1,16 @@
+0.32.1 - Changelog:
+    * Fixed a bug in the LFR detection
+    
+
+0.32 - Changelog:
+    * Updated codebase for WoW 5.0.4 (not fully tested)
+    * Added base data for MoP raid instances
+    * Added localization templates for itIT and ptBR
+    * Added option to disable tracking in LFR raids (untested)
+    * Added option to disable slash command
+    * Fixed a bug that prevented the creation of an attendance check event if a custom trigger is enabled
+
+
 0.31 - Changelog:
     * Updated frFR translation (thanks to Dohkoken)
     * Updated deDE translation (thanks to sebfle)
