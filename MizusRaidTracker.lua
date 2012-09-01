@@ -781,7 +781,10 @@ function MRT_CheckZoneAndSizeStatus()
         if (uiVersion >= 40300) then
             local isInLFG = nil;
             if (uiVersion >= 50001) then
-                _, isInLFG = GetLFGInfoServer(LE_LFG_CATEGORY_LFR);
+                _, isInLFG = GetLFGInfoServer(LE_LFG_CATEGORY_RF);
+                if not isInLFG then
+                    _, isInLFG = GetLFGInfoServer(LE_LFG_CATEGORY_LFR);
+                end
             else
                 _, isInLFG = GetLFGInfoServer();
             end
