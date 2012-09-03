@@ -1,3 +1,7 @@
+0.32.3 - Changelog:
+    * Fixed a bug in the raid detection (MoP change)
+    
+
 0.32.2 - Changelog:
     * Fixed another bug in the LFR detection
     

@@ -770,9 +770,9 @@ end
 
 function MRT_CheckZoneAndSizeStatus()
     -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
-    local _, instanceInfoType, instanceInfoDifficulty = GetInstanceInfo();
+    local _, instanceInfoType, instanceInfoDifficulty = MRT_GetInstanceInfo();
     local localInstanceInfoName = GetZoneText();
-    local instanceInfoDifficulty2 = GetInstanceDifficulty();
+    local instanceInfoDifficulty2 = MRT_GetInstanceDifficulty();
     local instanceInfoName = LBZR[localInstanceInfoName];
     -- if no english name available, return
     if (instanceInfoName == nil) then MRT_Debug("MRT_CheckZoneAndSizeStatus called - No LBZ-entry for this zone found. Zone is "..localInstanceInfoName); return; end
@@ -824,7 +824,7 @@ function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
     --  III) If changed from 25 men to 10 men (if 10men enabled - else close raid)
     --  IV) If RaidZone changed and CreateNewRaidOnNewZone on
     --  V) If RaidZone and RaidSize changed and CreateNewRaidOnNewZone off
-    MRT_Debug("Match in MRT_Raidzones from GetInstanceInfo() fround.");
+    MRT_Debug("Match in MRT_Raidzones from MRT_GetInstanceInfo() found.");
     -- Case: No active raidtracking:
     if (not MRT_NumOfCurrentRaid) then
         if (MRT_Options["Tracking_Log10MenRaids"] and (instanceInfoDifficulty == 1 or instanceInfoDifficulty == 3)) then 
@@ -1111,7 +1111,7 @@ end
 function MRT_AddBosskill(bossname, man_diff, bossID)
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
-    local _, _, instanceDifficulty, _, _, dynDiff, isDyn = GetInstanceInfo();
+    local _, _, instanceDifficulty, _, _, dynDiff, isDyn = MRT_GetInstanceInfo();
     if (man_diff) then
         if (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) then
             instanceDifficulty = 1;
@@ -1759,7 +1759,7 @@ function MRT_GetNumRaidMembers()
     end
 end
 
--- Adding generic function in order to deal with WoW MoP changes
+-- Adding generic function in order to deal with WoW MoP changes (to ensure backwards compatibility)
 function MRT_IsInRaid()
     if (uiVersion < 50001) then
         if (GetNumRaidMembers() > 0) then
@@ -1769,5 +1769,36 @@ function MRT_IsInRaid()
         end
     else
         return IsInRaid();
+    end
+end
+
+function MRT_GetInstanceDifficulty()
+    if (uiVersion < 50001) then
+        return GetInstanceDifficulty();
+    else
+        local iniDiff = GetInstanceDifficulty();
+        local iniDiffMapping = {
+            [1] = nil,
+            [2] = 1,
+            [3] = 2,
+            [4] = 1,
+            [5] = 2,
+            [6] = 3,
+            [7] = 4,
+            [8] = 2,
+            [9] = nil,
+            [10] = 1,
+        };
+        return iniDiffMapping[iniDiff];
+    end
+end
+
+function MRT_GetInstanceInfo()
+    if (uiVersion < 50001) then
+        return GetInstanceInfo();
+    else
+        local inName, inType, _, diffName, mPlayers, dynDiff, isDynamic = GetInstanceInfo();
+        local diffIndex = MRT_GetInstanceDifficulty();
+        return inName, inType, diffIndex, diffName, mPlayers, dynDiff, isDynamic;
     end
 end
