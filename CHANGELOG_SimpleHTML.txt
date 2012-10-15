@@ -1,3 +1,13 @@
+<h4>0.32.4 - Changelog:</h4>
+<strong>Bug Fixes:</strong>
+<ul>
+    <li>Added MoP related information for MLDKP v1.5 export</li>
+</ul>
+<strong>Known Issues:</strong>
+<ul>
+    <li>Raid detection isn't working properly on non-english WoW clients</li>
+</ul>
+    
 <h4>0.32.3 - Changelog:</h4>
 <ul>
     <li>Fixed a bug in the raid detection (MoP change)</li>

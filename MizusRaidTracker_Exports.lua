@@ -720,6 +720,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         ["MAGE"] = 8,
         ["PRIEST"] = 9,
         ["DEATHKNIGHT"] = 10,   -- Wrath of the Lich King
+        ["MONK"] = 11,          -- Mists of Pandaria
     };
     local MLDKP_RaceTable = {
         ["Gnome"] = 1,
@@ -732,8 +733,9 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         ["Tauren"] = 8,
         ["Draenei"] = 9,        -- The Burning Crusade
         ["BloodElf"] = 10,      -- The Burning Crusade
-        ["Worgen"] = 11,        -- Cataclysm (FIXME: Is this string correct? - if not, the export will fail horribly)
-        ["Goblin"] = 12,        -- Cataclysm (FIXME: Is this string correct? - if not, the export will fail horribly)
+        ["Worgen"] = 11,        -- Cataclysm
+        ["Goblin"] = 12,        -- Cataclysm
+        ["Pandaren"] = 13,      -- Mists of Pandaria
     };
     local LBBR = LBB:GetReverseLookupTable();
     -- start to create generic functions for repeated blocks
