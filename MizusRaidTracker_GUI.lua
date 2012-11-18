@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010-2011)
+--    * Mizukichan @ EU-Thrall (2010-2012)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -1306,7 +1306,9 @@ function MRT_GUI_RaidBosskillsTableUpdate(raidnum)
     if (raidnum) then MRT_BosskillsCount = #MRT_RaidLog[raidnum]["Bosskills"]; end;
     if (raidnum and MRT_BosskillsCount) then
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
-            if (v["Difficulty"] > 2) then
+            if not v["Difficulty"] then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], "-"};
+            elseif (v["Difficulty"] > 2) then
                 MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
             else
                 MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
