@@ -59,64 +59,70 @@ MRT_ItemValues = {
 ----------------------
 MRT_RaidZones = {
     -- Wrath of the Lich King
-	["The Eye of Eternity"] = true,
-	["The Obsidian Sanctum"] = true,
-	["Vault of Archavon"] = true,
-	["Naxxramas"] = true,
-	["Ulduar"] = true,
-	["Trial of the Crusader"] = true,
-	["Onyxia's Lair"] = true,
-	["Icecrown Citadel"] = true,
-    ["The Ruby Sanctum"] = true,
+	[527] = true,       -- The Eye of Eternity
+	[531] = true,       -- The Obsidian Sanctum
+	[532] = true,       -- Vault of Archavon
+	[535] = true,       -- Naxxramas
+	[529] = true,       -- Ulduar
+	[543] = true,       -- Trial of the Crusader
+	[718] = true,       -- Onyxia's Lair
+	[604] = true,       -- Icecrown Citadel
+    [609] = true,       -- The Ruby Sanctum
     -- Cataclysm
-    ["Baradin Hold"] = true,
-    ["Blackwing Descent"] = true,
-    ["The Bastion of Twilight"] = true,
-    ["Throne of the Four Winds"] = true,
-    ["Firelands"] = true,
-    ["Dragon Soul"] = true,
+    [752] = true,       -- Baradin Hold
+    [754] = true,       -- Blackwing Descent
+    [758] = true,       -- The Bastion of Twilight
+    [773] = true,       -- Throne of the Four Winds
+    [800] = true,       -- Firelands
+    [824] = true,       -- Dragon Soul
     -- Mists of Pandaria
-    ["Mogu'shan Vaults"] = true,
-    ["Terrace of the Endless Spring"] = true,
-    ["Heart of Fear"] = true,
+    [896] = true,       -- Mogu'shan Vaults
+    [886] = true,       -- Terrace of Endless Spring
+    [897] = true,       -- Heart of Fear
 }
 
 MRT_LegacyRaidZonesCataclysm = {
-    ["Baradin Hold"] = true,
-    ["Blackwing Descent"] = true,
-    ["The Bastion of Twilight"] = true,
-    ["Throne of the Four Winds"] = true,
-    ["Firelands"] = true,
-    ["Dragon Soul"] = true,
+    [752] = true,       -- Baradin Hold
+    [754] = true,       -- Blackwing Descent
+    [758] = true,       -- The Bastion of Twilight
+    [773] = true,       -- Throne of the Four Winds
+    [800] = true,       -- Firelands
+    [824] = true,       -- Dragon Soul
 }
 
 MRT_LegacyRaidZonesWotLK = {
-	["The Eye of Eternity"] = true,
-	["The Obsidian Sanctum"] = true,
-	["Vault of Archavon"] = true,
-	["Naxxramas"] = true,
-	["Ulduar"] = true,
-	["Trial of the Crusader"] = true,
-	["Onyxia's Lair"] = true,
-	["Icecrown Citadel"] = true,
-    ["The Ruby Sanctum"] = true,
+	[527] = true,       -- The Eye of Eternity
+	[531] = true,       -- The Obsidian Sanctum
+	[532] = true,       -- Vault of Archavon
+	[535] = true,       -- Naxxramas
+	[529] = true,       -- Ulduar
+	[543] = true,       -- Trial of the Crusader
+	[718] = true,       -- Onyxia's Lair
+	[604] = true,       -- Icecrown Citadel
+    [609] = true,       -- The Ruby Sanctum
 }
 
 MRT_LegacyRaidZonesBC = {
-    ["Karazhan"] = true,
-    ["Gruul's Lair"] = true,
-    ["Magtheridon's Lair"] = true,
-    ["Zul'Aman"] = true,
-    ["Serpentshrine Cavern"] = true,
-    ["Tempest Keep"] = true,
-    ["Hyjal Summit"] = true,
-    ["Black Temple"] = true,
-    ["Sunwell Plateau"] = true,
+    [799] = true,       -- Karazhan
+    [776] = true,       -- Gruul's Lair
+    [779] = true,       -- Magtheridon's Lair
+    [780] = true,       -- Serpentshrine Cavern
+    [782] = true,       -- Tempest Keep
+    [775] = true,       -- Hyjal Summit
+    [796] = true,       -- Black Temple
+    [789] = true,       -- Sunwell Plateau
+}
+
+MRT_LegacyRaidZonesClassic = {
+    [755] = true,       -- Blackwing Lair
+    [696] = true,       -- Molten Core
+    [717] = true,       -- Ruins of Ahn'Qiraj
+    [766] = true,       -- Temple of Ahn'Qiraj
 }
 
 MRT_PvPRaids = {
-    ["Baradin Hold"] = true,
-    ["Vault of Archavon"] = true,
+    [752] = true,       -- Baradin Hold
+	[532] = true,       -- Vault of Archavon
 }
 
 
@@ -261,7 +267,7 @@ MRT_BossIDList = {
     [60410] = "Elegon",
     [60400] = "Will of the Emperor",            -- Council type, shared HP pool
     
-    -- Terrace of the Endless Spring
+    -- Terrace of Endless Spring
     [60583] = "Protectors of the Endless",      -- Like Atramedes dwarf trash - will need bossyell
     [60491] = "Sha of Anger",
     [62346] = "Salyis's Warband",               -- unsure, FIXME

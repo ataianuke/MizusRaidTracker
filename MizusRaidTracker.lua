@@ -99,8 +99,6 @@ local LBB = LibStub("LibBabble-Boss-3.0");
 local LBBL = LBB:GetUnstrictLookupTable();
 local LBI = LibStub("LibBabble-Inventory-3.0");
 local LBIR = LBI:GetReverseLookupTable();
-local LBZ = LibStub("LibBabble-Zone-3.0");
-local LBZR = LBZ:GetReverseLookupTable();
 local EPGPCalc = LibStub("LibEPGP-GPCalculator-1.0");
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
@@ -191,14 +189,12 @@ function MRT_OnEvent(frame, event, ...)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         if (not MRT_NumOfCurrentRaid) then return; end
         local monsteryell, sourceName = ...;
-        local localInstance = GetZoneText();
-        if (not localInstance) then return; end
-        local instance = LBZR[localInstance];
-        if (not instance) then return; end
-        if (MRT_L.Bossyells[instance] and MRT_L.Bossyells[instance][monsteryell]) then
+        local areaID = GetCurrentMapAreaID();
+        if (not areaID) then return; end
+        if (MRT_L.Bossyells[areaID] and MRT_L.Bossyells[areaID][monsteryell]) then
             MRT_Debug("NPC Yell from Bossyelllist detected. Source was "..sourceName);
-            local bossName = LBBL[MRT_L.Bossyells[instance][monsteryell]] or MRT_L.Bossyells[instance][monsteryell];
-            local NPCID = MRT_ReverseBossIDList[MRT_L.Bossyells[instance][monsteryell]];
+            local bossName = LBBL[MRT_L.Bossyells[areaID][monsteryell]] or MRT_L.Bossyells[areaID][monsteryell];
+            local NPCID = MRT_ReverseBossIDList[MRT_L.Bossyells[areaID][monsteryell]];
             MRT_AddBosskill(bossName, nil, NPCID);
         end
     
@@ -771,13 +767,12 @@ end
 function MRT_CheckZoneAndSizeStatus()
     -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
     local _, instanceInfoType, instanceInfoDifficulty = MRT_GetInstanceInfo();
-    local localInstanceInfoName = GetZoneText();
+    local areaID = GetCurrentMapAreaID();
+    if (not areaID) then return; end
+    local localInstanceInfoName = GetMapNameByID(areaID);
     local instanceInfoDifficulty2 = MRT_GetInstanceDifficulty();
-    local instanceInfoName = LBZR[localInstanceInfoName];
-    -- if no english name available, return
-    if (instanceInfoName == nil) then MRT_Debug("MRT_CheckZoneAndSizeStatus called - No LBZ-entry for this zone found. Zone is "..localInstanceInfoName); return; end
-    MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..instanceInfoName.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
-    if (MRT_RaidZones[instanceInfoName]) then
+    MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..localInstanceInfoName.." / ID=" ..areaID.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
+    if (MRT_RaidZones[areaID]) then
         if (uiVersion >= 40300) then
             local isInLFG = nil;
             if (uiVersion >= 50001) then
@@ -796,19 +791,20 @@ function MRT_CheckZoneAndSizeStatus()
         end
         -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
         -- This is the point where to check if the current raidZone is a zone, which should be tracked
-        if (MRT_PvPRaids[instanceInfoName] and not MRT_Options["Tracking_LogAVRaids"]) then 
+        if (MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
             MRT_Debug("This instance is a PvP-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesWotLK[instanceInfoName] and not MRT_Options["Tracking_LogWotLKRaids"]) then
+        if (MRT_LegacyRaidZonesWotLK[areaID] and not MRT_Options["Tracking_LogWotLKRaids"]) then
             MRT_Debug("This instance is a WotLK-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesBC[instanceInfoName] and not MRT_Options["Tracking_LogBCRaids"]) then
+        if (MRT_LegacyRaidZonesBC[areaID] and not MRT_Options["Tracking_LogBCRaids"]) then
             MRT_Debug("This instance is a BC-Raid and tracking of those is disabled.");
-            -- FIXME!
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
         end
         MRT_CheckTrackingStatus(localInstanceInfoName, instanceInfoDifficulty2);
     else
