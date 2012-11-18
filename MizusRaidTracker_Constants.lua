@@ -374,6 +374,10 @@ MRT_IgnoredItemIDList = {
     
     -- Shards
     [34057] = true,  -- Abyss Crystal
+    
+    -- Sigils of...
+    [87208] = true,  -- ...Power
+    [87209] = true,  -- ...Wisdom
 }
 
 
