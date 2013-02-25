@@ -63,6 +63,12 @@ MRT_L.Bossyells = {
     [800] = {
         ["Too soon! ... You have come too soon..."] = "Ragnaros",
     },
+    -- Mist of Pandaria
+    [886] = {
+	["No... the waters... I must... resist... I shall not... fear..."] = "Protectors of the Endless",
+	["I thank you, strangers. I have been freed."] = "Tsulong", 
+	["I... ah... oh! Did I...? Was I...? It was... so... cloudy."] = "Lei Shi",
+    },
 }
 
 

@@ -260,28 +260,26 @@ MRT_BossIDList = {
     --  Mists of Pandaria  --
     -------------------------
     -- Mogu'shan Vaults
-    [60047] = "Stone Guard",                    -- Council type - will probably need bossyell
-    [60009] = "Feng the Accursed",
-    [60143] = "Gara'jal the Spriritbinder",
-    [61429] = "The Spirit Kings",               -- Council type - will probably need bossyell
-    [60410] = "Elegon",
-    [60400] = "Will of the Emperor",            -- Council type, shared HP pool
+    [60047] = "The Stone Guard",                -- ok
+    [60009] = "Feng the Accursed",		-- ok
+    [60143] = "Gara'jal the Spriritbinder",	-- ok
+    [60708] = "Meng the Demented",             	-- ok
+    [60410] = "Elegon",				-- ok
+    [60400] = "Will of the Emperor",            -- ok
     
     -- Terrace of Endless Spring
-    [60583] = "Protectors of the Endless",      -- Like Atramedes dwarf trash - will need bossyell
-    [60491] = "Sha of Anger",
-    [62346] = "Salyis's Warband",               -- unsure, FIXME
-    [62442] = "Tsulong",
-    [63099] = "Lei Shi",
-    [60999] = "Sha of Fear",
+ 	    -- Protectors of the Endless
+	    -- Tsulong via Boss-Yell
+	    -- Lei Shi via Boss-Yell
+    [60999] = "Sha of Fear",			-- ok
     
     -- Heart of Fear
-    [66791] = "Imperial Vizier Zor'lok",
-    [62543] = "Blade Lord Ta'yak",
-    [62164] = "Garalon",
-    [65501] = "Wind Lord Mel'jarak",
-    [63666] = "Amber-Shaper Un'sok",
-    [62837] = "Grand Empress Shek'zeer",
+    [62980] = "Imperial Vizier Zor'lok",	-- ok
+    [62543] = "Blade Lord Ta'yak",		-- ok
+    [62164] = "Garalon",			-- ok
+    [62397] = "Wind Lord Mel'jarak",        	-- ok
+    [62511] = "Amber-Shaper Un'sok",        	-- ok
+    [62837] = "Grand Empress Shek'zeer",    	-- ok
 }
 
 
@@ -329,9 +327,13 @@ MRT_BossRenameList = {
     -------------------------
     --  Mists of Pandaria  --
     -------------------------
-    [60047] = "The Stone Guard",
-    [61429] = "The Spirit Kings",
+    [59915] = "The Stone Guard",
+	[60043] = "The Stone Guard",
+	[60047] = "The Stone Guard",
+	[60051] = "The Stone Guard",
+    [60708] = "The Spirit Kings",
     [60400] = "Will of the Emperor",
+    [60583] = "Protectors of the Endless",
 }
 
 
@@ -356,6 +358,13 @@ MRT_ReverseBossIDList = {
     --  Cataclysm  --
     -----------------
     ["Conclave of Wind"] = 45871,
+
+    ------------------------
+    --  Mist of Pandaria  --
+    ------------------------
+    ["Protectors of the Endless"] = 60583,
+    ["Tsulong"] = 62442,
+    ["Lei Shi"] = 62983,
 }
 
 
@@ -382,8 +391,9 @@ MRT_IgnoredItemIDList = {
     [34057] = true,  -- Abyss Crystal
     
     -- Sigils of...
-    [87208] = true,  -- ...Power
-    [87209] = true,  -- ...Wisdom
+    [87208] = true,  -- Sigil of Power
+    [87209] = true,  -- Sigil of Wisdom
+    [87210] = true,  -- Chimera of Fear
 }
 
 
