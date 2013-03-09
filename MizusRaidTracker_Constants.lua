@@ -59,14 +59,14 @@ MRT_ItemValues = {
 ----------------------
 MRT_RaidZones = {
     -- Wrath of the Lich King
-	[527] = true,       -- The Eye of Eternity
-	[531] = true,       -- The Obsidian Sanctum
-	[532] = true,       -- Vault of Archavon
-	[535] = true,       -- Naxxramas
-	[529] = true,       -- Ulduar
-	[543] = true,       -- Trial of the Crusader
-	[718] = true,       -- Onyxia's Lair
-	[604] = true,       -- Icecrown Citadel
+    [527] = true,       -- The Eye of Eternity
+    [531] = true,       -- The Obsidian Sanctum
+    [532] = true,       -- Vault of Archavon
+    [535] = true,       -- Naxxramas
+    [529] = true,       -- Ulduar
+    [543] = true,       -- Trial of the Crusader
+    [718] = true,       -- Onyxia's Lair
+    [604] = true,       -- Icecrown Citadel
     [609] = true,       -- The Ruby Sanctum
     -- Cataclysm
     [752] = true,       -- Baradin Hold
@@ -79,6 +79,8 @@ MRT_RaidZones = {
     [896] = true,       -- Mogu'shan Vaults
     [886] = true,       -- Terrace of Endless Spring
     [897] = true,       -- Heart of Fear
+    [930] = true,       -- Throne of Thunder
+
 }
 
 MRT_LegacyRaidZonesCataclysm = {
@@ -91,14 +93,14 @@ MRT_LegacyRaidZonesCataclysm = {
 }
 
 MRT_LegacyRaidZonesWotLK = {
-	[527] = true,       -- The Eye of Eternity
-	[531] = true,       -- The Obsidian Sanctum
-	[532] = true,       -- Vault of Archavon
-	[535] = true,       -- Naxxramas
-	[529] = true,       -- Ulduar
-	[543] = true,       -- Trial of the Crusader
-	[718] = true,       -- Onyxia's Lair
-	[604] = true,       -- Icecrown Citadel
+    [527] = true,       -- The Eye of Eternity
+    [531] = true,       -- The Obsidian Sanctum
+    [532] = true,       -- Vault of Archavon
+    [535] = true,       -- Naxxramas
+    [529] = true,       -- Ulduar
+    [543] = true,       -- Trial of the Crusader
+    [718] = true,       -- Onyxia's Lair
+    [604] = true,       -- Icecrown Citadel
     [609] = true,       -- The Ruby Sanctum
 }
 
@@ -122,7 +124,7 @@ MRT_LegacyRaidZonesClassic = {
 
 MRT_PvPRaids = {
     [752] = true,       -- Baradin Hold
-	[532] = true,       -- Vault of Archavon
+    [532] = true,       -- Vault of Archavon
 }
 
 
@@ -260,26 +262,51 @@ MRT_BossIDList = {
     --  Mists of Pandaria  --
     -------------------------
     -- Mogu'shan Vaults
-    [60047] = "The Stone Guard",                -- ok
-    [60009] = "Feng the Accursed",		-- ok
-    [60143] = "Gara'jal the Spriritbinder",	-- ok
-    [60708] = "Meng the Demented",             	-- ok
-    [60410] = "Elegon",				-- ok
-    [60400] = "Will of the Emperor",            -- ok
+    [60047] = "The Stone Guard",
+    [60009] = "Feng the Accursed",
+    [60143] = "Gara'jal the Spriritbinder",
+    [60708] = "Meng the Demented",
+    [60410] = "Elegon",
+    [60400] = "Will of the Emperor",
     
     -- Terrace of Endless Spring
- 	    -- Protectors of the Endless
-	    -- Tsulong via Boss-Yell
-	    -- Lei Shi via Boss-Yell
-    [60999] = "Sha of Fear",			-- ok
+        -- Protectors of the Endless
+        -- Tsulong via Boss-Yell
+        -- Lei Shi via Boss-Yell
+    [60999] = "Sha of Fear",
     
     -- Heart of Fear
-    [62980] = "Imperial Vizier Zor'lok",	-- ok
-    [62543] = "Blade Lord Ta'yak",		-- ok
-    [62164] = "Garalon",			-- ok
-    [62397] = "Wind Lord Mel'jarak",        	-- ok
-    [62511] = "Amber-Shaper Un'sok",        	-- ok
-    [62837] = "Grand Empress Shek'zeer",    	-- ok
+    [62980] = "Imperial Vizier Zor'lok",
+    [62543] = "Blade Lord Ta'yak",
+    [62164] = "Garalon",
+    [62397] = "Wind Lord Mel'jarak",
+    [62511] = "Amber-Shaper Un'sok",
+    [62837] = "Grand Empress Shek'zeer",
+
+    -- Throne of Thunder
+    -- Last Stand of the Zandalari
+    [69465]  = "Jin'rokh the Breaker",
+    [68476]  = "Horridon",
+    [69134]  = "Kazra'jin, Council of Elders",
+    [69078]  = "Sul the Sandcrawler, Council of Elders",
+    [69131]  = "Frost King Malakk, Council of Elders",
+    [69132]  = "High Priestess Mar'li, Council of Elders",
+    -- Forgotten Depths
+    [67977]  = "Tortos",
+    [70229]  = "Megaera", -- "Flaming Head <Head of Megaera>"
+    [70250]  = "Megaera", -- "Frozen Head <Head of Megaera>"
+    [70251]  = "Megaera", -- "Venomous Head <Head of Megaera>"
+    [69712]  = "Ji-Kun",
+    -- Halls of Flesh-Shaping
+    [68036]  = "Durumu the Forgotten",
+    [69017]  = "Primordius",
+    [69427]  = "Dark Animus",
+    -- Pinnacle of Storms
+    [68078]  = "Iron Qon", -- <Master of Quilen>"
+    [68905]  = "Twin Consorts" -- Lu'lin <Mistress of Solitude>, Twin Consorts"
+    [68904]  = "Twin Consorts" -- Suen <Mistress of Anger>, Twin Consorts"
+    [68397]  = "Lei Shen", -- <The Thunder King>"
+    --[] = "Ra-den" <Fallen Keeper of Storms>""
 }
 
 
@@ -328,9 +355,9 @@ MRT_BossRenameList = {
     --  Mists of Pandaria  --
     -------------------------
     [59915] = "The Stone Guard",
-	[60043] = "The Stone Guard",
-	[60047] = "The Stone Guard",
-	[60051] = "The Stone Guard",
+    [60043] = "The Stone Guard",
+    [60047] = "The Stone Guard",
+    [60051] = "The Stone Guard",
     [60708] = "The Spirit Kings",
     [60400] = "Will of the Emperor",
     [60583] = "Protectors of the Endless",
