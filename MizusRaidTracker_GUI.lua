@@ -336,7 +336,7 @@ function MRT_GUI_BossAdd()
         return;
     end
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
-    local raidDiff = GetCurrentRaidDifficulty();
+    local raidDiff = GetRaidDifficultyID();
     MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Add bosskill"]);
     MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Bossname"]);
     MRT_GUI_ThreeRowDialog_EB1:SetText("");
