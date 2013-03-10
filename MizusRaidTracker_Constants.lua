@@ -303,8 +303,8 @@ MRT_BossIDList = {
     [69427]  = "Dark Animus",
     -- Pinnacle of Storms
     [68078]  = "Iron Qon", -- <Master of Quilen>"
-    [68905]  = "Twin Consorts" -- Lu'lin <Mistress of Solitude>, Twin Consorts"
-    [68904]  = "Twin Consorts" -- Suen <Mistress of Anger>, Twin Consorts"
+    [68905]  = "Twin Consorts", -- Lu'lin <Mistress of Solitude>, Twin Consorts"
+    [68904]  = "Twin Consorts", -- Suen <Mistress of Anger>, Twin Consorts"
     [68397]  = "Lei Shen", -- <The Thunder King>"
     --[] = "Ra-den" <Fallen Keeper of Storms>""
 }
