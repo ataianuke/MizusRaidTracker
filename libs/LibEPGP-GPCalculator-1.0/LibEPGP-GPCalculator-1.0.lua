@@ -4,7 +4,7 @@
 -- A library for calculating GP values of items.
 -- 
 -- This library is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010-2011)
+--    * Mizukichan @ EU-Thrall (2010-2013)
 --
 -- Licensed under the MIT-License (see LICENSE.txt)
 --
@@ -27,10 +27,14 @@ do
     local epgpCoefficient = 0
 
     -- The coefficient seems to have changed in Cataclysm to 0.06974 - this isn't in the official web documentation but in the EPGP-Addon-Code
+    -- Update: coefficient formula: 1000 * 2 ^ (-standard_ilvl / 26)
+    -- standard_ilvl = normal raiding gear ilvl
     if (uiVersion < 40000) then
         epgpCoefficient = 0.483
-    else
+    elseif (uiVersion < 40300) then
         epgpCoefficient = 0.06974
+    else
+        epgpCoefficient = 0.000904157
     end
 
     -- List of various ItemIDs of token and their corresponding item level:
