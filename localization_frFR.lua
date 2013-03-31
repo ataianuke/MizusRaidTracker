@@ -63,6 +63,13 @@ MRT_L.Bossyells = {
     [800] = {
         ["Trop tôt! ... Vous êtes venu trop ..."] = "Ragnaros",
     },
+    
+    -- Terrace of Endless Spring
+    [886] = {
+        --["Non… les eaux… je dois… résister… je n'aurai pas… peur…"] = "Protecteurs de l’Éternel",
+        ["Je vous remercie, étrangers. J'ai été libéré."] = "Tsulong", 
+        ["Je… ah… oh ! J’ai… ? Tout était… si… embrouillé."] = "Lei Shi",
+    },
 }
 
 

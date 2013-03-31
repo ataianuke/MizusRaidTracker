@@ -63,6 +63,21 @@ MRT_L.Bossyells = {
     [800] = {
         ["Too soon! ... You have come too soon..."] = "Ragnaros",
     },
+    
+    -- Terrace of Endless Spring
+    [886] = {
+        --["¡No debéis estar aquí! He de proteger el agua... ¡Si no puedo expulsaros, os mataré!"] = "Protectores de la Eternidad",
+        --["¡No deben estar aquí! He de proteger el agua... ¡Si no puedo expulsarlos, los mataré!"] = "Protectores de la Eternidad",
+        ["Gracias, forasteros. Me habéis liberado. / Gracias, forasteros. Me han liberado."] = "Tsulong", 
+        ["Yo... ah... ¿eh? ¿Yo he...? ¿Era yo...? Todo... estaba... turbio."] = "Lei Shi",
+    },
+    
+    -- Hear of Fear
+    [897] = {
+        --["Empress... I have... failed you..."] = "Wind Lord Mel'jarak",
+        --["Forgive me, Empress...."] = "Amber-Shaper Un'sok",
+        --["Augh... ah ... I...  have failed."] = "Grand Empress Shek'zeer",
+    },
 }
 
 
