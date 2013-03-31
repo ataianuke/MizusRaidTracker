@@ -76,11 +76,10 @@ MRT_RaidZones = {
     [800] = true,       -- Firelands
     [824] = true,       -- Dragon Soul
     -- Mists of Pandaria
-    [896] = true,       -- Mogu'shan Vaults
     [886] = true,       -- Terrace of Endless Spring
+    [896] = true,       -- Mogu'shan Vaults
     [897] = true,       -- Heart of Fear
     [930] = true,       -- Throne of Thunder
-
 }
 
 MRT_LegacyRaidZonesCataclysm = {
@@ -265,12 +264,18 @@ MRT_BossIDList = {
     [60047] = "The Stone Guard",
     [60009] = "Feng the Accursed",
     [60143] = "Gara'jal the Spriritbinder",
-    [60708] = "Meng the Demented",
+    [60708] = "The Spirit Kings", -- Meng
+	[60701] = "The Spirit Kings", -- Zian
+	[60709] = "The Spirit Kings", -- Qiang
+	[60710] = "The Spirit Kings", -- Subetai
     [60410] = "Elegon",
-    [60400] = "Will of the Emperor",
+    [60399] = "Will of the Emperor", -- qin-xi
+	[60400] = "Will of the Emperor", -- jan-xi
     
     -- Terrace of Endless Spring
-        -- Protectors of the Endless
+    [60583] = "Protectors of the Endless", -- Kaolan
+	[60586] = "Protectors of the Endless", -- Asani
+	[60585] = "Protectors of the Endless", -- Regail    
         -- Tsulong via Boss-Yell
         -- Lei Shi via Boss-Yell
     [60999] = "Sha of Fear",
@@ -285,27 +290,25 @@ MRT_BossIDList = {
 
     -- Throne of Thunder
     -- Last Stand of the Zandalari
-    [69465]  = "Jin'rokh the Breaker",
-    [68476]  = "Horridon",
-    [69134]  = "Kazra'jin, Council of Elders",
-    [69078]  = "Sul the Sandcrawler, Council of Elders",
-    [69131]  = "Frost King Malakk, Council of Elders",
-    [69132]  = "High Priestess Mar'li, Council of Elders",
+    [69465] = "Jin'rokh the Breaker",
+    [68476] = "Horridon",
+    [69134] = "Council of Elders", -- kazra'jin
+    [69078] = "Council of Elders", -- sul
+    [69131] = "Council of Elders", -- Malakk
+    [69132] = "Council of Elders", -- Marli
     -- Forgotten Depths
-    [67977]  = "Tortos",
-    [70229]  = "Megaera", -- "Flaming Head <Head of Megaera>"
-    [70250]  = "Megaera", -- "Frozen Head <Head of Megaera>"
-    [70251]  = "Megaera", -- "Venomous Head <Head of Megaera>"
-    [69712]  = "Ji-Kun",
+    [67977] = "Tortos",
+    [68065] = "Megaera", -- NPC ID according to Augar2
+    [69712] = "Ji-Kun",
     -- Halls of Flesh-Shaping
-    [68036]  = "Durumu the Forgotten",
-    [69017]  = "Primordius",
-    [69427]  = "Dark Animus",
+    [68036] = "Durumu the Forgotten",
+    [69017] = "Primordius",
+    [69427] = "Dark Animus",
     -- Pinnacle of Storms
-    [68078]  = "Iron Qon", -- <Master of Quilen>"
-    [68905]  = "Twin Consorts", -- Lu'lin <Mistress of Solitude>, Twin Consorts"
-    [68904]  = "Twin Consorts", -- Suen <Mistress of Anger>, Twin Consorts"
-    [68397]  = "Lei Shen", -- <The Thunder King>"
+    [68078] = "Iron Qon", -- <Master of Quilen>"
+    [68905] = "Twin Consorts", -- Lu'lin <Mistress of Solitude>, Twin Consorts"
+    [68904] = "Twin Consorts", -- Suen <Mistress of Anger>, Twin Consorts"
+    [68397] = "Lei Shen", -- <The Thunder King>"
     --[] = "Ra-den" <Fallen Keeper of Storms>""
 }
 
@@ -392,6 +395,10 @@ MRT_ReverseBossIDList = {
     ["Protectors of the Endless"] = 60583,
     ["Tsulong"] = 62442,
     ["Lei Shi"] = 62983,
+    
+    ["Wind Lord Mel'jarak"] = 62397,
+    ["Amber-Shaper Un'sok"] = 62511,
+    ["Grand Empress Shek'zeer"] = 62837,
 }
 
 
@@ -420,6 +427,8 @@ MRT_IgnoredItemIDList = {
     -- Sigils of...
     [87208] = true,  -- Sigil of Power
     [87209] = true,  -- Sigil of Wisdom
+    
+    -- Wrathion Legendary Questline
     [87210] = true,  -- Chimera of Fear
 }
 
