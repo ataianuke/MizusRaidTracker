@@ -275,7 +275,7 @@ MRT_BossIDList = {
     -- Terrace of Endless Spring
     [60583] = "Protectors of the Endless", -- Kaolan
 	[60586] = "Protectors of the Endless", -- Asani
-	[60585] = "Protectors of the Endless", -- Regail    
+	[60585] = "Protectors of the Endless", -- Regail
         -- Tsulong via Boss-Yell
         -- Lei Shi via Boss-Yell
     [60999] = "Sha of Fear",
@@ -312,6 +312,25 @@ MRT_BossIDList = {
     --[] = "Ra-den" <Fallen Keeper of Storms>""
 }
 
+-- ARRAY 
+-- :>
+MRT_ArrayBossIDList = {}
+MRT_ArrayBossIDList_cache = {}
+
+for key, val in pairs(MRT_BossIDList) do
+	MRT_ArrayBossIDList_cache[val] = MRT_ArrayBossIDList_cache[val] or { }
+	table.insert(MRT_ArrayBossIDList_cache[val], key) 
+end
+
+for key, val in pairs(MRT_ArrayBossIDList_cache) do
+	local nc = table.getn(val);
+
+	if( nc > 1) then
+		MRT_ArrayBossIDList[key]= val;
+	end
+end
+
+wipe(MRT_ArrayBossIDList_cache);
 
 -- SpellID list - A list of spell IDs which indicates a dead boss
 -- Format: [<SpellID>] = { "<English boss name>", <BossID> }
@@ -353,17 +372,7 @@ MRT_BossRenameList = {
     -- Dragon Soul
     [53879] = "Spine of Deathwing",   
     [56173] = "Madness of Deathwing",
-    
-    -------------------------
-    --  Mists of Pandaria  --
-    -------------------------
-    [59915] = "The Stone Guard",
-    [60043] = "The Stone Guard",
-    [60047] = "The Stone Guard",
-    [60051] = "The Stone Guard",
-    [60708] = "The Spirit Kings",
-    [60400] = "Will of the Emperor",
-    [60583] = "Protectors of the Endless",
+  
 }
 
 
@@ -392,7 +401,6 @@ MRT_ReverseBossIDList = {
     ------------------------
     --  Mist of Pandaria  --
     ------------------------
-    ["Protectors of the Endless"] = 60583,
     ["Tsulong"] = 62442,
     ["Lei Shi"] = 62983,
     

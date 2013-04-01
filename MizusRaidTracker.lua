@@ -4,10 +4,12 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010-2012)
+--    * Mizukichan @ EU-Thrall (2010-2013)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
+--    * Knoxa (various MoP fixes) (2013)
+--    * augar2 (various MoP fixes, enhancements to boss kill detection) (2013)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -37,6 +39,9 @@ MRT_NumOfLastBoss = nil;
 MRT_Options = {};
 MRT_RaidLog = {};
 MRT_PlayerDB = {};
+
+MRT_ArrayBossID = {};
+MRT_ArrayBosslast = nil;
 
 local MRT_Defaults = {
     ["Options"] = {
@@ -150,6 +155,8 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
+    frame:RegisterEvent("PLAYER_REGEN_DISABLED");
+    
     if (uiVersion >= 50001) then
         frame:RegisterEvent("RAID_ROSTER_UPDATE");
     end
@@ -258,6 +265,10 @@ function MRT_OnEvent(frame, event, ...)
             end
         end);
     
+    elseif(event == "PLAYER_REGEN_DISABLED") then 
+        wipe(MRT_ArrayBossID)
+        --MRT_Debug("Tabelle gelöscht");
+    
     elseif (event == "GROUP_ROSTER_UPDATE" or event == "RAID_ROSTER_UPDATE") then
         MRT_Debug("GROUP_ROSTER_UPDATE or RAID_ROSTER_UPDATE fired!");
         if (MRT_UnknownRelogStatus) then
@@ -297,14 +308,26 @@ function MRT_CombatLogHandler(...)
         local NPCID = MRT_GetNPCID(destGUID);
         --MRT_Debug("localBossName: "..localBossName.." - NPCID: "..NPCID);
         if (MRT_BossIDList[NPCID]) then
-            --MRT_Debug("Valid NPCID found... - Match on "..MRT_BossIDList[NPCID]);
-            if (MRT_BossRenameList[NPCID]) then
-                --MRT_Debug("Rename entry for NPCID found...");
-                englishBossName = MRT_BossRenameList[NPCID];
-                localBossName = LBBL[englishBossName] or englishBossName;
-                --MRT_Debug("New local bossname is "..localBossName);
+            MRT_Debug("Valid NPCID found... - Match on "..MRT_BossIDList[NPCID]);
+            localBossName = LBBL[MRT_BossIDList[NPCID]] or MRT_BossIDList[NPCID];
+            if(MRT_ArrayBossIDList[MRT_BossIDList[NPCID]]) then
+                local count = 0;
+                local bosses = getn(MRT_ArrayBossIDList[MRT_BossIDList[NPCID]]);
+                MRT_ArrayBossID[NPCID] = NPCID;
+                MRT_Debug("Tabelle erweitert um "..NPCID);
+                for key, val in pairs(MRT_ArrayBossID) do
+                    if(tContains(MRT_ArrayBossIDList[MRT_BossIDList[NPCID]], val)) then
+                        count = count +1;
+                    end
+                end
+                if (bosses == count) then
+                    if (MRT_ArrayBosslast ~= localBossName) then
+                        MRT_AddBosskill(localBossName, nil, NPCID);
+                    end
+                end
+            else 
+                MRT_AddBosskill(localBossName, nil, NPCID);
             end
-            MRT_AddBosskill(localBossName, nil, NPCID);
         end
     end
     if (combatEvent == "SPELL_CAST_SUCCESS") then
@@ -1159,6 +1182,8 @@ function MRT_AddBosskill(bossname, man_diff, bossID)
             MRT_StartGuildAttendanceCheck(bossname);
         end
     end
+    MRT_ArrayBosslast = bossname;
+    wipe(MRT_ArrayBossID);
 end
 
 function MRT_EndActiveRaid()
@@ -1626,9 +1651,9 @@ function MRT_GuildAttendanceSendAnnouncement(unformattedText, boss, timer)
     local textlineList = { string.split("\n", announcement) };
     -- send announcement
     local targetChannel = "GUILD";
-    --@debug@
+    --[===[@debug@
     if (MRT_Options["General_DebugEnabled"]) then targetChannel = "RAID"; end
-    --@end-debug@
+    --@end-debug@]===]
     for index, textline in ipairs(textlineList) do
         SendChatMessage(textline, targetChannel);
     end
@@ -1690,13 +1715,7 @@ function MRT_GetNPCID(GUID)
     local first3 = tonumber("0x"..strsub(GUID, 3, 5));
     local unitType = bit.band(first3, 0x007);
     if ((unitType == 0x003) or (unitType == 0x005)) then
-        if (uiVersion < 40000) then
-            -- WoW client previous to 4.0.1 (China)
-            return tonumber("0x"..strsub(GUID, 9, 12));
-        else
-            -- WoW client >= 4.0.1 (rest of the world)
-            return tonumber("0x"..strsub(GUID, 7, 10));
-        end
+        return tonumber("0x"..strsub(GUID, 6, 10));
     else
         return nil;
     end
@@ -1772,18 +1791,18 @@ function MRT_GetInstanceDifficulty()
     if (uiVersion < 50001) then
         return GetInstanceDifficulty();
     else
-        local iniDiff = GetInstanceDifficulty();
+        local _, _, iniDiff = GetInstanceInfo();
         local iniDiffMapping = {
-            [1] = nil,
-            [2] = 1,
-            [3] = 2,
-            [4] = 1,
-            [5] = 2,
-            [6] = 3,
-            [7] = 4,
-            [8] = 2,
-            [9] = nil,
-            [10] = 1,
+            [0] = nil,
+            [1] = 1,
+            [2] = 2,
+            [3] = 1,
+            [4] = 2,
+            [5] = 3,
+            [6] = 4,
+            [7] = 2,
+            [8] = nil,
+            [9] = 1,
         };
         return iniDiffMapping[iniDiff];
     end
