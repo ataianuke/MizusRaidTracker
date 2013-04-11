@@ -9,7 +9,7 @@
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
 --    * Knoxa (various MoP fixes) (2013)
---    * augar2 (various MoP fixes, enhancements to boss kill detection) (2013)
+--    * Kravval (various MoP fixes, enhancements to boss kill detection) (2013)
 --
 --    This file is part of Mizus RaidTracker.
 --

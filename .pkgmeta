@@ -27,6 +27,6 @@ externals:
         url: http://hg.wowace.com/wow/libdialog-1-0/mainline
         tag: latest
 enable-nolib-creation: no
-#manual-changelog: 
-#    filename: CHANGELOG_SimpleHTML.txt
-#    markup-type: html
+manual-changelog: 
+    filename: CHANGELOG_SimpleHTML.txt
+    markup-type: html

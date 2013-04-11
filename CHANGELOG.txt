@@ -1,3 +1,12 @@
+0.52.0 - Changelog:
+    * Added various MoP related fixes (provided by Knoxa and Kravval)
+    * Added boss kill enhancements (provided by Kravval)
+    * Updated localization files (provided by Knoxa)
+    * Added boss kill detection for Throne of Thunder (provided by Knoxy, Kravval and gOOvER)
+    * Added 'Sigil of Power', 'Sigil of Wisdom' and 'Chimera of Fear' to item ignore list
+    * Rewritten raid zone detection, now based on AreaID instead of LibBabble-Zone
+
+
 0.32.4 - Changelog:
   Bug Fixes:
     * Added MoP related information for MLDKP v1.5 export
