@@ -438,6 +438,9 @@ MRT_IgnoredItemIDList = {
     
     -- Wrathion Legendary Questline
     [87210] = true,  -- Chimera of Fear
+    [94593] = true,  -- Secrets of the Empire
+    [94594] = true,  -- Titan Runestones
+    [94867] = true,  -- Heart of the Thunder King
 }
 
 
