@@ -430,7 +430,11 @@ MRT_IgnoredItemIDList = {
     [36925] = true,  -- Majestic Zircon
     
     -- Shards
+    [20725] = true,  -- Nexus Crystal
+    [22450] = true,  -- Void Crystal
     [34057] = true,  -- Abyss Crystal
+    [52722] = true,  -- Maelstrom Crystal
+    [74248] = true,  -- Sha Crystal
     
     -- Sigils of...
     [87208] = true,  -- Sigil of Power
