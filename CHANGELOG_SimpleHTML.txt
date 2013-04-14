@@ -1,7 +1,7 @@
 <h4>0.52.0 - Changelog:</h4>
 <ul>
     <li>Added various MoP related fixes (provided by Knoxa and Kravval)</li>
-    <li>Added boss kill enhancements (provided by Kravval)</li>
+    <li>Added general boss kill detection enhancements (provided by Kravval)</li>
     <li>Updated localization files (provided by Knoxa)</li>
     <li>Added boss kill detection for Throne of Thunder (provided by Knoxy, Kravval and gOOvER)</li>
     <li>Added 'Sigil of Power', 'Sigil of Wisdom' and 'Chimera of Fear' to item ignore list</li>
