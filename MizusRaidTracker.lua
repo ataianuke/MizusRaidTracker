@@ -1793,7 +1793,7 @@ function MRT_GetInstanceDifficulty()
     else
         local _, _, iniDiff = GetInstanceInfo();
         local iniDiffMapping = {
-            [0] = nil,
+            [0] = 0, -- fix check outside
             [1] = 1,
             [2] = 2,
             [3] = 1,
@@ -1801,7 +1801,7 @@ function MRT_GetInstanceDifficulty()
             [5] = 3,
             [6] = 4,
             [7] = 2,
-            [8] = nil,
+            [8] = 0,
             [9] = 1,
         };
         return iniDiffMapping[iniDiff];
