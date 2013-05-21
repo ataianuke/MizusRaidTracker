@@ -1,12 +1,12 @@
-## Interface: 50200
+## Interface: 50300
 ## Title: Mizus RaidTracker
-## Version: 0.52.1-Alpha
+## Version: 0.53.0
 ## Notes: Tracks raid, loot and attendance
 ## Author: Mizukichan@EU-Thrall
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: MRT_Options, MRT_RaidLog, MRT_PlayerDB, MRT_NumOfCurrentRaid, MRT_NumOfLastBoss
-## X-Max-Interface: 50200
+## X-Max-Interface: 50300
 ## X-Min-Interface: 50001
 ## X-Website: http://nanaki.affenfelsen.de
 
