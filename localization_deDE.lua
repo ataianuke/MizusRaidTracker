@@ -73,9 +73,9 @@ MRT_L.Bossyells = {
     
     -- Heart of Fear
     [897] = {
-        ["Kaiserin... ich habe... versagt..."] = "Wind Lord Mel'jarak",
-        ["Vergebt mir, Kaiserin ..."] = "Amber-Shaper Un'sok",
-        ["Augh... ah... Ich... habe versagt."] = "Grand Empress Shek'zeer",
+--        ["Kaiserin... ich habe... versagt..."] = "Wind Lord Mel'jarak",
+--        ["Vergebt mir, Kaiserin ..."] = "Amber-Shaper Un'sok",
+--        ["Augh... ah... Ich... habe versagt."] = "Grand Empress Shek'zeer",
     },
 }
 
