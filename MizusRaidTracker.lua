@@ -1803,6 +1803,7 @@ function MRT_GetInstanceDifficulty()
             [7] = 2,
             [8] = 0,
             [9] = 1,
+			[14] = 2,
         };
         return iniDiffMapping[iniDiff];
     end
