@@ -321,7 +321,9 @@ MRT_BossIDList = {
 		-- Ra-den <Fallen Keeper of Storms> via boss yell (doesn't die)
 	-- Siege of Orgrimmar
 		-- Immerseus via boss yell (doesn't die)
-		-- The Fallen Protectors via boss yell - they don't die
+    [71475] = "The Fallen Protectors",  -- ID of Rook Stonetoe
+    [71479] = "The Fallen Protectors",  -- ID of He Softfoot
+    [71480] = "The Fallen Protectors",  -- ID of Sun Tenderheart
 	[72276] = "Norushen", 				-- ID of Amalgam of Corruption
 	[71734] = "Sha of Pride",
 	[72249] = "Galakras",
@@ -441,7 +443,6 @@ MRT_ReverseBossIDList = {
     ["Grand Empress Shek'zeer"] = 62837,
 	
 	["Immerseus"] = 71543,
-	["Fallen Protectors"] = 71475,		-- ID of Rook Stonetoe
 	["Spoils of Pandaria"] = 71889,		-- ID of ... something
 }
 
