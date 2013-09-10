@@ -72,7 +72,7 @@ MRT_L.Bossyells = {
 
     -- Siege of Orgrimmar
     [953] = {
-        ["Module 2's all prepared for system reset."] = "Spoils of Pandaria",
+        ["System resetting. Don't turn the power off, or the whole thing will probably explode."] = "Spoils of Pandaria",
     },
 }
 
