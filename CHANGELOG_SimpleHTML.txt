@@ -1,3 +1,16 @@
+<h4>0.54.0 - Changelog:</h4>
+<ul>
+    <li>Added basic support for Siege of Orgrimmer (Note: Immerseus is not supported at this moment)</li>
+    <li>Added basic support for FlexRaids</li>
+</ul>
+
+<h4>0.53.0 - Changelog:</h4>
+<ul>
+    <li>Added more ToT Wrathion Questline items (Secrets of the Empire, Titan Runestones, Heart of the Thunder King) to ignore list (thanks to Hinalover)</li>
+    <li>Added missing crystals to item ignore list</li>
+    <li>Fixed LUA errors while tracking world bosses</li>
+</ul>
+
 <h4>0.52.0 - Changelog:</h4>
 <ul>
     <li>Added various MoP related fixes (provided by Knoxa and Kravval)</li>
@@ -43,14 +56,3 @@
     <li>Fixed a bug that prevented the creation of an attendance check event if a custom trigger is enabled</li>
 </ul>
 
-<h4>0.31 - Changelog:</h4>
-<ul>
-    <li>Updated frFR translation (thanks to Dohkoken)</li>
-    <li>Updated deDE translation (thanks to sebfle)</li>
-</ul>
-
-<h4>0.30 - Changelog:</h4>
-<ul>
-    <li>SpellIDs can now be used a triggers for bosskill events.</li>
-    <li>Added spellID 110063 as "Madness of Deathwing"-trigger</li>
-</ul>
