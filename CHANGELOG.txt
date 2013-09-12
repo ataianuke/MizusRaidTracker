@@ -1,3 +1,11 @@
+0.54.2 - Changelog:
+    * Added trigger for Immerseus for enUS and deDE clients (thanks to Zmokey and Nylaia)
+    
+    
+0.54.1 - Changelog:
+    * Fixed LFR and FlexRaid instance detection issues
+
+    
 0.54.0 - Changelog:
     * Added basic support for Siege of Orgrimmer (Note: Immerseus is not supported at this moment)
     * Added basic support for FlexRaids

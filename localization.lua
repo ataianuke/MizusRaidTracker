@@ -72,6 +72,7 @@ MRT_L.Bossyells = {
 
     -- Siege of Orgrimmar
     [953] = {
+        ["Ah, you have done it!  The waters are pure once more."] = "Immerseus",
         ["System resetting. Don't turn the power off, or the whole thing will probably explode."] = "Spoils of Pandaria",
     },
 }
