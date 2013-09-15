@@ -1,6 +1,6 @@
 ## Interface: 50400
 ## Title: Mizus RaidTracker
-## Version: 0.54.2
+## Version: 0.54.3
 ## Notes: Tracks raid, loot and attendance
 ## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0

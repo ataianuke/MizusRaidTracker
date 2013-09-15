@@ -1,3 +1,8 @@
+<h4>0.54.3 - Changelog:</h4>
+<ul>
+<li>Fixed a lua error that was triggered by scenarios</li>
+</ul>
+
 <h4>0.54.2 - Changelog:</h4>
 <ul>
 <li>Added Immerseus trigger for enUS and deDE clients (thanks to Zmokey and Nylaia)</li>
