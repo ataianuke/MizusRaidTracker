@@ -1,3 +1,7 @@
+0.54.4 - Changelog:
+    * Fixed typo in deDE Immerseus trigger
+    
+
 0.54.3 - Changelog:
     * Fixed a lua error that was triggered by scenarios
     
