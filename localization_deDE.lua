@@ -76,7 +76,7 @@ MRT_L.Bossyells = {
         ["System resetting. Don't turn the power off, or the whole thing will probably explode."] = "Spoils of Pandaria",
     },
 }
-
+-- german miss
 ---------------------------------
 --  Core frames local strings  --
 ---------------------------------
