@@ -6,7 +6,7 @@
 -- This addon is written and copyrighted by:
 --    * Mîzukichan @ EU-Antonidas (2010-2013)
 --
---    This file is part of Miz fus RaidTracker.
+--    This file is part of Mizus RaidTracker.
 --
 --    Mizus RaidTracker is free software: you can redistribute it and/or 
 --    modify it under the terms of the GNU General Public License as 
