@@ -73,7 +73,7 @@ MRT_L.Bossyells = {
     -- Siege of Orgrimmar
     [953] = {
         ["Ah, Ihr habt es geschafft! Das Wasser ist wieder rein."] = "Immerseus",
-        ["System resetting. Don't turn the power off, or the whole thing will probably explode."] = "Spoils of Pandaria",
+        ["System wird neu gestartet. Die Energieversorgung muss stabil bleiben, sonst fliegt die ganze Chose in die Luft."] = "Spoils of Pandaria",
     },
 }
 -- german miss
