@@ -313,6 +313,19 @@
           </Layer>
         </Layers>
         <Scripts>
+          <OnLoad>
+           -- test values
+           self:SetMinMaxValues(0,6)
+           self:SetValueStep(1)
+           self:SetStepsPerPage(1)
+          </OnLoad>
+          <OnValueChanged>
+           if not self._onsetting then
+             self._onsetting = true
+             self:SetValue(self:GetValue())
+             self._onsetting = false
+           else return end             
+          </OnValueChanged>
           <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToLog_Slider(self); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>
@@ -371,6 +384,19 @@
           </Layer>
         </Layers>
         <Scripts>
+         <OnLoad>
+           -- test values
+           self:SetMinMaxValues(0,6)
+           self:SetValueStep(1)
+           self:SetStepsPerPage(1)
+         </OnLoad>
+         <OnValueChanged>
+           if not self._onsetting then
+             self._onsetting = true
+             self:SetValue(self:GetValue())
+             self._onsetting = false
+           else return end             
+         </OnValueChanged>
           <OnMouseDown>self:SetScript("OnUpdate", function() MRT_Options_TP_MinItemQualityToGetCost_Slider(self); end)</OnMouseDown>
           <OnMouseUp>self:SetScript("OnUpdate", nil)</OnMouseUp>
         </Scripts>

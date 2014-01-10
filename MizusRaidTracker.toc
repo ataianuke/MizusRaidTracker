@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 ## Interface: 50300
+=======
+## Interface: 50400
+>>>>>>> branch 'master' of git@git.curseforge.net:wow/mizusraidtracker/mainline.git
 ## Title: Mizus RaidTracker
+<<<<<<< HEAD
 ## Version: 0.53.0
+=======
+## Version: 0.54.5
+>>>>>>> branch 'master' of git@git.curseforge.net:wow/mizusraidtracker/mainline.git
 ## Notes: Tracks raid, loot and attendance
-## Author: Mizukichan@EU-Thrall
+## Author: Mîzukichan@EU-Antonidas
 ## LoadOnDemand: 0
 ## DefaultState: enabled
 ## SavedVariables: MRT_Options, MRT_RaidLog, MRT_PlayerDB, MRT_NumOfCurrentRaid, MRT_NumOfLastBoss
+<<<<<<< HEAD
 ## X-Max-Interface: 50300
+=======
+## X-Max-Interface: 50400
+>>>>>>> branch 'master' of git@git.curseforge.net:wow/mizusraidtracker/mainline.git
 ## X-Min-Interface: 50001
 ## X-Website: http://nanaki.affenfelsen.de
 

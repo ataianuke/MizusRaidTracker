@@ -66,19 +66,25 @@ MRT_L.Bossyells = {
     
     -- Terrace of Endless Spring
     [886] = {
-        --["Nein... die Wasser... Ich muss... widerstehen... Keine... Furcht..."] = "Protectors of the Endless",
         ["Ich danke Euch, Fremdlinge. Ich wurde befreit."] = "Tsulong", 
         ["Ich... ah... oh! Hab ich...? War ich...? Es war... so... trüb."] = "Lei Shi",
     },
     
+<<<<<<< HEAD
     -- Heart of Fear
     [897] = {
 --        ["Kaiserin... ich habe... versagt..."] = "Wind Lord Mel'jarak",
 --        ["Vergebt mir, Kaiserin ..."] = "Amber-Shaper Un'sok",
 --        ["Augh... ah... Ich... habe versagt."] = "Grand Empress Shek'zeer",
+=======
+    -- Siege of Orgrimmar
+    [953] = {
+        ["Ah, Ihr habt es geschafft! Das Wasser ist wieder rein."] = "Immerseus",
+        ["System resetting. Don't turn the power off, or the whole thing will probably explode."] = "Spoils of Pandaria",
+>>>>>>> branch 'master' of git@git.curseforge.net:wow/mizusraidtracker/mainline.git
     },
 }
-
+-- german miss
 ---------------------------------
 --  Core frames local strings  --
 ---------------------------------

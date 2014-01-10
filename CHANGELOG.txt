@@ -1,6 +1,33 @@
+0.54.4 - Changelog:
+    * Fixed typo in deDE Immerseus trigger
+    
+
+0.54.3 - Changelog:
+    * Fixed a lua error that was triggered by scenarios
+    
+    
+0.54.2 - Changelog:
+    * Added Immerseus trigger for enUS and deDE clients (thanks to Zmokey and Nylaia)
+    
+    
+0.54.1 - Changelog:
+    * Fixed LFR and FlexRaid instance detection issues
+
+    
+0.54.0 - Changelog:
+    * Added basic support for Siege of Orgrimmer (Note: Immerseus is not supported at this moment)
+    * Added basic support for FlexRaids
+
+
+0.53.0 - Changelog:
+    * Added more ToT Wrathion Questline items (Secrets of the Empire, Titan Runestones, Heart of the Thunder King) to ignore list (thanks to Hinalover)
+    * Added missing crystals to item ignore list
+    * Fixed LUA errors while tracking world bosses
+
+
 0.52.0 - Changelog:
     * Added various MoP related fixes (provided by Knoxa and Kravval)
-    * Added boss kill enhancements (provided by Kravval)
+    * Added general boss kill detection enhancements (provided by Kravval)
     * Updated localization files (provided by Knoxa)
     * Added boss kill detection for Throne of Thunder (provided by Knoxy, Kravval and gOOvER)
     * Added 'Sigil of Power', 'Sigil of Wisdom' and 'Chimera of Fear' to item ignore list

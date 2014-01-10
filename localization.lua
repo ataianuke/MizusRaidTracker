@@ -66,16 +66,14 @@ MRT_L.Bossyells = {
     
     -- Terrace of Endless Spring
     [886] = {
-        --["No... the waters... I must... resist... I shall not... fear..."] = "Protectors of the Endless",
         ["I thank you, strangers. I have been freed."] = "Tsulong", 
         ["I... ah... oh! Did I...? Was I...? It was... so... cloudy."] = "Lei Shi",
     },
 
-    -- Heart of Fear
-    [897] = {
-        --["Empress... I have... failed you..."] = "Wind Lord Mel'jarak",
-        --["Forgive me, Empress...."] = "Amber-Shaper Un'sok",
-        --["Augh... ah ... I...  have failed."] = "Grand Empress Shek'zeer",
+    -- Siege of Orgrimmar
+    [953] = {
+        ["Ah, you have done it!  The waters are pure once more."] = "Immerseus",
+        ["System resetting. Don't turn the power off, or the whole thing will probably explode."] = "Spoils of Pandaria",
     },
 }
 

@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010-2013)
+--    * Mîzukichan @ EU-Antonidas (2010-2013)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -154,8 +154,9 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
-    frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("PLAYER_REGEN_DISABLED");
+    frame:RegisterEvent("RAID_INSTANCE_WELCOME");
+    frame:RegisterEvent("ZONE_CHANGED_NEW_AREA");
     
     if (uiVersion >= 50001) then
         frame:RegisterEvent("RAID_ROSTER_UPDATE");
@@ -247,13 +248,13 @@ function MRT_OnEvent(frame, event, ...)
         end);
         
     
-    elseif (event == "RAID_INSTANCE_WELCOME") then
-        MRT_Debug("Event RAID_INSTANCE_WELCOME fired.");
+    elseif (event == "ZONE_CHANGED_NEW_AREA") then
+        MRT_Debug("Event ZONE_CHANGED_NEW_AREA fired.");
         if (not MRT_Options["General_MasterEnable"]) then 
             MRT_Debug("MRT seems to be disabled. Ignoring Event.");
             return; 
         end;
-        -- The WoW-Client randomly returns wrong zone information directly after a zone change for a relativly long period of time.
+        -- The WoW-Client randomly returns wrong zone information directly after a zone change for a relatively long period of time.
         -- Use the DBM approach: wait 10 seconds after RIW-Event and then check instanceInfo stuff. Hopefully this fixes the problem....
         -- A generic function to schedule functions would be nice! <- FIXME!
         MRT_Debug("Setting up instance check timer - raid status will be checked in 10 seconds.");
@@ -1803,6 +1804,9 @@ function MRT_GetInstanceDifficulty()
             [7] = 2,
             [8] = 0,
             [9] = 1,
+            [11] = 0,
+            [12] = 0,
+			[14] = 2,
         };
         return iniDiffMapping[iniDiff];
     end

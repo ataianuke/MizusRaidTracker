@@ -80,6 +80,15 @@ MRT_RaidZones = {
     [896] = true,       -- Mogu'shan Vaults
     [897] = true,       -- Heart of Fear
     [930] = true,       -- Throne of Thunder
+	[953] = true,		-- Siege of Orgrimmar
+}
+
+MRT_LegacyRaidZonesPanadria = {
+    [886] = true,       -- Terrace of Endless Spring
+    [896] = true,       -- Mogu'shan Vaults
+    [897] = true,       -- Heart of Fear
+    [930] = true,       -- Throne of Thunder
+	[953] = true,		-- Siege of Orgrimmar
 }
 
 MRT_LegacyRaidZonesCataclysm = {
@@ -276,8 +285,8 @@ MRT_BossIDList = {
     [60583] = "Protectors of the Endless", -- Kaolan
 	[60586] = "Protectors of the Endless", -- Asani
 	[60585] = "Protectors of the Endless", -- Regail
-        -- Tsulong via Boss-Yell
-        -- Lei Shi via Boss-Yell
+        -- Tsulong via boss yell
+        -- Lei Shi via boss yell
     [60999] = "Sha of Fear",
     
     -- Heart of Fear
@@ -292,24 +301,49 @@ MRT_BossIDList = {
     -- Last Stand of the Zandalari
     [69465] = "Jin'rokh the Breaker",
     [68476] = "Horridon",
-    [69134] = "Council of Elders", -- kazra'jin
-    [69078] = "Council of Elders", -- sul
-    [69131] = "Council of Elders", -- Malakk
-    [69132] = "Council of Elders", -- Marli
+    [69134] = "Council of Elders", 		-- kazra'jin
+    [69078] = "Council of Elders", 		-- sul
+    [69131] = "Council of Elders", 		-- Malakk
+    [69132] = "Council of Elders", 		-- Marli
     -- Forgotten Depths
     [67977] = "Tortos",
-    [68065] = "Megaera", -- NPC ID according to Augar2
+    [68065] = "Megaera",
     [69712] = "Ji-Kun",
     -- Halls of Flesh-Shaping
     [68036] = "Durumu the Forgotten",
     [69017] = "Primordius",
     [69427] = "Dark Animus",
     -- Pinnacle of Storms
-    [68078] = "Iron Qon", -- <Master of Quilen>"
-    [68905] = "Twin Consorts", -- Lu'lin <Mistress of Solitude>, Twin Consorts"
-    [68904] = "Twin Consorts", -- Suen <Mistress of Anger>, Twin Consorts"
-    [68397] = "Lei Shen", -- <The Thunder King>"
-    --[] = "Ra-den" <Fallen Keeper of Storms>""
+    [68078] = "Iron Qon", 				-- <Master of Quilen>
+    [68905] = "Twin Consorts", 			-- Lu'lin <Mistress of Solitude>, Twin Consorts
+    [68904] = "Twin Consorts", 			-- Suen <Mistress of Anger>, Twin Consorts
+    [68397] = "Lei Shen", 				-- <The Thunder King>
+		-- Ra-den <Fallen Keeper of Storms> via boss yell (doesn't die)
+	-- Siege of Orgrimmar
+		-- Immerseus via boss yell (doesn't die)
+    [71475] = "The Fallen Protectors",  -- ID of Rook Stonetoe
+    [71479] = "The Fallen Protectors",  -- ID of He Softfoot
+    [71480] = "The Fallen Protectors",  -- ID of Sun Tenderheart
+	[72276] = "Norushen", 				-- ID of Amalgam of Corruption
+	[71734] = "Sha of Pride",
+	[72249] = "Galakras",
+	[71466] = "Iron Juggernaut",
+	[71858] = "Kor'kron Dark Shaman", 	-- ID of Wavebinder Kardris - shared healthpool
+	[71515] = "General Nazgrim",
+	[71454] = "Malkorok",
+		-- Spoils of Pandaria via boss yell (no boss)
+	[71529] = "Thok the Bloodthirsty",
+	[71504] = "Siegecrafter Blackfuse",
+	[71152] = "Paragons of the Klaxxi",	-- ID of Skeer the Bloodseeker
+	[71153] = "Paragons of the Klaxxi", -- ID of Hisek the Swarmkeeper
+	[71154] = "Paragons of the Klaxxi", -- ID of Ka'roz the Locust
+	[71155] = "Paragons of the Klaxxi", -- ID of Korven the Prime
+	[71156] = "Paragons of the Klaxxi", -- ID of Kaz'tik the Manipulator
+	[71157] = "Paragons of the Klaxxi", -- ID of Xaril the Poisoned Mind
+	[71158] = "Paragons of the Klaxxi", -- ID of Rik'kal the Dissector
+	[71160] = "Paragons of the Klaxxi", -- ID of Iyyokuk the Lucid
+	[71161] = "Paragons of the Klaxxi", -- ID of Kil'ruk the Wind-Reaver
+	[71865] = "Garrosh Hellscream",
 }
 
 -- ARRAY 
@@ -407,6 +441,9 @@ MRT_ReverseBossIDList = {
     ["Wind Lord Mel'jarak"] = 62397,
     ["Amber-Shaper Un'sok"] = 62511,
     ["Grand Empress Shek'zeer"] = 62837,
+	
+	["Immerseus"] = 71543,
+	["Spoils of Pandaria"] = 71889,		-- ID of ... something
 }
 
 
