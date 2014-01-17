@@ -123,7 +123,7 @@ local MRT_PlayerDropDownTableColDef = {
     {["name"] = "", ["width"] = 100},
 };
 
--- -- -- --- -- 
+
 -----------------
 --  API-Stuff  --
 -----------------

@@ -76,7 +76,7 @@ MRT_L.Bossyells = {
         ["System wird neu gestartet. Die Energieversorgung muss stabil bleiben, sonst fliegt die ganze Chose in die Luft."] = "Spoils of Pandaria",
     },
 }
--- german miss
+
 ---------------------------------
 --  Core frames local strings  --
 ---------------------------------
