@@ -907,7 +907,7 @@ function MRT_GUI_LootModifyAccept(raidnum, bossnum, lootnum)
         end
     else
         MRT_LootInfo["ItemCount"] = 1;
-        MRT_LootInfo["Time"] = time();
+        MRT_LootInfo["Time"] = MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Date"] + 15;
         tinsert(MRT_RaidLog[raidnum]["Loot"], MRT_LootInfo);
         -- notify registered, external functions
         if (#MRT_ExternalLootNotifier > 0) then
