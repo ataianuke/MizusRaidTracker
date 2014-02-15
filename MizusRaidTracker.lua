@@ -449,6 +449,7 @@ function MRT_Initialize(frame)
                 MRT_GUI_Toggle();
             elseif (button == "RightButton") then
                 InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
+                InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
             end
         end,
         OnTooltipShow = function(tooltip)
