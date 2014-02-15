@@ -149,6 +149,15 @@
           </Size>
         </ThumbTexture>
       </Slider>
+      <Button name="$parent_Reset_GUI_Button" inherits="GameMenuButtonTemplate" hidden="false" test="FIXME!">
+        <Size x="200" y="22"/>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parent_Prunning_Slider" relativePoint="BOTTOMLEFT" y="-10"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>MRT_Options_MainPanel_ResetGUIPos();</OnClick>
+        </Scripts>
+      </Button>
     </Frames>
     <Scripts>
       <OnLoad>MRT_Options_MainPanel_OnLoad(self);</OnLoad>

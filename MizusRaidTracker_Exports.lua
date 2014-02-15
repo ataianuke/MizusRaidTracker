@@ -1237,10 +1237,10 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
             end
         end
     end
-    -- If no boss events are present, create a list of raid atendees
+    -- If no boss events are present, create a list of raid attendees
     if (not bossDataExist) then
         -- Create list, remove duplicates, sort list, add list to export data 
-        -- Very dirty hack for sorting out duplicates, i know....
+        -- Very dirty hack for sorting out duplicates, I know....
         local keyPlayerList = {};
         local numPlayerList = {};
         for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do

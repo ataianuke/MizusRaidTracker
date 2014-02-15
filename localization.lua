@@ -177,6 +177,7 @@ MRT_L.Options = {
     MP_Days = "days",
     MP_MinimapIcon = "Show minimap icon",
     MP_SlashCmd = "Slash command",
+    MP_ResetGuiPos = "Reset GUI position",
 	TP_AskForDKPValue = "Ask for item cost",
     TP_CreateNewRaidOnNewZone = "Create new raid on new zone",
 	TP_Log10MenRaids = "Track 10 player raids",

@@ -77,6 +77,7 @@ function MRT_Options_ParseValues()
     MRT_Options_MainPanel_SlashCmd_EB_Text:SetText(MRT_L.Options["MP_SlashCmd"]);
     MRT_Options_MainPanel_MinimapIcon_CB_Text:SetText(MRT_L.Options["MP_MinimapIcon"]);
     MRT_Options_MainPanel_Prunning_CB_Text:SetText(MRT_L.Options["MP_AutoPrunning"]);
+    MRT_Options_MainPanel_Reset_GUI_Button:SetText(MRT_L.Options["MP_ResetGuiPos"]);
     -- TrackingPanel
     MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
     MRT_Options_TrackingPanel_Description:SetText("");
@@ -287,6 +288,15 @@ function MRT_Options_AP_GADuration_Slider()
     local sliderValue = MRT_Options_AttendancePanel_GADuration_Slider:GetValue();
     local sliderText = sliderValue.." "..MRT_L.Options["AP_Minutes"];
     MRT_Options_AttendancePanel_GADuration_SliderValue:SetText(sliderText);
+end
+
+
+----------------------
+--  Button handler  --
+----------------------
+function MRT_Options_MainPanel_ResetGUIPos()
+    MRT_GUIFrame:ClearAllPoints();
+    MRT_GUIFrame:SetPoint("CENTER", UIParent, "CENTER");
 end
 
 
