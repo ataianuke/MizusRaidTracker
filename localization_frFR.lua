@@ -70,6 +70,12 @@ MRT_L.Bossyells = {
         ["Je vous remercie, étrangers. J'ai été libéré."] = "Tsulong", 
         ["Je… ah… oh ! J’ai… ? Tout était… si… embrouillé."] = "Lei Shi",
     },
+    
+    -- Siege of Orgrimmar
+    [953] = {
+        ["Ah, vous avez réussi ! Les eaux ont retrouvé leur pureté."] = "Immerseus",
+        ["Système en cours de réinitialisation. Veuillez ne pas le débrancher, ou il pourrait vous sauter à la figure."] = "Spoils of Pandaria",
+    },
 }
 
 
