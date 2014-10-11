@@ -1727,7 +1727,7 @@ function MRT_GetNPCID(GUID)
         -- Player-GUID: Player-[server ID]-[player UID]
         -- other GUID: [Unit type]-0-[server ID]-[instance ID]-[zone UID]-[ID]-[Spawn UID]
         local unitType, _, _, _, _, ID = strsplit("-", GUID);
-        if (unitType = "Creature") or (unitType = "Vehicle") then
+        if (unitType == "Creature") or (unitType == "Vehicle") then
             return tonumber(ID);
         else
             return nil;
