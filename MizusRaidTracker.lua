@@ -1792,6 +1792,11 @@ end
 
 function MRT_GetInstanceDifficulty()
     if (uiVersion < 50001) then
+        -- legacy instance difficulty IDs, needs a big workaround for Draenor:
+        -- 1 = 5, 10 or 40 players normal
+        -- 2 = 5 or 25 players heroic
+        -- 3 = 10 players heroic
+        -- 4 = 25 players heroic
         return GetInstanceDifficulty();
     else
         local _, _, iniDiff = GetInstanceInfo();
