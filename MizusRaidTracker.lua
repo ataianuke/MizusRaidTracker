@@ -156,6 +156,7 @@ function MRT_MainFrame_OnLoad(frame)
     end
     frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
+    frame:RegisterEvent("PARTY_LOOT_METHOD_CHANGED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("PLAYER_REGEN_DISABLED");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
@@ -250,6 +251,13 @@ function MRT_OnEvent(frame, event, ...)
             end
         end);
         
+    elseif (event == "PARTY_LOOT_METHOD_CHANGED") then
+        MRT_Debug("Event PARTY_LOOT_METHOD_CHANGED fired.");
+        if (not MRT_Options["General_MasterEnable"]) then 
+            MRT_Debug("MRT seems to be disabled. Ignoring Event.");
+            return; 
+        end;
+        MRT_CheckZoneAndSizeStatus();
     
     elseif (event == "ZONE_CHANGED_NEW_AREA") then
         MRT_Debug("Event ZONE_CHANGED_NEW_AREA fired.");
@@ -845,6 +853,13 @@ function MRT_CheckZoneAndSizeStatus()
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
+        -- Check if the current loot mode should be tracked
+        if (select(1, GetLootMethod()) == "personalloot" and not MRT_Options["Tracking_LogLootModePersonal"]) then
+            MRT_Debug("Loot method is personal loot and tracking of this loot method is disabled.");
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        -- Check tracking status
         MRT_CheckTrackingStatus(localInstanceInfoName, instanceInfoDifficulty2);
     else
         MRT_Debug("This instance is not on the tracking list.");

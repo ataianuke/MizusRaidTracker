@@ -184,6 +184,7 @@ MRT_L.Options = {
 	TP_LogAVRaids = "Track PVP raids (VoA, BH)",
     TP_LogCataclysmRaids = "Track Cataclysm raids",
     TP_LogLFRRaids = "Track LFR raids",
+    TP_LogLootModePersonal = "Track loot mode 'Personal'",
     TP_LogWotLKRaids = "Track WotLK raids",
 	TP_MinItemQualityToGetCost_Desc = "Min item quality to ask cost for",
 	TP_MinItemQualityToLog_Desc = "Min item quality to log",
