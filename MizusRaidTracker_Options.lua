@@ -94,7 +94,7 @@ function MRT_Options_ParseValues()
     MRT_Options_ItemsTrackingPanel_AskForDKPValue_CB_Text:SetText(MRT_L.Options["TP_AskForDKPValue"]);    
     MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_SliderText:SetText(MRT_L.Options["TP_MinItemQualityToGetCost_Desc"]);
     MRT_Options_ItemsTrackingPanel_OnlyTrackItemsAbove_Text:SetText(MRT_L.Options["TP_OnlyTrackItemsAbove"]);
-    MRT_Options_ItemsTrackingPanel_UseEPGPValues_CB_Text:SetText(MRT_L.Options["ITP_UseEPGP_GP_Values"].." (experimental!)");
+    MRT_Options_ItemsTrackingPanel_UseEPGPValues_CB_Text:SetText(MRT_L.Options["ITP_UseEPGP_GP_Values"]);
     MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_Title:SetText(MRT_L.Options["ITP_AutoFocus_Title"]);
     MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu();
     MRT_Options_ItemsTrackingPanel_IgnoreEnchantingMats_CB_Text:SetText(MRT_L.Options["ITP_IgnoreEnchantingMats"]);
