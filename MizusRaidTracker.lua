@@ -824,8 +824,7 @@ function MRT_CheckZoneAndSizeStatus()
                 return;
             end
         end
-        -- check if recognized raidzone is a pvpraid (-> Archavons Vault) and if tracking is enabled
-        -- This is the point where to check if the current raidZone is a zone, which should be tracked
+        -- Check if the current raidZone is a zone which should be tracked
         if (MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
             MRT_Debug("This instance is a PvP-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
@@ -853,7 +852,7 @@ function MRT_CheckZoneAndSizeStatus()
 end
 
 function MRT_CheckTrackingStatus(instanceInfoName, instanceInfoDifficulty)
-    -- Create a new raidentry if MRT_Raidzones match and MRT enabled and:
+    -- Create a new raid entry if MRT_Raidzones match and MRT enabled and:
     --  I) If no active raid and 10 player tracking enabled
     --  if 10 player tracking disabled, check for 25 player
     --  II) If changed from 10 men to 25 men
