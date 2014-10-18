@@ -25,199 +25,437 @@ do
     
     local _, _, _, uiVersion = GetBuildInfo()
     local epgpCoefficient = 0
+    local standard_ilvl = 0
 
     -- The coefficient seems to have changed in Cataclysm to 0.06974 - this isn't in the official web documentation but in the EPGP-Addon-Code
     -- Update: coefficient formula: 1000 * 2 ^ (-standard_ilvl / 26)
     -- standard_ilvl = normal raiding gear ilvl
-    if (uiVersion < 40000) then
-        epgpCoefficient = 0.483
+    if (uiVersion < 40200) then
+        standard_ilvl = 359
     elseif (uiVersion < 40300) then
-        epgpCoefficient = 0.06974
+        standard_ilvl = 378
+    elseif MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] < 90 then
+        standard_ilvl = 397
+    elseif (uiVersion < 50200) then
+        standard_ilvl = 496
+    elseif (uiVersion < 50400) then
+        standard_ilvl = 522
+    elseif MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] < 100 then
+        standard_ilvl = 553
     else
-        epgpCoefficient = 0.000904157
+        standard_ilvl = 553
     end
+    
+    epgpCoefficient = 1000 * 2 ^ (-standard_ilvl / 26)
 
     -- List of various ItemIDs of token and their corresponding item level:
-    -- List of tokens, which can be traded for a helm
-    local TOKEN_HEAD = {
-        [29759] = 120,              -- T4-Head Hunter/Mage/Warlock
-        [29760] = 120,              -- T4-Head Paladin/Rogue/Shaman
-        [29761] = 120,              -- T4-Head Druid/Priest/Warrior
-        [30242] = 133,              -- T5-Head Paladin/Rogue/Shaman
-        [30243] = 133,              -- T5-Head Druid/Priest/Warrior
-        [30244] = 133,              -- T5-Head Hunter/Mage/Warlock
-        [31095] = 146,              -- T6-Head Hunter/Shaman/Warrior
-        [31096] = 146,              -- T6-Head Druid/Mage/Rogue
-        [31097] = 146,              -- T6-Head Paladin/Priest/Warlock
-        [40616] = 200,              -- T7/10-Head Paladin/Priest/Warlock
-        [40617] = 200,              -- T7/10-Head Hunter/Shaman/Warrior
-        [40618] = 200,              -- T7/10-Head Death Knight/Druid/Mage/Rogue
-        [40631] = 213,              -- T7/25-Head Paladin/Priest/Warlock
-        [40632] = 213,              -- T7/25-Head Hunter/Shaman/Warrior
-        [40633] = 213,              -- T7/25-Head Death Knight/Druid/Mage/Rogue
-        [45638] = 226,              -- T8/25-Head Paladin/Priest/Warlock
-        [45639] = 226,              -- T8/25-Head Hunter/Shaman/Warrior
-        [45640] = 226,              -- T8/25-Head Death Knight/Druid/Mage/Rogue
-        [45647] = 219,              -- T8/10-Head Paladin/Priest/Warlock
-        [45648] = 219,              -- T8/10-Head Hunter/Shaman/Warrior
-        [45649] = 219,              -- T8/10-Head Death Knight/Druid/Mage/Rogue
-        [63683] = 359,              -- T11-Head Paladin/Priest/Warlock
-        [63684] = 359,              -- T11-Head Hunter/Shaman/Warrior
-        [63682] = 359,              -- T11-Head Death Knight/Druid/Mage/Rogue
-        [65000] = 372,              -- T11-Heroic-Head Hunter/Shaman/Warrior
-        [65001] = 372,              -- T11-Heroic-Head Paladin/Priest/Warlock
-        [65002] = 372,              -- T11-Heroic-Head Death Knight/Druid/Mage/Rogue
-        [71675] = 378,              -- T12-Head Paladin/Priest/Warlock
-        [71668] = 378,              -- T12-Head Death Knight/Druid/Mage/Rogue
-        [71677] = 391,              -- T12-Heroic-Head Paladin/Priest/Warlock
-        [71670] = 391,              -- T12-Heroic-Head Death Knight/Druid/Mage/Rogue
-    }
+    local CUSTOM_ITEM_DATA = {
+        -- Tier 4
+        [29753] = { 4, 120, "INVTYPE_CHEST" },
+        [29754] = { 4, 120, "INVTYPE_CHEST" },
+        [29755] = { 4, 120, "INVTYPE_CHEST" },
+        [29756] = { 4, 120, "INVTYPE_HAND" },
+        [29757] = { 4, 120, "INVTYPE_HAND" },
+        [29758] = { 4, 120, "INVTYPE_HAND" },
+        [29759] = { 4, 120, "INVTYPE_HEAD" },
+        [29760] = { 4, 120, "INVTYPE_HEAD" },
+        [29761] = { 4, 120, "INVTYPE_HEAD" },
+        [29762] = { 4, 120, "INVTYPE_SHOULDER" },
+        [29763] = { 4, 120, "INVTYPE_SHOULDER" },
+        [29764] = { 4, 120, "INVTYPE_SHOULDER" },
+        [29765] = { 4, 120, "INVTYPE_LEGS" },
+        [29766] = { 4, 120, "INVTYPE_LEGS" },
+        [29767] = { 4, 120, "INVTYPE_LEGS" },
 
-    -- List of tokens, which can be traded for a set of shoulder pads
-    local TOKEN_SHOULDERS = {
-        [29762] = 120,              -- T4-Shoulder pads Hunter/Mage/Warlock
-        [29763] = 120,              -- T4-Shoulder pads Paladin/Rogue/Shaman
-        [29764] = 120,              -- T4-Shoulder pads Druid/Priest/Warrior
-        [30248] = 133,              -- T5-Shoulder pads Paladin/Rogue/Shaman
-        [30249] = 133,              -- T5-Shoulder pads Druid/Priest/Warrior
-        [30250] = 133,              -- T5-Shoulder pads Hunter/Mage/Warlock
-        [31101] = 146,              -- T6-Shoulder pads Paladin/Priest/Warlock
-        [31102] = 146,              -- T6-Shoulder pads Druid/Mage/Rogue
-        [31103] = 146,              -- T6-Shoulder pads Hunter/Shaman/Warrior
-        [40622] = 200,              -- T7/10-Shoulder pads Paladin/Priest/Warlock
-        [40623] = 200,              -- T7/10-Shoulder pads Hunter/Shaman/Warrior
-        [40624] = 200,              -- T7/10-Shoulder pads Death Knight/Druid/Mage/Rogue
-        [40637] = 213,              -- T7/25-Shoulder pads Paladin/Priest/Warlock
-        [40638] = 213,              -- T7/25-Shoulder pads Hunter/Shaman/Warrior
-        [40639] = 213,              -- T7/25-Shoulder pads Death Knight/Druid/Mage/Rogue
-        [45656] = 226,              -- T8/25-Shoulder pads Paladin/Priest/Warlock
-        [45657] = 226,              -- T8/25-Shoulder pads Hunter/Shaman/Warrior
-        [45658] = 226,              -- T8/25-Shoulder pads Death Knight/Druid/Mage/Rogue
-        [45659] = 219,              -- T8/10-Shoulder pads Paladin/Priest/Warlock
-        [45660] = 219,              -- T8/10-Shoulder pads Hunter/Shaman/Warrior
-        [45661] = 219,              -- T8/10-Shoulder pads Death Knight/Druid/Mage/Rogue
-        [64314] = 359,              -- T11-Shoulder pads Death Knight/Druid/Mage/Rogue
-        [64315] = 359,              -- T11-Shoulder pads Paladin/Priest/Warlock
-        [64316] = 359,              -- T11-Shoulder pads Hunter/Shaman/Warrior
-        [65087] = 372,              -- T11-Heroic-Shoulder pads Hunter/Shaman/Warrior
-        [65088] = 372,              -- T11-Heroic-Shoulder pads Paladin/Priest/Warlock
-        [65089] = 372,              -- T11-Heroic-Shoulder pads Death Knight/Druid/Mage/Rogue
-        [71681] = 378,              -- T12-Shoulder pads Paladin/Priest/Warlock
-        [71674] = 378,              -- T12-Shoulder pads Death Knight/Druid/Mage/Rogue
-        [71680] = 391,              -- T12-Heroic-Shoulder pads Paladin/Priest/Warlock
-        [71673] = 391,              -- T12-Heroic-Shoulder pads Death Knight/Druid/Mage/Rogue
-    }
+        -- Tier 5
+        [30236] = { 4, 133, "INVTYPE_CHEST" },
+        [30237] = { 4, 133, "INVTYPE_CHEST" },
+        [30238] = { 4, 133, "INVTYPE_CHEST" },
+        [30239] = { 4, 133, "INVTYPE_HAND" },
+        [30240] = { 4, 133, "INVTYPE_HAND" },
+        [30241] = { 4, 133, "INVTYPE_HAND" },
+        [30242] = { 4, 133, "INVTYPE_HEAD" },
+        [30243] = { 4, 133, "INVTYPE_HEAD" },
+        [30244] = { 4, 133, "INVTYPE_HEAD" },
+        [30245] = { 4, 133, "INVTYPE_LEGS" },
+        [30246] = { 4, 133, "INVTYPE_LEGS" },
+        [30247] = { 4, 133, "INVTYPE_LEGS" },
+        [30248] = { 4, 133, "INVTYPE_SHOULDER" },
+        [30249] = { 4, 133, "INVTYPE_SHOULDER" },
+        [30250] = { 4, 133, "INVTYPE_SHOULDER" },
 
-    -- List of tokens, which can be traded for a chest piece
-    local TOKEN_CHEST = {
-        [29753] = 120,              -- T4-Chest Druid/Priest/Warrior
-        [29754] = 120,              -- T4-Chest Paladin/Rogue/Shaman
-        [29755] = 120,              -- T4-Chest Hunter/Mage/Warlock
-        [30236] = 133,              -- T5-Chest Paladin/Rogue/Shaman
-        [30237] = 133,              -- T5-Chest Druid/Priest/Warrior
-        [30238] = 133,              -- T5-Chest Hunter/Mage/Warlock
-        [31089] = 146,              -- T6-Chest Paladin/Priest/Warlock
-        [31090] = 146,              -- T6-Chest Druid/Mage/Rogue
-        [31091] = 146,              -- T6-Chest Hunter/Shaman/Warrior
-        [40610] = 200,              -- T7/10-Chest Paladin/Priest/Warlock
-        [40611] = 200,              -- T7/10-Chest Hunter/Shaman/Warrior
-        [40612] = 200,              -- T7/10-Chest Death Knight/Druid/Mage/Rogue
-        [40625] = 213,              -- T7/25-Chest Paladin/Priest/Warlock
-        [40626] = 213,              -- T7/25-Chest Hunter/Shaman/Warrior
-        [40627] = 213,              -- T7/25-Chest Death Knight/Druid/Mage/Rogue
-        [45632] = 226,              -- T8/25-Chest Paladin/Priest/Warlock
-        [45633] = 226,              -- T8/25-Chest Hunter/Shaman/Warrior
-        [45634] = 226,              -- T8/25-Chest Death Knight/Druid/Mage/Rogue
-        [45635] = 219,              -- T8/10-Chest Paladin/Priest/Warlock
-        [45636] = 219,              -- T8/10-Chest Hunter/Shaman/Warrior
-        [45637] = 219,              -- T8/10-Chest Death Knight/Druid/Mage/Rogue
-        [67423] = 372,              -- T11-Heroic-Chest Paladin/Priest/Warlock
-        [67424] = 372,              -- T11-Heroic-Chest Hunter/Shaman/Warrior
-        [67425] = 372,              -- T11-Heroic-Chest Death Knight/Druid/Mage/Rogue
-        [71679] = 391,              -- T12-Heroic-Chest Paladin/Priest/Warlock
-        [71672] = 391,              -- T12-Heroic-Chest Death Knight/Druid/Mage/Rogue
-    }
+        -- Tier 5 - BoE recipes - BoP crafts
+        [30282] = { 4, 128, "INVTYPE_BOOTS" },
+        [30283] = { 4, 128, "INVTYPE_BOOTS" },
+        [30305] = { 4, 128, "INVTYPE_BOOTS" },
+        [30306] = { 4, 128, "INVTYPE_BOOTS" },
+        [30307] = { 4, 128, "INVTYPE_BOOTS" },
+        [30308] = { 4, 128, "INVTYPE_BOOTS" },
+        [30323] = { 4, 128, "INVTYPE_BOOTS" },
+        [30324] = { 4, 128, "INVTYPE_BOOTS" },
 
-    -- List of tokens, which can be traded for a set of bracers
-    local TOKEN_WRISTS = {
-        [34848] = 154,              -- T6-Bracers Paladin/Priest/Warlock
-        [34851] = 154,              -- T6-Bracers Hunter/Shaman/Warrior
-        [34852] = 154,              -- T6-Bracers Rogue/Mage/Druid
-    }
+        -- Tier 6
+        [31089] = { 4, 146, "INVTYPE_CHEST" },
+        [31090] = { 4, 146, "INVTYPE_CHEST" },
+        [31091] = { 4, 146, "INVTYPE_CHEST" },
+        [31092] = { 4, 146, "INVTYPE_HAND" },
+        [31093] = { 4, 146, "INVTYPE_HAND" },
+        [31094] = { 4, 146, "INVTYPE_HAND" },
+        [31095] = { 4, 146, "INVTYPE_HEAD" },
+        [31096] = { 4, 146, "INVTYPE_HEAD" },
+        [31097] = { 4, 146, "INVTYPE_HEAD" },
+        [31098] = { 4, 146, "INVTYPE_LEGS" },
+        [31099] = { 4, 146, "INVTYPE_LEGS" },
+        [31100] = { 4, 146, "INVTYPE_LEGS" },
+        [31101] = { 4, 146, "INVTYPE_SHOULDER" },
+        [31102] = { 4, 146, "INVTYPE_SHOULDER" },
+        [31103] = { 4, 146, "INVTYPE_SHOULDER" },
+        [34848] = { 4, 154, "INVTYPE_WRIST" },
+        [34851] = { 4, 154, "INVTYPE_WRIST" },
+        [34852] = { 4, 154, "INVTYPE_WRIST" },
+        [34853] = { 4, 154, "INVTYPE_WAIST" },
+        [34854] = { 4, 154, "INVTYPE_WAIST" },
+        [34855] = { 4, 154, "INVTYPE_WAIST" },
+        [34856] = { 4, 154, "INVTYPE_FEET" },
+        [34857] = { 4, 154, "INVTYPE_FEET" },
+        [34858] = { 4, 154, "INVTYPE_FEET" },
 
-    -- List of tokens, which can be traded for a set of gloves
-    local TOKEN_HANDS = {
-        [29756] = 120,              -- T4-Gloves Hunter/Mage/Warlock
-        [29757] = 120,              -- T4-Gloves Druid/Priest/Warrior
-        [29758] = 120,              -- T4-Gloves Paladin/Rogue/Shaman
-        [30239] = 133,              -- T5-Gloves Paladin/Rogue/Shaman
-        [30240] = 133,              -- T5-Gloves Druid/Priest/Warrior
-        [30241] = 133,              -- T5-Gloves Hunter/Mage/Warlock
-        [31092] = 146,              -- T6-Gloves Paladin/Priest/Warlock
-        [31093] = 146,              -- T6-Gloves Druid/Mage/Rogue
-        [31094] = 146,              -- T6-Gloves Hunter/Shaman/Warrior
-        [40613] = 200,              -- T7/10-Gloves Paladin/Priest/Warlock
-        [40614] = 200,              -- T7/10-Gloves Hunter/Shaman/Warrior
-        [40615] = 200,              -- T7/10-Gloves Death Knight/Druid/Mage/Rogue
-        [40628] = 213,              -- T7/25-Gloves Paladin/Priest/Warlock
-        [40629] = 213,              -- T7/25-Gloves Hunter/Shaman/Warrior
-        [40630] = 213,              -- T7/25-Gloves Death Knight/Druid/Mage/Rogue
-        [45641] = 226,              -- T8/25-Gloves Paladin/Priest/Warlock
-        [45642] = 226,              -- T8/25-Gloves Hunter/Shaman/Warrior
-        [45643] = 226,              -- T8/25-Gloves Death Knight/Druid/Mage/Rogue
-        [45644] = 219,              -- T8/10-Gloves Paladin/Priest/Warlock
-        [45645] = 219,              -- T8/10-Gloves Hunter/Shaman/Warrior
-        [45646] = 219,              -- T8/10-Gloves Death Knight/Druid/Mage/Rogue
-        [67429] = 372,              -- T11-Heroic-Gloves Paladin/Priest/Warlock
-        [67430] = 372,              -- T11-Heroic-Gloves Hunter/Shaman/Warrior
-        [67431] = 372,              -- T11-Heroic-Gloves Death Knight/Druid/Mage/Rogue
-        [71676] = 391,              -- T12-Heroic-Gloves Paladin/Priest/Warlock
-        [71669] = 391,              -- T12-Heroic-Gloves Death Knight/Druid/Mage/Rogue
-    }
+        -- Tier 6 - BoE recipes - BoP crafts
+        [32737] = { 4, 141, "INVTYPE_SHOULDER" },
+        [32739] = { 4, 141, "INVTYPE_SHOULDER" },
+        [32745] = { 4, 141, "INVTYPE_SHOULDER" },
+        [32747] = { 4, 141, "INVTYPE_SHOULDER" },
+        [32749] = { 4, 141, "INVTYPE_SHOULDER" },
+        [32751] = { 4, 141, "INVTYPE_SHOULDER" },
+        [32753] = { 4, 141, "INVTYPE_SHOULDER" },
+        [32755] = { 4, 141, "INVTYPE_SHOULDER" },
 
-    -- List of tokens, which can be traded for a waist piece
-    local TOKEN_WAIST = {
-        [34853] = 154,              -- T6-Belt Paladin/Priest/Warlock
-        [34854] = 154,              -- T6-Belt Hunter/Shaman/Warrior
-        [34855] = 154,              -- T6-Belt Rogue/Mage/Druid
-    }
+        -- Magtheridon's Head
+        [32385] = { 4, 125, "INVTYPE_FINGER" },
+        [32386] = { 4, 125, "INVTYPE_FINGER" },
 
-    -- List of tokens, which can be traded for a leg piece
-    local TOKEN_LEGS = {
-        [29765] = 120,              -- T4-Leggings Hunter/Mage/Warlock
-        [29766] = 120,              -- T4-Leggings Paladin/Rogue/Shaman
-        [29767] = 120,              -- T4-Leggings Druid/Priest/Warrior
-        [30245] = 133,              -- T5-Leggings Paladin/Rogue/Shaman
-        [30246] = 133,              -- T5-Leggings Druid/Priest/Warrior
-        [30247] = 133,              -- T5-Leggings Hunter/Mage/Warlock
-        [31098] = 146,              -- T6-Leggings Paladin/Priest/Warlock
-        [31099] = 146,              -- T6-Leggings Druid/Mage/Rogue
-        [31100] = 146,              -- T6-Leggings Hunter/Shaman/Warrior
-        [40619] = 200,              -- T7/10-Leggings Paladin/Priest/Warlock
-        [40620] = 200,              -- T7/10-Leggings Hunter/Shaman/Warrior
-        [40621] = 200,              -- T7/10-Leggings Death Knight/Druid/Mage/Rogue
-        [40634] = 213,              -- T7/25-Leggings Paladin/Priest/Warlock
-        [40635] = 213,              -- T7/25-Leggings Hunter/Shaman/Warrior
-        [40636] = 213,              -- T7/25-Leggings Death Knight/Druid/Mage/Rogue
-        [45653] = 226,              -- T8/25-Leggings Paladin/Priest/Warlock
-        [45654] = 226,              -- T8/25-Leggings Hunter/Shaman/Warrior
-        [45655] = 226,              -- T8/25-Leggings Death Knight/Druid/Mage/Rogue
-        [45647] = 219,              -- T8/10-Leggings Paladin/Priest/Warlock
-        [45648] = 219,              -- T8/10-Leggings Hunter/Shaman/Warrior
-        [45649] = 219,              -- T8/10-Leggings Death Knight/Druid/Mage/Rogue
-        [67426] = 372,              -- T11-Heroic-Leggings Death Knight/Druid/Mage/Rogue
-        [67427] = 372,              -- T11-Heroic-Leggings Hunter/Shaman/Warrior
-        [67428] = 372,              -- T11-Heroic-Leggings Paladin/Priest/Warlock
-        [71678] = 391,              -- T12-Heroic-Leggings Paladin/Priest/Warlock
-        [71671] = 391,              -- T12-Heroic-Leggings Death Knight/Druid/Mage/Rogue
-    }
+        -- Kael'thas' Sphere
+        [32405] = { 4, 138, "INVTYPE_NECK" },
 
-    -- List of tokens, which can be traded for a pair of shoes
-    local TOKEN_FEET = {
-        [34856] = 154,              -- T6-Shoes Paladin/Priest/Warlock
-        [34857] = 154,              -- T6-Shoes Hunter/Shaman/Warrior
-        [34858] = 154,              -- T6-Shoes Rogue/Mage/Druid
-    }
+        -- T7
+        [40610] = { 4, 200, "INVTYPE_CHEST" },
+        [40611] = { 4, 200, "INVTYPE_CHEST" },
+        [40612] = { 4, 200, "INVTYPE_CHEST" },
+        [40613] = { 4, 200, "INVTYPE_HAND" },
+        [40614] = { 4, 200, "INVTYPE_HAND" },
+        [40615] = { 4, 200, "INVTYPE_HAND" },
+        [40616] = { 4, 200, "INVTYPE_HEAD" },
+        [40617] = { 4, 200, "INVTYPE_HEAD" },
+        [40618] = { 4, 200, "INVTYPE_HEAD" },
+        [40619] = { 4, 200, "INVTYPE_LEGS" },
+        [40620] = { 4, 200, "INVTYPE_LEGS" },
+        [40621] = { 4, 200, "INVTYPE_LEGS" },
+        [40622] = { 4, 200, "INVTYPE_SHOULDER" },
+        [40623] = { 4, 200, "INVTYPE_SHOULDER" },
+        [40624] = { 4, 200, "INVTYPE_SHOULDER" },
+
+        -- T7 (heroic)
+        [40625] = { 4, 213, "INVTYPE_CHEST" },
+        [40626] = { 4, 213, "INVTYPE_CHEST" },
+        [40627] = { 4, 213, "INVTYPE_CHEST" },
+        [40628] = { 4, 213, "INVTYPE_HAND" },
+        [40629] = { 4, 213, "INVTYPE_HAND" },
+        [40630] = { 4, 213, "INVTYPE_HAND" },
+        [40631] = { 4, 213, "INVTYPE_HEAD" },
+        [40632] = { 4, 213, "INVTYPE_HEAD" },
+        [40633] = { 4, 213, "INVTYPE_HEAD" },
+        [40634] = { 4, 213, "INVTYPE_LEGS" },
+        [40635] = { 4, 213, "INVTYPE_LEGS" },
+        [40636] = { 4, 213, "INVTYPE_LEGS" },
+        [40637] = { 4, 213, "INVTYPE_SHOULDER" },
+        [40638] = { 4, 213, "INVTYPE_SHOULDER" },
+        [40639] = { 4, 213, "INVTYPE_SHOULDER" },
+
+        -- Key to the Focusing Iris
+        [44569] = { 4, 213, "INVTYPE_NECK" },
+        [44577] = { 4, 226, "INVTYPE_NECK" },
+
+        -- T8
+        [45635] = { 4, 219, "INVTYPE_CHEST" },
+        [45636] = { 4, 219, "INVTYPE_CHEST" },
+        [45637] = { 4, 219, "INVTYPE_CHEST" },
+        [45647] = { 4, 219, "INVTYPE_HEAD" },
+        [45648] = { 4, 219, "INVTYPE_HEAD" },
+        [45649] = { 4, 219, "INVTYPE_HEAD" },
+        [45644] = { 4, 219, "INVTYPE_HAND" },
+        [45645] = { 4, 219, "INVTYPE_HAND" },
+        [45646] = { 4, 219, "INVTYPE_HAND" },
+        [45650] = { 4, 219, "INVTYPE_LEGS" },
+        [45651] = { 4, 219, "INVTYPE_LEGS" },
+        [45652] = { 4, 219, "INVTYPE_LEGS" },
+        [45659] = { 4, 219, "INVTYPE_SHOULDER" },
+        [45660] = { 4, 219, "INVTYPE_SHOULDER" },
+        [45661] = { 4, 219, "INVTYPE_SHOULDER" },
+
+        -- T8 (heroic)
+        [45632] = { 4, 226, "INVTYPE_CHEST" },
+        [45633] = { 4, 226, "INVTYPE_CHEST" },
+        [45634] = { 4, 226, "INVTYPE_CHEST" },
+        [45638] = { 4, 226, "INVTYPE_HEAD" },
+        [45639] = { 4, 226, "INVTYPE_HEAD" },
+        [45640] = { 4, 226, "INVTYPE_HEAD" },
+        [45641] = { 4, 226, "INVTYPE_HAND" },
+        [45642] = { 4, 226, "INVTYPE_HAND" },
+        [45643] = { 4, 226, "INVTYPE_HAND" },
+        [45653] = { 4, 226, "INVTYPE_LEGS" },
+        [45654] = { 4, 226, "INVTYPE_LEGS" },
+        [45655] = { 4, 226, "INVTYPE_LEGS" },
+        [45656] = { 4, 226, "INVTYPE_SHOULDER" },
+        [45657] = { 4, 226, "INVTYPE_SHOULDER" },
+        [45658] = { 4, 226, "INVTYPE_SHOULDER" },
+
+        -- Reply Code Alpha
+        [46052] = { 4, 226, "INVTYPE_RING" },
+        [46053] = { 4, 239, "INVTYPE_RING" },
+
+        -- T9.245 (10M heroic/25M)
+        [47242] = { 4, 245, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+
+        -- T9.258 (25M heroic)
+        [47557] = { 4, 258, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+        [47558] = { 4, 258, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+        [47559] = { 4, 258, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+
+        -- T10.264 (10M heroic/25M)
+        [52025] = { 4, 264, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+        [52026] = { 4, 264, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+        [52027] = { 4, 264, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+
+        -- T10.279 (25M heroic)
+        [52028] = { 4, 279, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+        [52029] = { 4, 279, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+        [52030] = { 4, 279, "INVTYPE_CUSTOM_MULTISLOT_TIER" },
+
+        -- T11
+        [63683] = { 4, 359, "INVTYPE_HEAD" },
+        [63684] = { 4, 359, "INVTYPE_HEAD" },
+        [63682] = { 4, 359, "INVTYPE_HEAD" },
+        [64315] = { 4, 359, "INVTYPE_SHOULDER" },
+        [64316] = { 4, 359, "INVTYPE_SHOULDER" },
+        [64314] = { 4, 359, "INVTYPE_SHOULDER" },
+
+        -- T11 Heroic
+        [65001] = { 4, 372, "INVTYPE_HEAD" },
+        [65000] = { 4, 372, "INVTYPE_HEAD" },
+        [65002] = { 4, 372, "INVTYPE_HEAD" },
+        [65088] = { 4, 372, "INVTYPE_SHOULDER" },
+        [65087] = { 4, 372, "INVTYPE_SHOULDER" },
+        [65089] = { 4, 372, "INVTYPE_SHOULDER" },
+        [67424] = { 4, 372, "INVTYPE_CHEST" },
+        [67425] = { 4, 372, "INVTYPE_CHEST" },
+        [67423] = { 4, 372, "INVTYPE_CHEST" },
+        [67426] = { 4, 372, "INVTYPE_LEGS" },
+        [67427] = { 4, 372, "INVTYPE_LEGS" },
+        [67428] = { 4, 372, "INVTYPE_LEGS" },
+        [67431] = { 4, 372, "INVTYPE_HAND" },
+        [67430] = { 4, 372, "INVTYPE_HAND" },
+        [67429] = { 4, 372, "INVTYPE_HAND" },
+
+        -- T12
+        [71674] = { 4, 378, "INVTYPE_SHOULDER" },
+        [71688] = { 4, 378, "INVTYPE_SHOULDER" },
+        [71681] = { 4, 378, "INVTYPE_SHOULDER" },
+        [71668] = { 4, 378, "INVTYPE_HEAD" },
+        [71682] = { 4, 378, "INVTYPE_HEAD" },
+        [71675] = { 4, 378, "INVTYPE_HEAD" },
+
+        -- T12 Heroic
+        [71679] = { 4, 391, "INVTYPE_CHEST" },
+        [71686] = { 4, 391, "INVTYPE_CHEST" },
+        [71672] = { 4, 391, "INVTYPE_CHEST" },
+        [71677] = { 4, 391, "INVTYPE_HEAD" },
+        [71684] = { 4, 391, "INVTYPE_HEAD" },
+        [71670] = { 4, 391, "INVTYPE_HEAD" },
+        [71676] = { 4, 391, "INVTYPE_HAND" },
+        [71683] = { 4, 391, "INVTYPE_HAND" },
+        [71669] = { 4, 391, "INVTYPE_HAND" },
+        [71678] = { 4, 391, "INVTYPE_LEGS" },
+        [71685] = { 4, 391, "INVTYPE_LEGS" },
+        [71671] = { 4, 391, "INVTYPE_LEGS" },
+        [71680] = { 4, 391, "INVTYPE_SHOULDER" },
+        [71687] = { 4, 391, "INVTYPE_SHOULDER" },
+        [71673] = { 4, 391, "INVTYPE_SHOULDER" },
+
+        -- T12 misc
+        [71617] = { 4, 391, "INVTYPE_TRINKET" }, -- crystallized firestone
+
+        -- T13 normal
+        [78184] = { 4, 397, "INVTYPE_CHEST" },
+        [78179] = { 4, 397, "INVTYPE_CHEST" },
+        [78174] = { 4, 397, "INVTYPE_CHEST" },
+        [78182] = { 4, 397, "INVTYPE_HEAD" },
+        [78177] = { 4, 397, "INVTYPE_HEAD" },
+        [78172] = { 4, 397, "INVTYPE_HEAD" },
+        [78183] = { 4, 397, "INVTYPE_HAND" },
+        [78178] = { 4, 397, "INVTYPE_HAND" },
+        [78173] = { 4, 397, "INVTYPE_HAND" },
+        [78181] = { 4, 397, "INVTYPE_LEGS" },
+        [78176] = { 4, 397, "INVTYPE_LEGS" },
+        [78171] = { 4, 397, "INVTYPE_LEGS" },
+        [78180] = { 4, 397, "INVTYPE_SHOULDER" },
+        [78175] = { 4, 397, "INVTYPE_SHOULDER" },
+        [78170] = { 4, 397, "INVTYPE_SHOULDER" },
+
+        -- T13 heroic
+        [78847] = { 4, 410, "INVTYPE_CHEST" },
+        [78848] = { 4, 410, "INVTYPE_CHEST" },
+        [78849] = { 4, 410, "INVTYPE_CHEST" },
+        [78850] = { 4, 410, "INVTYPE_HEAD" },
+        [78851] = { 4, 410, "INVTYPE_HEAD" },
+        [78852] = { 4, 410, "INVTYPE_HEAD" },
+        [78853] = { 4, 410, "INVTYPE_HAND" },
+        [78854] = { 4, 410, "INVTYPE_HAND" },
+        [78855] = { 4, 410, "INVTYPE_HAND" },
+        [78856] = { 4, 410, "INVTYPE_LEGS" },
+        [78857] = { 4, 410, "INVTYPE_LEGS" },
+        [78858] = { 4, 410, "INVTYPE_LEGS" },
+        [78859] = { 4, 410, "INVTYPE_SHOULDER" },
+        [78860] = { 4, 410, "INVTYPE_SHOULDER" },
+        [78861] = { 4, 410, "INVTYPE_SHOULDER" },
+
+        -- T14 normal
+        [89248] = { 4, 496, "INVTYPE_SHOULDER" },
+        [89247] = { 4, 496, "INVTYPE_SHOULDER" },
+        [89246] = { 4, 496, "INVTYPE_SHOULDER" },
+
+        [89245] = { 4, 496, "INVTYPE_LEGS" },
+        [89244] = { 4, 496, "INVTYPE_LEGS" },
+        [89243] = { 4, 496, "INVTYPE_LEGS" },
+
+        [89234] = { 4, 496, "INVTYPE_HEAD" },
+        [89236] = { 4, 496, "INVTYPE_HEAD" },
+        [89235] = { 4, 496, "INVTYPE_HEAD" },
+
+        [89242] = { 4, 496, "INVTYPE_HAND" },
+        [89241] = { 4, 496, "INVTYPE_HAND" },
+        [89240] = { 4, 496, "INVTYPE_HAND" },
+
+        [89239] = { 4, 496, "INVTYPE_CHEST" },
+        [89238] = { 4, 496, "INVTYPE_CHEST" },
+        [89237] = { 4, 496, "INVTYPE_CHEST" },
+
+        -- T14 heroic
+        [89261] = { 4, 509, "INVTYPE_SHOULDER" },
+        [89263] = { 4, 509, "INVTYPE_SHOULDER" },
+        [89262] = { 4, 509, "INVTYPE_SHOULDER" },
+
+        [89252] = { 4, 509, "INVTYPE_LEGS" },
+        [89254] = { 4, 509, "INVTYPE_LEGS" },
+        [89253] = { 4, 509, "INVTYPE_LEGS" },
+
+        [89258] = { 4, 509, "INVTYPE_HEAD" },
+        [89260] = { 4, 509, "INVTYPE_HEAD" },
+        [89259] = { 4, 509, "INVTYPE_HEAD" },
+
+        [89255] = { 4, 509, "INVTYPE_HAND" },
+        [89257] = { 4, 509, "INVTYPE_HAND" },
+        [89256] = { 4, 509, "INVTYPE_HAND" },
+
+        [89249] = { 4, 509, "INVTYPE_CHEST" },
+        [89251] = { 4, 509, "INVTYPE_CHEST" },
+        [89250] = { 4, 509, "INVTYPE_CHEST" },
+
+        -- T15 normal
+        [95573] = { 4, 522, "INVTYPE_SHOULDER" },
+        [95583] = { 4, 522, "INVTYPE_SHOULDER" },
+        [95578] = { 4, 522, "INVTYPE_SHOULDER" },
+
+        [95572] = { 4, 522, "INVTYPE_LEGS" },
+        [95581] = { 4, 522, "INVTYPE_LEGS" },
+        [95576] = { 4, 522, "INVTYPE_LEGS" },
+
+        [95571] = { 4, 522, "INVTYPE_HEAD" },
+        [95582] = { 4, 522, "INVTYPE_HEAD" },
+        [95577] = { 4, 522, "INVTYPE_HEAD" },
+
+        [95570] = { 4, 522, "INVTYPE_HAND" },
+        [95580] = { 4, 522, "INVTYPE_HAND" },
+        [95575] = { 4, 522, "INVTYPE_HAND" },
+
+        [95569] = { 4, 522, "INVTYPE_CHEST" },
+        [95579] = { 4, 522, "INVTYPE_CHEST" },
+        [95574] = { 4, 522, "INVTYPE_CHEST" },
+
+        -- T15 heroic
+        [96699] = { 4, 535, "INVTYPE_SHOULDER" },
+        [96700] = { 4, 535, "INVTYPE_SHOULDER" },
+        [96701] = { 4, 535, "INVTYPE_SHOULDER" },
+
+        [96631] = { 4, 535, "INVTYPE_LEGS" },
+        [96632] = { 4, 535, "INVTYPE_LEGS" },
+        [96633] = { 4, 535, "INVTYPE_LEGS" },
+
+        [96625] = { 4, 535, "INVTYPE_HEAD" },
+        [96623] = { 4, 535, "INVTYPE_HEAD" },
+        [96624] = { 4, 535, "INVTYPE_HEAD" },
+
+        [96599] = { 4, 535, "INVTYPE_HAND" },
+        [96600] = { 4, 535, "INVTYPE_HAND" },
+        [96601] = { 4, 535, "INVTYPE_HAND" },
+
+        [96567] = { 4, 535, "INVTYPE_CHEST" },
+        [96568] = { 4, 535, "INVTYPE_CHEST" },
+        [96566] = { 4, 535, "INVTYPE_CHEST" },
+
+        -- T16 Normal
+        [99685] = { 4, 553, "INVTYPE_SHOULDER" },
+        [99695] = { 4, 553, "INVTYPE_SHOULDER" },
+        [99690] = { 4, 553, "INVTYPE_SHOULDER" },
+
+        [99684] = { 4, 553, "INVTYPE_LEGS" },
+        [99693] = { 4, 553, "INVTYPE_LEGS" },
+        [99688] = { 4, 553, "INVTYPE_LEGS" },
+
+        [99683] = { 4, 553, "INVTYPE_HEAD" },
+        [99694] = { 4, 553, "INVTYPE_HEAD" },
+        [99689] = { 4, 553, "INVTYPE_HEAD" },
+
+        [99682] = { 4, 553, "INVTYPE_HAND" },
+        [99692] = { 4, 553, "INVTYPE_HAND" },
+        [99687] = { 4, 553, "INVTYPE_HAND" },
+
+        [99696] = { 4, 553, "INVTYPE_CHEST" },
+        [99691] = { 4, 553, "INVTYPE_CHEST" },
+        [99686] = { 4, 553, "INVTYPE_CHEST" },
+
+        -- T16 Normal Essences
+        [105857] = { 4, 553, "INVTYPE_HEAD" },
+        [105859] = { 4, 553, "INVTYPE_HEAD" },
+        [105858] = { 4, 553, "INVTYPE_HEAD" },
+
+        -- T16 Heroic
+        [99717] = { 4, 566, "INVTYPE_SHOULDER" },
+        [99719] = { 4, 566, "INVTYPE_SHOULDER" },
+        [99718] = { 4, 566, "INVTYPE_SHOULDER" },
+
+        [99726] = { 4, 566, "INVTYPE_LEGS" },
+        [99713] = { 4, 566, "INVTYPE_LEGS" },
+        [99712] = { 4, 566, "INVTYPE_LEGS" },
+
+        [99723] = { 4, 566, "INVTYPE_HEAD" },
+        [99725] = { 4, 566, "INVTYPE_HEAD" },
+        [99724] = { 4, 566, "INVTYPE_HEAD" },
+
+        [99720] = { 4, 566, "INVTYPE_HAND" },
+        [99722] = { 4, 566, "INVTYPE_HAND" },
+        [99721] = { 4, 566, "INVTYPE_HAND" },
+
+        [99714] = { 4, 566, "INVTYPE_CHEST" },
+        [99716] = { 4, 566, "INVTYPE_CHEST" },
+        [99715] = { 4, 566, "INVTYPE_CHEST" },
+
+        -- T16 Heroic Essences
+        [105868] = { 4, 566, "INVTYPE_HEAD" },
+        [105867] = { 4, 566, "INVTYPE_HEAD" },
+        [105866] = { 4, 566, "INVTYPE_HEAD" },
+
+        }
+
 
     -- List of tokens, which can be traded for a head, shoulder, chest, hands or legs slot item
     local TOKEN_5PART = {
@@ -232,6 +470,22 @@ do
         [52029] = 277,              -- T10-Heroic-Token Hunter/Shaman/Warrior
         [52030] = 277,              -- T10-Heroic-Token Paladin/Priest/Warlock
         [66998] = 372,              -- T11-Heroic-Token universal (Essence of the Forlorn)
+        -- T16 LFR Essences
+        [105860] = 528,
+        [105861] = 528,
+        [105862] = 528,
+        -- T16 Flex Essences
+        [105863] = 540,
+        [105864] = 540,
+        [105865] = 540,
+        -- T16 Normal Essences
+        [105857] = 553,             -- T16-Normal-Token Warrior/Hunter/Shaman/Monk
+        [105858] = 553,             -- T16-Normal-Token Paladin/Priest/Warlock
+        [105859] = 553,             -- T16-Normal-Token Rogue/Death Knight
+        -- T16 Heroic Essences
+        [105866] = 566,
+        [105867] = 566,
+        [105868] = 566,
     }
 
 
@@ -268,6 +522,11 @@ do
         end
         -- Get ItemID
         local itemID = string.match(itemLink, "|Hitem:(%d+)")
+        -- Convert simple tokens to armor
+        if LBIR[itemType] == "Miscellaneous" and CUSTOM_ITEM_DATA[itemID] and not TOKEN_5PART[itemID] then
+            _, itemLevel, itemEquipLoc = unpack(CUSTOM_ITEM_DATA[itemID])
+            itemType = "Armor"
+        end
         -- Armor: With the exception of shields, the GP values for armor items are unique
         if LBIR[itemType] == "Armor" then
             -- Slots Wrist, Neck, Back, Finger, Offhand-Items and Relics have a fixed modifier of 0.5
@@ -400,18 +659,6 @@ do
         end
         -- Misc: Tier Tokens are under this category. Depending on the type of the token, it may be able to redeem different slots 
         if LBIR[itemType] == "Miscellaneous" then
-            if TOKEN_HEAD[itemID] or TOKEN_CHEST[itemID] or TOKEN_LEGS[itemID] then
-                itemLevel = TOKEN_HEAD[itemID] or TOKEN_CHEST[itemID] or TOKEN_LEGS[itemID]
-                return { libGP:GetGP(itemLevel, itemRarity, 1) }
-            end
-            if TOKEN_SHOULDERS[itemID] or TOKEN_HANDS[itemID] or TOKEN_WAIST[itemID] or TOKEN_FEET[itemID] then
-                itemLevel = TOKEN_SHOULDERS[itemID] or TOKEN_HANDS[itemID] or TOKEN_WAIST[itemID] or TOKEN_FEET[itemID]
-                return { libGP:GetGP(itemLevel, itemRarity, 0.75) }
-            end
-            if TOKEN_WRISTS[itemID] then
-                itemLevel = TOKEN_WRISTS[itemID]
-                return { libGP:GetGP(itemLevel, itemRarity, 0.5) }
-            end
             if TOKEN_5PART[itemID] then
                 itemLevel = TOKEN_5PART[itemID]
                 if slot == "INVTYPE_HEAD" or slot == "INVTYPE_CHEST" or slot == "INVTYPE_ROBE" or slot == "INVTYPE_LEGS" then
