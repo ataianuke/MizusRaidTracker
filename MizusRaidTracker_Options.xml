@@ -249,9 +249,23 @@
           </Layer>
         </Layers>
       </CheckButton>
+      <CheckButton name="$parent_LogCataclysmRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWotLKRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Cataclysm raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
       <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_LogWotLKRaids_CB" relativePoint="BOTTOMLEFT" y="-25"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_LogCataclysmRaids_CB" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">

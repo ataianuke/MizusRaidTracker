@@ -576,9 +576,9 @@ function MRT_UpdateSavedOptions()
         MRT_Options["General_OptionsVersion"] = 14;
     end
     if MRT_Options["General_OptionsVersion"] == 14 then
-        MRT_Options["Tracking_LogCataclysmRaids"] = false,     
-        MRT_Options["Tracking_LogMoPRaids"] = true,            
-        MRT_Options["Tracking_LogLootModePersonal"] = true,
+        MRT_Options["Tracking_LogCataclysmRaids"] = false;     
+        MRT_Options["Tracking_LogMoPRaids"] = true;            
+        MRT_Options["Tracking_LogLootModePersonal"] = true;
         MRT_Options["General_OptionsVersion"] = 15;
     end
 end
@@ -828,6 +828,11 @@ function MRT_CheckZoneAndSizeStatus()
         -- This is the point where to check if the current raidZone is a zone, which should be tracked
         if (MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
             MRT_Debug("This instance is a PvP-Raid and tracking of those is disabled.");
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        if (MRT_LegacyRaidZonesCataclysm[areaID] and not MRT_Options["Tracking_LogCataclysmRaids"]) then
+            MRT_Debug("This instance is a Cataclysm-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
