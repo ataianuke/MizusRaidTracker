@@ -66,6 +66,9 @@ local MRT_Defaults = {
         ["Tracking_LogLFRRaids"] = true,                                            -- Track LFR raids: true / nil
         ["Tracking_LogAVRaids"] = false,                                            -- Track PvP raids: true / nil
         ["Tracking_LogWotLKRaids"] = false,                                         -- Track WotLK raid: true / nil
+        ["Tracking_LogCataclysmRaids"] = false,                                     -- Track Catacylsm raid: true / nil
+        ["Tracking_LogMoPRaids"] = true,                                            -- Track MoP raid: true / nil
+        ["Tracking_LogLootModePersonal"] = true,
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
@@ -571,6 +574,12 @@ function MRT_UpdateSavedOptions()
     if MRT_Options["General_OptionsVersion"] == 13 then
         MRT_Options["Tracking_LogLFRRaids"] = true;
         MRT_Options["General_OptionsVersion"] = 14;
+    end
+    if MRT_Options["General_OptionsVersion"] == 14 then
+        MRT_Options["Tracking_LogCataclysmRaids"] = false,     
+        MRT_Options["Tracking_LogMoPRaids"] = true,            
+        MRT_Options["Tracking_LogLootModePersonal"] = true,
+        MRT_Options["General_OptionsVersion"] = 15;
     end
 end
 
