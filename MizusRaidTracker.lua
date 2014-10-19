@@ -812,8 +812,9 @@ function MRT_CheckZoneAndSizeStatus()
     local areaID = GetCurrentMapAreaID();
     if (not areaID) then return; end
     local localInstanceInfoName = GetMapNameByID(areaID);
-    local instanceInfoDifficulty2 = MRT_GetInstanceDifficulty();
     if (not localInstanceInfoName) then return; end
+    local instanceInfoDifficulty2 = MRT_GetInstanceDifficulty();
+    if (not instanceInfoDifficulty2) then return; end
     MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..localInstanceInfoName.." / ID=" ..areaID.." / Type="..instanceInfoType.." / InfoDiff="..instanceInfoDifficulty.." / GetInstanceDiff="..instanceInfoDifficulty2);
     if (MRT_RaidZones[areaID]) then
         if (uiVersion >= 40300) then
