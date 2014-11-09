@@ -1132,25 +1132,20 @@ end
 function MRT_AddBosskill(bossname, man_diff, bossID)
     if (not MRT_NumOfCurrentRaid) then return; end
     MRT_Debug("Adding bosskill to RaidLog[] - tracked boss: "..bossname);
-    local _, _, instanceDifficulty, _, _, dynDiff, isDyn = MRT_GetInstanceInfo();
+    local maxPlayers = MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"];
+    local _, _, diffID = MRT_GetInstanceInfo();
     if (man_diff) then
-        if (MRT_RaidLog[MRT_NumOfCurrentRaid]["RaidSize"] == 10) then
-            instanceDifficulty = 1;
-        else
-            instanceDifficulty = 2;
-        end;
-        if (man_diff == "H") then
-            instanceDifficulty = instanceDifficulty + 2;
-        end;
-    else
-        if (isDyn) then instanceDifficulty = instanceDifficulty + (2 * dynDiff); end;
-    end;
+        diffID = MRT_RaidLog[MRT_NumOfCurrentRaid]["DiffID"];
+        if (man_diff == "H" and (diffID == 3 or diffID == 4)) then
+            diffID = diffID + 2;
+        end
+    end
     local trackedPlayers = {};
     local numRaidMembers = MRT_GetNumRaidMembers();
     for i = 1, numRaidMembers do
         local playerName, _, playerSubGroup, _, _, _, _, playerOnline = GetRaidRosterInfo(i);
         -- check group number and group related tracking options
-        if (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= 2 and (instanceDifficulty == 1 or instanceDifficulty == 3)) or (playerSubGroup <= 5 and (instanceDifficulty == 2 or instanceDifficulty == 4))) then
+        if (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= (maxPlayers / 5))) then
             -- check online status and online status related tracking options
             if (MRT_Options["Attendance_TrackOffline"] or playerOnline == 1) then
                 tinsert(trackedPlayers, playerName);
@@ -1161,7 +1156,7 @@ function MRT_AddBosskill(bossname, man_diff, bossID)
         ["Players"] = trackedPlayers,
         ["Name"] = bossname,
         ["Date"] = MRT_GetCurrentTime(),
-        ["Difficulty"] = instanceDifficulty,
+        ["Difficulty"] = diffID,
         ["BossId"] = bossID,
     }
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"], MRT_BossKillInfo);
