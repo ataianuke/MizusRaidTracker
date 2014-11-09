@@ -23,6 +23,11 @@
 --    If not, see <http://www.gnu.org/licenses/>.
 
 
+-- Check for addon table
+if (not MizusRaidTracker) then MizusRaidTracker = {}; end
+local mrt = MizusRaidTracker
+
+
 --------------
 --  Locals  --
 --------------

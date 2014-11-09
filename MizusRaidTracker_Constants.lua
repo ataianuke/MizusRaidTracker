@@ -4,6 +4,12 @@
 -- *********************************************************
 --
 
+
+-- Check for addon table
+if (not MizusRaidTracker) then MizusRaidTracker = {}; end
+local mrt = MizusRaidTracker
+
+
 MRT_InstanceDifficultyTable = {
     [1] = "10 Normal",              -- Note: also 5 Normal / 40 player raid
     [2] = "25 Normal",              -- Note: also 5 Heroic
