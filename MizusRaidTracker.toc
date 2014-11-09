@@ -7,7 +7,7 @@
 ## DefaultState: enabled
 ## SavedVariables: MRT_Options, MRT_RaidLog, MRT_PlayerDB, MRT_NumOfCurrentRaid, MRT_NumOfLastBoss
 ## X-Max-Interface: 60000
-## X-Min-Interface: 50001
+## X-Min-Interface: 60000
 ## X-Website: http://nanaki.affenfelsen.de
 
 embeds.xml
