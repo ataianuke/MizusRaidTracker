@@ -27,9 +27,11 @@
 --    along with Mizus RaidTracker.  
 --    If not, see <http://www.gnu.org/licenses/>.
 
+
 -- Check for addon table
 if (not MizusRaidTracker) then MizusRaidTracker = {}; end
 local mrt = MizusRaidTracker
+
 
 -------------------------------
 --  Globals/Default Options  --
@@ -64,8 +66,12 @@ local MRT_Defaults = {
         ["Attendance_GuildAttendanceCustomText"] = MRT_GA_TEXT_CHARNAME_BOSS,
         ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
-        ["Tracking_Log10MenRaids"] = true,                                          -- Track 10 player raids: true / nil
-        ["Tracking_LogLFRRaids"] = true,                                            -- Track LFR raids: true / nil
+        ["Tracking_Log10MenRaids"] = true,                                          -- Track 10 player raids: true / nil (pre WoD-Raids)
+        ["Tracking_Log25MenRaids"] = true,                                          -- Track 25 player raids: true / nil (pre WoD-Raids)
+        ["Tracking_LogLFRRaids"] = true,                                            -- Track LFR raids: true / nil (any)
+        ["Tracking_LogNormalRaids"] = true,                                         -- Track Normal raids (WoD+)
+        ["Tracking_LogHeroicRaids"] = true,                                         -- Track Heroic raids (WoD+)
+        ["Tracking_LogMythicRaids"] = true,                                         -- Track Mythic raids (WoD+)
         ["Tracking_LogAVRaids"] = false,                                            -- Track PvP raids: true / nil
         ["Tracking_LogWotLKRaids"] = false,                                         -- Track WotLK raid: true / nil
         ["Tracking_LogCataclysmRaids"] = false,                                     -- Track Catacylsm raid: true / nil
@@ -590,6 +596,13 @@ function MRT_UpdateSavedOptions()
         MRT_Options["Tracking_LogMoPRaids"] = true;            
         MRT_Options["Tracking_LogLootModePersonal"] = true;
         MRT_Options["General_OptionsVersion"] = 15;
+    end
+    if MRT_Options["General_OptionsVersion"] == 15 then
+        MRT_Options["Tracking_Log25MenRaids"] = true;
+        MRT_Options["Tracking_LogNormalRaids"] = true;
+        MRT_Options["Tracking_LogHeroicRaids"] = true;
+        MRT_Options["Tracking_LogMythicRaids"] = true;
+        MRT_Options["General_OptionsVersion"] = 16;
     end
 end
 
