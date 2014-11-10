@@ -75,7 +75,7 @@ end
 --------------------------------------------------------
 function MRT_Options_ParseValues()
     -- MainPanel
-    MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." v."..MRT_ADDON_VERSION);
+    MRT_Options_MainPanel_Title:SetText(MRT_ADDON_TITLE.." "..MRT_ADDON_VERSION);
     MRT_Options_MainPanel_Description:SetText(MRT_L.Options["MP_Description"]);
     MRT_Options_MainPanel_Enabled_CB_Text:SetText(MRT_L.Options["MP_Enabled"]);
     MRT_Options_MainPanel_Debug_CB_Text:SetText(MRT_L.Options["MP_Debug"]);
