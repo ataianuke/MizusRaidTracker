@@ -430,14 +430,9 @@ function MRT_GUI_BossAddAccept(raidnum)
         bossdata["Players"] = {};
         bossdata["Name"] = bossname;
         bossdata["Date"] = bossTimestamp;
-        if (difficulty == "N" and MRT_RaidLog[raidnum]["RaidSize"] == 10) then
-            bossdata["Difficulty"] = 1;
-        elseif (difficulty == "H" and MRT_RaidLog[raidnum]["RaidSize"] == 10) then
-            bossdata["Difficulty"] = 3;
-        elseif (difficulty == "N" and MRT_RaidLog[raidnum]["RaidSize"] == 25) then
-            bossdata["Difficulty"] = 2;
-        elseif (difficulty == "H" and MRT_RaidLog[raidnum]["RaidSize"] == 25) then
-            bossdata["Difficulty"] = 4;
+        bossdata["Difficulty"] = MRT_RaidLog[raidnum]["DiffID"];;
+        if (difficulty == "H" and (bossdata["Difficulty"] == 3 or bossdata["Difficulty"] == 4)) then
+            bossdata["Difficulty"] = bossdata["Difficulty"] + 2;
         end
         -- search position in RaidLog (based on time) and insert data
         if (#MRT_RaidLog[raidnum]["Bosskills"] > 0) then
