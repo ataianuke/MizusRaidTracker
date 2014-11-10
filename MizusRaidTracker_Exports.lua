@@ -1155,10 +1155,16 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         else
             bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].." - ";
         end
-        if tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
-            bossData = bossData..MRT_L.Core["Export_Normal"];
-        else
-            bossData = bossData..MRT_L.Core["Export_Heroic"];
+        if tContains(mrt.diffIDsLFR, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
+            bossData = bossData..PLAYER_DIFFICULTY3;
+        elseif tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
+            bossData = bossData..PLAYER_DIFFICULTY1;
+        elseif tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
+            bossData = bossData..PLAYER_DIFFICULTY2;
+        elseif (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 8) then
+            bossData = bossData..PLAYER_DIFFICULTY5;
+        elseif (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 16) then
+            bossData = bossData..PLAYER_DIFFICULTY6;
         end
         -- End boss headline formatting
         if (addFormat == 1 or addFormat == 2) then
@@ -1271,10 +1277,16 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
             bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"];
         end
         bossData = bossData.."</span><span class=\"difficulty\">";
-        if tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
-            bossData = bossData..MRT_L.Core["Export_Normal"];
-        else
-            bossData = bossData..MRT_L.Core["Export_Heroic"];
+        if tContains(mrt.diffIDsLFR, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
+            bossData = bossData..PLAYER_DIFFICULTY3;
+        elseif tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
+            bossData = bossData..PLAYER_DIFFICULTY1;
+        elseif tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
+            bossData = bossData..PLAYER_DIFFICULTY2;
+        elseif (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 8) then
+            bossData = bossData..PLAYER_DIFFICULTY5;
+        elseif (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 16) then
+            bossData = bossData..PLAYER_DIFFICULTY6;
         end
         -- End boss headline formatting
         bossData = bossData.."</span></div>";
