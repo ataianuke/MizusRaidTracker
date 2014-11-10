@@ -9,13 +9,9 @@
 if (not MizusRaidTracker) then MizusRaidTracker = {}; end
 local mrt = MizusRaidTracker
 
-
-MRT_InstanceDifficultyTable = {
-    [1] = "10 Normal",              -- Note: also 5 Normal / 40 player raid
-    [2] = "25 Normal",              -- Note: also 5 Heroic
-    [3] = "10 Heroic",
-    [4] = "25 Heroic",
-}
+mrt.diffIDsLFR = { 7, 17 }
+mrt.diffIDsNormal = { 1, 3, 4, 9, 12, 14 }
+mrt.diffIDsHeroic = { 2, 5, 6, 11, 15 }
 
 -- these are probably not needed anymore
 MRT_ItemColorValues = {

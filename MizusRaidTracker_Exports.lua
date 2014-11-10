@@ -223,11 +223,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     else
         xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
     end
-    if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
-        xml = xml.."<difficulty>1</difficulty>";
-    elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
-        xml = xml.."<difficulty>2</difficulty>";
-    end
+    xml = xml.."<difficulty>"..MRT_RaidLog[raidID]["DiffID"].."</difficulty>";
     -- player infos: gather all players, sort them, create player info once per player
     local playerList = {};
     -- prepare player information and join/leave times
@@ -354,7 +350,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         tinsert(exportedBosses, bossID);
     else
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
-            if ( (not difficulty) or ((bossInfo["Difficulty"] < 3) and difficulty == "N") or ((bossInfo["Difficulty"] > 2) and difficulty == "H") ) then
+            if ( (not difficulty) or (tContains(mrt.diffIDsNormal, bossInfo["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, bossInfo["Difficulty"]) and difficulty == "H") ) then
                 if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
                     xml = xml..createBossInfoString(index, bossInfo, sortedPlayerList);
                 else
@@ -513,11 +509,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     else
         xml = xml.."<name>"..MRT_RaidLog[raidID]["RaidZone"].."</name>";
     end
-    if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
-        xml = xml.."<difficulty>1</difficulty>";
-    elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
-        xml = xml.."<difficulty>2</difficulty>";
-    end
+    xml = xml.."<difficulty>"..MRT_RaidLog[raidID]["DiffID"].."</difficulty>";
     xml = xml.."</zone></zones>";
     -- now the bosskills
     xml = xml.."<bosskills>";
@@ -526,9 +518,9 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             if (not difficulty) then
                 xml = xml..createBossInfoString(raidID, i);
-            elseif ((bossInfo["Difficulty"] < 3) and difficulty == "N") then
+            elseif (tContains(mrt.diffIDsNormal, bossInfo["Difficulty"]) and difficulty == "N") then
                 xml = xml..createBossInfoString(raidID, i);
-            elseif ((bossInfo["Difficulty"] > 2) and difficulty == "H") then
+            elseif (tContains(mrt.diffIDsHeroic, bossInfo["Difficulty"]) and difficulty == "H") then
                 xml = xml..createBossInfoString(raidID, i);
             end
         end
@@ -700,7 +692,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
                 xml = xml..createItemInfoString(raidID, i);
             elseif (bossID and itemInfo["BossNumber"] == bossID) then
                 xml = xml..createItemInfoString(raidID, i);
-            elseif ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] < 3) and difficulty == "N") or ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] > 2) and difficulty == "H") then
+            elseif (tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "H") then
                 xml = xml..createItemInfoString(raidID, i);
             end
         end
@@ -824,11 +816,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     else
         xml = xml.."<zone>"..MRT_RaidLog[raidID]["RaidZone"].."</zone>";
     end
-    if (MRT_RaidLog[raidID]["RaidSize"] == 10) then
-        xml = xml.."<difficulty>1</difficulty>";
-    elseif (MRT_RaidLog[raidID]["RaidSize"] == 25) then
-        xml = xml.."<difficulty>2</difficulty>";
-    end
+    xml = xml.."<difficulty>"..MRT_RaidLog[raidID]["DiffID"].."</difficulty>";
     xml = xml.."<exporter>"..UnitName("Player").."</exporter>";
     -- header complete, gather playerInfo
     local playerList = {};
@@ -892,7 +880,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
                     xml = xml.."<bosskills>";
                 end
                 xml = xml..createBossInfoString(raidID, i);
-            elseif ((bossInfo["Difficulty"] < 3) and difficulty == "N") or ((bossInfo["Difficulty"] > 2) and difficulty == "H") then
+            elseif (tContains(mrt.diffIDsNormal, bossInfo["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, bossInfo["Difficulty"]) and difficulty == "H") then
                 if (isFirstBosskill) then
                     isFirstBosskill = false;
                     xml = xml.."<bosskills>";
@@ -933,7 +921,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
                 xml = xml..createItemInfoString(raidID, i);
             elseif (bossID and itemInfo["BossNumber"] == bossID) then
                 xml = xml..createItemInfoString(raidID, i);
-            elseif ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] < 3) and difficulty == "N") or ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] > 2) and difficulty == "H") then
+            elseif (tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "H") then
                 xml = xml..createItemInfoString(raidID, i);
             end
         end
@@ -1114,9 +1102,9 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             if (not difficulty) then
                 xml = xml..createBossInfoString(raidID, i);
-            elseif ((bossInfo["Difficulty"] < 3) and difficulty == "N") then
+            elseif (tContains(mrt.diffIDsNormal, bossInfo["Difficulty"]) and difficulty == "N") then
                 xml = xml..createBossInfoString(raidID, i);
-            elseif ((bossInfo["Difficulty"] > 2) and difficulty == "H") then
+            elseif (tContains(mrt.diffIDsHeroic, bossInfo["Difficulty"]) and difficulty == "H") then
                 xml = xml..createBossInfoString(raidID, i);
             end
         end
@@ -1133,7 +1121,7 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
                 xml = xml..createItemInfoString(itemInfo);
             elseif (bossID and itemInfo["BossNumber"] == bossID) then
                 xml = xml..createItemInfoString(itemInfo);
-            elseif ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] < 3) and difficulty == "N") or ((MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"] > 2) and difficulty == "H") then
+            elseif (tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "H") then
                 xml = xml..createItemInfoString(itemInfo);
             end
         end
@@ -1167,7 +1155,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
         else
             bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].." - ";
         end
-        if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] < 3) then
+        if tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
             bossData = bossData..MRT_L.Core["Export_Normal"];
         else
             bossData = bossData..MRT_L.Core["Export_Heroic"];
@@ -1234,7 +1222,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
             bossDataExist = true;
         else
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
-                if ((val["Difficulty"] < 3) and difficulty == "N") or ((val["Difficulty"] > 2) and difficulty == "H") then
+                if (tContains(mrt.diffIDsNormal, val["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, val["Difficulty"]) and difficulty == "H") then
                     export = export..getBossData(raidID, idx);
                     bossDataExist = true;
                 end
@@ -1283,7 +1271,7 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
             bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"];
         end
         bossData = bossData.."</span><span class=\"difficulty\">";
-        if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] < 3) then
+        if tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
             bossData = bossData..MRT_L.Core["Export_Normal"];
         else
             bossData = bossData..MRT_L.Core["Export_Heroic"];
@@ -1344,7 +1332,7 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
             bossDataExist = true;
         else
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
-                if ((val["Difficulty"] < 3) and difficulty == "N") or ((val["Difficulty"] > 2) and difficulty == "H") then
+                if (tContains(mrt.diffIDsNormal, val["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, val["Difficulty"]) and difficulty == "H") then
                     export = export..getBossData(raidID, idx);
                     bossDataExist = true;
                 end
