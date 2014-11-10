@@ -225,6 +225,7 @@ MRT_L.GUI = {
     Button_StartNewRaid = "Start new raid",
 	Button_TakeSnapshot = "Take Snapshot",
 	["Can not delete current raid"] = "Error: Can't delete current raid.",
+    Cell_LFR = "LFR",
 	Cell_Hard = "Hard",
 	Cell_Normal = "Normal",
 	Col_Cost = "Cost",

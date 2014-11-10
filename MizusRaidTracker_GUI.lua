@@ -426,7 +426,7 @@ function MRT_GUI_BossAddAccept(raidnum)
         bossdata["Players"] = {};
         bossdata["Name"] = bossname;
         bossdata["Date"] = bossTimestamp;
-        bossdata["Difficulty"] = MRT_RaidLog[raidnum]["DiffID"];;
+        bossdata["Difficulty"] = MRT_RaidLog[raidnum]["DiffID"];
         if (difficulty == "H" and (bossdata["Difficulty"] == 3 or bossdata["Difficulty"] == 4)) then
             bossdata["Difficulty"] = bossdata["Difficulty"] + 2;
         end
@@ -1302,12 +1302,18 @@ function MRT_GUI_RaidBosskillsTableUpdate(raidnum)
     if (raidnum) then MRT_BosskillsCount = #MRT_RaidLog[raidnum]["Bosskills"]; end;
     if (raidnum and MRT_BosskillsCount) then
         for i, v in ipairs(MRT_RaidLog[raidnum]["Bosskills"]) do
-            if not v["Difficulty"] then
+            if (not v["Difficulty"]) then
                 MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], "-"};
-            elseif (v["Difficulty"] > 2) then
-                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Hard"]};
-            else
-                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI["Cell_Normal"]};
+            elseif (tContains(mrt.diffIDsNormal, v["Difficulty"])) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY1};
+            elseif (tContains(mrt.diffIDsHeroic, v["Difficulty"])) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY2};
+            elseif (v["Difficulty"] == 8) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY5};
+            elseif (v["Difficulty"] == 16) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], PLAYER_DIFFICULTY6};
+            elseif (tContains(mrt.diffIDsLFR, v["Difficulty"])) then
+                MRT_GUI_RaidBosskillsTableData[i] = {i, date("%H:%M", v["Date"]), v["Name"], MRT_L.GUI.Cell_LFR};
             end
         end
     end
