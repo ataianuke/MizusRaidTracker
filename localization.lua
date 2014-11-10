@@ -128,7 +128,7 @@ MRT_L.Core = {
 --  Option panels local strings  --
 -----------------------------------
 MRT_L.Options = {
-	AP_GroupRestriction = "Track only first 2/5 groups",
+	AP_GroupRestriction = "Track only first 2/4/5/6 groups",
 	AP_GuildAttendance = "Enable guild attendance check",
     AP_GuildAttendanceNoAuto = "Ask for confirmation",
     AP_GuildAttendanceTrigger = "Trigger",
