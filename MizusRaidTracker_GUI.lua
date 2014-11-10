@@ -373,10 +373,6 @@ function MRT_GUI_BossAddAccept(raidnum)
         MRT_Print(MRT_L.GUI["No boss name entered"]);
         return;
     end
-    if (difficulty ~= "N" and difficulty ~= "H") then
-        MRT_Print(MRT_L.GUI["No valid difficulty entered"]);
-        return;
-    end
     if (enteredTime == "") then
         -- check if there is an active raid
         if (MRT_NumOfCurrentRaid == nil) then
