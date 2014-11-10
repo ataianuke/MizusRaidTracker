@@ -83,6 +83,9 @@ MRT_RaidZones = {
     [897] = true,       -- Heart of Fear
     [930] = true,       -- Throne of Thunder
 	[953] = true,		-- Siege of Orgrimmar
+    -- Warlords of Draenor
+    [994] = true,       -- Highmaul
+    [988] = true,       -- Blackrock Foundry
 }
 
 MRT_LegacyRaidZonesPanadria = {
@@ -346,6 +349,33 @@ MRT_BossIDList = {
 	[71160] = "Paragons of the Klaxxi", -- ID of Iyyokuk the Lucid
 	[71161] = "Paragons of the Klaxxi", -- ID of Kil'ruk the Wind-Reaver
 	[71865] = "Garrosh Hellscream",
+    
+    ---------------------------
+    --  Warlords of Draenor  --
+    ---------------------------
+    -- Highmaul
+    [87444] = "Kargath Bladefist",      -- Will probably need a boss yell
+    [87447] = "The Butcher",
+    [87446] = "Tectus",
+    [87441] = "Brackenspore",
+    [87449] = "Twin Ogron",             -- ID of Pol
+    [78237] = "Twin Ogron",             -- ID of Phemos
+    [87445] = "Ko'ragh",
+    [87818] = "Imperator Mar'gok",
+    -- Blackrock Foundry
+    [76877] = "Gruul",
+    [77182] = "Oregorger",
+    [76865] = "Beastlord Darmac",
+    [76814] = "Flamebender Ka'graz",
+    [76973] = "Hans'gar and Franzok",   -- ID of Hans'gar
+    [76974] = "Hans'gar and Franzok",   -- ID of Franzok
+    [76906] = "Operator Thogar",
+    [76806] = "The Blast Furnace",      -- ID of Heart of the Mountain
+    [77692] = "Kromog",
+    [77557] = "The Iron Maidens",       -- ID of Admiral Gar'an
+    [77231] = "The Iron Maidens",       -- ID of Enforcer Sorka
+    [77477] = "The Iron Maidens",       -- ID of Marak the Blooded
+    [87420] = "Blackhand",
 }
 
 -- ARRAY 
@@ -408,7 +438,12 @@ MRT_BossRenameList = {
     -- Dragon Soul
     [53879] = "Spine of Deathwing",   
     [56173] = "Madness of Deathwing",
-  
+    
+    ---------------------------
+    --  Warlords of Draenor  --
+    ---------------------------
+    -- Blackrock Foundry
+    [76806] = "The Blast Furnace",  
 }
 
 
