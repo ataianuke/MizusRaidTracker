@@ -50,6 +50,20 @@ function MRT_ExportFrame_Hide()
     MRT_ExportFrame:Hide();
 end
 
+
+------------------------
+--  helper functions  --
+------------------------
+-- returns a table with bonus - returns nil, if no bonus IDs 
+function mrt:GetBonusIDs(itemData)
+    local function returnFormat(itemID, enchant, gem1, gem2, gem3, gem4, suffixID, uniqueID, level, upgradeID, iniDiffID, numBonusIDs, ...)
+        if (not numBonusIDs or tonumber(numBonusIDs) == 0) then return nil; end
+        local t = { ... } 
+        return t
+    end
+    return returnFormat(strsplit(":", itemData))
+end
+
 ------------------------
 --  export functions  --
 ------------------------
@@ -1180,7 +1194,18 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
             if (val["BossNumber"] == bossID and val["Looter"] ~= "_deleted_") then
                 if (isFirstItem) then bossData = bossData..MRT_L.Core["Export_Loot"]..":\n"; isFirstItem = false; end
                 bossData = bossData.."- ";
-                if (addFormat == 2) then bossData = bossData.."[url=http://www.wowhead.com/?item="..val["ItemId"].."]"; end
+                if (addFormat == 2) then 
+                    bossData = bossData.."[url=http://www.wowhead.com/?item="..val["ItemId"];
+                    local bonusIDs = mrt:GetBonusIDs(deformat(val["ItemString"], "item:%s"))
+                    if bonusIDs then
+                        bossData = bossData.."&bonus="
+                        for j, bonusID in pairs(bonusIDs) do
+                            if j > 1 then bossData = bossData..":"; end
+                            bossData = bossData..bonusID;
+                        end
+                    end
+                    bossData = bossData.."]"; 
+                end
                 bossData = bossData..val["ItemName"];
                 if (addFormat == 2) then bossData = bossData.."[/url]"; end
                 bossData = bossData.." - "..val["DKPValue"].." "..MRT_Options["Export_Currency"];
@@ -1300,7 +1325,16 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
             if (val["BossNumber"] == bossID and val["Looter"] ~= "_deleted_") then
                 if (isFirstItem) then bossData = bossData.."<span class=\"label\">"..MRT_L.Core["Export_Loot"].."</span><ul>"; isFirstItem = false; end
                 bossData = bossData.."<li>";
-                bossData = bossData.."<a class=\"item\" href=\"http://www.wowhead.com/?item="..val["ItemId"].."\">";
+                bossData = bossData.."<a class=\"item\" href=\"http://www.wowhead.com/?item="..val["ItemId"]
+                local bonusIDs = mrt:GetBonusIDs(deformat(val["ItemString"], "item:%s"))
+                if bonusIDs then
+                    bossData = bossData.."&bonus="
+                    for j, bonusID in pairs(bonusIDs) do
+                        if j > 1 then bossData = bossData..":"; end
+                        bossData = bossData..bonusID;
+                    end
+                end
+                bossData = bossData.."\">";
                 bossData = bossData..val["ItemName"];
                 bossData = bossData.."</a>";
                 bossData = bossData.."<span class=\"value\">"..val["DKPValue"].." "..MRT_Options["Export_Currency"].."</span>";
