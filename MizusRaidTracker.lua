@@ -676,6 +676,36 @@ function MRT_VersionUpdate()
         end
         MRT_Options["DB_Version"] = 2;
     end
+    -- DB changes from v.2 to v.3: 
+    -- * Update from 3.4 difficulty IDs to 6.0 difficulty IDs
+    -- * Add raid difficulty IDs to raid entries
+    -- * Fix LFR (ID 17) entries
+    if (MRT_Options["DB_Version"] == 2) then
+        if (#MRT_RaidLog > 0) then
+            for i, raidInfoTable in ipairs(MRT_RaidLog) do
+                if (raidInfoTable["RaidSize"] == 10) then
+                    raidInfoTable["DiffID"] = 3;
+                elseif (raidInfoTable["RaidSize"] == 25) then
+                    raidInfoTable["DiffID"] = 4;
+                end
+                for j, bossInfo in ipairs(raidInfoTable["Bosskills"]) do
+                    if (not bossInfo["Difficulty"]) then
+                        raidInfoTable["DiffID"] = 17;
+                        bossInfo["Difficulty"] = 17;
+                    elseif (bossInfo["Difficulty"] == 1) then
+                        bossInfo["Difficulty"] = 3;
+                    elseif (bossInfo["Difficulty"] == 2) then
+                        bossInfo["Difficulty"] = 4;
+                    elseif (bossInfo["Difficulty"] == 3) then
+                        bossInfo["Difficulty"] = 5;
+                    elseif (bossInfo["Difficulty"] == 4) then
+                        bossInfo["Difficulty"] = 6;
+                    end
+                end
+            end
+        end
+        MRT_Options["DB_Version"] = 3;
+    end
 end
 
 
