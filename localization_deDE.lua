@@ -20,11 +20,6 @@ if GetLocale() ~= "deDE" then return end
 --  Bossyells  --
 -----------------
 MRT_L.Bossyells = {
-    -- Naxxramas
-    [535] = {
-        ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Die vier Reiter", -- FIXME!
-    },
-
     -- Ulduar
     [529] = {
         ["Ich... bin von ihm befreit... endlich."] = "Hodir",

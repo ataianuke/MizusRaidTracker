@@ -20,11 +20,6 @@ MRT_L = { ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {} };
 --  Bossyells  --
 -----------------
 MRT_L.Bossyells = {
-    -- Naxxramas
-    [535] = {
-        ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Four Horsemen",
-    },
-
     -- Ulduar
     [529] = {
         ["I... I am released from his grasp... at last."] = "Hodir",

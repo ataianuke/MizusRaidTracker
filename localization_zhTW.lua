@@ -20,11 +20,6 @@ if GetLocale() ~= "zhTW" then return end
 --  Bossyells  --
 -----------------
 MRT_L.Bossyells = {
-    -- Naxxramas
-    [535] = {
-        ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Four Horsemen",  -- Four Horsemen
-    },
-    
     -- Ulduar
     [529] = {
         ["我…我終於從他的掌控中…解脫了。"] = "霍迪爾",  -- Hodir

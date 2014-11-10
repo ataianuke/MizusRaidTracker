@@ -164,7 +164,10 @@ MRT_BossIDList = {
     [16011] = "Loatheb",
     [16061] = "Instructor Razuvious",
     [16060] = "Gothik the Harvester",
-        -- Four Horsemen not supported - boss event with multiple NPCs without shared health pool and without boss yell
+    [16064] = "The Four Horsemen",              -- ID of Thane Korth'azz
+    [16065] = "The Four Horsemen",              -- ID of Lady Blaumeux
+    [30549] = "The Four Horsemen",              -- ID of Baron Rivendare
+    [16063] = "The Four Horsemen",              -- ID of Sire Zeliek
     [16028] = "Patchwerk",
     [15931] = "Grobbulus",
     [15932] = "Gluth",
@@ -455,7 +458,6 @@ MRT_ReverseBossIDList = {
     --  Wrath of the Lich King  --
     ------------------------------
     -- Ulduar
-    ["Iron Council"] = 32857,
     ["Hodir"] = 32845,
     ["Thorim"] = 32865,
     ["Freya"] = 32906,

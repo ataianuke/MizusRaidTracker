@@ -20,11 +20,6 @@ if GetLocale() ~= "esMX" then return end
 --  Bossyells  --
 -----------------
 MRT_L.Bossyells = {
-    -- Naxxramas
-    [535] = {
-        ["I grow tired of these games. Proceed, and I will banish your souls to oblivion!"] = "Cofre de los Cuatro Jinetes",
-    },
-    
     -- Ulduar
     [529] = {
         ["I... I am released from his grasp... at last."] = "Hodir",
