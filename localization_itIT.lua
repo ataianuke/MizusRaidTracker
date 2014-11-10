@@ -27,9 +27,6 @@ MRT_L.Bossyells = {
 
     -- Ulduar
     [529] = {
-        ["You rush headlong into the maw of madness!"] = "Iron Council",  -- Normalmode - Stormcaller Brundir last
-        ["What have you gained from my defeat? You are no less doomed, mortals."] = "Iron Council",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Impossible..."] = "Iron Council",  -- Hardmode - Steelbreaker last
         ["I... I am released from his grasp... at last."] = "Hodir",
         ["Stay your arms! I yield!"] = "Thorim",
         ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",

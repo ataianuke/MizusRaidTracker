@@ -27,9 +27,6 @@ MRT_L.Bossyells = {
     
     -- Ulduar
     [529] = {
-        ["你们盲目地冲进了疯狂的深渊！"] = "钢铁议会",  -- Normalmode - Stormcaller Brundir last
-        ["你们能从我的失败中得到什么？你们终究会被平等地毁灭，凡人！"] = "钢铁议会",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["这不可能……"] = "钢铁议会",  -- Hardmode - Steelbreaker last
         ["我……我终于从他的魔掌中……解脱了。"] = "霍迪尔",  -- Hodir
         ["住手！我认输了！"] = "托里姆",  -- Thorim
         ["他对我的控制已经不复存在了。我又一次恢复了理智。谢谢你们，英雄们。"] = "弗蕾亚",  -- Freya

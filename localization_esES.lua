@@ -27,9 +27,6 @@ MRT_L.Bossyells = {
     
     -- Ulduar
     [529] = {
-        ["You rush headlong into the maw of madness!"] = "Asamblea de Hierro",  -- Normalmode - Stormcaller Brundir last
-        ["What have you gained from my defeat? You are no less doomed, mortals!"] = "Asamblea de Hierro",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Impossible..."] = "Asamblea de Hierro",  -- Hardmode - Steelbreaker last
         ["I... I am released from his grasp... at last."] = "Hodir",
         ["Stay your arms! I yield!"] = "Thorim",
         ["His hold on me dissipates. I can see clearly once more. Thank you, heroes."] = "Freya",

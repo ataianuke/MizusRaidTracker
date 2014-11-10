@@ -27,9 +27,6 @@ MRT_L.Bossyells = {
     
     -- Ulduar
     [529] = {
-        ["네놈들은 광기의 도가니에 빠져들고 있을 뿐이야!"] = "무쇠 평의회",  -- Normalmode - Stormcaller Brundir last
-        ["날 쓰러뜨리면 나아질 줄 아느냐? 파멸은 조금도 없어지지 않았다..."] = "무쇠 평의회",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["이런 일이..."] = "무쇠 평의회",  -- Hardmode - Steelbreaker last
         ["드디어... 드디어 그의 손아귀를... 벗어나는구나."] = "호디르",  -- Hodir
         ["무기를 거둬라! 내가 졌다!"] = "토림",  -- Thorim
         ["내게서 그의 지배력이 걷혔다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다."] = "프레이야",  -- Freya

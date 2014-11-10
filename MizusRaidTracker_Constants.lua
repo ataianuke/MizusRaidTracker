@@ -189,7 +189,9 @@ MRT_BossIDList = {
     [33118] = "Ignis the Furnace Master",
     [33186] = "Razorscale",
     [33293] = "XT-002 Deconstructor",
-        -- The Assembly of Iron will need bossyell for correct tracking
+    [32867] = "Assembly of Iron",               -- ID of Steelbreaker
+    [32927] = "Assembly of Iron",               -- ID of Runemaster Molgeim
+    [32857] = "Assembly of Iron",               -- ID of Stormcaller Brundir
     [32930] = "Kologarn",
     [33515] = "Auriaya",
         -- Freya, Hodir, Mimiron and Thorim will need bossyells - they don't die

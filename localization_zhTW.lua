@@ -27,9 +27,6 @@ MRT_L.Bossyells = {
     
     -- Ulduar
     [529] = {
-        ["你魯莽地闖入了瘋狂的禁地!"] = "鐵之集會",  -- Normalmode - Stormcaller Brundir last
-        ["擊敗我對你有什麼益處?你早已注定要滅亡，凡人。"] = "鐵之集會",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["不可能......"] = "鐵之集會",  -- Hardmode - Steelbreaker last
         ["我…我終於從他的掌控中…解脫了。"] = "霍迪爾",  -- Hodir
         ["住手!我認輸了!"] = "索林姆",  -- Thorim
         ["他對我的操控已然退散。我已再次恢復神智了。感激不盡，英雄們。"] = "芙蕾雅",  -- Freya

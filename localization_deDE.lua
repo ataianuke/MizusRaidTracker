@@ -27,9 +27,6 @@ MRT_L.Bossyells = {
 
     -- Ulduar
     [529] = {
-        ["Ihr lauft geradewegs in den Schlund des Wahnsinns!"] = "Versammlung des Eisens",  -- Normalmode - Stormcaller Brundir last
-        ["Was gewinnt Ihr durch meinen Tod? Ihr seid dennoch verdammt, Sterbliche."] = "Versammlung des Eisens",  -- Semi-Hardmode - Runemaster Molgeim last FIXME!
-        ["Unm\195\182glich..."] = "Versammlung des Eisens",  -- Hardmode - Steelbreaker last
         ["Ich... bin von ihm befreit... endlich."] = "Hodir",
         ["Senkt Eure Waffen! Ich ergebe mich!"] = "Thorim",
         ["Seine Macht \195\188ber mich beginnt zu schwinden. Endlich kann ich wieder klar sehen. Ich danke Euch, Helden."] = "Freya",

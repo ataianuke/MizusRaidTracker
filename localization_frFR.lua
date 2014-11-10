@@ -27,9 +27,6 @@ MRT_L.Bossyells = {
     
     -- Ulduar
     [529] = {
-        ["Vous courez tout droit dans la gueule de la folie !"] = "Assemblée du Fer",  -- Normalmode - Stormcaller Brundir last
-        ["Que vous apporte ma chute? Votre destin n'en est pas moins scellé, mortels!"] = "Assemblée du Fer",  -- Semi-Hardmode - Runemaster Molgeim last
-        ["Impossible..."] = "Assemblée du Fer",  -- Hardmode - Steelbreaker last
         ["Je suis... libéré de son emprise... enfin."] = "Hodir",
         ["Retenez vos coups ! Je me rends !"] = "Thorim",
         ["Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."] = "Freya",
