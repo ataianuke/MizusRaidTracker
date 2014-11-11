@@ -10,6 +10,10 @@
 --  MRT requires a correct localization of bossyells for working
 --
 
+-- Check for addon table
+if (not MizusRaidTracker) then MizusRaidTracker = {}; end
+local mrt = MizusRaidTracker
+
 -----------------------------
 --  Create Tablestructure  --
 -----------------------------
