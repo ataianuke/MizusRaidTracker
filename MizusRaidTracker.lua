@@ -31,7 +31,7 @@
 -- Check for addon table
 if (not MizusRaidTracker) then MizusRaidTracker = {}; end
 local mrt = MizusRaidTracker
-
+local _L = MizusRaidTracker._L
 
 -------------------------------
 --  Globals/Default Options  --
@@ -152,6 +152,14 @@ local MRT_DKPFrame_DropDownTableColDef = {
     {["name"] = "", ["width"] = 100},
 };
 
+-- Table for boss yells
+for k, v in pairs(_L.yells) do
+    MRT_L.Bossyells[k] = {}
+    for k2, v2 in pairs(v) do
+        if (k2 == "Icecrown Gunship Battle Alliance") or (k2 == "Icecrown Gunship Battle Horde") then k2 = "Icecrown Gunship Battle"; end
+        MRT_L.Bossyells[k][v2] = k2
+    end
+end
 
 ----------------------
 --  RegisterEvents  --

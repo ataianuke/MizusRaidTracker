@@ -10,6 +10,10 @@
 --  MRT requires a correct localization of RaidZones and Bossyells for working
 --
 
+-- Check for addon table
+if (not MizusRaidTracker) then return; end
+local _L = MizusRaidTracker._L
+
 ----------------------
 --  Are you local?  --
 ----------------------
@@ -19,56 +23,15 @@ if GetLocale() ~= "frFR" then return end
 -----------------
 --  Bossyells  --
 -----------------
-MRT_L.Bossyells = {
-    -- Ulduar
-    [529] = {
-        ["Je suis... libéré de son emprise... enfin."] = "Hodir",
-        ["Retenez vos coups ! Je me rends !"] = "Thorim",
-        ["Son emprise sur moi se dissipe. J'y vois à nouveau clair. Merci, héros."] = "Freya",
-        ["Il semblerait que j'aie pu faire une minime erreur de calcul. J'ai permis \195\160 mon esprit de se laisser corrompre par ce d\195\169mon dans la prison qui a désactiv\195\169 ma directive principale. Tous les syst\195\168mes fonctionnent \195\160 nouveau. Termin\195\169."] = "Mimiron",
-        ["J'ai vu des mondes baigner dans les flammes"] = "Algalon l'Observateur",
-    },
-     
-    -- Trial of the Crusader
-    [543] = {
-        ["Une victoire tragique et depourvue de sens. La perte subie aujourd'hui nous affaiblira tous, car qui d'autre que le roi-liche pourrait beneficier d'une telle folie?? De grands guerriers ont perdu la vie. Et pour quoi?? La vraie menace plane à l'horizon?: le roi-liche nous attend, tous, dans la mort."] = "Champions de faction",
-    },
-    
-    -- Icecrown Citadel
-    [604] = {
-        ["Vous direz pas que j'vous avais pas prévenus, canailles ! Mes frères et sœurs, en avant !"] = "Bataille des canonnières", -- Muradin
-        ["L'Alliance baisse pavillon. Sus au roi-liche !"] = "Bataille des canonnières", -- Saurfang
-        ["JE REVIS !"] = "Valithria Marcherêve", -- Dreamwalker
-    },
-
-    -- Ruby Sanctum
-    [609] = {
-        ["Savourez bien cette victoire mortels car ce serra votre dernière. Ce monde brulera au retour du maitre !"] = "Halion", -- Halion
-    },
-    
-    -- Throne of the Four Winds
-    [773] = {
-        ["Le conclave du Vent est dissip\195\169. Votre conduite honorable et votre d\195\169termination vous valent le droit de m'affronter, mortels. J'attends votre attaque sur ma plate-forme ! Venez !"] = "Conclave of Wind", -- Conclave of Wind
-    },
-    
-    -- Firelands
-    [800] = {
-        ["Trop tôt! ... Vous êtes venu trop ..."] = "Ragnaros",
-    },
-    
-    -- Terrace of Endless Spring
-    [886] = {
-        --["Non… les eaux… je dois… résister… je n'aurai pas… peur…"] = "Protecteurs de l’Éternel",
-        ["Je vous remercie, étrangers. J'ai été libéré."] = "Tsulong", 
-        ["Je… ah… oh ! J’ai… ? Tout était… si… embrouillé."] = "Lei Shi",
-    },
-    
-    -- Siege of Orgrimmar
-    [953] = {
-        ["Ah, vous avez réussi ! Les eaux ont retrouvé leur pureté."] = "Immerseus",
-        ["Système en cours de réinitialisation. Veuillez ne pas le débrancher, ou il pourrait vous sauter à la figure."] = "Spoils of Pandaria",
-    },
-}
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[529]", namespace="Yells/Ulduar")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[543]", namespace="Yells/Trials_of_the_Crusader")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[604]", namespace="Yells/Icecrown_Citadel")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[609]", namespace="Yells/Ruby_Sanctum")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[773]", namespace="Yells/Throne_of_the_Four_Winds")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[800]", namespace="Yells/Firelands")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[886]", namespace="Yells/Terrace_of_Endless_Spring")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[953]", namespace="Yells/Siege_of_Orgrimmar")@
+--@localization(locale="frFR", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[994]", namespace="Yells/Highmaul")@
 
 
 ---------------------------------
