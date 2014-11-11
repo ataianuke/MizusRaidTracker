@@ -17,8 +17,60 @@ local mrt = MizusRaidTracker
 -----------------------------
 --  Create Tablestructure  --
 -----------------------------
-MRT_L = { ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {} };
+MRT_L = { ["Bossyells"] = {}, ["Core"] = {}, ["Options"] = {}, ["GUI"] = {}, };
 
+mrt._L = { 
+    ["yells"] = {
+        [529] = {}, 
+        [543] = {}, 
+        [604] = {}, 
+        [609] = {}, 
+        [773] = {}, 
+        [800] = {}, 
+        [886] = {}, 
+        [953] = {}, 
+        [994] = {},
+    } 
+}
+
+------------------
+--  boss yells  --
+------------------
+-- --[[
+mrt._L.yells[800]["Ragnaros"] = "Too soon! ... You have come too soon..."
+
+
+mrt._L.yells[994]["Kargath Bladefist"] = "FIXME"
+
+
+mrt._L.yells[604]["Dreamwalker"] = "I AM RENEWED! Ysera grant me the favor to lay these foul creatures to rest!"
+mrt._L.yells[604]["Icecrown Gunship Battle Alliance"] = "Don't say I didn't warn ya, scoundrels! Onward, brothers and sisters!"
+mrt._L.yells[604]["Icecrown Gunship Battle Horde"] = "The Alliance falter. Onward to the Lich King!"
+
+
+mrt._L.yells[609]["Halion"] = "Relish this victory, mortals, for it will be your last. This world will burn with the master's return!"
+
+
+mrt._L.yells[953]["Immerseus"] = "Ah, you have done it!  The waters are pure once more."
+mrt._L.yells[953]["Spoils of Pandaria"] = "System resetting. Don't turn the power off, or the whole thing will probably explode."
+
+
+mrt._L.yells[886]["Lei Shi"] = "I... ah... oh! Did I...? Was I...? It was... so... cloudy."
+mrt._L.yells[886]["Tsulong"] = "I thank you, strangers. I have been freed."
+
+
+mrt._L.yells[773]["Conclave Of Wind"] = "The Conclave of Wind has dissipated. Your honorable conduct and determination have earned you the right to face me in battle, mortals. I await your assault on my platform! Come!"
+
+
+mrt._L.yells[543]["Faction Champions"] = "A shallow and tragic victory. We are weaker as a whole from the losses suffered today. Who but the Lich King could benefit from such foolishness? Great warriors have lost their lives. And for what? The true threat looms ahead - the Lich King awaits us all in death."
+
+
+mrt._L.yells[529]["Algalon"] = "I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?"
+mrt._L.yells[529]["Freya"] = "His hold on me dissipates. I can see clearly once more. Thank you, heroes."
+mrt._L.yells[529]["Hodir"] = "I... I am released from his grasp... at last."
+mrt._L.yells[529]["Mimiron"] = "It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear."
+mrt._L.yells[529]["Thorim"] = "Stay your arms! I yield!"
+-- --]]
 
 ---------------------------------
 --  Core frames local strings  --
