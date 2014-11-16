@@ -321,17 +321,7 @@ end
 
 -- Combatlog handler
 function MRT_CombatLogHandler(...)
-    local combatEvent, destGUID, destName, spellID;
-    if (uiVersion < 40100) then
-        -- WoW client previous to 4.1.0 (China)
-        _, combatEvent, _, _, _, destGUID, destName, _, spellID = ...;
-    elseif (uiVersion < 40200) then
-        -- WoW client = 4.1.0
-        _, combatEvent, _, _, _, _, destGUID, destName, _, spellID = ...;
-    else
-        -- WoW client >= 4.2.0
-        _, combatEvent, _, _, _, _, _, destGUID, destName, _, _, spellID = ...;
-    end
+    local _, combatEvent, _, _, _, _, _, destGUID, destName, _, _, spellID = ...;
     if (not MRT_NumOfCurrentRaid) then return; end
     if (combatEvent == "UNIT_DIED") then
         local englishBossName;
@@ -1812,28 +1802,16 @@ end
 
 -- Adding generic function for counting raid members in order to deal with WoW MoP changes
 function MRT_GetNumRaidMembers()
-    if (uiVersion < 50001) then
-        return GetNumRaidMembers();
+    if (IsInRaid()) then
+        return GetNumGroupMembers();
     else
-        if (IsInRaid()) then
-            return GetNumGroupMembers();
-        else
-            return 0;
-        end
+        return 0;
     end
 end
 
 -- Adding generic function in order to deal with WoW MoP changes (to ensure backwards compatibility)
 function MRT_IsInRaid()
-    if (uiVersion < 50001) then
-        if (GetNumRaidMembers() > 0) then
-            return true;
-        else
-            return false;
-        end
-    else
-        return IsInRaid();
-    end
+    return IsInRaid();
 end
 
 function MRT_GetInstanceDifficulty()
