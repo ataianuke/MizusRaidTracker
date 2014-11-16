@@ -1838,9 +1838,17 @@ end
 
 function MRT_GetInstanceDifficulty()
     local _, _, iniDiff = GetInstanceInfo();
-    return iniDiff;
+    -- handle non instanced territories as 40 player raids
+    if (iniDiff == 0) then iniDiff = 9; end
+    return iniDiff
 end
 
 function MRT_GetInstanceInfo()
-    return GetInstanceInfo();
+    local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceMapID, instanceGroupSize = GetInstanceInfo()
+    -- handle non instanced territories as 40 player raids
+    if (difficultyID == 0) then 
+        difficultyID = 9;
+        maxPlayers = 40;
+    end
+    return name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceMapID, instanceGroupSize
 end
