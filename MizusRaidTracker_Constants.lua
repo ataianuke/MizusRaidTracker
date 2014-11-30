@@ -493,36 +493,45 @@ MRT_ReverseBossIDList = {
 --------------------------------
 MRT_IgnoredItemIDList = {
     -- Emblems of...
-    [40752] = true,  -- ...Heroism
-    [40753] = true,  -- ...Valor
-    [45624] = true,  -- ...Conquest
-    [47241] = true,  -- ...Triumph
-    [49426] = true,  -- ...Frost
+    [40752] = true,     -- ...Heroism
+    [40753] = true,     -- ...Valor
+    [45624] = true,     -- ...Conquest
+    [47241] = true,     -- ...Triumph
+    [49426] = true,     -- ...Frost
     
     -- Gems
-    [36931] = true,  -- Ametrine
-    [36919] = true,  -- Cardinal Ruby
-    [36928] = true,  -- Dreadstone
-    [36934] = true,  -- Eye of Zul
-    [36922] = true,  -- King's Amber
-    [36925] = true,  -- Majestic Zircon
+    [36931] = true,     -- Ametrine
+    [36919] = true,     -- Cardinal Ruby
+    [36928] = true,     -- Dreadstone
+    [36934] = true,     -- Eye of Zul
+    [36922] = true,     -- King's Amber
+    [36925] = true,     -- Majestic Zircon
     
     -- Shards
-    [20725] = true,  -- Nexus Crystal
-    [22450] = true,  -- Void Crystal
-    [34057] = true,  -- Abyss Crystal
-    [52722] = true,  -- Maelstrom Crystal
-    [74248] = true,  -- Sha Crystal
+    [20725] = true,     -- Nexus Crystal
+    [22450] = true,     -- Void Crystal
+    [34057] = true,     -- Abyss Crystal
+    [52722] = true,     -- Maelstrom Crystal
+    [74248] = true,     -- Sha Crystal
+    [115502] = true,    -- Small Luminous Shard
+    [111245] = true,    -- Luminous Shard
+    [115504] = true,    -- Fractured Temporal Crystal
+    [113588] = true,    -- Temporal Crystal
     
     -- Sigils of...
-    [87208] = true,  -- Sigil of Power
-    [87209] = true,  -- Sigil of Wisdom
+    [87208] = true,     -- Sigil of Power
+    [87209] = true,     -- Sigil of Wisdom
     
     -- Wrathion Legendary Questline
-    [87210] = true,  -- Chimera of Fear
-    [94593] = true,  -- Secrets of the Empire
-    [94594] = true,  -- Titan Runestones
-    [94867] = true,  -- Heart of the Thunder King
+    [87210] = true,     -- Chimera of Fear
+    [94593] = true,     -- Secrets of the Empire
+    [94594] = true,     -- Titan Runestones
+    [94867] = true,     -- Heart of the Thunder King
+    
+    -- WoD Legendary Questline
+    [115280] = true,    -- Abrogator Stone
+    [115288] = true,    -- Felbreaker's Tome
+    [115289] = true,    -- Sigil of the Sorcerer King
 }
 
 
