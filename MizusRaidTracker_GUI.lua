@@ -226,6 +226,8 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_MakeAttendanceCheck_Button:SetText(MRT_L.GUI["Button_MakeGuildAttendanceCheck"]);
     MRT_GUIFrame_EndCurrentRaid_Button:SetText(MRT_L.GUI["Button_EndCurrentRaid"]);
     MRT_GUIFrame_ResumeLastRaid_Button:SetText(MRT_L.GUI["Button_ResumeLastRaid"]);
+    -- Create difficulty drop down menu
+    mrt:UI_CreateTwoRowDDM()
     -- Insert table data
     MRT_GUI_CompleteTableUpdate();
     -- Create and anchor drop down menu table for add/modify loot dialog
@@ -245,6 +247,57 @@ function MRT_GUI_ParseValues()
             return true;
         end
     });
+end
+
+function mrt:UI_CreateTwoRowDDM()
+    -- Create DropDownFrame
+    if (not MRT_GUI_TwoRowDialog_DDM) then
+        CreateFrame("Frame", "MRT_GUI_TwoRowDialog_DDM", MRT_GUI_TwoRowDialog, "UIDropDownMenuTemplate")
+        MRT_GUI_TwoRowDialog_DDM:CreateFontString("MRT_GUI_TwoRowDialog_DDM_Text", "OVERLAY", "ChatFontNormal")
+    end
+    -- List of DropDownMenuItems
+    local items = {
+        { [16] = select(1, GetDifficultyInfo(16)).." (20)" },
+        { [15] = select(1, GetDifficultyInfo(15)).." (30)" },
+        { [14] = select(1, GetDifficultyInfo(14)).." (30)" },
+        { [17] = select(1, GetDifficultyInfo(17)).." (30)" },
+        { [9] = select(1, GetDifficultyInfo(9)) },
+        { [4] = select(1, GetDifficultyInfo(4)) },
+        { [3] = select(1, GetDifficultyInfo(3)) },
+    }
+    -- Anchor DropDownFrame
+    MRT_GUI_TwoRowDialog_DDM:ClearAllPoints();
+    MRT_GUI_TwoRowDialog_DDM:SetPoint("TOP", MRT_GUI_TwoRowDialog_EB1, "TOP", -4, -64);
+    MRT_GUI_TwoRowDialog_DDM_Text:ClearAllPoints();
+    MRT_GUI_TwoRowDialog_DDM_Text:SetPoint("BOTTOMLEFT", MRT_GUI_TwoRowDialog_DDM, "TOPLEFT", 14, 0);
+    MRT_GUI_TwoRowDialog_DDM:Show();
+    -- Click handler function
+    local function OnClick(self)
+       UIDropDownMenu_SetSelectedID(MRT_GUI_TwoRowDialog_DDM, self:GetID())
+    end
+    -- DropDownMenu initialize function
+    local function initialize(self, level)
+        local info = UIDropDownMenu_CreateInfo()
+        for k2, v2 in ipairs(items) do
+            for k, v in pairs(v2) do
+                info = UIDropDownMenu_CreateInfo()
+                info.text = v
+                info.value = k
+                info.func = OnClick
+                UIDropDownMenu_AddButton(info, level)
+            end
+        end
+    end
+    -- Setup DropDownMenu
+    UIDropDownMenu_Initialize(MRT_GUI_TwoRowDialog_DDM, initialize);
+    UIDropDownMenu_SetWidth(MRT_GUI_TwoRowDialog_DDM, 236);
+    UIDropDownMenu_SetButtonWidth(MRT_GUI_TwoRowDialog_DDM, 260);
+    UIDropDownMenu_SetSelectedID(MRT_GUI_TwoRowDialog_DDM, 3);
+    UIDropDownMenu_JustifyText(MRT_GUI_TwoRowDialog_DDM, "LEFT");
+    -- Setup text
+    MRT_GUI_TwoRowDialog_DDM_Text:SetText(MRT_L.GUI["Raid size"])
+    -- Hide element
+    MRT_GUI_TwoRowDialog_DDM:Hide();
 end
 
 
