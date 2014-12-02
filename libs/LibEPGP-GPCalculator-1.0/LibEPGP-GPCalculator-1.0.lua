@@ -43,7 +43,7 @@ do
     elseif MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] < 100 then
         standard_ilvl = 553
     else
-        standard_ilvl = 553
+        standard_ilvl = 670
     end
     
     epgpCoefficient = 1000 * 2 ^ (-standard_ilvl / 26)
@@ -453,8 +453,40 @@ do
         [105868] = { 4, 566, "INVTYPE_HEAD" },
         [105867] = { 4, 566, "INVTYPE_HEAD" },
         [105866] = { 4, 566, "INVTYPE_HEAD" },
+        
+        -- T17
+        -- Item IDs are identical across difficulties, so specify nil for item level
+        -- and specify the tier number instead: the raid difficulty and tier number
+        -- will be used to get the item level.
+        [119309] = { 4, 665, "INVTYPE_SHOULDER" },
+        [119322] = { 4, 665, "INVTYPE_SHOULDER" },
+        [119314] = { 4, 665, "INVTYPE_SHOULDER" },
 
-        }
+        [119307] = { 4, 665, "INVTYPE_LEGS" },
+        [119320] = { 4, 665, "INVTYPE_LEGS" },
+        [119313] = { 4, 665, "INVTYPE_LEGS" },
+
+        [119308] = { 4, 665, "INVTYPE_HEAD" },
+        [119321] = { 4, 665, "INVTYPE_HEAD" },
+        [119312] = { 4, 665, "INVTYPE_HEAD" },
+
+        [119306] = { 4, 665, "INVTYPE_HAND" },
+        [119319] = { 4, 665, "INVTYPE_HAND" },
+        [119311] = { 4, 665, "INVTYPE_HAND" },
+
+        [119305] = { 4, 665, "INVTYPE_CHEST" },
+        [119318] = { 4, 665, "INVTYPE_CHEST" },
+        [119315] = { 4, 665, "INVTYPE_CHEST" },
+
+        -- T17 essences
+        [119310] = { 4, 665, "INVTYPE_HEAD" },
+        [120277] = { 4, 665, "INVTYPE_HEAD" },
+        [119323] = { 4, 665, "INVTYPE_HEAD" },
+        [120279] = { 4, 665, "INVTYPE_HEAD" },
+        [119316] = { 4, 665, "INVTYPE_HEAD" },
+        [120278] = { 4, 665, "INVTYPE_HEAD" },
+
+    }
 
 
     -- List of tokens, which can be traded for a head, shoulder, chest, hands or legs slot item
@@ -486,6 +518,13 @@ do
         [105866] = 566,
         [105867] = 566,
         [105868] = 566,
+        -- T17 Essences (also using bonus ID system)
+        [119310] = 665,
+        [120277] = 665,
+        [119323] = 665,
+        [120279] = 665,
+        [119316] = 665,
+        [120278] = 665,
     }
 
 
