@@ -171,20 +171,14 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("ENCOUNTER_END");
-    if (uiVersion < 50001) then
-        frame:RegisterEvent("GROUP_ROSTER_UPDATE");
-    end
     frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
     frame:RegisterEvent("PARTY_LOOT_METHOD_CHANGED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
     frame:RegisterEvent("PLAYER_REGEN_DISABLED");
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
+    frame:RegisterEvent("RAID_ROSTER_UPDATE");
     frame:RegisterEvent("ZONE_CHANGED_NEW_AREA");
-    
-    if (uiVersion >= 50001) then
-        frame:RegisterEvent("RAID_ROSTER_UPDATE");
-    end
 end
 
 
@@ -282,6 +276,14 @@ function MRT_OnEvent(frame, event, ...)
             return; 
         end;
         MRT_CheckZoneAndSizeStatus();
+        
+    elseif (event == "RAID_ROSTER_UPDATE") then
+        MRT_Debug("RAID_ROSTER_UPDATE fired!");
+        if (MRT_UnknownRelogStatus) then
+            MRT_UnknownRelogStatus = false;
+            MRT_CheckRaidStatusAfterLogin();
+        end
+        MRT_RaidRosterUpdate(frame);
     
     elseif (event == "ZONE_CHANGED_NEW_AREA") then
         MRT_Debug("Event ZONE_CHANGED_NEW_AREA fired.");
@@ -304,14 +306,6 @@ function MRT_OnEvent(frame, event, ...)
     elseif(event == "PLAYER_REGEN_DISABLED") then 
         wipe(MRT_ArrayBossID)
         --MRT_Debug("Tabelle gelöscht");
-    
-    elseif (event == "GROUP_ROSTER_UPDATE" or event == "RAID_ROSTER_UPDATE") then
-        MRT_Debug("GROUP_ROSTER_UPDATE or RAID_ROSTER_UPDATE fired!");
-        if (MRT_UnknownRelogStatus) then
-            MRT_UnknownRelogStatus = false;
-            MRT_CheckRaidStatusAfterLogin();
-        end
-        MRT_RaidRosterUpdate(frame);
     
     end
 end
