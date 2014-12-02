@@ -1151,14 +1151,12 @@ function MRT_GUI_StartNewRaid()
         return;
     end
     MRT_GUI_TwoRowDialog_Title:SetText(MRT_L.GUI["Button_StartNewRaid"]);
+    MRT_GUI_TwoRowDialog_DDM:Show();
     MRT_GUI_TwoRowDialog_EB1_Text:SetText(MRT_L.GUI["Zone name"]);
     MRT_GUI_TwoRowDialog_EB1:SetText("");
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB1, "StartNewRaid_ZoneNameEB"); end);
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
-    MRT_GUI_TwoRowDialog_EB2_Text:SetText(MRT_L.GUI["Raid size"]);
-    MRT_GUI_TwoRowDialog_EB2:SetText("");
-    MRT_GUI_TwoRowDialog_EB2:SetScript("OnEnter", function() MRT_GUI_SetTT(MRT_GUI_TwoRowDialog_EB2, "StartNewRaid_RaidSizeEB"); end);
-    MRT_GUI_TwoRowDialog_EB2:SetScript("OnLeave", function() MRT_GUI_HideTT(); end);
+    MRT_GUI_TwoRowDialog_EB2:Hide();
     MRT_GUI_TwoRowDialog_OKButton:SetText(MRT_L.Core["MB_Ok"]);
     MRT_GUI_TwoRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_StartNewRaidAccept(); end);
     MRT_GUI_TwoRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
@@ -1166,15 +1164,10 @@ function MRT_GUI_StartNewRaid()
 end
 
 function MRT_GUI_StartNewRaidAccept()
+    local diffIDList = { 16, 15, 14, 17, 9, 4, 3 }
     local zoneName = MRT_GUI_TwoRowDialog_EB1:GetText()
-    local raidSize = MRT_GUI_TwoRowDialog_EB2:GetText()
-    -- sanity check entered values
-    if (raidSize == "") then raidSize = 25; end
-    raidSize = tonumber(raidSize);
-    if (not raidSize) then 
-        MRT_Print(MRT_L.GUI["No valid raid size"]); 
-        return;
-    end
+    local diffId = diffIDList[UIDropDownMenu_GetSelectedID(MRT_GUI_TwoRowDialog_DDM)]
+    local raidSize = mrt.raidSizes[diffId]
     -- Hide dialogs
     MRT_GUI_HideDialogs();
     -- check current raidstatus is ok
@@ -1191,7 +1184,7 @@ function MRT_GUI_StartNewRaidAccept()
         zoneName = GetRealZoneText();
     end
     -- create new raid
-    MRT_CreateNewRaid(zoneName, raidSize);
+    MRT_CreateNewRaid(zoneName, raidSize, diffId);
     MRT_GUI_CompleteTableUpdate();
 end
 
@@ -1439,10 +1432,12 @@ function MRT_GUI_HideDialogs()
     MRT_GUI_OneRowDialog_EB1:SetScript("OnEnter", nil);
     MRT_GUI_OneRowDialog_EB1:SetScript("OnLeave", nil);
     MRT_GUI_OneRowDialog:Hide();
+    MRT_GUI_TwoRowDialog_DDM:Hide();
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnEnter", nil);
     MRT_GUI_TwoRowDialog_EB1:SetScript("OnLeave", nil);
     MRT_GUI_TwoRowDialog_EB2:SetScript("OnEnter", nil);
     MRT_GUI_TwoRowDialog_EB2:SetScript("OnLeave", nil);
+    MRT_GUI_TwoRowDialog_EB2:Show();
     MRT_GUI_TwoRowDialog:Hide();
     MRT_GUI_ThreeRowDialog_EB1:SetScript("OnEnter", nil);
     MRT_GUI_ThreeRowDialog_EB1:SetScript("OnLeave", nil);

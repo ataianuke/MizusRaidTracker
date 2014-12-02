@@ -12,6 +12,7 @@ local mrt = MizusRaidTracker
 mrt.diffIDsLFR = { 7, 17 }
 mrt.diffIDsNormal = { 1, 3, 4, 9, 12, 14 }
 mrt.diffIDsHeroic = { 2, 5, 6, 11, 15 }
+mrt.raidSizes = { 5, 5, 10, 25, 10, 25, 25, 5, 40, 40, 3, 3, 40, 30, 30, 20, 30, 5, 5, 5 }
 
 -- these are probably not needed anymore
 MRT_ItemColorValues = {

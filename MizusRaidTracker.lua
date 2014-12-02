@@ -956,7 +956,7 @@ function MRT_CreateNewRaid(zoneName, raidSize, diffID)
     local numRaidMembers = MRT_GetNumRaidMembers();
     local realm = GetRealmName();
     if (numRaidMembers == 0) then return; end
-    MRT_Debug("Creating new raid... - RaidZone is "..zoneName.." and RaidSize is "..tostring(raidSize));
+    MRT_Debug("Creating new raid... - RaidZone is "..zoneName..", RaidSize is "..tostring(raidSize).. " and diffID is "..tostring(diffID));
     local currentTime = MRT_GetCurrentTime();
     local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["DiffID"] = diffID, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = currentTime};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
