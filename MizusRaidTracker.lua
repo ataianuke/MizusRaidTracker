@@ -170,6 +170,7 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("CHAT_MSG_WHISPER");
     frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    frame:RegisterEvent("ENCOUNTER_END");
     if (uiVersion < 50001) then
         frame:RegisterEvent("GROUP_ROSTER_UPDATE");
     end
@@ -232,6 +233,10 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "COMBAT_LOG_EVENT_UNFILTERED") then 
         if (not MRT_Options["General_MasterEnable"]) then return end;
         MRT_CombatLogHandler(...);
+        
+    elseif (event == "ENCOUNTER_END") then
+        local encounterID, name, difficulty, size, success = ...
+        MRT_Debug("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
     
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
@@ -352,7 +357,7 @@ function MRT_CombatLogHandler(...)
         end
     end
     if (combatEvent == "SPELL_CAST_SUCCESS") then
-        MRT_Debug("SPELL_CAST_SUCCESS event found - SpellID is " .. spellID);
+        -- MRT_Debug("SPELL_CAST_SUCCESS event found - SpellID is " .. spellID);
     end
     if (combatEvent == "SPELL_CAST_SUCCESS" and MRT_BossSpellIDTriggerList[spellID]) then
         MRT_Debug("Matching SpellID in trigger list found - Processing...");
