@@ -859,7 +859,7 @@ function MRT_CheckZoneAndSizeStatus()
     if (not areaID) then return; end
     local localInstanceInfoName = GetMapNameByID(areaID);
     if (not localInstanceInfoName) then return; end
-    MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..localInstanceInfoName.." / ID=" ..areaID.." / Type="..instanceInfoType.." / InfoDiff="..diffDesc.." / GetInstanceDiff="..diffID);
+    MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..localInstanceInfoName.." / areaID=" ..areaID.." / Type="..instanceInfoType.." / diffDesc="..diffDesc.." / diffID="..diffID);
     -- For legacy 10 N/H and 25 N/H raids, difficulty is tracked at boss killtime, as those difficulties have a shared ID
     -- Thus, handle diffID 5 as 3 and 6 as 2
     if (diffID == 5) then diffID = 3; end
