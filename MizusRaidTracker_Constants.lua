@@ -360,14 +360,14 @@ MRT_BossIDList = {
     --  Warlords of Draenor  --
     ---------------------------
     -- Highmaul
-    [87444] = "Kargath Bladefist",      -- Will probably need a boss yell
-    [87447] = "The Butcher",
-    [87446] = "Tectus",
-    [87441] = "Brackenspore",
-    [87449] = "Twin Ogron",             -- ID of Pol
+    [78714] = "Kargath Bladefist",      -- Will probably need a boss yell
+    [77404] = "The Butcher",
+    [78948] = "Tectus",
+    [78491] = "Brackenspore",
+    [78238] = "Twin Ogron",             -- ID of Pol
     [78237] = "Twin Ogron",             -- ID of Phemos
-    [87445] = "Ko'ragh",
-    [87818] = "Imperator Mar'gok",
+    [79015] = "Ko'ragh",
+    [77428] = "Imperator Mar'gok",
     -- Blackrock Foundry
     [76877] = "Gruul",
     [77182] = "Oregorger",
@@ -381,7 +381,7 @@ MRT_BossIDList = {
     [77557] = "The Iron Maidens",       -- ID of Admiral Gar'an
     [77231] = "The Iron Maidens",       -- ID of Enforcer Sorka
     [77477] = "The Iron Maidens",       -- ID of Marak the Blooded
-    [87420] = "Blackhand",
+    [77325] = "Blackhand",
 }
 
 -- ARRAY 
