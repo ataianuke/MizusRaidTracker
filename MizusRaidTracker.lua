@@ -121,6 +121,7 @@ local LBBL = LBB:GetUnstrictLookupTable();
 local LBI = LibStub("LibBabble-Inventory-3.0");
 local LBIR = LBI:GetReverseLookupTable();
 local EPGPCalc = LibStub("LibEPGP-GPCalculator-1.0");
+local LibGP = LibStub("LibGearPoints-1.2");
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
 local pairs = pairs;
@@ -1298,14 +1299,18 @@ function MRT_AutoAddLoot(chatmsg)
     local lootAction = nil;
     local itemNote = nil;
     local supressCostDialog = nil;
-    local GPValues, GPValueText, GPListType, GPList = nil, nil, nil, nil;
+    local gp1, gp2 = nil, nil;
     -- if EPGP GP system is enabled, get GP values
     if (MRT_Options["ItemTracking_UseEPGPValues"]) then
-        local realm = GetRealmName();
-        local lootClass = MRT_PlayerDB[realm][playerName]["Class"];
-        GPValues, GPValueText, GPListType, GPList = EPGPCalc:GetItemGP(itemLink, lootClass);
-        dkpValue = GPValues[1];
-        itemNote = GPValueText;
+        gp1, gp2 = LibGP:GetValue(itemLink);
+        if (not gp1) then
+            dkpValue = 0
+        elseif (not gp2) then
+            dkpValue = gp1
+        else
+            dkpValue = gp1
+            itemNote = string.format("%d or %d", gp1, gp2)
+        end
     end
     -- if an external function handles item data, notify it
     if (MRT_ExternalItemCostHandler.func) then
