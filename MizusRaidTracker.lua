@@ -32,6 +32,7 @@
 if (not MizusRaidTracker) then MizusRaidTracker = {}; end
 local mrt = MizusRaidTracker
 local _L = MizusRaidTracker._L
+local _O = MRT_Options
 
 -------------------------------
 --  Globals/Default Options  --
@@ -39,7 +40,7 @@ local _L = MizusRaidTracker._L
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v0.61.1-alpha"
+MRT_ADDON_VERSION = "v0.61.2-alpha"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
@@ -81,6 +82,7 @@ local MRT_Defaults = {
         ["Tracking_LogMoPRaids"] = true,                                            -- Track MoP raid: true / nil
         ["Tracking_LogLootModePersonal"] = true,
         ["Tracking_AskForDKPValue"] = true,                                         -- 
+        ["Tracking_AskForDKPValuePersonal"] = true,                                 -- ask for points cost when in personal loot mode true/nil - not used when generic option is off
         ["Tracking_MinItemQualityToLog"] = 4,                                       -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_MinItemQualityToGetDKPValue"] = 4,                               -- 0:poor, 1:common, 2:uncommon, 3:rare, 4:epic, 5:legendary, 6:artifact
         ["Tracking_AskCostAutoFocus"] = 2,                                          -- 1: always AutoFocus, 2: when not in combat, 3: never
@@ -603,6 +605,10 @@ function MRT_UpdateSavedOptions()
         MRT_Options["Tracking_LogHeroicRaids"] = true;
         MRT_Options["Tracking_LogMythicRaids"] = true;
         MRT_Options["General_OptionsVersion"] = 16;
+    end
+    if MRT_Options["General_OptionsVersion"] == 16 then
+        MRT_Options["Tracking_AskForDKPValuePersonal"] = true;
+        MRT_Options["General_OptionsVersion"] = 17;
     end
 end
 
@@ -1349,7 +1355,10 @@ function MRT_AutoAddLoot(chatmsg)
         ["Note"] = itemNote,
     };
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
-    if ((not MRT_Options["Tracking_AskForDKPValue"]) or supressCostDialog) then 
+    -- get current loot mode
+    local isPersonal = select(1, GetLootMethod()) == "personalloot"
+    -- check if we should ask the player for item cost
+    if (supressCostDialog or (not MRT_Options["Tracking_AskForDKPValue"]) or (isPersonal and not MRT_Options["Tracking_AskForDKPValuePersonal"])) then 
         -- notify registered, external functions
         local itemNum = #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"];
         if (#MRT_ExternalLootNotifier > 0) then
@@ -1373,6 +1382,7 @@ function MRT_AutoAddLoot(chatmsg)
         return; 
     end
     if (MRT_Options["Tracking_MinItemQualityToGetDKPValue"] > MRT_ItemColorValues[itemColor]) then return; end
+    -- ask the player for item cost
     MRT_DKPFrame_AddToItemCostQueue(MRT_NumOfCurrentRaid, #MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"]);
 end
 
@@ -1485,7 +1495,7 @@ function MRT_DKPFrame_AskCost()
     else
         MRT_GetDKPValueFrame_EB:SetAutoFocus(true);
     end
-    -- show DKPValue
+    -- show DKPValue Frame
     MRT_GetDKPValueFrame:Show();  
 end
 

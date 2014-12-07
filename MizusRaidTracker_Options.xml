@@ -308,7 +308,7 @@
         </FontString>
         <FontString name="$parent_OnlyTrackItemsAbove_Text" inherits="GameFontWhite" text="(L)Only track items equal or above Itemlevel">
           <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Title" x="0" y="-160"/>
+            <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_Title" x="0" y="-176"/>
           </Anchors>
         </FontString>
         <!--
@@ -389,12 +389,24 @@
           </Layer>
         </Layers>
       </CheckButton>
+      <CheckButton name="$parent_AskForDKPValuePersonal_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValue_CB" relativePoint="BOTTOMLEFT" x="16" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="... if loot mode personal (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
       <Slider name="$parent_MinItemQualityToGetCost_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
         <Size x="200" y="20"/>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValue_CB" relativePoint="BOTTOMLEFT">
-            <Offset y="-20"/>
-          </Anchor>
+          <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValuePersonal_CB" relativePoint="BOTTOMLEFT" x="-16" y="-16"/>
         </Anchors>
         <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
           <EdgeSize>

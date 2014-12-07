@@ -164,6 +164,7 @@ MRT_L.Options = {
     MP_SlashCmd = "Slash command",
     MP_ResetGuiPos = "Reset GUI position",
 	TP_AskForDKPValue = "Ask for item cost",
+    TP_AskForDKPValuePersonal = "... if loot mode is personal",
     TP_CreateNewRaidOnNewZone = "Create new raid on new zone",
 	TP_Log10MenRaids = "Track 10 player raids",
 	TP_LogAVRaids = "Track PVP raids (VoA, BH)",
