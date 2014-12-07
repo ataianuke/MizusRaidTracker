@@ -31,7 +31,6 @@ if GetLocale() ~= "zhTW" then return end
 --@localization(locale="zhTW", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[800]", namespace="Yells/Firelands")@
 --@localization(locale="zhTW", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[886]", namespace="Yells/Terrace_of_Endless_Spring")@
 --@localization(locale="zhTW", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[953]", namespace="Yells/Siege_of_Orgrimmar")@
---@localization(locale="zhTW", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[994]", namespace="Yells/Highmaul")@
 
 
 ---------------------------------

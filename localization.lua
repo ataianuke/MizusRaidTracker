@@ -29,7 +29,6 @@ mrt._L = {
         [800] = {}, 
         [886] = {}, 
         [953] = {}, 
-        [994] = {},
     } 
 }
 local _L = mrt._L
@@ -61,7 +60,6 @@ _L.yells[886]["Tsulong"] = "I thank you, strangers. I have been freed."
 _L.yells[953]["Immerseus"] = "Ah, you have done it!  The waters are pure once more."
 _L.yells[953]["Spoils of Pandaria"] = "System resetting. Don't turn the power off, or the whole thing will probably explode."
 
-_L.yells[994]["Kargath Bladefist"] = "FIXME"
 
 ---------------------------------
 --  Core frames local strings  --
