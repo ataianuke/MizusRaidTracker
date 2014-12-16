@@ -14,7 +14,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --]]
 
--- Modifications by Mizukichan: Removed LibDebug dependencies
+-- Modifications by Mizukichan: Removed LibDebug and LibItemUtils dependencies
 
 local MAJOR_VERSION = "LibGearPoints-1.2"
 local MINOR_VERSION = 10200
@@ -22,7 +22,23 @@ local MINOR_VERSION = 10200
 local lib, oldMinor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 
-local ItemUtils = LibStub("LibItemUtils-1.0")
+local function BonusIDs(itemLink)
+  local _, itemLink, _, _, _, _, _, _, _ = GetItemInfo(item)
+  if not itemLink then return end
+
+  local itemString = string.match(itemLink, "item[%-?%d:]+")
+  if not itemString then return nil end
+  
+  local bonuses = {}
+    local tbl = { strsplit(":", itemString) }
+    for key, value in pairs(tbl) do
+       if key >= 14 then
+          table.insert(bonuses, tonumber(value))
+        end
+    end
+
+  return bonuses
+end
 
 -- This is the high price equipslot multiplier.
 local EQUIPSLOT_MULTIPLIER_1 = {
@@ -634,7 +650,7 @@ function lib:GetValue(item)
   end
 
   -- Get the bonuses for the item to check against known bonuses
-  local itemBonuses = ItemUtils:BonusIDs(itemLink)
+  local itemBonuses = BonusIDs(itemLink)
 
   -- Check to see if there is custom data for this item ID
   if CUSTOM_ITEM_DATA[itemID] then

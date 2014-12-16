@@ -11,6 +11,5 @@
   <Include file="libs\LibBabble-Zone-3.0\lib.xml"/>
   <Include file="libs\LibDialog-1.0\lib.xml"/>
   <Script file="libs\LibEPGP-GPCalculator-1.0\LibEPGP-GPCalculator-1.0.lua"/>
-  <Script file="libs\LibGearPoints-1.2\LibItemUtils-1.0.lua"/>
   <Script file="libs\LibGearPoints-1.2\LibGearPoints-1.2.lua"/>
 </Ui>
