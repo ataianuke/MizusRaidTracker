@@ -22,7 +22,7 @@ local MINOR_VERSION = 10200
 local lib, oldMinor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 
-local function BonusIDs(itemLink)
+local function BonusIDs(item)
   local _, itemLink, _, _, _, _, _, _, _ = GetItemInfo(item)
   if not itemLink then return end
 
