@@ -533,6 +533,13 @@ MRT_IgnoredItemIDList = {
     [115280] = true,    -- Abrogator Stone
     [115288] = true,    -- Felbreaker's Tome
     [115289] = true,    -- Sigil of the Sorcerer King
+    [115494] = true,    -- Draenic Thaumaturgical Orb
+    
+    -- WoD Garrison Follower Upgrades
+    [114131] = true,    -- Power Overrun Weapon Enhancement
+    [114822] = true,    -- Heavily Reinforced Armor Enhancement
+    [114622] = true,    -- Goredrenched Weaponry
+    [114746] = true,    -- Goredrenched Armor Set
 }
 
 
