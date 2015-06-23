@@ -540,6 +540,9 @@ MRT_IgnoredItemIDList = {
     [114822] = true,    -- Heavily Reinforced Armor Enhancement
     [114622] = true,    -- Goredrenched Weaponry
     [114746] = true,    -- Goredrenched Armor Set
+    
+    -- Rogue stuff
+    [113007] = true,    -- Magma-Infused War Beads
 }
 
 
