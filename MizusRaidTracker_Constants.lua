@@ -382,6 +382,22 @@ MRT_BossIDList = {
     [77231] = "The Iron Maidens",       -- ID of Enforcer Sorka
     [77477] = "The Iron Maidens",       -- ID of Marak the Blooded
     [77325] = "Blackhand",
+    -- Hellfire Citadel
+        -- Hellfire Assault need boss yell or different win condition
+    [90284] = "Iron Reaver",
+    [90776] = "Kormrok",
+    [90378] = "Kilrogg Deadeye",
+    [92146] = "Hellfire High Council",  -- ID of Gurtogg Bloodboil
+    [93713] = "Hellfire High Council",  -- ID of Blademaster Jubei'thos
+    [92144] = "Hellfire High Council",  -- ID of Dia Darkwhisper
+    [91809] = "Gorefiend",
+    [95067] = "Shadow-Lord Iskar",
+    [90296] = "Socrethar the Eternal",  -- ID of Soulbound Construct
+    [93439] = "Tyrant Velhari",
+    [89890] = "Fel Lord Zakuun",
+    [93068] = "Xhul'horac",
+    [91349] = "Mannaroth",
+    [91331] = "Archimonde",
 }
 
 -- ARRAY 
