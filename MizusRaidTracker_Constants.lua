@@ -87,6 +87,7 @@ MRT_RaidZones = {
     -- Warlords of Draenor
     [994] = true,       -- Highmaul
     [988] = true,       -- Blackrock Foundry
+    [1026] = true,      -- Hellfire Citadel
 }
 
 MRT_LegacyRaidZonesPanadria = {
