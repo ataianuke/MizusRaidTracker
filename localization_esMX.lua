@@ -31,6 +31,7 @@ if GetLocale() ~= "esMX" then return end
 --@localization(locale="esMX", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[800]", namespace="Yells/Firelands")@
 --@localization(locale="esMX", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[886]", namespace="Yells/Terrace_of_Endless_Spring")@
 --@localization(locale="esMX", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[953]", namespace="Yells/Siege_of_Orgrimmar")@
+--@localization(locale="esMX", format="lua_additive_table", handle-unlocalized="comment", table-name="_L.yells[1026]", namespace="Yells/Hellfire_Citadel")@
 
 
 ---------------------------------
