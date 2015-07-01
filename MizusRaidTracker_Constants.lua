@@ -386,7 +386,7 @@ MRT_BossIDList = {
     -- Hellfire Citadel
         -- Hellfire Assault need boss yell or different win condition
     [90284] = "Iron Reaver",
-    [90776] = "Kormrok",
+    [90435] = "Kormrok",
     [90378] = "Kilrogg Deadeye",
     [92146] = "Hellfire High Council",  -- ID of Gurtogg Bloodboil
     [93713] = "Hellfire High Council",  -- ID of Blademaster Jubei'thos
@@ -551,6 +551,7 @@ MRT_IgnoredItemIDList = {
     [115288] = true,    -- Felbreaker's Tome
     [115289] = true,    -- Sigil of the Sorcerer King
     [115494] = true,    -- Draenic Thaumaturgical Orb
+    [127115] = true,    -- Tome of Chaos
     
     -- WoD Garrison Follower Upgrades
     [114131] = true,    -- Power Overrun Weapon Enhancement
