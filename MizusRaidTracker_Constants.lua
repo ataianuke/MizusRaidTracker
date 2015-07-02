@@ -389,7 +389,7 @@ MRT_BossIDList = {
     [90435] = "Kormrok",
     [90378] = "Kilrogg Deadeye",
     [92146] = "Hellfire High Council",  -- ID of Gurtogg Bloodboil
-    [93713] = "Hellfire High Council",  -- ID of Blademaster Jubei'thos
+    [92142] = "Hellfire High Council",  -- ID of Blademaster Jubei'thos
     [92144] = "Hellfire High Council",  -- ID of Dia Darkwhisper
     [91809] = "Gorefiend",
     [95067] = "Shadow-Lord Iskar",
@@ -503,6 +503,11 @@ MRT_ReverseBossIDList = {
 	
 	["Immerseus"] = 71543,
 	["Spoils of Pandaria"] = 71889,		-- ID of ... something
+    
+    ---------------------------
+    --  Warlords of Draenor  --
+    ---------------------------
+    ["Hellfire Assault"] = 95068,
 }
 
 
