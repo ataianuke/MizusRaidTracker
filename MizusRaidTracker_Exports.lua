@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2014)
+--    * Mîzukichan @ EU-Antonidas (2010-2015)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -56,7 +56,7 @@ end
 ------------------------
 -- returns a table with bonus - returns nil, if no bonus IDs 
 function mrt:GetBonusIDs(itemData)
-    local function returnFormat(itemID, enchant, gem1, gem2, gem3, gem4, suffixID, uniqueID, level, upgradeID, iniDiffID, numBonusIDs, ...)
+    local function returnFormat(itemID, enchant, gem1, gem2, gem3, gem4, suffixID, uniqueID, level, specializationID, upgradeID, iniDiffID, numBonusIDs, ...)
         if (not numBonusIDs or tonumber(numBonusIDs) == 0) then return nil; end
         local t = { ... } 
         return t
