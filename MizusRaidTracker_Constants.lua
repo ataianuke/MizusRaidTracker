@@ -397,7 +397,7 @@ MRT_BossIDList = {
     [90269] = "Tyrant Velhari",
     [89890] = "Fel Lord Zakuun",
     [93068] = "Xhul'horac",
-    [91349] = "Mannaroth",
+    [91349] = "Mannoroth",
     [91331] = "Archimonde",
 }
 
