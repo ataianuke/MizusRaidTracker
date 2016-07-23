@@ -74,7 +74,16 @@ local MRT_BossLootTableColDef = {
                 --MRT_Debug("self:GetCell(realrow, column) = "..self:GetCell(realrow, column));
                 local itemId = self:GetCell(realrow, column);
                 local itemTexture = GetItemIcon(itemId); 
-                cellFrame:SetBackdrop( { bgFile = itemTexture } );
+                --cellFrame:SetBackdrop( { bgFile = itemTexture } );            -- put this back in, if and when SetBackdrop can handle texture IDs
+                if not (cellFrame.cellItemTexture) then
+                    cellFrame.cellItemTexture = cellFrame:CreateTexture();
+                end
+                cellFrame.cellItemTexture:SetTexture(itemTexture);
+                cellFrame.cellItemTexture:SetTexCoord(0, 1, 0, 1);
+                cellFrame.cellItemTexture:Show();
+                cellFrame.cellItemTexture:SetPoint("CENTER", cellFrame.cellItemTexture:GetParent(), "CENTER");
+                cellFrame.cellItemTexture:SetWidth(30);
+                cellFrame.cellItemTexture:SetHeight(30);
             end
             -- tooltip handling
             local itemLink = self:GetCell(realrow, 6);
