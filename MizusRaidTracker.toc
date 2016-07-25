@@ -23,6 +23,8 @@ localization_ptBR.lua
 localization_ruRU.lua
 localization_zhCN.lua
 localization_zhTW.lua
+MizusRaidTracker_UIDropDownMenuTemplates.xml
+MizusRaidTracker_UIDropDownMenu.lua
 MizusRaidTracker_Constants.lua
 MizusRaidTracker.xml
 MizusRaidTracker_Options.xml
