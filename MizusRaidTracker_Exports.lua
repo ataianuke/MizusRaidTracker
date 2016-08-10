@@ -731,6 +731,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         ["PRIEST"] = 9,
         ["DEATHKNIGHT"] = 10,   -- Wrath of the Lich King
         ["MONK"] = 11,          -- Mists of Pandaria
+        ["DEMONHUNTER"] = 12,   -- Legion
     };
     local MLDKP_RaceTable = {
         ["Gnome"] = 1,
