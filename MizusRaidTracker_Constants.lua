@@ -413,6 +413,13 @@ MRT_BossIDList = {
     --  Legion  --
     --------------    
     -- The Emerald Nightmare
+    [102672] = "Nythendra",
+    [105393] = "Il'gynoth",
+    [106087] = "Elerethe Renferal",
+    [100497] = "Ursoc",
+    [102679] = "Dragons of Nightmare",  -- ID of Ysondre
+    [104636] = "Cenarius",
+    [103769] = "Xavius",
 }
 
 -- ARRAY 
@@ -481,6 +488,12 @@ MRT_BossRenameList = {
     ---------------------------
     -- Blackrock Foundry
     [76806] = "The Blast Furnace",  
+    
+    --------------
+    --  Legion  --
+    --------------    
+    -- The Emerald Nightmare
+    [102679] = "Dragons of Nightmare",
 }
 
 
