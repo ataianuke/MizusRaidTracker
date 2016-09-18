@@ -408,6 +408,11 @@ MRT_BossIDList = {
     [93068] = "Xhul'horac",
     [91349] = "Mannoroth",
     [91331] = "Archimonde",
+    
+    --------------
+    --  Legion  --
+    --------------    
+    -- The Emerald Nightmare
 }
 
 -- ARRAY 

@@ -1,4 +1,4 @@
-## Interface: 40000
+## Interface: 70000
 ## Title: LibEPGP_GPCalculator
 ## Version: 1.0
 ## Notes: Does stuff for Mizukichan

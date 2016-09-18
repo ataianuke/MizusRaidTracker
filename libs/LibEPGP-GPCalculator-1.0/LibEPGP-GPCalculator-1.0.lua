@@ -4,7 +4,7 @@
 -- A library for calculating GP values of items.
 -- 
 -- This library is written and copyrighted by:
---    * Mizukichan @ EU-Thrall (2010-2013)
+--    * Mîzukichan @ EU-Antonidas (2010-2016)
 --
 -- Licensed under the MIT-License (see LICENSE.txt)
 --
@@ -12,7 +12,7 @@
 assert(LibStub, "LibEPGP_GPCalculator-1.0 requires LibStub")
 assert(LibStub:GetLibrary("LibBabble-Inventory-3.0", true), "LibEPGP-GPCalculator-1.0 requires LibBabble-Inventory-3.0")
 
-local libGP = LibStub:NewLibrary("LibEPGP-GPCalculator-1.0", 1)
+local libGP = LibStub:NewLibrary("LibEPGP-GPCalculator-1.0", 2)
 
 if not libGP then 
     return -- No upgrade needed
@@ -26,27 +26,36 @@ do
     local _, _, _, uiVersion = GetBuildInfo()
     local epgpCoefficient = 0
     local standard_ilvl = 0
+    local ilvl_denominator = 26
 
     -- The coefficient seems to have changed in Cataclysm to 0.06974 - this isn't in the official web documentation but in the EPGP-Addon-Code
-    -- Update: coefficient formula: 1000 * 2 ^ (-standard_ilvl / 26)
+    -- Update: coefficient formula: 1000 * 2 ^ (-standard_ilvl / ilvl_denominator)
     -- standard_ilvl = normal raiding gear ilvl
+    local level_cap = MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()]
     if (uiVersion < 40200) then
         standard_ilvl = 359
     elseif (uiVersion < 40300) then
         standard_ilvl = 378
-    elseif MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] < 90 then
+    elseif (level_cap == 80) then
         standard_ilvl = 397
     elseif (uiVersion < 50200) then
         standard_ilvl = 496
     elseif (uiVersion < 50400) then
         standard_ilvl = 522
-    elseif MAX_PLAYER_LEVEL_TABLE[GetExpansionLevel()] < 100 then
+    elseif (uiVersion < 60000) or (level_cap == 90) then
         standard_ilvl = 553
+    elseif (uiVersion < 60200) then
+        standard_ilvl = 680
+        ilvl_denominator = 30
+    elseif (uiVersion < 70000) then
+        standard_ilvl = 710
+        ilvl_denominator = 30
     else
-        standard_ilvl = 670
+        standard_ilvl = 865
+        ilvl_denominator = 30
     end
     
-    epgpCoefficient = 1000 * 2 ^ (-standard_ilvl / 26)
+    epgpCoefficient = 1000 * 2 ^ (-standard_ilvl / ilvl_denominator)
 
     -- List of various ItemIDs of token and their corresponding item level:
     local CUSTOM_ITEM_DATA = {
@@ -458,33 +467,59 @@ do
         -- Item IDs are identical across difficulties, so specify nil for item level
         -- and specify the tier number instead: the raid difficulty and tier number
         -- will be used to get the item level.
-        [119309] = { 4, 665, "INVTYPE_SHOULDER" },
-        [119322] = { 4, 665, "INVTYPE_SHOULDER" },
-        [119314] = { 4, 665, "INVTYPE_SHOULDER" },
+        [119309] = { 4, 670, "INVTYPE_SHOULDER" },
+        [119322] = { 4, 670, "INVTYPE_SHOULDER" },
+        [119314] = { 4, 670, "INVTYPE_SHOULDER" },
 
-        [119307] = { 4, 665, "INVTYPE_LEGS" },
-        [119320] = { 4, 665, "INVTYPE_LEGS" },
-        [119313] = { 4, 665, "INVTYPE_LEGS" },
+        [119307] = { 4, 670, "INVTYPE_LEGS" },
+        [119320] = { 4, 670, "INVTYPE_LEGS" },
+        [119313] = { 4, 670, "INVTYPE_LEGS" },
 
-        [119308] = { 4, 665, "INVTYPE_HEAD" },
-        [119321] = { 4, 665, "INVTYPE_HEAD" },
-        [119312] = { 4, 665, "INVTYPE_HEAD" },
+        [119308] = { 4, 670, "INVTYPE_HEAD" },
+        [119321] = { 4, 670, "INVTYPE_HEAD" },
+        [119312] = { 4, 670, "INVTYPE_HEAD" },
 
-        [119306] = { 4, 665, "INVTYPE_HAND" },
-        [119319] = { 4, 665, "INVTYPE_HAND" },
-        [119311] = { 4, 665, "INVTYPE_HAND" },
+        [119306] = { 4, 670, "INVTYPE_HAND" },
+        [119319] = { 4, 670, "INVTYPE_HAND" },
+        [119311] = { 4, 670, "INVTYPE_HAND" },
 
-        [119305] = { 4, 665, "INVTYPE_CHEST" },
-        [119318] = { 4, 665, "INVTYPE_CHEST" },
-        [119315] = { 4, 665, "INVTYPE_CHEST" },
+        [119305] = { 4, 670, "INVTYPE_CHEST" },
+        [119318] = { 4, 670, "INVTYPE_CHEST" },
+        [119315] = { 4, 670, "INVTYPE_CHEST" },
 
         -- T17 essences
-        [119310] = { 4, 665, "INVTYPE_HEAD" },
-        [120277] = { 4, 665, "INVTYPE_HEAD" },
-        [119323] = { 4, 665, "INVTYPE_HEAD" },
-        [120279] = { 4, 665, "INVTYPE_HEAD" },
-        [119316] = { 4, 665, "INVTYPE_HEAD" },
-        [120278] = { 4, 665, "INVTYPE_HEAD" },
+        [119310] = { 4, 670, "INVTYPE_HEAD" },
+        [120277] = { 4, 670, "INVTYPE_HEAD" },
+        [119323] = { 4, 670, "INVTYPE_HEAD" },
+        [120279] = { 4, 670, "INVTYPE_HEAD" },
+        [119316] = { 4, 670, "INVTYPE_HEAD" },
+        [120278] = { 4, 670, "INVTYPE_HEAD" },
+        
+        -- T18
+        [127957] = { 4, 695, "INVTYPE_SHOULDER" },
+        [127967] = { 4, 695, "INVTYPE_SHOULDER" },
+        [127961] = { 4, 695, "INVTYPE_SHOULDER" },
+
+        [127955] = { 4, 695, "INVTYPE_LEGS" },
+        [127965] = { 4, 695, "INVTYPE_LEGS" },
+        [127960] = { 4, 695, "INVTYPE_LEGS" },
+
+        [127956] = { 4, 695, "INVTYPE_HEAD" },
+        [127966] = { 4, 695, "INVTYPE_HEAD" },
+        [127959] = { 4, 695, "INVTYPE_HEAD" },
+
+        [127954] = { 4, 695, "INVTYPE_HAND" },
+        [127964] = { 4, 695, "INVTYPE_HAND" },
+        [127958] = { 4, 695, "INVTYPE_HAND" },
+
+        [127953] = { 4, 695, "INVTYPE_CHEST" },
+        [127963] = { 4, 695, "INVTYPE_CHEST" },
+        [127962] = { 4, 695, "INVTYPE_CHEST" },
+
+        -- T18 trinket tokens (note: slightly higher ilvl)
+        [127969] = { 4, 705, "INVTYPE_TRINKET" },
+        [127970] = { 4, 705, "INVTYPE_TRINKET" },
+        [127968] = { 4, 705, "INVTYPE_TRINKET" },
 
     }
 
@@ -519,14 +554,26 @@ do
         [105867] = 566,
         [105868] = 566,
         -- T17 Essences (also using bonus ID system)
-        [119310] = 665,
-        [120277] = 665,
-        [119323] = 665,
-        [120279] = 665,
-        [119316] = 665,
-        [120278] = 665,
+        [119310] = 670,
+        [120277] = 670,
+        [119323] = 670,
+        [120279] = 670,
+        [119316] = 670,
+        [120278] = 670,
     }
 
+    -- Used to add extra GP if the item contains bonus stats
+    local ITEM_BONUS_GP = {
+        [40]  = 0,  -- avoidance, no material value
+        [41]  = 0,  -- leech, no material value
+        [42]  = 25,  -- speed, arguably useful, so 25 gp
+        [43]  = 0,  -- indestructible, no material value
+        [523] = 200, -- extra socket
+        [563] = 200, -- extra socket
+        [564] = 200, -- extra socket
+        [565] = 200, -- extra socket
+        [572] = 200, -- extra socket
+    }    
 
     --- Calculate and return a simple list of possible GP values. If there is more than one possible GP value, the function will also return a
     -- human readable string, for presenting the different values to a user and a special list, to represent which value apply under which conditions.
@@ -731,6 +778,6 @@ do
         --]]
         -- sanity check inputs here
         -- calculate the GP value
-        return floor( epgpCoefficient * 2 ^ ( itemLevel/26 + (rarity - 4) ) * slotMod )
+        return floor( epgpCoefficient * 2 ^ ( itemLevel/ilvl_denominator + (rarity - 4) ) * slotMod )
     end
 end

@@ -121,7 +121,6 @@ local LBB = LibStub("LibBabble-Boss-3.0");
 local LBBL = LBB:GetUnstrictLookupTable();
 local LBI = LibStub("LibBabble-Inventory-3.0");
 local LBIR = LBI:GetReverseLookupTable();
-local EPGPCalc = LibStub("LibEPGP-GPCalculator-1.0");
 local LibGP = LibStub("LibGearPoints-1.2-MRT");
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
