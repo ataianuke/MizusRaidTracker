@@ -263,10 +263,37 @@
           </Layer>
         </Layers>
       </CheckButton>
-      
+      <CheckButton name="$parent_LogPandariaRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogCataclysmRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Pandaria raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>
+      <CheckButton name="$parent_LogWarlordsRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogPandariaRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Warlords of Draenor raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </CheckButton>      
       <CheckButton name="$parent_LogLootModePersonal_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogCataclysmRaids_CB" y="-25"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWarlordsRaids_CB" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">

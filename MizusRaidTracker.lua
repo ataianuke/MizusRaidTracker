@@ -79,7 +79,8 @@ local MRT_Defaults = {
         ["Tracking_LogAVRaids"] = false,                                            -- Track PvP raids: true / nil
         ["Tracking_LogWotLKRaids"] = false,                                         -- Track WotLK raid: true / nil
         ["Tracking_LogCataclysmRaids"] = false,                                     -- Track Catacylsm raid: true / nil
-        ["Tracking_LogMoPRaids"] = true,                                            -- Track MoP raid: true / nil
+        ["Tracking_LogMoPRaids"] = false,                                           -- Track MoP raid: true / nil
+        ["Tracking_LogWarlordsRaids"] = false,                                      -- Track Warlords of Draenor raid: true / nil
         ["Tracking_LogLootModePersonal"] = true,
         ["Tracking_AskForDKPValue"] = true,                                         -- 
         ["Tracking_AskForDKPValuePersonal"] = true,                                 -- ask for points cost when in personal loot mode true/nil - not used when generic option is off
@@ -611,6 +612,10 @@ function MRT_UpdateSavedOptions()
         MRT_Options["Tracking_AskForDKPValuePersonal"] = true;
         MRT_Options["General_OptionsVersion"] = 17;
     end
+    if MRT_Options["General_OptionsVersion"] == 17 then
+        MRT_Options["Tracking_LogWarlordsRaids"] = true;
+        MRT_Options["General_OptionsVersion"] = 18;
+    end
 end
 
 
@@ -875,6 +880,16 @@ function MRT_CheckZoneAndSizeStatus()
         -- Check if the current raidZone is a zone which should be tracked
         if (MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
             MRT_Debug("This instance is a PvP-Raid and tracking of those is disabled.");
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        if (MRT_LegacyRaidZonesWarlords[areaID] and not MRT_Options["Tracking_LogWarlordsRaids"]) then
+            MRT_Debug("This instance is a Draenor-Raid and tracking of those is disabled.");
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        if (MRT_LegacyRaidZonesPanadria[areaID] and not MRT_Options["Tracking_LogMoPRaids"]) then
+            MRT_Debug("This instance is a Pandaria-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end

@@ -91,6 +91,8 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB_Text:SetText(MRT_L.Options["TP_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_LogCataclysmRaids_CB_Text:SetText(MRT_L.Options["TP_LogCataclysmRaids"]);
+    MRT_Options_TrackingPanel_LogPandariaRaids_CB_Text:SetText(MRT_L.Options["TP_LogMoPRaids"]);
+    MRT_Options_TrackingPanel_LogWarlordsRaids_CB_Text:SetText(MRT_L.Options["TP_LogWarlordsRaids"]);
     MRT_Options_TrackingPanel_LogLootModePersonal_CB_Text:SetText(MRT_L.Options["TP_LogLootModePersonal"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
@@ -164,6 +166,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
     MRT_Options["Tracking_LogWotLKRaids"] = MRT_Options_TrackingPanel_LogWotLKRaids_CB:GetChecked();
     MRT_Options["Tracking_LogCataclysmRaids"] = MRT_Options_TrackingPanel_LogCataclysmRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogMoPRaids"] = MRT_Options_TrackingPanel_LogPandariaRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogWarlordsRaids"] = MRT_Options_TrackingPanel_LogWarlordsRaids_CB:GetChecked();
     MRT_Options["Tracking_LogLootModePersonal"] = MRT_Options_TrackingPanel_LogLootModePersonal_CB:GetChecked();
     MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
     MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
@@ -236,6 +240,8 @@ function MRT_Options_RestoreValues()
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB:SetChecked(MRT_Options["Tracking_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_LogCataclysmRaids_CB:SetChecked(MRT_Options["Tracking_LogCataclysmRaids"]);
+    MRT_Options_TrackingPanel_LogPandariaRaids_CB:SetChecked(MRT_Options["Tracking_LogMoPRaids"]);
+    MRT_Options_TrackingPanel_LogWarlordsRaids_CB:SetChecked(MRT_Options["Tracking_LogWarlordsRaids"]);
     MRT_Options_TrackingPanel_LogLootModePersonal_CB:SetChecked(MRT_Options["Tracking_LogLootModePersonal"]);
     MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
