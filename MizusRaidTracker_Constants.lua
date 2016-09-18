@@ -88,6 +88,15 @@ MRT_RaidZones = {
     [994] = true,       -- Highmaul
     [988] = true,       -- Blackrock Foundry
     [1026] = true,      -- Hellfire Citadel
+    -- Legion
+    [1094] = true,      -- The Emerald Nightmare
+    [1088] = true,      -- The Nighthold
+}
+
+MRT_LegacyRaidZonesWarlords = {
+    [994] = true,       -- Highmaul
+    [988] = true,       -- Blackrock Foundry
+    [1026] = true,      -- Hellfire Citadel
 }
 
 MRT_LegacyRaidZonesPanadria = {
