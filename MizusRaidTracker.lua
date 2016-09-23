@@ -1301,13 +1301,15 @@ function MRT_AutoAddLoot(chatmsg)
     -- if code reach this point, we should have a valid looter and a valid itemLink
     MRT_Debug("Item looted - Looter is "..playerName.." and loot is "..itemLink);
     -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
-    local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _ = MRT_GetDetailedItemInformation(itemLink);
+    local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemLink);
     if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLoot()"); return; end
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > itemRarity) then MRT_Debug("Item not tracked - quality is too low."); return; end
     if (MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] > itemLevel) then MRT_Debug("Item not tracked - iLvl is too low."); return; end
-    if (MRT_Options["ItemTracking_IgnoreGems"] and LBIR[itemType] == "Gem") then MRT_Debug("Item not tracked - it is a gem and the corresponding ignore option is on."); return; end
-    if (MRT_Options["ItemTracking_IgnoreEnchantingMats"] and LBIR[itemType] == "Trade Goods" and LBIR[itemSubType] == "Enchanting") then MRT_Debug("Item not tracked - it is a enchanting material and the corresponding ignore option is on."); return; end
+    -- itemClassID 3 = "Gem", itemSubClassID 11 = "Artifact Relic"; itemClassID 7 = "Tradeskill", itemSubClassID 4 = "Jewelcrafting", 12 = Enchanting
+    if (MRT_Options["ItemTracking_IgnoreGems"] and itemClassID == 3 and itemSubClassID ~= 11) then MRT_Debug("Item not tracked - it is a gem and the corresponding ignore option is on."); return; end
+    if (MRT_Options["ItemTracking_IgnoreGems"] and itemClassID == 7 and itemSubClassID == 4) then MRT_Debug("Item not tracked - it is a gem and the corresponding ignore option is on."); return; end
+    if (MRT_Options["ItemTracking_IgnoreEnchantingMats"] and itemClassID == 7 and itemSubClassID == 12) then MRT_Debug("Item not tracked - it is a enchanting material and the corresponding ignore option is on."); return; end
     if (MRT_IgnoredItemIDList[itemId]) then MRT_Debug("Item not tracked - ItemID is listed on the ignore list"); return; end
     local dkpValue = 0;
     local lootAction = nil;
@@ -1789,17 +1791,16 @@ function MRT_GetNPCID(GUID)
 end
 
 -- @param itemIdentifer: Either itemLink or itemID and under special circumstances itemName
--- @usage local itemName, itemLink, itemId, itemString, itemRarity, itemColor, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = MRT_GetDetailedItemInformation(itemIdentifier)
+-- @usage local itemName, itemLink, itemId, itemString, itemRarity, itemColor, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemIdentifier)
 -- If itemIdentifier is not valid, the return value will be nil
 -- otherwise, it will be a long tuple of item information
--- this function should be compatible with 3.x and 4.0.x clients
 function MRT_GetDetailedItemInformation(itemIdentifier)
-    local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice = GetItemInfo(itemIdentifier);
+    local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice, itemClassID, itemSubClassID = GetItemInfo(itemIdentifier);
     if (not itemLink) then return nil; end
     local _, itemString, _ = deformat(itemLink, "|c%s|H%s|h%s|h|r");
     local itemId, _ = deformat(itemString, "item:%d:%s");
     local itemColor = MRT_ItemColors[itemRarity + 1];
-    return itemName, itemLink, itemId, itemString, itemRarity, itemColor, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice;
+    return itemName, itemLink, itemId, itemString, itemRarity, itemColor, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice, itemClassID, itemSubClassID;
 end
 
 function MRT_GetCurrentTime()
