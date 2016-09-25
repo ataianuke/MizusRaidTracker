@@ -593,6 +593,9 @@ MRT_IgnoredItemIDList = {
     
     -- Rogue stuff
     [113007] = true,    -- Magma-Infused War Beads
+    
+    -- Legion Questitems
+    [141303] = true,    -- Essence of Clarity
 }
 
 
