@@ -595,7 +595,9 @@ MRT_IgnoredItemIDList = {
     [113007] = true,    -- Magma-Infused War Beads
     
     -- Legion Questitems
-    [141303] = true,    -- Essence of Clarity
+    [141303] = true,    -- Essence of Clarity (normal)
+    [141304] = true,    -- Essence of Clarity (heroic)
+    [141305] = true,    -- Essence of Clarity (mythic)
 }
 
 
