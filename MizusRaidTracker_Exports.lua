@@ -491,7 +491,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         -- If the attendance check is enabled, modify the loot time to guarantee that it is in the borders of the RLI raid time window
         if (MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"]) then
             local bossKillTime = MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"];
-            itemXml = itemXml.."<time>"..(bossKillTime + 5).."</time>";
+            itemXml = itemXml.."<time>"..(bossKillTime + itemID).."</time>";
         else
             itemXml = itemXml.."<time>"..MRT_RaidLog[raidID]["Loot"][itemID]["Time"].."</time>";
         end
