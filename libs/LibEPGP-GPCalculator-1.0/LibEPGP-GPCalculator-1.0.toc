@@ -1,7 +1,0 @@
-## Interface: 70000
-## Title: LibEPGP_GPCalculator
-## Version: 1.0
-## Notes: Does stuff for Mizukichan
-## Author: Mizukichan@EU-Thrall
-
-LibEPGP_GPCalculator-1.0.lua
