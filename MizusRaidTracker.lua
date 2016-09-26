@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2015)
+--    * Mîzukichan @ EU-Antonidas (2010-2016)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -119,8 +119,6 @@ local LDBIcon = LibStub("LibDBIcon-1.0");
 local LDialog = LibStub("LibDialog-1.0");
 local LBB = LibStub("LibBabble-Boss-3.0");
 local LBBL = LBB:GetUnstrictLookupTable();
-local LBI = LibStub("LibBabble-Inventory-3.0");
-local LBIR = LBI:GetReverseLookupTable();
 local LibGP = LibStub("LibGearPoints-1.2-MRT");
 local ScrollingTable = LibStub("ScrollingTable");
 local tinsert = tinsert;
