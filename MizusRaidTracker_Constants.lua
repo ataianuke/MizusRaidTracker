@@ -1,6 +1,5 @@
 -- *********************************************************
 -- **           Mizus Raid Tracker - Constants            **
--- **           <http://nanaki.affenfelsen.de>            **
 -- *********************************************************
 --
 
@@ -90,6 +89,7 @@ MRT_RaidZones = {
     [1026] = true,      -- Hellfire Citadel
     -- Legion
     [1094] = true,      -- The Emerald Nightmare
+    [1114] = true,      -- Trial of Valor
     [1088] = true,      -- The Nighthold
 }
 
@@ -420,6 +420,11 @@ MRT_BossIDList = {
     [102679] = "Dragons of Nightmare",  -- ID of Ysondre
     [104636] = "Cenarius",
     [103769] = "Xavius",
+    
+    -- Trial of Valor
+    [114263] = "Odyn",
+    [114344] = "Guarm",
+    [114537] = "Helya",
 }
 
 -- ARRAY 
