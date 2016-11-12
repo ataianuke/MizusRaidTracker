@@ -232,6 +232,8 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "ENCOUNTER_END") then
         local encounterID, name, difficulty, size, success = ...
         MRT_Debug("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
+        if (not MRT_Options["General_MasterEnable"]) then return end;
+        MRT_EncounterEndHandler(encounterID, name, difficulty, size, success);
     
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
@@ -361,6 +363,14 @@ function MRT_CombatLogHandler(...)
         -- Get localized boss name, if available - else use english one supplied in the constants file
         local localBossName = LBBL[MRT_BossSpellIDTriggerList[spellID][1]] or MRT_BossSpellIDTriggerList[spellID][1];
         MRT_AddBosskill(localBossName, nil, NPCID);
+    end
+end
+
+function MRT_EncounterEndHandler(encounterID, name, difficulty, size, success)
+    if (not MRT_NumOfCurrentRaid) then return; end
+    if ((success == 1) and (MRT_EncounterIDList[encounterID])) then
+        MRT_Debug("Valid encounterID found... - Match on "..MRT_EncounterIDList[encounterID]);
+        MRT_AddBosskill(name, nil, MRT_EncounterIDList[encounterID]);
     end
 end
 

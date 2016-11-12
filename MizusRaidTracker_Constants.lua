@@ -422,9 +422,19 @@ MRT_BossIDList = {
     [103769] = "Xavius",
     
     -- Trial of Valor
-    [114263] = "Odyn",
-    [114344] = "Guarm",
-    [114537] = "Helya",
+        -- Odyn doesn't die, tracking via encounter ID 1958
+        -- [114323] = "Guarm",
+        -- [114537] = "Helya",
+}
+
+MRT_EncounterIDList = {
+    --------------
+    --  Legion  --
+    --------------
+    -- Trial of Valor
+    [1958] = 114263,            -- Odyn
+    [1962] = 114323,            -- Guarm
+    [2008] = 114537,            -- Helya
 }
 
 -- ARRAY 
