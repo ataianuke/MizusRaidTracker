@@ -1,26 +1,26 @@
 externals:
     libs/LibStub:
-        url: svn://svn.wowace.com/wow/libstub/mainline/trunk
+        url: https://repos.wowace.com/wow/libstub/trunk
         tag: latest
     libs/LibST:
-        url: svn://svn.wowace.com/wow/lib-st/mainline/trunk
+        url: https://repos.wowace.com/wow/lib-st/trunk
         tag: latest
     libs/LibDeformat-3.0:
-        url: git://git.wowace.com/wow/libdeformat-3-0/mainline.git
+        url: https://repos.wowace.com/wow/libdeformat-3-0
         tag: latest
     libs/CallbackHandler-1.0:
-        url: svn://svn.wowace.com/wow/callbackhandler/mainline/trunk/CallbackHandler-1.0
+        url: https://repos.wowace.com/wow/callbackhandler/trunk/CallbackHandler-1.0
         tag: latest
     libs/LibBabble-Boss-3.0:
-        url: svn://svn.wowace.com/wow/libbabble-boss-3-0/mainline/trunk
+        url: https://repos.wowace.com/wow/libbabble-boss-3-0/trunk
         tag: latest
     libs/LibBabble-Zone-3.0:
-        url: svn://svn.wowace.com/wow/libbabble-zone-3-0/mainline/trunk
+        url: https://repos.wowace.com/wow/libbabble-zone-3-0/trunk
         tag: latest
     libs/LibDBIcon-1.0:
-        url: svn://svn.wowace.com/wow/libdbicon-1-0/mainline/trunk/LibDBIcon-1.0
+        url: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
         tag: latest
     libs/LibDialog-1.0:
-        url: http://hg.wowace.com/wow/libdialog-1-0/mainline
+        url: https://repos.wowace.com/wow/libdialog-1-0
         tag: latest
 enable-nolib-creation: no
