@@ -435,6 +435,18 @@ MRT_EncounterIDList = {
     [1958] = 114263,            -- Odyn
     [1962] = 114323,            -- Guarm
     [2008] = 114537,            -- Helya
+    
+    -- The Nighthold
+    [1849] = 102263,            -- Skorpyon
+    [1865] = 104415,            -- Chronomatic Anomaly
+    [1867] = 104327,            -- Trilliax
+    [1871] = 104881,            -- Aluriel
+    [1862] = 103685,            -- Tichondrius
+    [1842] = 101002,            -- Krosus
+    [1886] = 104528,            -- Tel'arn
+    [1863] = 103758,            -- Etraeus
+    [1872] = 106643,            -- Elisande
+    [1866] = 105503,            -- Gul'dan
 }
 
 -- ARRAY 
