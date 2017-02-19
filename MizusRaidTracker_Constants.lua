@@ -625,6 +625,9 @@ MRT_IgnoredItemIDList = {
     [141303] = true,    -- Essence of Clarity (normal)
     [141304] = true,    -- Essence of Clarity (heroic)
     [141305] = true,    -- Essence of Clarity (mythic)
+    [143656] = true,    -- Echo of Time (normal)
+    [143657] = true,    -- Echo of Time (heroic)
+    [143658] = true,    -- Echo of Time (mythic)
 }
 
 
