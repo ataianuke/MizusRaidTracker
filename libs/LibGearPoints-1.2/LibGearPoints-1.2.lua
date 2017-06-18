@@ -581,6 +581,56 @@ local CUSTOM_ITEM_DATA = {
   [127969] = { 4, 705, "INVTYPE_TRINKET", true },
   [127970] = { 4, 705, "INVTYPE_TRINKET", true },
   [127968] = { 4, 705, "INVTYPE_TRINKET", true },
+
+  -- T19 tokens
+  [143566] = { 4, 875, "INVTYPE_SHOULDER", true }, -- Conq
+  [143570] = { 4, 875, "INVTYPE_SHOULDER", true }, -- Vanq
+  [143576] = { 4, 875, "INVTYPE_SHOULDER", true }, -- Prot
+
+  [143564] = { 4, 875, "INVTYPE_LEGS", true },
+  [143569] = { 4, 875, "INVTYPE_LEGS", true },
+  [143574] = { 4, 875, "INVTYPE_LEGS", true },
+
+  [143565] = { 4, 875, "INVTYPE_HEAD", true },
+  [143568] = { 4, 875, "INVTYPE_HEAD", true },
+  [143575] = { 4, 875, "INVTYPE_HEAD", true },
+
+  [143563] = { 4, 875, "INVTYPE_HAND", true },
+  [143567] = { 4, 875, "INVTYPE_HAND", true },
+  [143573] = { 4, 875, "INVTYPE_HAND", true },
+
+  [143562] = { 4, 875, "INVTYPE_CHEST", true },
+  [143571] = { 4, 875, "INVTYPE_CHEST", true },
+  [143572] = { 4, 875, "INVTYPE_CHEST", true },
+
+  [143577] = { 4, 875, "INVTYPE_CLOAK", true },
+  [143578] = { 4, 875, "INVTYPE_CLOAK", true },
+  [143579] = { 4, 875, "INVTYPE_CLOAK", true },
+  
+  -- T20 tokens
+  [147329] = { 4, 900, "INVTYPE_SHOULDER", true }, -- Conq
+  [147328] = { 4, 900, "INVTYPE_SHOULDER", true }, -- Vanq
+  [147330] = { 4, 900, "INVTYPE_SHOULDER", true }, -- Prot
+
+  [147326] = { 4, 900, "INVTYPE_LEGS", true },
+  [147325] = { 4, 900, "INVTYPE_LEGS", true },
+  [147327] = { 4, 900, "INVTYPE_LEGS", true },
+
+  [147323] = { 4, 900, "INVTYPE_HEAD", true },
+  [147322] = { 4, 900, "INVTYPE_HEAD", true },
+  [147324] = { 4, 900, "INVTYPE_HEAD", true },
+
+  [147320] = { 4, 900, "INVTYPE_HAND", true },
+  [147319] = { 4, 900, "INVTYPE_HAND", true },
+  [147321] = { 4, 900, "INVTYPE_HAND", true },
+
+  [147317] = { 4, 900, "INVTYPE_CHEST", true },
+  [147316] = { 4, 900, "INVTYPE_CHEST", true },
+  [147318] = { 4, 900, "INVTYPE_CHEST", true },
+
+  [147332] = { 4, 900, "INVTYPE_CLOAK", true },
+  [147331] = { 4, 900, "INVTYPE_CLOAK", true },
+  [147333] = { 4, 900, "INVTYPE_CLOAK", true },  
 }
 
 -- Used to add extra GP if the item contains bonus stats
@@ -595,6 +645,7 @@ local ITEM_BONUS_GP = {
   [564] = 200, -- extra socket
   [565] = 200, -- extra socket
   [572] = 200, -- extra socket
+  [1808] = 200, -- extra socket
 }
 
 -- The default quality threshold:
@@ -754,7 +805,7 @@ function lib:GetValue(item)
     standard_ilvl = 710
     ilvl_denominator = 30
   else
-    standard_ilvl = 865		-- The Emerald Nightmare HC
+    standard_ilvl = 915		-- Tomb of Sageras HC
     ilvl_denominator = 30
   end
   local multiplier = 1000 * 2 ^ (-standard_ilvl / ilvl_denominator)
