@@ -91,6 +91,7 @@ MRT_RaidZones = {
     [1094] = true,      -- The Emerald Nightmare
     [1114] = true,      -- Trial of Valor
     [1088] = true,      -- The Nighthold
+    [1147] = true,      -- Tomb of Sargeras
 }
 
 MRT_LegacyRaidZonesWarlords = {
@@ -447,6 +448,17 @@ MRT_EncounterIDList = {
     [1863] = 103758,            -- Etraeus
     [1872] = 106643,            -- Elisande
     [1866] = 105503,            -- Gul'dan
+    
+    -- Tomb of Sageras
+    [2032] = 115844,            -- Goroth
+    [2048] = 116691,            -- Demonic Inquisition
+    [2036] = 116407,            -- Harjatan
+    [2050] = 118518,            -- Sisters of the Moon
+    [2037] = 115767,            -- Mistress Sassz'ine
+    [2054] = 119072,            -- The Desolate Host
+    [2052] = 118289,            -- Maiden of Vigilance
+    [2038] = 116939,            -- Fallen Avatar
+    [2051] = 108573,            -- Kil'jaeden
 }
 
 -- ARRAY 
