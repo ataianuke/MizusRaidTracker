@@ -640,6 +640,10 @@ MRT_IgnoredItemIDList = {
     [143656] = true,    -- Echo of Time (normal)
     [143657] = true,    -- Echo of Time (heroic)
     [143658] = true,    -- Echo of Time (mythic)
+    [151248] = true,    -- Fragment of the Guardian's Seal
+    [151249] = true,    -- Fragment of the Guardian's Seal
+    [151250] = true,    -- Fragment of the Guardian's Seal
+    
 }
 
 
