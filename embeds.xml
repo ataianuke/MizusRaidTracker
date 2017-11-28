@@ -9,6 +9,5 @@
   <Include file="libs\LibBabble-Boss-3.0\lib.xml"/>
   <Include file="libs\LibBabble-Zone-3.0\lib.xml"/>
   <Include file="libs\LibDialog-1.0\lib.xml"/>
-  <Include file="libs\LibDialogMRT-1.0\lib.xml"/>
   <Script file="libs\LibGearPoints-1.2\LibGearPoints-1.2.lua"/>
 </Ui>
