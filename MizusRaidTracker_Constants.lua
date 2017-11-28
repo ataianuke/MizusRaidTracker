@@ -92,6 +92,7 @@ MRT_RaidZones = {
     [1114] = true,      -- Trial of Valor
     [1088] = true,      -- The Nighthold
     [1147] = true,      -- Tomb of Sargeras
+	[1188] = true,		-- Antorus
 }
 
 MRT_LegacyRaidZonesWarlords = {
@@ -459,6 +460,19 @@ MRT_EncounterIDList = {
     [2052] = 118289,            -- Maiden of Vigilance
     [2038] = 116939,            -- Fallen Avatar
     [2051] = 108573,            -- Kil'jaeden
+	
+	-- Antorus
+	[2076] = 122450,            -- Garothi Worldbreaker
+	[2074] = 122477,            -- Felhounds of Sargeras
+	[2070] = 122333,            -- Antoran High Command
+	[2064] = 122104,            -- Portal Keeper Hasabel
+	[2075] = 124445,            -- Eonar the Life-Binder
+	[2082] = 124158,            -- Imonar the Soulhunter
+	[2088] = 122578,            -- Kin'garoth
+	[2069] = 122366,            -- Variamathras
+	[2073] = 122468,            -- The Coven of Shivarra
+	[2063] = 121975,            -- Aggramar
+	[2092] = 125111,            -- Argus the Unmaker
 }
 
 -- ARRAY 
