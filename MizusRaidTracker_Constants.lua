@@ -61,96 +61,96 @@ MRT_ItemValues = {
 ----------------------
 MRT_RaidZones = {
     -- Wrath of the Lich King
-    [527] = true,       -- The Eye of Eternity
-    [531] = true,       -- The Obsidian Sanctum
-    [532] = true,       -- Vault of Archavon
-    [535] = true,       -- Naxxramas
-    [529] = true,       -- Ulduar
-    [543] = true,       -- Trial of the Crusader
-    [718] = true,       -- Onyxia's Lair
-    [604] = true,       -- Icecrown Citadel
-    [609] = true,       -- The Ruby Sanctum
+    [616] = true,       -- The Eye of Eternity
+    [615] = true,       -- The Obsidian Sanctum
+    [624] = true,       -- Vault of Archavon
+    [533] = true,       -- Naxxramas
+    [603] = true,       -- Ulduar
+    [649] = true,       -- Trial of the Crusader
+    [249] = true,       -- Onyxia's Lair
+    [631] = true,       -- Icecrown Citadel
+    [724] = true,       -- The Ruby Sanctum
     -- Cataclysm
-    [752] = true,       -- Baradin Hold
-    [754] = true,       -- Blackwing Descent
-    [758] = true,       -- The Bastion of Twilight
-    [773] = true,       -- Throne of the Four Winds
-    [800] = true,       -- Firelands
-    [824] = true,       -- Dragon Soul
+    [757] = true,       -- Baradin Hold
+    [669] = true,       -- Blackwing Descent
+    [671] = true,       -- The Bastion of Twilight
+    [754] = true,       -- Throne of the Four Winds
+    [720] = true,       -- Firelands
+    [967] = true,       -- Dragon Soul
     -- Mists of Pandaria
-    [886] = true,       -- Terrace of Endless Spring
-    [896] = true,       -- Mogu'shan Vaults
-    [897] = true,       -- Heart of Fear
-    [930] = true,       -- Throne of Thunder
-	[953] = true,		-- Siege of Orgrimmar
+    [996] = true,       -- Terrace of Endless Spring
+    [1008] = true,      -- Mogu'shan Vaults
+    [1009] = true,      -- Heart of Fear
+    [1098] = true,      -- Throne of Thunder
+	[1136] = true,		-- Siege of Orgrimmar
     -- Warlords of Draenor
-    [994] = true,       -- Highmaul
-    [988] = true,       -- Blackrock Foundry
-    [1026] = true,      -- Hellfire Citadel
+    [1228] = true,      -- Highmaul
+    [1205] = true,      -- Blackrock Foundry
+    [1448] = true,      -- Hellfire Citadel
     -- Legion
-    [1094] = true,      -- The Emerald Nightmare
-    [1114] = true,      -- Trial of Valor
-    [1088] = true,      -- The Nighthold
-    [1147] = true,      -- Tomb of Sargeras
-	[1188] = true,		-- Antorus
+    [1520] = true,      -- The Emerald Nightmare
+    [1648] = true,      -- Trial of Valor
+    [1530] = true,      -- The Nighthold
+    [1676] = true,      -- Tomb of Sargeras
+	[1712] = true,		-- Antorus
 }
 
 MRT_LegacyRaidZonesWarlords = {
-    [994] = true,       -- Highmaul
-    [988] = true,       -- Blackrock Foundry
-    [1026] = true,      -- Hellfire Citadel
+    [1228] = true,      -- Highmaul
+    [1205] = true,      -- Blackrock Foundry
+    [1448] = true,      -- Hellfire Citadel
 }
 
 MRT_LegacyRaidZonesPanadria = {
-    [886] = true,       -- Terrace of Endless Spring
-    [896] = true,       -- Mogu'shan Vaults
-    [897] = true,       -- Heart of Fear
-    [930] = true,       -- Throne of Thunder
-	[953] = true,		-- Siege of Orgrimmar
+    [996] = true,       -- Terrace of Endless Spring
+    [1008] = true,      -- Mogu'shan Vaults
+    [1009] = true,      -- Heart of Fear
+    [1098] = true,      -- Throne of Thunder
+	[1136] = true,		-- Siege of Orgrimmar
 }
 
 MRT_LegacyRaidZonesCataclysm = {
-    [752] = true,       -- Baradin Hold
-    [754] = true,       -- Blackwing Descent
-    [758] = true,       -- The Bastion of Twilight
-    [773] = true,       -- Throne of the Four Winds
-    [800] = true,       -- Firelands
-    [824] = true,       -- Dragon Soul
+    [757] = true,       -- Baradin Hold
+    [669] = true,       -- Blackwing Descent
+    [671] = true,       -- The Bastion of Twilight
+    [754] = true,       -- Throne of the Four Winds
+    [720] = true,       -- Firelands
+    [967] = true,       -- Dragon Soul
 }
 
 MRT_LegacyRaidZonesWotLK = {
-    [527] = true,       -- The Eye of Eternity
-    [531] = true,       -- The Obsidian Sanctum
-    [532] = true,       -- Vault of Archavon
-    [535] = true,       -- Naxxramas
-    [529] = true,       -- Ulduar
-    [543] = true,       -- Trial of the Crusader
-    [718] = true,       -- Onyxia's Lair
-    [604] = true,       -- Icecrown Citadel
-    [609] = true,       -- The Ruby Sanctum
+    [616] = true,       -- The Eye of Eternity
+    [615] = true,       -- The Obsidian Sanctum
+    [624] = true,       -- Vault of Archavon
+    [533] = true,       -- Naxxramas
+    [603] = true,       -- Ulduar
+    [649] = true,       -- Trial of the Crusader
+    [249] = true,       -- Onyxia's Lair
+    [631] = true,       -- Icecrown Citadel
+    [724] = true,       -- The Ruby Sanctum
 }
 
 MRT_LegacyRaidZonesBC = {
-    [799] = true,       -- Karazhan
-    [776] = true,       -- Gruul's Lair
-    [779] = true,       -- Magtheridon's Lair
-    [780] = true,       -- Serpentshrine Cavern
-    [782] = true,       -- Tempest Keep
-    [775] = true,       -- Hyjal Summit
-    [796] = true,       -- Black Temple
-    [789] = true,       -- Sunwell Plateau
+    [532] = true,       -- Karazhan
+    [565] = true,       -- Gruul's Lair
+    [544] = true,       -- Magtheridon's Lair
+    [548] = true,       -- Serpentshrine Cavern
+    [550] = true,       -- Tempest Keep
+    [534] = true,       -- Hyjal Summit
+    [564] = true,       -- Black Temple
+    [580] = true,       -- Sunwell Plateau
 }
 
 MRT_LegacyRaidZonesClassic = {
-    [755] = true,       -- Blackwing Lair
-    [696] = true,       -- Molten Core
-    [717] = true,       -- Ruins of Ahn'Qiraj
-    [766] = true,       -- Temple of Ahn'Qiraj
+    [469] = true,       -- Blackwing Lair
+    [409] = true,       -- Molten Core
+    [509] = true,       -- Ruins of Ahn'Qiraj
+    [531] = true,       -- Temple of Ahn'Qiraj
 }
 
 MRT_PvPRaids = {
-    [752] = true,       -- Baradin Hold
-    [532] = true,       -- Vault of Archavon
+    [757] = true,       -- Baradin Hold
+    [624] = true,       -- Vault of Archavon
 }
 
 
@@ -671,3 +671,43 @@ MRT_GA_TEXT_CHARNAME_BOSS = "********************".."\n".."MRT: "..MRT_Preformat
 MRT_GA_TEXT_CHARNAME_NOBOSS = "********************".."\n".."MRT: "..MRT_L.Core["GuildAttendanceAnnounceText"].."\n".."MRT: "..MRT_PreformattedTimerText.."\n".."********************"
 MRT_GA_TEXT_TRIGGER_BOSS = "********************".."\n".."MRT: "..MRT_PreformattedBossText.." "..MRT_PreformattedTriggerText.."\n".."MRT: "..MRT_PreformattedTimerText.."\n".."********************"
 MRT_GA_TEXT_TRIGGER_NOBOSS = "********************".."\n".."MRT: "..MRT_PreformattedTriggerText.."\n".."MRT: "..MRT_PreformattedTimerText.."\n".."********************"
+
+
+--------------------------------------------------
+--  Table for converting mapIDs to instanceIDs  --
+--------------------------------------------------
+mrt.DBConvertMapToInstanceList = {
+    -- Wrath of the Lich King
+    [527] = 616,        -- The Eye of Eternity
+    [531] = 615,        -- The Obsidian Sanctum
+    [532] = 624,        -- Vault of Archavon
+    [535] = 533,        -- Naxxramas
+    [529] = 603,        -- Ulduar
+    [543] = 649,        -- Trial of the Crusader
+    [718] = 249,        -- Onyxia's Lair
+    [604] = 631,        -- Icecrown Citadel
+    [609] = 724,        -- The Ruby Sanctum
+    -- Cataclysm       
+    [752] = 757,        -- Baradin Hold
+    [754] = 669,        -- Blackwing Descent
+    [758] = 671,        -- The Bastion of Twilight
+    [773] = 754,        -- Throne of the Four Winds
+    [800] = 720,        -- Firelands
+    [824] = 967,        -- Dragon Soul
+    -- Mists of Pandaria
+    [886] = 996,        -- Terrace of Endless Spring
+    [896] = 1008,       -- Mogu'shan Vaults
+    [897] = 1009,       -- Heart of Fear
+    [930] = 1098,       -- Throne of Thunder
+	[953] = 1136,		-- Siege of Orgrimmar
+    -- Warlords of Draenor
+    [994] = 1228,       -- Highmaul
+    [988] = 1205,       -- Blackrock Foundry
+    [1026] = 1448,      -- Hellfire Citadel
+    -- Legion
+    [1094] = 1520,      -- The Emerald Nightmare
+    [1114] = 1648,      -- Trial of Valor
+    [1088] = 1530,      -- The Nighthold
+    [1147] = 1676,      -- Tomb of Sargeras
+	[1188] = 1712,		-- Antorus
+}
