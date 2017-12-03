@@ -1,10 +1,10 @@
 -- ********************************************************
 -- **              Mizus RaidTracker - Core              **
--- **           <http://nanaki.affenfelsen.de>           **
+-- **               <http://cosmocanyon.de>              **
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2016)
+--    * Mîzukichan @ EU-Antonidas (2010-2017)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -216,6 +216,7 @@ function MRT_OnEvent(frame, event, ...)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         if (not MRT_NumOfCurrentRaid) then return; end
         local monsteryell, sourceName = ...;
+		-- local _, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, areaID, iniGroupSize = MRT_GetInstanceInfo();
         local areaID = GetCurrentMapAreaID();
         if (not areaID) then return; end
         if (MRT_L.Bossyells[areaID] and MRT_L.Bossyells[areaID][monsteryell]) then
@@ -872,11 +873,10 @@ end
 
 function MRT_CheckZoneAndSizeStatus()
     -- Use GetInstanceInfo() for informations about the zone! / Track bossdifficulty at bosskill (important for ICC)
-    local _, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, iniMapID, iniGroupSize = MRT_GetInstanceInfo();
+    local localInstanceInfoName, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, areaID, iniGroupSize = MRT_GetInstanceInfo();
     if (not diffID) then return; end
-    local areaID = GetCurrentMapAreaID();
     if (not areaID) then return; end
-    local localInstanceInfoName = GetMapNameByID(areaID);
+    -- local localInstanceInfoName = GetMapNameByID(areaID);
     if (not localInstanceInfoName) then return; end
     MRT_Debug("MRT_CheckZoneAndSizeStatus called - data: Name="..localInstanceInfoName.." / areaID=" ..areaID.." / Type="..instanceInfoType.." / diffDesc="..diffDesc.." / diffID="..diffID);
     -- For legacy 10 N/H and 25 N/H raids, difficulty is tracked at boss killtime, as those difficulties have a shared ID
