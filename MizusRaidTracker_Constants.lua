@@ -657,6 +657,12 @@ MRT_IgnoredItemIDList = {
     [151248] = true,    -- Fragment of the Guardian's Seal
     [151249] = true,    -- Fragment of the Guardian's Seal
     [151250] = true,    -- Fragment of the Guardian's Seal
+	[152902] = true, 	-- Rune of Passage (normal)
+	[152906] = true, 	-- Rune of Passage (heroic)
+	[152907] = true, 	-- Rune of Passage (mythic)
+	[152908] = true, 	-- Sigil of the Dark Titan (normal)
+	[152909] = true, 	-- Sigil of the Dark Titan (heroic)
+	[152910] = true, 	-- Sigil of the Dark Titan (mythic)
     
 }
 
