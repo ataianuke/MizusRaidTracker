@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2017)
+--    * MÃ®zukichan @ EU-Antonidas (2010-2017)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -309,7 +309,7 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif(event == "PLAYER_REGEN_DISABLED") then 
         wipe(MRT_ArrayBossID)
-        --MRT_Debug("Tabelle gelöscht");
+        --MRT_Debug("Tabelle gelÃ¶scht");
     
     end
 end
