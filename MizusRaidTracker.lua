@@ -181,9 +181,6 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
     frame:RegisterEvent("ZONE_CHANGED_NEW_AREA");
-	-- Testevents for ML tracker
-	frame:RegisterEvent("OPEN_MASTER_LOOT_LIST");
-	frame:RegisterEvent("UPDATE_MASTER_LOOT_LIST");
 end
 
 
@@ -202,6 +199,12 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
+			-- Check if player is master looter - if yes, don't track chat messages 
+			-- ToDo: This will ignore some items, like BoE in Legion... - needs a proper item duplication detection... somehow...
+			if IsMasterLooter() then 
+				MRT_Debug("Current player is master looter. Stopping chat message processing...");
+				return;
+			end
             MRT_AutoAddLoot(...);
         end
         
@@ -243,10 +246,6 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
 		
-	-- ML-test
-	elseif (event == "OPEN_MASTER_LOOT_LIST") then
-		MRT_Debug("OPEN_MASTER_LOOT_LIST fired!");
-        
     elseif (event == "PARTY_CONVERTED_TO_RAID") then
         MRT_Debug("PARTY_CONVERTED_TO_RAID fired!");
         if (MRT_UnknownRelogStatus) then
@@ -297,10 +296,6 @@ function MRT_OnEvent(frame, event, ...)
         end
         MRT_RaidRosterUpdate(frame);
 		
-	-- ML-test
-	elseif (event == "UPDATE_MASTER_LOOT_LIST") then
-		MRT_Debug("UPDATE_MASTER_LOOT_LIST fired!");
-    
     elseif (event == "ZONE_CHANGED_NEW_AREA") then
         MRT_Debug("Event ZONE_CHANGED_NEW_AREA fired.");
         if (not MRT_Options["General_MasterEnable"]) then 
@@ -462,28 +457,34 @@ end
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", MRT_ChatHandler.CHAT_MSG_WHISPER_Filter);
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER);
 
--- Called when a player is awarded loot
+-- Called when a player was awarded loot by the master looter, should only be called if the player is the active master looter as hooked function
 -- Data for GetLootSlotInfo is still available, although the items itself was distributed at that time
 function MRT_Hook_GiveMasterLoot(slot, index)
+	-- Do nothing if no active raid
+	if (not MRT_NumOfCurrentRaid) then return; end
+	-- Check required input
 	if (not slot) then return; end
 	if (not index) then return; end
 	MRT_Debug("MRT_Hook_GiveMasterLoot called - Slot="..slot.." - Index="..index);
-	local _, lootName, lootQuantity, lootQuality, locked, isQuestItem, questID, isActive = GetLootSlotInfo(slot);
+	-- local _, lootName, lootQuantity, lootQuality, locked, isQuestItem, questID, isActive = GetLootSlotInfo(slot);
 	local itemLink = GetLootSlotLink(slot);
-	if (not lootName) then
-		MRT_Debug("No item found...");
+	if (not itemLink) then
+		MRT_Debug("No item found for given index.");
+		return;
 	else
-		MRT_Debug("Item found: lootName="..lootName);
 		MRT_Debug("Itemlink: "..itemLink);
 	end
 	-- GetMasterLootCandidate() - This doesn't seem return anything?!?
-	-- Available docu possibly outdated - blizz UI calls: GetMasterLootCandidate(LootFrame.selectedSlot, i)
+	-- Available documentation outdated - blizz UI calls: GetMasterLootCandidate(LootFrame.selectedSlot, i)
 	local candidate = GetMasterLootCandidate(slot, index);
 	if (not candidate) then
 		MRT_Debug("No candidate returned...");
+		return;
 	else
 		MRT_Debug("Candidate: "..candidate);
 	end
+	-- At this point, we should have valid loot information
+	MRT_AutoAddLootItem(candidate, itemLink, 1);
 end
 hooksecurefunc("GiveMasterLoot", MRT_Hook_GiveMasterLoot);
 
@@ -664,9 +665,9 @@ function MRT_UpdateSavedOptions()
 end
 
 
-------------------------------------------------
---  Make configuration changes if neccessary  --
-------------------------------------------------
+-----------------------------------------------
+--  Make configuration changes if necessary  --
+-----------------------------------------------
 function MRT_VersionUpdate()
     -- DB changes from v.nil to v.1: Move extended player information in extra database
     if (MRT_Options["DB_Version"] == nil) then
@@ -1319,35 +1320,44 @@ end
 -------------------------------
 -- track loot based on chatmessage recognized by event CHAT_MSG_LOOT
 function MRT_AutoAddLoot(chatmsg)
-    -- MRT_Debug("Lootevent recieved. Processing...");
+    MRT_Debug("Loot event received. Processing...");
     -- patterns LOOT_ITEM / LOOT_ITEM_SELF are also valid for LOOT_ITEM_MULTIPLE / LOOT_ITEM_SELF_MULTIPLE - but not the other way around - try these first
-    -- first try: somebody else recieved multiple loot (most parameters)
+    -- first try: somebody else received multiple loot (most parameters)
     local playerName, itemLink, itemCount = deformat(chatmsg, LOOT_ITEM_MULTIPLE);
-    -- next try: somebody else recieved single loot
+    -- next try: somebody else received single loot
     if (playerName == nil) then
         itemCount = 1;
         playerName, itemLink = deformat(chatmsg, LOOT_ITEM);
     end
-    -- if player == nil, then next try: player recieved multiple loot
+    -- if player == nil, then next try: player received multiple loot
     if (playerName == nil) then
         playerName = UnitName("player");
         itemLink, itemCount = deformat(chatmsg, LOOT_ITEM_SELF_MULTIPLE);
     end
-    -- if itemLink == nil, then last try: player recieved single loot
+    -- if itemLink == nil, then last try: player received single loot
     if (itemLink == nil) then
         itemCount = 1;
         itemLink = deformat(chatmsg, LOOT_ITEM_SELF);
     end
     -- if itemLink == nil, then there was neither a LOOT_ITEM, nor a LOOT_ITEM_SELF message
     if (itemLink == nil) then 
-        -- MRT_Debug("No valid lootevent recieved."); 
+        -- MRT_Debug("No valid loot event received."); 
         return; 
     end
-    -- if code reach this point, we should have a valid looter and a valid itemLink
+	-- if code reaches this point, we should have a valid looter and a valid itemLink
     MRT_Debug("Item looted - Looter is "..playerName.." and loot is "..itemLink);
-    -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r
+	MRT_AutoAddLootItem(playerName, itemLink, itemCount);
+end	
+
+-- track loot for a given player and item
+function MRT_AutoAddLootItem(playerName, itemLink, itemCount)
+	if (not playerName) then return; end
+	if (not itemLink) then return; end
+	if (not itemCount) then return; end
+	MRT_Debug("MRT_AutoAddLootItem called - playerName: "..playerName.." - itemLink: "..itemLink.." - itemCount: "..itemCount);
+    -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r (outdated!)
     local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemLink);
-    if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLoot()"); return; end
+    if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLootItem()"); return; end
     -- check options, if this item should be tracked
     if (MRT_Options["Tracking_MinItemQualityToLog"] > itemRarity) then MRT_Debug("Item not tracked - quality is too low."); return; end
     if (MRT_Options["Tracking_OnlyTrackItemsAboveILvl"] > itemLevel) then MRT_Debug("Item not tracked - iLvl is too low."); return; end
@@ -1402,11 +1412,11 @@ function MRT_AutoAddLoot(chatmsg)
             playerName = "_deleted_";
         end
     end
-    -- Quick&Dirty for Trashdrops before first bosskill
+    -- Quick&Dirty for trash drops before first boss kill
     if (MRT_NumOfLastBoss == nil) then 
         MRT_AddBosskill(MRT_L.Core["Trash Mob"], "N");
     end
-    -- if code reach this point, we should have valid item information, an active raid and at least one bosskill entry - make a table!
+    -- if code reach this point, we should have valid item information, an active raid and at least one boss kill entry - make a table!
     local MRT_LootInfo = {
         ["ItemLink"] = itemLink,
         ["ItemString"] = itemString,
