@@ -181,6 +181,9 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("RAID_INSTANCE_WELCOME");
     frame:RegisterEvent("RAID_ROSTER_UPDATE");
     frame:RegisterEvent("ZONE_CHANGED_NEW_AREA");
+	-- Testevents for ML tracker
+	frame:RegisterEvent("OPEN_MASTER_LOOT_LIST");
+	frame:RegisterEvent("UPDATE_MASTER_LOOT_LIST");
 end
 
 
@@ -239,6 +242,10 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
+		
+	-- ML-test
+	elseif (event == "OPEN_MASTER_LOOT_LIST") then
+		MRT_Debug("OPEN_MASTER_LOOT_LIST fired!");
         
     elseif (event == "PARTY_CONVERTED_TO_RAID") then
         MRT_Debug("PARTY_CONVERTED_TO_RAID fired!");
@@ -289,6 +296,10 @@ function MRT_OnEvent(frame, event, ...)
             MRT_CheckRaidStatusAfterLogin();
         end
         MRT_RaidRosterUpdate(frame);
+		
+	-- ML-test
+	elseif (event == "UPDATE_MASTER_LOOT_LIST") then
+		MRT_Debug("UPDATE_MASTER_LOOT_LIST fired!");
     
     elseif (event == "ZONE_CHANGED_NEW_AREA") then
         MRT_Debug("Event ZONE_CHANGED_NEW_AREA fired.");
@@ -450,6 +461,31 @@ function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_FILTER(event, msg, from, ...)
 end
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", MRT_ChatHandler.CHAT_MSG_WHISPER_Filter);
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER);
+
+-- Called when a player is awarded loot
+-- Data for GetLootSlotInfo is still available, although the items itself was distributed at that time
+function MRT_Hook_GiveMasterLoot(slot, index)
+	if (not slot) then return; end
+	if (not index) then return; end
+	MRT_Debug("MRT_Hook_GiveMasterLoot called - Slot="..slot.." - Index="..index);
+	local _, lootName, lootQuantity, lootQuality, locked, isQuestItem, questID, isActive = GetLootSlotInfo(slot);
+	local itemLink = GetLootSlotLink(slot);
+	if (not lootName) then
+		MRT_Debug("No item found...");
+	else
+		MRT_Debug("Item found: lootName="..lootName);
+		MRT_Debug("Itemlink: "..itemLink);
+	end
+	-- GetMasterLootCandidate() - This doesn't seem return anything?!?
+	-- Available docu possibly outdated - blizz UI calls: GetMasterLootCandidate(LootFrame.selectedSlot, i)
+	local candidate = GetMasterLootCandidate(slot, index);
+	if (not candidate) then
+		MRT_Debug("No candidate returned...");
+	else
+		MRT_Debug("Candidate: "..candidate);
+	end
+end
+hooksecurefunc("GiveMasterLoot", MRT_Hook_GiveMasterLoot);
 
 
 ------------------
