@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2017)
+--    * Mîzukichan @ EU-Antonidas (2010-2018)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -154,6 +154,7 @@ local MRT_DKPFrame_DropDownTableColDef = {
 };
 
 -- Table for boss yells
+-- ToDo: Check if win encounter events in old instances (WotLK and others) are fixed and replace yells with encounter IDs
 for k, v in pairs(_L.yells) do
     MRT_L.Bossyells[k] = {}
     for k2, v2 in pairs(v) do
