@@ -368,71 +368,181 @@ MRT_BossIDList = {
 	[71161] = "Paragons of the Klaxxi", -- ID of Kil'ruk the Wind-Reaver
 	[71865] = "Garrosh Hellscream",
     
+}
+
+MRT_EncounterIDList = {
+	------------------------------
+    --  Wrath of the Lich King  --
+    ------------------------------
+    -- Naxxramas
+    [1] = "Anub'Rekhan",
+    [1] = "Grand Widow Faerlina",
+    [1] = "Maexxna",
+    [1] = "Noth the Plaguebringer",
+    [1] = "Heigan the Unclean",
+    [1] = "Loatheb",
+    [1] = "Instructor Razuvious",
+    [1] = "Gothik the Harvester",
+    [1] = "The Four Horsemen",              
+    [1] = "Patchwerk",
+    [1] = "Grobbulus",
+    [1] = "Gluth",
+    [1] = "Thaddius",
+    [1] = "Sapphiron",
+    [1] = "Kel'Thuzad",
+    
+    -- The Obsidian Sanctum
+    [1] = "Sartharion",
+    
+    -- Eye of Eternity
+    [1] = "Malygos",
+    
+    -- Archavon's Chamber
+    [1] = "Archavon the Stone Watcher",
+    [1] = "Emalon the Storm Watcher",
+    [1] = "Koralon the Flame Watcher",
+    [1] = "Toravon the Ice Watcher",
+    
+    -- Ulduar
+    [1132] = "Flame Leviathan",
+    [1136] = "Ignis the Furnace Master",
+    [1139] = "Razorscale",
+    [1142] = "XT-002 Deconstructor",
+    [1140] = "Assembly of Iron",               
+    [1137] = "Kologarn",
+    [1131] = "Auriaya",
+	[1133] = "Freya",
+	[1135] = "Hodir",
+	[1138] = "Mimiron",
+	[1141] = "Thorim",
+    [1134] = "General Vezax",
+    [1143] = "Yogg-Saron",
+    [1130] = "Algalon",
+        
+    -- Onyxias Lair
+    [1] = "Onyxia",
+    
+    -- Trial of the Crusader
+    [1] = "Icehowl",                        
+    [1] = "Lord Jaraxxus",
+	[1] = "Faction Champions",
+    [1] = "The Twin Val'kyr",             
+    [1] = "Anub'arak",    
+    
+    -- Icecrown Citadel
+    [1101] = "Lord Marrowgar",
+    [1100] = "Lady Deathwhisper",
+	[1099] = "Gunship Battle",					-- this one might not work
+    [1096] = "Deathbringer Saurfang",
+    [1097] = "Festergut",
+    [1104] = "Rotface",
+    [1102] = "Professor Putricide",       
+    [1095] = "Blood Prince Council",           
+    [1103] = "Blood-Queen Lana'thel",
+    [1098] = "Dreamwalker Valithria",
+    [1105] = "Sindragosa",
+    [1106] = "The Lich King",
+    
+    -- The Ruby Sanctum
+    [1] = "Halion",                     
+	
+	
+    -----------------
+    --  Cataclysm  --
+    -----------------
+    -- Baradin Hold
+    [1] = "Argaloth",
+    [1] = "Occu'thar",
+    [1] = "Alizabal",
+    
+    -- Blackwing Descent
+    [1111] = 41570,				-- "Magmaw",
+    [1111] = 42180,				-- "Omnotron Defense System", ID of Toxitron
+    [1111] = 41378,				-- "Maloriak",
+    [1111] = 41442,				-- "Atramedes",
+    [1023] = 43296,				-- "Chimaeron",
+    [1111] = 41376,				-- "Nefarian",
+    
+    -- The Bastion of Twilight
+    [1] = "Halfus Wyrmbreaker",
+    [1] = "Valiona and Theralion",          -- ID of Valiona    - Valiona & Theralion - Twin drakes with shared health pool
+    [1] = "Ascendant Council",              -- ID of Elementium Monstrosity
+    [1] = "Cho'gall",
+    [1] = "Sinestra",
+    
+    -- Throne of the Four Winds
+    [1] = "Conclave of Wind",
+    [1] = "Al'Akir",
+    
+    -- Firelands
+    [1] = "Beth'tilac",
+    [1] = "Lord Rhyolith",
+    [1] = "Alysrazor",
+    [1] = "Shannox",
+    [1] = "Baleroc",
+    [1] = "Majordomo Staghelm",
+    [1] = "Ragnaros",
+    
+    -- Dragon Soul
+    [1] = "Morchok",
+    [1] = "Warlord Zonozz",
+    [1] = "Yor'sahj the Unsleeping",
+    [1] = "Hagara the Stormbinder",
+    [1] = "Ultraxion",
+    [1] = "Warmaster Blackhorn",
+    [1] = "Spine of Deathwing",   
+    [1] = "Madness of Deathwing",
+    
+    
     ---------------------------
     --  Warlords of Draenor  --
     ---------------------------
     -- Highmaul
-    [78714] = "Kargath Bladefist",      -- Will probably need a boss yell
-    [77404] = "The Butcher",
-    [78948] = "Tectus",
-    [78491] = "Brackenspore",
-    [78238] = "Twin Ogron",             -- ID of Pol
-    [78237] = "Twin Ogron",             -- ID of Phemos
-    [79015] = "Ko'ragh",
-    [77428] = "Imperator Mar'gok",
+    [1721] = 78714,             -- Kargath Bladefist
+    [1706] = 77404,             -- The Butcher
+    [1722] = 78948,             -- Tectus
+    [1720] = 78491,             -- Brackenspore
+    [1719] = 78237,             -- Twin Ogron               -- ID of Phemos
+    [1723] = 79015,             -- Ko'ragh
+    [1705] = 77428,             -- Imperator Mar'gok
     -- Blackrock Foundry
-    [76877] = "Gruul",
-    [77182] = "Oregorger",
-    [76865] = "Beastlord Darmac",
-    [76814] = "Flamebender Ka'graz",
-    [76973] = "Hans'gar and Franzok",   -- ID of Hans'gar
-    [76974] = "Hans'gar and Franzok",   -- ID of Franzok
-    [76906] = "Operator Thogar",
-    [76806] = "The Blast Furnace",      -- ID of Heart of the Mountain
-    [77692] = "Kromog",
-    [77557] = "The Iron Maidens",       -- ID of Admiral Gar'an
-    [77231] = "The Iron Maidens",       -- ID of Enforcer Sorka
-    [77477] = "The Iron Maidens",       -- ID of Marak the Blooded
-    [77325] = "Blackhand",
+    [1691] = 76877,             -- Gruul
+    [1696] = 77182,             -- Oregorger
+    [1694] = 76865,             -- Beastlord Darmac
+    [1689] = 76814,             -- Flamebender Ka'graz
+    [1693] = 76973,             -- Hans'gar and Franzok     -- ID of Hans'gar
+    [1692] = 76906,             -- Operator Thogar
+    [1690] = 76806,             -- The Blast Furnace        -- ID of Heart of the Mountain
+    [1713] = 77692,             -- Kromog
+    [1695] = 77231,             -- The Iron Maidens         -- ID of Enforcer Sorka
+    [1704] = 77325,             -- Blackhand
     -- Hellfire Citadel
-        -- Hellfire Assault need boss yell or different win condition
-    [90284] = "Iron Reaver",
-    [90435] = "Kormrok",
-    [90378] = "Kilrogg Deadeye",
-    [92146] = "Hellfire High Council",  -- ID of Gurtogg Bloodboil
-    [92142] = "Hellfire High Council",  -- ID of Blademaster Jubei'thos
-    [92144] = "Hellfire High Council",  -- ID of Dia Darkwhisper
-    [90199] = "Gorefiend",
-    [90316] = "Shadow-Lord Iskar",
-    [92330] = "Socrethar the Eternal",  -- ID of Soulbound Construct
-    [90269] = "Tyrant Velhari",
-    [89890] = "Fel Lord Zakuun",
-    [93068] = "Xhul'horac",
-    [91349] = "Mannoroth",
-    [91331] = "Archimonde",
-    
-    --------------
-    --  Legion  --
-    --------------    
-    -- The Emerald Nightmare
-    [102672] = "Nythendra",
-    [105393] = "Il'gynoth",
-    [106087] = "Elerethe Renferal",
-    [100497] = "Ursoc",
-    [102679] = "Dragons of Nightmare",  -- ID of Ysondre
-    [104636] = "Cenarius",
-    [103769] = "Xavius",
-    
-    -- Trial of Valor
-        -- Odyn doesn't die, tracking via encounter ID 1958
-        -- [114323] = "Guarm",
-        -- [114537] = "Helya",
-}
+    [1778] = 94515,             -- Hellfire Assault
+    [1785] = 90284,             -- Iron Reaver
+    [1787] = 90435,             -- Kormrok
+    [1786] = 90378,             -- Kilrogg Deadeye
+    [1778] = 92142,             -- Hellfire High Council    -- ID of Blademaster Jubei'thos
+    [1783] = 90199,             -- Gorefiend
+    [1788] = 90316,             -- Shadow-Lord Iskar
+    [1794] = 92330,             -- Socrethar the Eternal    -- ID of Soulbound Construct
+    [1784] = 90269,             -- Tyrant Velhari
+    [1777] = 89890,             -- Fel Lord Zakuun
+    [1800] = 93068,             -- Xhul'horac
+    [1795] = 91349,             -- Mannoroth
+    [1799] = 91331,             -- Archimonde
 
-MRT_EncounterIDList = {
     --------------
     --  Legion  --
     --------------
+	-- The Emerald Nightmare
+    [1853] = 102672, 			-- Nythendra
+    [1873] = 105393, 			-- Il'gynoth
+    [1876] = 106087, 			-- Elerethe Renferal
+    [1841] = 100497, 			-- Ursoc
+    [1854] = 102679, 			-- Dragons of Nightmare     -- ID of Ysondre
+    [1877] = 104636, 			-- Cenarius
+    [1864] = 103769, 			-- Xavius
+	
     -- Trial of Valor
     [1958] = 114263,            -- Odyn
     [1962] = 114323,            -- Guarm

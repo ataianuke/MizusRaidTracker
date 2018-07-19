@@ -40,7 +40,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v0.7x.y-alpha"
+MRT_ADDON_VERSION = "v0.8x.y-alpha"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
@@ -170,10 +170,10 @@ function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
     frame:RegisterEvent("CHAT_MSG_LOOT");
     frame:RegisterEvent("CHAT_MSG_WHISPER");
-    frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-    frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+    --frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
+    --frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("ENCOUNTER_END");
-    frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
+    --frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
     frame:RegisterEvent("PARTY_LOOT_METHOD_CHANGED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
@@ -223,7 +223,8 @@ function MRT_OnEvent(frame, event, ...)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         if (not MRT_NumOfCurrentRaid) then return; end
         local monsteryell, sourceName = ...;
-		-- local _, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, areaID, iniGroupSize = MRT_GetInstanceInfo();
+		-- local localInstanceInfoName, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, areaID, iniGroupSize = MRT_GetInstanceInfo();
+		-- local localInstanceInfoName, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, areaID, iniGroupSize = MRT_GetInstanceInfo();
         local areaID = GetCurrentMapAreaID();
         if (not areaID) then return; end
         if (MRT_L.Bossyells[areaID] and MRT_L.Bossyells[areaID][monsteryell]) then
