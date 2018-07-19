@@ -173,7 +173,6 @@ function MRT_MainFrame_OnLoad(frame)
     --frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
     --frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
     frame:RegisterEvent("ENCOUNTER_END");
-    --frame:RegisterEvent("PARTY_CONVERTED_TO_RAID");
     frame:RegisterEvent("PARTY_INVITE_REQUEST");
     frame:RegisterEvent("PARTY_LOOT_METHOD_CHANGED");
     frame:RegisterEvent("PLAYER_ENTERING_WORLD");
@@ -247,13 +246,6 @@ function MRT_OnEvent(frame, event, ...)
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
 		
-    elseif (event == "PARTY_CONVERTED_TO_RAID") then
-        MRT_Debug("PARTY_CONVERTED_TO_RAID fired!");
-        if (MRT_UnknownRelogStatus) then
-            MRT_UnknownRelogStatus = false;
-            MRT_EndActiveRaid();            
-        end
-        
     elseif (event == "PARTY_INVITE_REQUEST") then
         MRT_Debug("PARTY_INVITE_REQUEST fired!");
         if (MRT_UnknownRelogStatus) then
