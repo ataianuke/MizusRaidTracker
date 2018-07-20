@@ -198,12 +198,6 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
-			-- Check if player is master looter - if yes, don't track chat messages 
-			-- ToDo: This will ignore some items, like BoE in Legion... - needs a proper item duplication detection... somehow...
-			if IsMasterLooter() then 
-				MRT_Debug("Current player is master looter. Stopping chat message processing...");
-				return;
-			end
             MRT_AutoAddLoot(...);
         end
         
@@ -449,37 +443,6 @@ function MRT_ChatHandler:CHAT_MSG_WHISPER_INFORM_FILTER(event, msg, from, ...)
 end
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", MRT_ChatHandler.CHAT_MSG_WHISPER_Filter);
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_MSG_WHISPER_INFORM_FILTER);
-
--- Called when a player was awarded loot by the master looter, should only be called if the player is the active master looter as hooked function
--- Data for GetLootSlotInfo is still available, although the items itself was distributed at that time
-function MRT_Hook_GiveMasterLoot(slot, index)
-	-- Do nothing if no active raid
-	if (not MRT_NumOfCurrentRaid) then return; end
-	-- Check required input
-	if (not slot) then return; end
-	if (not index) then return; end
-	MRT_Debug("MRT_Hook_GiveMasterLoot called - Slot="..slot.." - Index="..index);
-	-- local _, lootName, lootQuantity, lootQuality, locked, isQuestItem, questID, isActive = GetLootSlotInfo(slot);
-	local itemLink = GetLootSlotLink(slot);
-	if (not itemLink) then
-		MRT_Debug("No item found for given index.");
-		return;
-	else
-		MRT_Debug("Itemlink: "..itemLink);
-	end
-	-- GetMasterLootCandidate() - This doesn't seem return anything?!?
-	-- Available documentation outdated - blizz UI calls: GetMasterLootCandidate(LootFrame.selectedSlot, i)
-	local candidate = GetMasterLootCandidate(slot, index);
-	if (not candidate) then
-		MRT_Debug("No candidate returned...");
-		return;
-	else
-		MRT_Debug("Candidate: "..candidate);
-	end
-	-- At this point, we should have valid loot information
-	MRT_AutoAddLootItem(candidate, itemLink, 1);
-end
-hooksecurefunc("GiveMasterLoot", MRT_Hook_GiveMasterLoot);
 
 
 ------------------
