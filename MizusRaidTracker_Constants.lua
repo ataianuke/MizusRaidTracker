@@ -620,46 +620,6 @@ MRT_BossSpellIDTriggerList = {
 }
 
 
--- Boss rename list - When a boss kill with one of the below mentioned IDs is detected, then MRT will change the boss name given by
--- the combat log with the corresponding name entered below (e.g.: 37972: Prince Keleseth -> Blood Prince Council)
--- The resulting english name will be run through LibBabble-Boss-3.0 in order to get a localized name.
-MRT_BossRenameList = {
-    ------------------------------
-    --  Wrath of the Lich King  --
-    ------------------------------
-    -- Trial of the Crusader
-    [34497] = "The Twin Val'kyr",
-    -- Icecrown Citadel
-    [37972] = "Blood Prince Council",
-    
-    -----------------
-    --  Cataclysm  --
-    -----------------
-    -- Blackwing Descent
-    [42180] = "Omnotron Defense System",
-    -- The Bastion of Twilight
-    [45992] = "Valiona and Theralion",
-    [43735] = "Ascendant Council",
-    -- Throne of the Four Winds
-    [45871] = "Conclave of Wind",
-    -- Dragon Soul
-    [53879] = "Spine of Deathwing",   
-    [56173] = "Madness of Deathwing",
-    
-    ---------------------------
-    --  Warlords of Draenor  --
-    ---------------------------
-    -- Blackrock Foundry
-    [76806] = "The Blast Furnace",  
-    
-    --------------
-    --  Legion  --
-    --------------    
-    -- The Emerald Nightmare
-    [102679] = "Dragons of Nightmare",
-}
-
-
 -- The reverse boss ID list is needed for bosses, that are tracked by a boss yell.
 MRT_ReverseBossIDList = {
     ------------------------------
