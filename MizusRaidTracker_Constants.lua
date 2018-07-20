@@ -288,85 +288,6 @@ MRT_BossIDList = {
     [56427] = "Warmaster Blackhorn",
     [53879] = "Spine of Deathwing",   
         -- Madness of Deathwing needs SpellID
-        
-    -------------------------
-    --  Mists of Pandaria  --
-    -------------------------
-    -- Mogu'shan Vaults
-    [60047] = "The Stone Guard",
-    [60009] = "Feng the Accursed",
-    [60143] = "Gara'jal the Spriritbinder",
-    [60708] = "The Spirit Kings", -- Meng
-	[60701] = "The Spirit Kings", -- Zian
-	[60709] = "The Spirit Kings", -- Qiang
-	[60710] = "The Spirit Kings", -- Subetai
-    [60410] = "Elegon",
-    [60399] = "Will of the Emperor", -- qin-xi
-	[60400] = "Will of the Emperor", -- jan-xi
-    
-    -- Terrace of Endless Spring
-    [60583] = "Protectors of the Endless", -- Kaolan
-	[60586] = "Protectors of the Endless", -- Asani
-	[60585] = "Protectors of the Endless", -- Regail
-        -- Tsulong via boss yell
-        -- Lei Shi via boss yell
-    [60999] = "Sha of Fear",
-    
-    -- Heart of Fear
-    [62980] = "Imperial Vizier Zor'lok",
-    [62543] = "Blade Lord Ta'yak",
-    [62164] = "Garalon",
-    [62397] = "Wind Lord Mel'jarak",
-    [62511] = "Amber-Shaper Un'sok",
-    [62837] = "Grand Empress Shek'zeer",
-
-    -- Throne of Thunder
-    -- Last Stand of the Zandalari
-    [69465] = "Jin'rokh the Breaker",
-    [68476] = "Horridon",
-    [69134] = "Council of Elders", 		-- kazra'jin
-    [69078] = "Council of Elders", 		-- sul
-    [69131] = "Council of Elders", 		-- Malakk
-    [69132] = "Council of Elders", 		-- Marli
-    -- Forgotten Depths
-    [67977] = "Tortos",
-    [68065] = "Megaera",
-    [69712] = "Ji-Kun",
-    -- Halls of Flesh-Shaping
-    [68036] = "Durumu the Forgotten",
-    [69017] = "Primordius",
-    [69427] = "Dark Animus",
-    -- Pinnacle of Storms
-    [68078] = "Iron Qon", 				-- <Master of Quilen>
-    [68905] = "Twin Consorts", 			-- Lu'lin <Mistress of Solitude>, Twin Consorts
-    [68904] = "Twin Consorts", 			-- Suen <Mistress of Anger>, Twin Consorts
-    [68397] = "Lei Shen", 				-- <The Thunder King>
-		-- Ra-den <Fallen Keeper of Storms> via boss yell (doesn't die)
-	-- Siege of Orgrimmar
-		-- Immerseus via boss yell (doesn't die)
-    [71475] = "The Fallen Protectors",  -- ID of Rook Stonetoe
-    [71479] = "The Fallen Protectors",  -- ID of He Softfoot
-    [71480] = "The Fallen Protectors",  -- ID of Sun Tenderheart
-	[72276] = "Norushen", 				-- ID of Amalgam of Corruption
-	[71734] = "Sha of Pride",
-	[72249] = "Galakras",
-	[71466] = "Iron Juggernaut",
-	[71858] = "Kor'kron Dark Shaman", 	-- ID of Wavebinder Kardris - shared healthpool
-	[71515] = "General Nazgrim",
-	[71454] = "Malkorok",
-		-- Spoils of Pandaria via boss yell (no boss)
-	[71529] = "Thok the Bloodthirsty",
-	[71504] = "Siegecrafter Blackfuse",
-	[71152] = "Paragons of the Klaxxi",	-- ID of Skeer the Bloodseeker
-	[71153] = "Paragons of the Klaxxi", -- ID of Hisek the Swarmkeeper
-	[71154] = "Paragons of the Klaxxi", -- ID of Ka'roz the Locust
-	[71155] = "Paragons of the Klaxxi", -- ID of Korven the Prime
-	[71156] = "Paragons of the Klaxxi", -- ID of Kaz'tik the Manipulator
-	[71157] = "Paragons of the Klaxxi", -- ID of Xaril the Poisoned Mind
-	[71158] = "Paragons of the Klaxxi", -- ID of Rik'kal the Dissector
-	[71160] = "Paragons of the Klaxxi", -- ID of Iyyokuk the Lucid
-	[71161] = "Paragons of the Klaxxi", -- ID of Kil'ruk the Wind-Reaver
-	[71865] = "Garrosh Hellscream",
     
 }
 
@@ -492,6 +413,63 @@ MRT_EncounterIDList = {
     [1] = "Warmaster Blackhorn",
     [1] = "Spine of Deathwing",   
     [1] = "Madness of Deathwing",
+    
+    
+    -------------------------
+    --  Mists of Pandaria  --
+    -------------------------
+    -- Mogu'shan Vaults
+    [1395] = 60047,             -- The Stone Guard
+    [1390] = 60009,             -- Feng the Accursed
+    [1434] = 60143,             -- Gara'jal the Spriritbinder
+	[1436] = 60701,             -- The Spirit Kings         -- Zian
+    [1500] = 60410,             -- Elegon
+    [1407] = 60399,             -- Will of the Emperor      -- qin-xi
+    
+    -- Terrace of Endless Spring
+    [1409] = 60583,             -- Protectors of the Endless -- Kaolan
+    [1505] = 62442,             -- Tsulong 
+    [1506] = 62983,             -- Lei Shi
+    [1431] = 60999,             -- Sha of Fear
+    
+    -- Heart of Fear
+    [1507] = 62980,             -- Imperial Vizier Zor'lok
+    [1504] = 62543,             -- Blade Lord Ta'yak
+    [1463] = 62164,             -- Garalon
+    [1498] = 62397,             -- Wind Lord Mel'jarak
+    [1499] = 62511,             -- Amber-Shaper Un'sok
+    [1501] = 62837,             -- Grand Empress Shek'zeer
+
+    -- Throne of Thunder
+    [1577] = 69465,             -- Jin'rokh the Breaker
+    [1575] = 68476,             -- Horridon
+    [1570] = 69078,             -- Council of Elders 	    -- Sul
+    [1565] = 67977,             -- Tortos
+    [1578] = 68065,             -- Megaera
+    [1573] = 69712,             -- Ji-Kun
+    [1572] = 68036,             -- Durumu the Forgotten
+    [1574] = 69017,             -- Primordius
+    [1576] = 69427,             -- Dark Animus
+    [1559] = 68078,             -- Iron Qon			        -- <Master of Quilen>
+    [1560] = 68904,             -- Twin Consorts 		    -- Suen <Mistress of Anger>, Twin Consorts
+    [1579] = 68397,             -- Lei Shen			        -- <The Thunder King>
+	[1580] = 69473,	            -- Ra-den <Fallen Keeper of Storms>
+
+	-- Siege of Orgrimmar
+	[1602] = 71543,	            -- Immerseus
+    [1598] = 71475,             -- The Fallen Protectors    -- ID of Rook Stonetoe
+	[1624] = 72276,             -- Norushen 				-- ID of Amalgam of Corruption (EncounterID might not work)
+	[1604] = 71734,             -- Sha of Pride
+	[1622] = 72249,             -- Galakras
+	[1600] = 71466,             -- Iron Juggernaut
+	[1606] = 71858,             -- Kor'kron Dark Shaman 	-- ID of Wavebinder Kardris - shared healthpool
+	[1603] = 71515,             -- General Nazgrim
+	[1595] = 71454,             -- Malkorok
+	[1594] = 71512,             -- Spoils of Pandaria
+	[1599] = 71529,             -- Thok the Bloodthirsty
+	[1601] = 71504,             -- Siegecrafter Blackfuse
+	[1593] = 71152,             -- Paragons of the Klaxxi	-- ID of Skeer the Bloodseeker
+	[1623] = 71865,             -- Garrosh Hellscream
     
     
     ---------------------------
