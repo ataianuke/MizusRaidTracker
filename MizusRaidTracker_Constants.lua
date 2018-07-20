@@ -694,10 +694,6 @@ MRT_ReverseBossIDList = {
 	["Immerseus"] = 71543,
 	["Spoils of Pandaria"] = 71889,		-- ID of ... something
     
-    ---------------------------
-    --  Warlords of Draenor  --
-    ---------------------------
-    ["Hellfire Assault"] = 95068,
 }
 
 
