@@ -167,82 +167,7 @@ MRT_BossIDList = {
     [32428] = "Underbelly Rat",
     [32470] = "Sewer Frog",
     --]]
-    
-    -- Naxxramas
-    [15956] = "Anub'Rekhan",
-    [15953] = "Grand Widow Faerlina",
-    [15952] = "Maexxna",
-    [15954] = "Noth the Plaguebringer",
-    [15936] = "Heigan the Unclean",
-    [16011] = "Loatheb",
-    [16061] = "Instructor Razuvious",
-    [16060] = "Gothik the Harvester",
-    [16064] = "The Four Horsemen",              -- ID of Thane Korth'azz
-    [16065] = "The Four Horsemen",              -- ID of Lady Blaumeux
-    [30549] = "The Four Horsemen",              -- ID of Baron Rivendare
-    [16063] = "The Four Horsemen",              -- ID of Sire Zeliek
-    [16028] = "Patchwerk",
-    [15931] = "Grobbulus",
-    [15932] = "Gluth",
-    [15928] = "Thaddius",
-    [15989] = "Sapphiron",
-    [15990] = "Kel'Thuzad",
-    
-    -- The Obsidian Sanctum
-    [28860] = "Sartharion",
-    
-    -- Eye of Eternity
-    [28859] = "Malygos",
-    
-    -- Archavon's Chamber
-    [31125] = "Archavon the Stone Watcher",
-    [33993] = "Emalon the Storm Watcher",
-    [35013] = "Koralon the Flame Watcher",
-    [38433] = "Toravon the Ice Watcher",
-    
-    -- Ulduar
-    [33113] = "Flame Leviathan",
-    [33118] = "Ignis the Furnace Master",
-    [33186] = "Razorscale",
-    [33293] = "XT-002 Deconstructor",
-    [32867] = "Assembly of Iron",               -- ID of Steelbreaker
-    [32927] = "Assembly of Iron",               -- ID of Runemaster Molgeim
-    [32857] = "Assembly of Iron",               -- ID of Stormcaller Brundir
-    [32930] = "Kologarn",
-    [33515] = "Auriaya",
-        -- Freya, Hodir, Mimiron and Thorim will need bossyells - they don't die
-    [33271] = "General Vezax",
-    [33288] = "Yogg-Saron",
-        -- Algalon needs a bossyell - he doesn't die
-        
-    -- Onyxias Lair
-    [10184] = "Onyxia",
-    
-    -- Trial of the Crusader
-    [34797] = "Icehowl",                        -- Northrend Beasts, third boss
-    [34780] = "Lord Jaraxxus",
-        -- Faction Champions will need bossyell
-    [34497] = "The Twin Val'kyr",               -- ID of Fjola Lightbane
-    [34564] = "Anub'arak",    
-    
-    -- Icecrown Citadel
-    [36612] = "Lord Marrowgar",
-    [36855] = "Lady Deathwhisper",
-        -- Gunship Battle will need bossyell
-    [37813] = "Deathbringer Saurfang",
-    [36626] = "Festergut",
-    [36627] = "Rotface",
-    [36678] = "Professor Putricide",       
-    [37972] = "Blood Prince Council",           -- ID of Keleseth
-    [37955] = "Blood-Queen Lana'thel",
-        -- Dreamwalker will need bossyell
-    [36853] = "Sindragosa",
-    [36597] = "The Lich King",
-    
-    -- The Ruby Sanctum
-    -- Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
-    -- [39863] = "Halion",                      -- according to wowhead
-     
+ 
 }
 
 MRT_EncounterIDList = {
@@ -250,76 +175,76 @@ MRT_EncounterIDList = {
     --  Wrath of the Lich King  --
     ------------------------------
     -- Naxxramas
-    [1] = "Anub'Rekhan",
-    [1] = "Grand Widow Faerlina",
-    [1] = "Maexxna",
-    [1] = "Noth the Plaguebringer",
-    [1] = "Heigan the Unclean",
-    [1] = "Loatheb",
-    [1] = "Instructor Razuvious",
-    [1] = "Gothik the Harvester",
-    [1] = "The Four Horsemen",              
-    [1] = "Patchwerk",
-    [1] = "Grobbulus",
-    [1] = "Gluth",
-    [1] = "Thaddius",
-    [1] = "Sapphiron",
-    [1] = "Kel'Thuzad",
+    [1107] = 15956,             -- Anub'Rekhan
+    [1110] = 15953,             -- Grand Widow Faerlina
+    [1116] = 15952,             -- Maexxna
+    [1117] = 15954,             -- Noth the Plaguebringer
+    [1112] = 15936,             -- Heigan the Unclean
+    [1115] = 16011,             -- Loatheb
+    [1113] = 16061,             -- Instructor Razuvious
+    [1109] = 16060,             -- Gothik the Harvester
+    [1121] = 16063,             -- The Four Horsemen          
+    [1118] = 16028,             -- Patchwerk
+    [1111] = 15931,             -- Grobbulus
+    [1108] = 15932,             -- Gluth
+    [1120] = 15928,             -- Thaddius
+    [1119] = 15989,             -- Sapphiron
+    [1114] = 15990,             -- Kel'Thuzad
     
     -- The Obsidian Sanctum
-    [1] = "Sartharion",
+    [1090] = 28860,             -- Sartharion
     
     -- Eye of Eternity
-    [1] = "Malygos",
+    [1094] = 28859,             -- Malygos
     
     -- Archavon's Chamber
-    [1] = "Archavon the Stone Watcher",
-    [1] = "Emalon the Storm Watcher",
-    [1] = "Koralon the Flame Watcher",
-    [1] = "Toravon the Ice Watcher",
+    [1126] = 31125,             -- Archavon the Stone Watcher
+    [1127] = 33993,             -- Emalon the Storm Watcher
+    [1128] = 35013,             -- Koralon the Flame Watcher
+    [1129] = 38433,             -- Toravon the Ice Watcher
     
     -- Ulduar
-    [1132] = "Flame Leviathan",
-    [1136] = "Ignis the Furnace Master",
-    [1139] = "Razorscale",
-    [1142] = "XT-002 Deconstructor",
-    [1140] = "Assembly of Iron",               
-    [1137] = "Kologarn",
-    [1131] = "Auriaya",
-	[1133] = "Freya",
-	[1135] = "Hodir",
-	[1138] = "Mimiron",
-	[1141] = "Thorim",
-    [1134] = "General Vezax",
-    [1143] = "Yogg-Saron",
-    [1130] = "Algalon",
+    [1132] = 33113,             -- Flame Leviathan
+    [1136] = 33118,             -- Ignis the Furnace Master
+    [1139] = 33186,             -- Razorscale
+    [1142] = 33293,             -- XT-002 Deconstructor
+    [1140] = 32857,             -- Assembly of Iron         
+    [1137] = 32930,             -- Kologarn
+    [1131] = 33515,             -- Auriaya
+	[1133] = 32906,             -- Freya
+	[1135] = 32845,             -- Hodir
+	[1138] = 33350,             -- Mimiron
+	[1141] = 32865,             -- Thorim
+    [1134] = 33271,             -- General Vezax
+    [1143] = 33288,             -- Yogg-Saron
+    [1130] = 32871,             -- Algalon
         
     -- Onyxias Lair
-    [1] = "Onyxia",
+    [1084] = 10184,             -- Onyxia
     
     -- Trial of the Crusader
-    [1] = "Icehowl",                        
-    [1] = "Lord Jaraxxus",
-	[1] = "Faction Champions",
-    [1] = "The Twin Val'kyr",             
-    [1] = "Anub'arak",    
+    [1088] = 34797,             -- Northrend Beasts         -- ID of Icehowl - EncounterID might be buggy
+    [1087] = 34780,             -- Lord Jaraxxus
+	[1086] = 34445,             -- Faction Champions        -- EncounterID might be buggy
+    [1089] = 34497,             -- The Twin Val'kyr
+    [1085] = 34564,             -- Anub'arak
     
     -- Icecrown Citadel
-    [1101] = "Lord Marrowgar",
-    [1100] = "Lady Deathwhisper",
-	[1099] = "Gunship Battle",					-- this one might not work
-    [1096] = "Deathbringer Saurfang",
-    [1097] = "Festergut",
-    [1104] = "Rotface",
-    [1102] = "Professor Putricide",       
-    [1095] = "Blood Prince Council",           
-    [1103] = "Blood-Queen Lana'thel",
-    [1098] = "Dreamwalker Valithria",
-    [1105] = "Sindragosa",
-    [1106] = "The Lich King",
+    [1101] = 36612,             -- Lord Marrowgar
+    [1100] = 36855,             -- Lady Deathwhisper
+	[1099] = 37215,             -- Gunship Battle		    -- this one might not work
+    [1096] = 37813,             -- Deathbringer Saurfang
+    [1097] = 36626,             -- Festergut
+    [1104] = 36627,             -- Rotface
+    [1102] = 36678,             -- Professor Putricide
+    [1095] = 37972,             -- Blood Prince Council
+    [1103] = 37955,             -- Blood-Queen Lana'thel
+    [1098] = 36789,             -- Dreamwalker Valithria
+    [1105] = 36853,             -- Sindragosa
+    [1106] = 36597,             -- The Lich King
     
     -- The Ruby Sanctum
-    [1] = "Halion",                     
+    [1150] = 39863,             -- Halion
 	
 	
     -----------------
@@ -569,11 +494,6 @@ MRT_ReverseBossIDList = {
     -- Ruby Sanctum
     ["Halion"] = 39863,
     
-    -----------------
-    --  Cataclysm  --
-    -----------------
-    ["Conclave of Wind"] = 45871,
-
     ------------------------
     --  Mist of Pandaria  --
     ------------------------
