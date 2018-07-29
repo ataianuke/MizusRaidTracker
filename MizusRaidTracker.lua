@@ -1816,9 +1816,8 @@ end
 
 function MRT_GetCurrentTime()
     if MRT_Options["Tracking_UseServerTime"] then
-        local _, month, day, year = CalendarGetDate();
-        local hour, minute = GetGameTime();
-        return time( { year = year, month = month, day = day, hour = hour, min = minute, } );
+        local timestamp = GetServerTime();
+        return timestamp;
     else
         return time();
     end
