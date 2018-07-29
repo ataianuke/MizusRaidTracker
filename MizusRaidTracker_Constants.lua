@@ -242,53 +242,7 @@ MRT_BossIDList = {
     -- The Ruby Sanctum
     -- Tracking of Halion via BossIDs disabled, because of missing UNIT_DIED-Events in Twilight Realm / Detection switched to bossyell
     -- [39863] = "Halion",                      -- according to wowhead
-    
-    -----------------
-    --  Cataclysm  --
-    -----------------
-    -- Baradin Hold
-    [47120] = "Argaloth",
-    [52363] = "Occu'thar",
-    [55869] = "Alizabal",
-    
-    -- Blackwing Descent
-    [41570] = "Magmaw",
-    [42180] = "Omnotron Defense System",        -- ID of Toxitron   - Omnotron Defense System may need bossyell
-    [41378] = "Maloriak",
-    [41442] = "Atramedes",
-    [43296] = "Chimaeron",
-    [41376] = "Nefarian",
-    
-    -- The Bastion of Twilight
-    [44600] = "Halfus Wyrmbreaker",
-    [45992] = "Valiona and Theralion",          -- ID of Valiona    - Valiona & Theralion - Twin drakes with shared health pool
-    [43735] = "Ascendant Council",              -- ID of Elementium Monstrosity
-    [43324] = "Cho'gall",
-    [45213] = "Sinestra",
-    
-    -- Throne of the Four Winds
-        -- Conclave of Wind needs bossyell
-    [46753] = "Al'Akir",
-    
-    -- Firelands
-    [52498] = "Beth'tilac",
-    [52558] = "Lord Rhyolith",
-    [52530] = "Alysrazor",
-    [53691] = "Shannox",
-    [53494] = "Baleroc",
-    [52571] = "Majordomo Staghelm",
-    [52409] = "Ragnaros",
-    
-    -- Dragon Soul
-    [55265] = "Morchok",
-    [55308] = "Warlord Zonozz",
-    [55312] = "Yor'sahj the Unsleeping",
-    [55689] = "Hagara the Stormbinder",
-    [55294] = "Ultraxion",
-    [56427] = "Warmaster Blackhorn",
-    [53879] = "Spine of Deathwing",   
-        -- Madness of Deathwing needs SpellID
-    
+     
 }
 
 MRT_EncounterIDList = {
@@ -372,49 +326,49 @@ MRT_EncounterIDList = {
     --  Cataclysm  --
     -----------------
     -- Baradin Hold
-    [1] = "Argaloth",
-    [1] = "Occu'thar",
-    [1] = "Alizabal",
+    [1033] = 47120,             -- Argaloth
+    [1250] = 52363,             -- Occu'thar
+    [1332] = 55869,             -- Alizabal
     
     -- Blackwing Descent
-    [1111] = 41570,				-- "Magmaw",
-    [1111] = 42180,				-- "Omnotron Defense System", ID of Toxitron
-    [1111] = 41378,				-- "Maloriak",
-    [1111] = 41442,				-- "Atramedes",
-    [1023] = 43296,				-- "Chimaeron",
-    [1111] = 41376,				-- "Nefarian",
+    [1024] = 41570,				-- Magmaw
+    [1027] = 42180,				-- Omnotron Defense System  -- ID of Toxitron
+    [1025] = 41378,				-- Maloriak
+    [1022] = 41442,				-- Atramedes
+    [1023] = 43296,				-- Chimaeron
+    [1026] = 41376,				-- Nefarian
     
     -- The Bastion of Twilight
-    [1] = "Halfus Wyrmbreaker",
-    [1] = "Valiona and Theralion",          -- ID of Valiona    - Valiona & Theralion - Twin drakes with shared health pool
-    [1] = "Ascendant Council",              -- ID of Elementium Monstrosity
-    [1] = "Cho'gall",
-    [1] = "Sinestra",
+    [1030] = 44600,             -- Halfus Wyrmbreaker
+    [1032] = 45992,             -- Valiona and Theralion    -- ID of Valiona
+    [1028] = 43735,             -- Ascendant Council        -- ID of Elementium Monstrosity
+    [1029] = 43324,             -- Cho'gall
+    [1082] = 45213,             -- Sinestra                 -- Might be 1083                    
     
     -- Throne of the Four Winds
-    [1] = "Conclave of Wind",
-    [1] = "Al'Akir",
+    [1035] = 45871,             -- Conclave of Wind
+    [1034] = 46753,             -- Al'Akir
     
     -- Firelands
-    [1] = "Beth'tilac",
-    [1] = "Lord Rhyolith",
-    [1] = "Alysrazor",
-    [1] = "Shannox",
-    [1] = "Baleroc",
-    [1] = "Majordomo Staghelm",
-    [1] = "Ragnaros",
+    [1197] = 52498,             -- Beth'tilac
+    [1204] = 52558,             -- Lord Rhyolith
+    [1206] = 52530,             -- Alysrazor
+    [1205] = 53691,             -- Shannox
+    [1200] = 53494,             -- Baleroc
+    [1185] = 52571,             -- Majordomo Staghelm
+    [1203] = 52409,             -- Ragnaros
     
     -- Dragon Soul
-    [1] = "Morchok",
-    [1] = "Warlord Zonozz",
-    [1] = "Yor'sahj the Unsleeping",
-    [1] = "Hagara the Stormbinder",
-    [1] = "Ultraxion",
-    [1] = "Warmaster Blackhorn",
-    [1] = "Spine of Deathwing",   
-    [1] = "Madness of Deathwing",
-    
-    
+    [1292] = 55265,             -- Morchok
+    [1294] = 55308,             -- Warlord Zonozz
+    [1295] = 55312,             -- Yor'sahj the Unsleeping
+    [1296] = 55689,             -- Hagara the Stormbinder
+    [1297] = 55294,             -- Ultraxion
+    [1298] = 56427,             -- Warmaster Blackhorn      -- Might not work
+    [1291] = 53879,             -- Spine of Deathwing 
+    [1299] = 56173,             -- Madness of Deathwing
+
+
     -------------------------
     --  Mists of Pandaria  --
     -------------------------
@@ -509,6 +463,7 @@ MRT_EncounterIDList = {
     [1795] = 91349,             -- Mannoroth
     [1799] = 91331,             -- Archimonde
 
+    
     --------------
     --  Legion  --
     --------------
