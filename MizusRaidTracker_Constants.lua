@@ -93,6 +93,16 @@ MRT_RaidZones = {
     [1530] = true,      -- The Nighthold
     [1676] = true,      -- Tomb of Sargeras
 	[1712] = true,		-- Antorus
+    -- Battle for Azeroth
+    [1861] = true,      -- Uldir
+}
+
+MRT_LegacyRaidZonesLegion = {
+    [1520] = true,      -- The Emerald Nightmare
+    [1648] = true,      -- Trial of Valor
+    [1530] = true,      -- The Nighthold
+    [1676] = true,      -- Tomb of Sargeras
+	[1712] = true,		-- Antorus
 }
 
 MRT_LegacyRaidZonesWarlords = {
@@ -441,6 +451,21 @@ MRT_EncounterIDList = {
 	[2073] = 122468,            -- The Coven of Shivarra
 	[2063] = 121975,            -- Aggramar
 	[2092] = 125111,            -- Argus the Unmaker
+    
+    
+    --------------------------
+    --  Battle for Azeroth  --
+    --------------------------
+    -- Uldir
+    [2144] = 137119,            -- Taloc
+    [2141] = 135452,            -- MOTHER
+    [2128] = 133298,            -- Fetid Devourer
+    [2136] = 134445,            -- Zek'voz, Herald of N'zoth
+    [2134] = 134442,            -- Vectis
+    [2145] = 138967,            -- Zul, Reborn
+    [2135] = 134546,            -- Mythrax the Unraveler
+    [2122] = 132998,            -- G'huun
+    
 }
 
 -- ARRAY 
