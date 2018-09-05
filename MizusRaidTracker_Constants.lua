@@ -608,6 +608,9 @@ MRT_IgnoredItemIDList = {
 	[152909] = true, 	-- Sigil of the Dark Titan (heroic)
 	[152910] = true, 	-- Sigil of the Dark Titan (mythic)
     
+    -- BfA Crafting
+    [162461] = true,    -- Sanguicell
+    
 }
 
 
