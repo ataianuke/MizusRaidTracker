@@ -618,6 +618,11 @@ function MRT_UpdateSavedOptions()
         MRT_Options["Tracking_LogWarlordsRaids"] = true;
         MRT_Options["General_OptionsVersion"] = 18;
     end
+    if MRT_Options["General_OptionsVersion"] == 18 then
+        -- BfA transition - reset logging of personal loot to true - it is the only loot mode available now
+        MRT_Options["Tracking_LogLootModePersonal"] = true;
+        MRT_Options["General_OptionsVersion"] = 19;
+    end
 end
 
 
