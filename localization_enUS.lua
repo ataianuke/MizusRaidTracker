@@ -1,6 +1,6 @@
 ﻿-- ********************************************************
 -- **        Mizus RaidTracker - enGB/enUS Local         **
--- **             <http://cosmocanyon.de>               **
+-- **              <http://cosmocanyon.de>               **
 -- ********************************************************
 --
 -- This localization is written by:

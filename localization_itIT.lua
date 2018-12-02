@@ -1,6 +1,6 @@
 -- ********************************************************
 -- **           Mizus RaidTracker - itIT Local           **
--- **             <http://cosmocanyon.de>               **
+-- **              <http://cosmocanyon.de>               **
 -- ********************************************************
 --
 -- This localization is written by:
