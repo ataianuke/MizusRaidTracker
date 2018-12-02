@@ -323,9 +323,59 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogWotLKRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogClassicRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogAVRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Classic raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_LogBCRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogClassicRaids_CB" y="-5"/>
+        </Anchors>
+        <Layers>
+          <Layer level="OVERLAY">
+            <FontString name="$parent_Text" inherits="GameFontWhite" text="Track Burning Crusade raids (L)">
+              <Anchors>
+                <Anchor point="LEFT" relativePoint="RIGHT"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Scripts>
+            <OnClick>
+                local enable = self:GetChecked()
+                self:SetChecked(enable and true or false)
+                if enable then
+                    PlaySound(856)
+                else
+                    PlaySound(857)
+                end
+            </OnClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parent_LogWotLKRaids_CB" inherits="OptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogBCRaids_CB" y="-5"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">

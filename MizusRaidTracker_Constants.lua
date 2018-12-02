@@ -60,6 +60,15 @@ MRT_ItemValues = {
 --  Zone name list  --
 ----------------------
 MRT_RaidZones = {
+    -- Burning Crusade
+    [532] = true,       -- Karazhan
+    [565] = true,       -- Gruul's Lair
+    [544] = true,       -- Magtheridon's Lair
+    [548] = true,       -- Serpentshrine Cavern
+    [550] = true,       -- Tempest Keep
+    [534] = true,       -- Hyjal Summit
+    [564] = true,       -- Black Temple
+    [580] = true,       -- Sunwell Plateau
     -- Wrath of the Lich King
     [616] = true,       -- The Eye of Eternity
     [615] = true,       -- The Obsidian Sanctum
@@ -181,6 +190,114 @@ MRT_BossIDList = {
 }
 
 MRT_EncounterIDList = {
+    ---------------
+    --  Classic  --
+    ---------------
+    -- Molten Core
+    [663] = 12118,              -- Lucifron
+    [664] = 11982,              -- Magmadar
+    [665] = 12259,              -- Gehennas
+    [666] = 12057,              -- Garr
+    [667] = 12264,              -- Shazzrah
+    [668] = 12056,              -- Baron Geddon
+    [670] = 11988,              -- Golemagg the Incinerator
+    [669] = 12098,              -- Sulfuron Harbinger
+    [671] = 12018,              -- Majordomo Executus
+    [672] = 11502,              -- Ragnaros
+    
+    -- Blackwing Lair
+    [610] = 12435,              -- Razorgore the Untamed
+    [611] = 13020,              -- Vaelastrasz the Corrupt 
+    [612] = 12017,              -- Broodlord Lashlayer
+    [613] = 11983,              -- Firemaw
+    [614] = 14601,              -- Ebonroc
+    [615] = 11981,              -- Flamegor
+    [616] = 14020,              -- Chromaggus
+    [617] = 11583,              -- Nefarian 
+    
+    -- Ruins of Ahn'Qiraj
+    [718] = 15348,              -- Kurinnaxx
+    [719] = 15341,              -- General Rajaxx
+    [720] = 15340,              -- Moam
+    [721] = 15370,              -- Buru the Gorger
+    [722] = 15369,              -- Ayamiss the Hunter
+    [723] = 15339,              -- Ossirian the Unscarred
+    
+    -- Temple of Ahn'Qiraj
+    [709] = 15263,              -- The Prophet Skeram
+    [711] = 15516,              -- Battleguard Sartura
+    [712] = 15510,              -- Fankriss the Unyielding
+    [714] = 15509,              -- Princess Huhuran
+    [715] = 15276,              -- Twin Emperors
+    [717] = 15589,              -- C'Thun
+    [710] = 15544,              -- Bug Trio
+    [713] = 15299,              -- Viscidus
+    [716] = 15517,              -- Ouro
+    
+    
+    -----------------------
+    --  Burning Crusade  --
+    -----------------------
+    -- Karazhan
+    [652] = 16151,              -- Attumen the Huntsman
+    [653] = 15687,              -- Moroes
+    [654] = 16457,              -- Maiden of Virtue
+    [655] = 17521,              -- Opera Hall
+    [656] = 15691,              -- The Curator
+    [658] = 16524,              -- Shade of Aran
+    [657] = 15688,              -- Terestian Illhoof
+    [659] = 15689,              -- Netherspite              -- FIXME - needs verification
+    [660] = 21752,              -- Chess Event
+    [661] = 15690,              -- Prince Malchezaar
+    [662] = 17225,              -- Nightbane
+    
+    -- Gruul's Lair
+    [650] = 19044,              -- Gruul
+    
+    -- Magtheridon's Lair
+    [651] = 17257,              -- Magtheridon
+    
+    -- Serpentshrine Cavern
+    [623] = 21216,              -- Hydross the Unstable
+    [624] = 21217,              -- The Lurker Below
+    [625] = 21215,              -- Leotheras the Blind
+    [626] = 21214,              -- Fathom-Lord Karathress
+    [627] = 21213,              -- Morogrim Tidewalker
+    [628] = 21212,              -- Lady Vashj
+    
+    -- Tempest Keep
+    [730] = 19514,              -- Al'ar
+    [731] = 19516,              -- Void Reaver
+    [732] = 18805,              -- High Astromancer Solarian
+    [733] = 19622,              -- Kael'thas Sunstrider
+    
+    -- Hyjal Summit
+    [618] = 17767,              -- Rage Winterchill
+    [619] = 17808,              -- Anetheron
+    [620] = 17888,              -- Kaz'rogal
+    [621] = 17842,              -- Azgalor
+    [622] = 17968,              -- Archimonde
+    
+    -- Black Temple
+    [601] = 22887,              -- High Warlord Naj'entus
+    [602] = 22898,              -- Supremus
+    [603] = 22841,              -- Shade of Akama
+    [604] = 22871,              -- Teron Gorefiend
+    [605] = 22948,              -- Gurtogg Bloodboil
+    [606] = 23420,              -- Reliquary of Souls
+    [607] = 22947,              -- Mother Shahraz
+    [608] = 22949,              -- The Illidari Council
+    [609] = 22917,              -- Illidan Stormrage
+    
+    -- Sunwell Plateau
+    [724] = 24850,              -- Kalecgos
+    [725] = 24882,              -- Brutallus
+    [726] = 25038,              -- Felmyst
+    [727] = 25165,              -- Eredar Twins
+    [728] = 25741,              -- M'uru
+    [729] = 25315,              -- Kil'jaeden
+    
+    
 	------------------------------
     --  Wrath of the Lich King  --
     ------------------------------

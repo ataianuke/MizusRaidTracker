@@ -89,6 +89,8 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogLFRRaids_CB_Text:SetText(MRT_L.Options["TP_LogLFRRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
+    MRT_Options_TrackingPanel_LogClassicRaids_CB_Text:SetText(MRT_L.Options["TP_LogClassicRaids"]);
+    MRT_Options_TrackingPanel_LogBCRaids_CB_Text:SetText(MRT_L.Options["TP_LogBCRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB_Text:SetText(MRT_L.Options["TP_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_LogCataclysmRaids_CB_Text:SetText(MRT_L.Options["TP_LogCataclysmRaids"]);
     MRT_Options_TrackingPanel_LogPandariaRaids_CB_Text:SetText(MRT_L.Options["TP_LogMoPRaids"]);
@@ -164,6 +166,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogLFRRaids"] = MRT_Options_TrackingPanel_LogLFRRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogClassicRaids"] = MRT_Options_TrackingPanel_LogClassicRaids_CB:GetChecked();
+    MRT_Options["Tracking_LogBCRaids"] = MRT_Options_TrackingPanel_LogBCRaids_CB:GetChecked();
     MRT_Options["Tracking_LogWotLKRaids"] = MRT_Options_TrackingPanel_LogWotLKRaids_CB:GetChecked();
     MRT_Options["Tracking_LogCataclysmRaids"] = MRT_Options_TrackingPanel_LogCataclysmRaids_CB:GetChecked();
     MRT_Options["Tracking_LogMoPRaids"] = MRT_Options_TrackingPanel_LogPandariaRaids_CB:GetChecked();
@@ -238,6 +242,8 @@ function MRT_Options_RestoreValues()
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogLFRRaids_CB:SetChecked(MRT_Options["Tracking_LogLFRRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
+    MRT_Options_TrackingPanel_LogClassicRaids_CB:SetChecked(MRT_Options["Tracking_LogClassicRaids"]);
+    MRT_Options_TrackingPanel_LogBCRaids_CB:SetChecked(MRT_Options["Tracking_LogBCRaids"]);
     MRT_Options_TrackingPanel_LogWotLKRaids_CB:SetChecked(MRT_Options["Tracking_LogWotLKRaids"]);
     MRT_Options_TrackingPanel_LogCataclysmRaids_CB:SetChecked(MRT_Options["Tracking_LogCataclysmRaids"]);
     MRT_Options_TrackingPanel_LogPandariaRaids_CB:SetChecked(MRT_Options["Tracking_LogMoPRaids"]);

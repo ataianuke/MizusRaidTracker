@@ -77,6 +77,8 @@ local MRT_Defaults = {
         ["Tracking_LogHeroicRaids"] = true,                                         -- Track Heroic raids (WoD+)
         ["Tracking_LogMythicRaids"] = true,                                         -- Track Mythic raids (WoD+)
         ["Tracking_LogAVRaids"] = false,                                            -- Track PvP raids: true / nil
+        ["Tracking_LogClassicRaids"] = false,                                       -- Track classic raids: true / nil
+        ["Tracking_LogBCRaids"] = false,                                            -- Track BC raid true / nil
         ["Tracking_LogWotLKRaids"] = false,                                         -- Track WotLK raid: true / nil
         ["Tracking_LogCataclysmRaids"] = false,                                     -- Track Catacylsm raid: true / nil
         ["Tracking_LogMoPRaids"] = false,                                           -- Track MoP raid: true / nil
@@ -911,6 +913,11 @@ function MRT_CheckZoneAndSizeStatus()
         end
         if (MRT_LegacyRaidZonesBC[areaID] and not MRT_Options["Tracking_LogBCRaids"]) then
             MRT_Debug("This instance is a BC-Raid and tracking of those is disabled.");
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        if (MRT_LegacyRaidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
+            MRT_Debug("This instance is a Classic-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
