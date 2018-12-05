@@ -1,6 +1,6 @@
 -- *******************************************************
 -- **          Mizus RaidTracker - koKR Local           **
--- **          <http://nanaki.affenfelsen.de>           **
+-- **              <http://cosmocanyon.de>              **
 -- *******************************************************
 --
 -- This localization is written by:

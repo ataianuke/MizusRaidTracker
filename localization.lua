@@ -1,7 +1,7 @@
--- ********************************************************
--- **        Mizus RaidTracker - Debug Local             **
--- **           <http://nanaki.affenfelsen.de>           **
--- ********************************************************
+-- *****************************************************
+-- **        Mizus RaidTracker - Debug Local          **
+-- **           <http://cosmocanyon.de>               **
+-- *****************************************************
 --
 -- This localization is written by:
 --  Mizukichan

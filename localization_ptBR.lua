@@ -1,6 +1,6 @@
 -- ********************************************************
 -- **           Mizus RaidTracker - ptBR Local           **
--- **           <http://nanaki.affenfelsen.de>           **
+-- **               <http://cosmocanyon.de>              **
 -- ********************************************************
 --
 -- This localization is written by:
