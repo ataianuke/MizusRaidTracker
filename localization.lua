@@ -80,8 +80,11 @@ MRT_L.Core = {
     DKP_Frame_Note = "Note",
     Export_Attendees = "Attendees",
     Export_Button = "Close",
-    Export_Explanation = "Press Ctrl+C to copy the data to the clipboard.\nPress Ctrl+V to import data in your webbrowser.",
-    Export_AttendanceNote = "In the Raid-Log-Import-Settings, please set the option \n\"Time in seconds, the loot belongs to the boss before.\"\nto or below 180 seconds to avoid attendance issues.",
+    Export_Explanation = [=[Press Ctrl+C to copy the data to the clipboard.
+Press Ctrl+V to import data in your webbrowser.]=],
+    Export_AttendanceNote = [=[In the Raid-Log-Import-Settings, please set the option
+"Time in seconds, the loot belongs to the boss before."
+to or below 180 seconds to avoid attendance issues.]=],
     Export_Frame_Title = "Data export",
     Export_Heroic = "Heroic",
     Export_Loot = "Loot",
@@ -130,10 +133,12 @@ MRT_L.Options = {
 	EP_BBCode = "BBCode formatted Text",
     EP_BBCode_wowhead = "BBCode formatted Text with wowhead links",
 	EP_ChooseExport_Title = "Export format",
-	EP_CTRT_AddPoorItem = "Enable boss encounter detection fix for the \nEQdkp(-Plus) CT_RaidTrackerImport 1.16.x",
+	EP_CTRT_AddPoorItem = [=[Enable boss encounter detection fix for the
+EQdkp(-Plus) CT_RaidTrackerImport 1.16.x]=],
 	EP_CTRT_compatible = "EQdkp / MLdkp 1.1 (CT RaidTracker compatible)",
     EP_CTRT_IgnorePerBossAttendance = "Ignore per boss attendance",
-    EP_CTRT_RLIAttendanceFix = "Enable attendance fix for the \nEQdkp-Plus Raid-Log-Import 0.5.6.x",
+    EP_CTRT_RLIAttendanceFix = [=[Enable attendance fix for the 
+EQdkp-Plus Raid-Log-Import 0.5.6.x]=],
 	EP_CTRTTitleText = "CTRT compatible export settings",
     EP_Currency = "Currency",
     EP_DKPBoard = "DKPBoard",
@@ -186,7 +191,16 @@ MRT_L.Options = {
     TP_UseServerTime = "Use server time",
     TT_AP_GA_CustomText = " Available variables: \n <<BOSS>> - Name of the boss event \n <<TIME>> - Remaining time of the guild attendance check \n <<TRIGGER>> - The custom trigger command",
     TT_EP_AddPoorItem = "This option changes the loot export a bit to fix the boss encounter detection \nof the CT_RaidTrackerImport. Use this, if you have boss events \nin your raid without loot associated to it. (e.g. attendance checks).",
-	TT_EP_DateTimeTT = " %d - day of the month [01-31] \n %m - month [01-12] \n %y - two-digit year [00-99] \n %Y - full year \n\n %H - hour, using a 24-hour clock [00-23] \n %I - hour, using a 12-hour clock [01-12] \n %M - minute [00-59] \n %S - second [00-59] \n %p - either 'am' or 'pm'",
+	TT_EP_DateTimeTT = [=[ %d - day of the month [01-31] 
+ %m - month [01-12] 
+ %y - two-digit year [00-99] 
+ %Y - full year 
+
+ %H - hour, using a 24-hour clock [00-23] 
+ %I - hour, using a 12-hour clock [01-12] 
+ %M - minute [00-59] 
+ %S - second [00-59] 
+ %p - either 'am' or 'pm']=],
     TT_EP_RLIAttendanceFix = "This option changes the export of timestamps a bit to pass \nthe 50% attendance threshold of the Raid-Log-Importer. \nOnly use this option, if your DKP system is based on per boss attendance.",
     TT_MP_SlashCmd = "Command without leading slash.\nA relog after changing this value is recommended.",
 }
