@@ -3,7 +3,7 @@ externals:
         url: https://repos.wowace.com/wow/libstub/trunk
         tag: latest
     libs/LibST:
-        url: https://github.com/ddumont/lib-st.git
+        url: https://github.com/Shadnix-was-taken/lib-st.git
         tag: latest
     libs/LibDeformat-3.0:
         url: https://repos.wowace.com/wow/libdeformat-3-0
