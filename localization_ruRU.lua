@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This localization is written by:
---  homocomputeris, Ingdruid, rinaline, YOti
+--  homocomputeris, Ingdruid, rinaline, YOti, LinGrey
 --
 -- Note: 
 --  MRT requires a correct localization of RaidZones and Bossyells for working
