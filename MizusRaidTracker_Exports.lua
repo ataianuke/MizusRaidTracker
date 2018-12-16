@@ -64,6 +64,15 @@ function mrt:GetBonusIDs(itemData)
     return returnFormat(strsplit(":", itemData))
 end
 
+-- remove server name from player name if required
+function mrt:FormatPlayerName(name, realm)
+    local playerName, playerRealm = strsplit("-", name)
+    if (not playerRealm) then return name; end
+    if (realm == playerRealm) then return playerName; end
+    -- FIXME: Add option to always remove realm name, even if realm is different
+    return name
+end
+
 ------------------------
 --  export functions  --
 ------------------------
@@ -129,7 +138,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     -- get reverse lookup table, if exports should be in english
     local LBBR = LBB:GetReverseLookupTable();
     -- create generic functions for repeated blocks
-    local function createBossInfoString(index, bossInfo, attendeeList)
+    local function createBossInfoString(index, bossInfo, attendeeList, realm)
         local bossXml = "<key"..index..">";
         if (MRT_Options["Export_ExportEnglish"]) then
             bossXml = bossXml.."<name>"..(LBBR[bossInfo.Name] or bossInfo.Name).."</name>";
@@ -141,11 +150,11 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         bossXml = bossXml.."<attendees>";
         if attendeeList then
             for i, name in ipairs(attendeeList) do
-                bossXml = bossXml.."<key"..i.."><name>"..name.."</name></key"..i..">";
+                bossXml = bossXml.."<key"..i.."><name>"..mrt:FormatPlayerName(name, realm).."</name></key"..i..">";
             end
         else
             for i, name in ipairs(bossInfo.Players) do
-                bossXml = bossXml.."<key"..i.."><name>"..name.."</name></key"..i..">";
+                bossXml = bossXml.."<key"..i.."><name>"..mrt:FormatPlayerName(name, realm).."</name></key"..i..">";
             end
         end
         bossXml = bossXml.."</attendees></key"..index..">";
@@ -153,7 +162,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     end
     local function createPlayerInfoString(index, name, realm)
         local playerInfoString = "<key"..index..">";
-        playerInfoString = playerInfoString.."<name>"..name.."</name>";
+        playerInfoString = playerInfoString.."<name>"..mrt:FormatPlayerName(name, realm).."</name>";
         if (MRT_PlayerDB[realm][name]) then
             if (MRT_PlayerDB[realm][name]["Race"]) then
                 playerInfoString = playerInfoString.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
@@ -171,14 +180,14 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         playerInfoString = playerInfoString.."</key"..index..">";
         return playerInfoString;
     end
-    local function createItemInfoString(index, itemInfo)
+    local function createItemInfoString(index, itemInfo, realm)
         local bossInfo = MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber];
         local itemXml = "<key"..index..">";
         itemXml = itemXml.."<ItemName>"..itemInfo.ItemName.."</ItemName>";
         itemXml = itemXml.."<ItemID>"..deformat(itemInfo.ItemString, "item:%s").."</ItemID>";
         itemXml = itemXml.."<Color>"..itemInfo.ItemColor.."</Color>";
         itemXml = itemXml.."<Count>"..itemInfo.ItemCount.."</Count>";
-        itemXml = itemXml.."<Player>"..itemInfo.Looter.."</Player>";
+        itemXml = itemXml.."<Player>"..mrt:FormatPlayerName(itemInfo.Looter, realm).."</Player>";
         itemXml = itemXml.."<Costs>"..itemInfo.DKPValue.."</Costs>";
         itemXml = itemXml.."<Time>"..MRT_MakeEQDKP_Time(bossInfo.Date + index).."</Time>";
         itemXml = itemXml.."<Difficulty>"..bossInfo.Difficulty.."</Difficulty>";
@@ -193,7 +202,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     end
     local function createJoinString(index, name, realm, joinTimeStamp)
         local joinXml = "<key"..index..">";
-        joinXml = joinXml.."<player>"..name.."</player>";
+        joinXml = joinXml.."<player>"..mrt:FormatPlayerName(name, realm).."</player>";
         if (MRT_PlayerDB[realm][name]) then
             if (MRT_PlayerDB[realm][name]["Race"]) then
                 joinXml = joinXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
@@ -212,9 +221,9 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         joinXml = joinXml.."</key"..index..">";
         return joinXml;
     end
-    local function createLeaveString(index, name, leaveTimeStamp)
+    local function createLeaveString(index, name, realm, leaveTimeStamp)
         local leaveString = leaveString.."<key"..index..">";
-        leaveString = leaveString.."<player>"..name.."</player>";
+        leaveString = leaveString.."<player>"..mrt:FormatPlayerName(name, realm).."</player>";
         leaveString = leaveString.."<time>"..MRT_MakeEQDKP_Time(leaveTimeStamp).."</time>";
         leaveString = leaveString.."</key"..index..">";
         return leaveString;
@@ -356,9 +365,9 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     xml = xml.."<BossKills>";
     if (bossID) then
         if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
-            xml = xml..createBossInfoString(1, MRT_RaidLog[raidID]["Bosskills"][bossID], sortedPlayerList);
+            xml = xml..createBossInfoString(1, MRT_RaidLog[raidID]["Bosskills"][bossID], sortedPlayerList, realm);
         else
-            xml = xml..createBossInfoString(1, MRT_RaidLog[raidID]["Bosskills"][bossID], nil);
+            xml = xml..createBossInfoString(1, MRT_RaidLog[raidID]["Bosskills"][bossID], nil, realm);
         end
         isFirstBoss = false;
         tinsert(exportedBosses, bossID);
@@ -366,9 +375,9 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             if ( (not difficulty) or (tContains(mrt.diffIDsNormal, bossInfo["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, bossInfo["Difficulty"]) and difficulty == "H") ) then
                 if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
-                    xml = xml..createBossInfoString(index, bossInfo, sortedPlayerList);
+                    xml = xml..createBossInfoString(index, bossInfo, sortedPlayerList, realm);
                 else
-                    xml = xml..createBossInfoString(index, bossInfo, nil);
+                    xml = xml..createBossInfoString(index, bossInfo, nil, realm);
                 end
                 index = index + 1;
                 tinsert(exportedBosses, i);
@@ -393,7 +402,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     xml = xml.."<Leave>";
     for name, joinLeaveTable in pairs(playerList) do
         for i, joinLeaveEntry in ipairs(joinLeaveTable) do
-            xml = xml..createJoinString(index, name, realm, joinLeaveEntry.Leave);
+            xml = xml..createLeaveString(index, name, realm, joinLeaveEntry.Leave);
             index = index + 1;
         end
     end
@@ -408,7 +417,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
     xml = xml.."<Loot>";
     for lootId, lootInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
         if (exportedBossesLookup[lootInfo.BossNumber]) then
-            xml = xml..createItemInfoString(index, lootInfo);
+            xml = xml..createItemInfoString(index, lootInfo, realm);
             index = index + 1;
         end
     end
@@ -427,7 +436,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         for i, bossNum in ipairs(exportedBosses) do
             lootInfo.BossNumber = bossNum;
             lootInfo.Time = MRT_RaidLog[raidID]["Bosskills"][bossNum]["Date"] + index;              -- a little random seed to prevent an item with bosskill time
-            xml = xml..createItemInfoString(index, lootInfo);
+            xml = xml..createItemInfoString(index, lootInfo, realm);
             index = index + 1;
         end
     end
@@ -458,7 +467,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     local function createPlayerInfoString(name, realm, joinLeaveTable)
         if (#joinLeaveTable == 0) then return ""; end
         local playerXml = "<member>";
-        playerXml = playerXml.."<name>"..name.."</name>";
+        playerXml = playerXml.."<name>"..mrt:FormatPlayerName(name, realm).."</name>";
         if (MRT_PlayerDB[realm][name]) then
             if (MRT_PlayerDB[realm][name]["Race"]) then
                 playerXml = playerXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
@@ -484,7 +493,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         playerXml = playerXml.."</times></member>";
         return playerXml;
     end
-    local function createItemInfoString(raidID, itemID)
+    local function createItemInfoString(raidID, itemID, realm)
         local bossID = MRT_RaidLog[raidID]["Loot"][itemID]["BossNumber"];
         local itemXml = "<item>";
         itemXml = itemXml.."<name>"..MRT_RaidLog[raidID]["Loot"][itemID]["ItemName"].."</name>";
@@ -495,7 +504,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
         else
             itemXml = itemXml.."<time>"..MRT_RaidLog[raidID]["Loot"][itemID]["Time"].."</time>";
         end
-        itemXml = itemXml.."<member>"..MRT_RaidLog[raidID]["Loot"][itemID]["Looter"].."</member>";
+        itemXml = itemXml.."<member>"..mrt:FormatPlayerName(MRT_RaidLog[raidID]["Loot"][itemID]["Looter"], realm).."</member>";
         itemXml = itemXml.."<itemid>"..deformat(MRT_RaidLog[raidID]["Loot"][itemID]["ItemString"], "item:%s").."</itemid>";
         itemXml = itemXml.."<cost>"..MRT_RaidLog[raidID]["Loot"][itemID]["DKPValue"].."</cost>";
         if MRT_RaidLog[raidID]["Loot"][itemID]["Note"] then
@@ -703,11 +712,11 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
     for i, itemInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
         if (itemInfo.Looter ~= "_deleted_") then
             if (not bossID and not difficulty) then
-                xml = xml..createItemInfoString(raidID, i);
+                xml = xml..createItemInfoString(raidID, i, realm);
             elseif (bossID and itemInfo["BossNumber"] == bossID) then
-                xml = xml..createItemInfoString(raidID, i);
+                xml = xml..createItemInfoString(raidID, i, realm);
             elseif (tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "H") then
-                xml = xml..createItemInfoString(raidID, i);
+                xml = xml..createItemInfoString(raidID, i, realm);
             end
         end
     end
@@ -717,7 +726,7 @@ function MRT_CreateEQDKPPlusXMLString(raidID, bossID, difficulty)
 end
 
 function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
-    -- MLDKP1.5 seems to have the instanceID as an optional value - since ID-Stuff changed massivly with the release of Patch 4.0.1, MRT will NOT support exporting of an instanceID in any form
+    -- MLDKP1.5 seems to have the instanceID as an optional value - since ID-Stuff changed massively with the release of Patch 4.0.1, MRT will NOT support exporting of an instanceID in any form
     -- MLDKP1.5 uses numbers for exporting classes and races, so we need a set of tables here. If these tables should be needed somewhere else, then these should be put in the constants file
     local MLDKP_ClassTable = {
         ["WARRIOR"] = 1,
@@ -764,7 +773,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     end
     local function createPlayerInfoString(name, realm)
         local playerXml = "<player>";
-        playerXml = playerXml.."<name>"..name.."</name>";
+        playerXml = playerXml.."<name>"..mrt:FormatPlayerName(name, realm).."</name>";
         if (MRT_PlayerDB[realm][name]) then
             if (MRT_PlayerDB[realm][name]["Race"]) then
                 playerXml = playerXml.."<race>"..MLDKP_RaceTable[MRT_PlayerDB[realm][name]["Race"]].."</race>";
@@ -782,13 +791,13 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         playerXml = playerXml.."</player>";
         return playerXml;
     end
-    local function createItemInfoString(raidID, itemID)
+    local function createItemInfoString(raidID, itemID, realm)
         local bossID = MRT_RaidLog[raidID]["Loot"][itemID]["BossNumber"];
         local lootXml = "<loot>";
         lootXml = lootXml.."<itemname>"..MRT_RaidLog[raidID]["Loot"][itemID]["ItemName"].."</itemname>";
         lootXml = lootXml.."<itemid>"..deformat(MRT_RaidLog[raidID]["Loot"][itemID]["ItemString"], "item:%s").."</itemid>";
         lootXml = lootXml.."<count>"..MRT_RaidLog[raidID]["Loot"][itemID]["ItemCount"].."</count>";
-        lootXml = lootXml.."<player>"..MRT_RaidLog[raidID]["Loot"][itemID]["Looter"].."</player>";
+        lootXml = lootXml.."<player>"..mrt:FormatPlayerName(MRT_RaidLog[raidID]["Loot"][itemID]["Looter"], realm).."</player>";
         lootXml = lootXml.."<costs>"..MRT_RaidLog[raidID]["Loot"][itemID]["DKPValue"].."</costs>";
         lootXml = lootXml.."<time>"..MRT_RaidLog[raidID]["Loot"][itemID]["Time"].."</time>";
         lootXml = lootXml.."<difficulty>"..MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"].."</difficulty>";
@@ -800,16 +809,16 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         lootXml = lootXml.."</loot>";
         return lootXml;
     end
-    local function createJoinString(name, joinTimeStamp)
+    local function createJoinString(name, realm, joinTimeStamp)
         local joinXml = "<join>";
-        joinXml = joinXml.."<player>"..name.."</player>";
+        joinXml = joinXml.."<player>"..mrt:FormatPlayerName(name, realm).."</player>";
         joinXml = joinXml.."<time>"..joinTimeStamp.."</time>";
         joinXml = joinXml.."</join>";
         return joinXml;
     end
-    local function createLeaveString(name, leaveTimeStamp)
+    local function createLeaveString(name, realm, leaveTimeStamp)
         local leaveXml = "<leave>";
-        leaveXml = leaveXml.."<player>"..name.."</player>";
+        leaveXml = leaveXml.."<player>"..mrt:FormatPlayerName(name, realm).."</player>";
         leaveXml = leaveXml.."<time>"..leaveTimeStamp.."</time>";
         leaveXml = leaveXml.."</leave>";
         return leaveXml;
@@ -916,7 +925,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     xml = xml.."<joins>";
     for name, joinLeaveTable in pairs(playerList) do
         for i, subTable in ipairs(joinLeaveTable) do
-            xml = xml..createJoinString(name, subTable.Join);
+            xml = xml..createJoinString(name, realm, subTable.Join);
         end
     end
     xml = xml.."</joins>";
@@ -924,7 +933,7 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     xml = xml.."<leaves>";
     for name, joinLeaveTable in pairs(playerList) do
         for i, subTable in ipairs(joinLeaveTable) do
-            xml = xml..createLeaveString(name, subTable.Leave);
+            xml = xml..createLeaveString(name, realm, subTable.Leave);
         end
     end
     xml = xml.."</leaves>";
@@ -933,11 +942,11 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
     for i, itemInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
         if (itemInfo.Looter ~= "_deleted_") then
             if (not bossID and not difficulty) then
-                xml = xml..createItemInfoString(raidID, i);
+                xml = xml..createItemInfoString(raidID, i, realm);
             elseif (bossID and itemInfo["BossNumber"] == bossID) then
-                xml = xml..createItemInfoString(raidID, i);
+                xml = xml..createItemInfoString(raidID, i, realm);
             elseif (tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "H") then
-                xml = xml..createItemInfoString(raidID, i);
+                xml = xml..createItemInfoString(raidID, i, realm);
             end
         end
     end
@@ -958,7 +967,7 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
         return string.format("%02d", hours)..":"..string.format("%02d", minutes)..":"..string.format("%02d", seconds);
     end
     -- start to create generic functions for repeated blocks
-    local function createBossInfoString(raidID, bossID)
+    local function createBossInfoString(raidID, bossID, realm)
         local bossXml = "<Boss>";
         if (MRT_Options["Export_ExportEnglish"]) then
             bossXml = bossXml.."<name>"..(LBBR[MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]] or MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]).."</name>";
@@ -968,7 +977,7 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
         bossXml = bossXml.."<time>"..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]).."</time>";
         bossXml = bossXml.."<participants>";
         for i, playerName in ipairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
-            bossXml = bossXml.."<participant>"..playerName.."</participant>";
+            bossXml = bossXml.."<participant>"..mrt:FormatPlayerName(playerName, realm).."</participant>";
         end
         bossXml = bossXml.."</participants>";
         bossXml = bossXml.."</Boss>";
@@ -996,7 +1005,7 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
             offlineTimeInSec = 0;
         end
         local playerXml = "<Raider>";
-        playerXml = playerXml.."<name>"..name.."</name>";
+        playerXml = playerXml.."<name>"..mrt:FormatPlayerName(name, realm).."</name>";
         if (MRT_PlayerDB[realm][name]) then
             if (MRT_PlayerDB[realm][name]["Race"]) then
                 playerXml = playerXml.."<race>"..MRT_PlayerDB[realm][name]["Race"].."</race>";
@@ -1022,7 +1031,7 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
         playerXml = playerXml.."</Raider>";
         return playerXml;
     end
-    local function createItemInfoString(itemInfo)
+    local function createItemInfoString(itemInfo, realm)
         local bossInfo = MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber];
         local itemXml = "<Loot>";
         itemXml = itemXml.."<ItemName>"..itemInfo.ItemName.."</ItemName>";
@@ -1032,7 +1041,7 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
         if (itemInfo.Looter == "disenchanted") then
             itemXml = itemXml.."<Buyer>Disenchanted</Buyer>";
         else
-            itemXml = itemXml.."<Buyer>"..itemInfo.Looter.."</Buyer>";
+            itemXml = itemXml.."<Buyer>"..mrt:FormatPlayerName(itemInfo.Looter, realm).."</Buyer>";
         end
         itemXml = itemXml.."<Cost>"..itemInfo.DKPValue.."</Cost>";
         itemXml = itemXml.."<Time>"..MRT_MakeEQDKP_Time(bossInfo.Date).."</Time>";
@@ -1116,16 +1125,16 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
         -- if no bossID is given, export complete raid or all boss of a specific difficulty
         for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
             if (not difficulty) then
-                xml = xml..createBossInfoString(raidID, i);
+                xml = xml..createBossInfoString(raidID, i, realm);
             elseif (tContains(mrt.diffIDsNormal, bossInfo["Difficulty"]) and difficulty == "N") then
-                xml = xml..createBossInfoString(raidID, i);
+                xml = xml..createBossInfoString(raidID, i, realm);
             elseif (tContains(mrt.diffIDsHeroic, bossInfo["Difficulty"]) and difficulty == "H") then
-                xml = xml..createBossInfoString(raidID, i);
+                xml = xml..createBossInfoString(raidID, i, realm);
             end
         end
     else
         -- export a specific boss
-        xml = xml..createBossInfoString(raidID, bossID);
+        xml = xml..createBossInfoString(raidID, bossID, realm);
     end
     xml = xml.."</BossKills>";
     -- and last, add items
@@ -1133,11 +1142,11 @@ function MRT_CreateDKPBoardComExportString(raidID, bossID, difficulty)
     for i, itemInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
         if (itemInfo.Looter ~= "_deleted_") then
             if (not bossID and not difficulty) then
-                xml = xml..createItemInfoString(itemInfo);
+                xml = xml..createItemInfoString(itemInfo, realm);
             elseif (bossID and itemInfo["BossNumber"] == bossID) then
-                xml = xml..createItemInfoString(itemInfo);
+                xml = xml..createItemInfoString(itemInfo, realm);
             elseif (tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "H") then
-                xml = xml..createItemInfoString(itemInfo);
+                xml = xml..createItemInfoString(itemInfo, realm);
             end
         end
     end
@@ -1149,14 +1158,18 @@ end
 -- Planned format options:
 -- @param addFormat: nil = plainText, 1 = BBCode, 2 = BBCode with wowhead-links, 3 = ?
 function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
-    -- get reverse lookup table, if exports should be in english
+    -- get reverse lookup table, if exports should be in English
     local LBBR = LBB:GetReverseLookupTable();
     -- Generate generic getBossData-Function:
     local function getBossData(raidID, bossID)
         -- Set up vars, create sorted playerList
         local bossData = "";
         local isFirstItem = true;
-        local playerList = MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"];
+        local realm = MRT_RaidLog[raidID]["Realm"];
+        local playerList = {}
+        for i, val in pairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
+            table.insert(playerList, mrt:FormatPlayerName(val, realm))
+        end
         table.sort(playerList);
         -- Create data
         -- Begin boss headline formatting
@@ -1203,7 +1216,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
                 bossData = bossData..val["ItemName"];
                 if (addFormat == 2) then bossData = bossData.."[/url]"; end
                 bossData = bossData.." - "..val["DKPValue"].." "..MRT_Options["Export_Currency"];
-                bossData = bossData.." - "..val["Looter"];
+                bossData = bossData.." - "..mrt:FormatPlayerName(val["Looter"], realm);
                 if val["Note"] then bossData = bossData.." ("..val["Note"]..")"; end
                 bossData = bossData.."\n";
             end
@@ -1236,6 +1249,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
     export = export.."\n\n";
     -- If boss events are present, create a list of boss events
     local bossDataExist = nil;
+    local realm = MRT_RaidLog[raidID]["Realm"];
     if (MRT_RaidLog[raidID]["Bosskills"] and #MRT_RaidLog[raidID]["Bosskills"] > 0) then
         if ((bossID == nil) and (difficulty == nil)) then
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
@@ -1264,7 +1278,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
             keyPlayerList[val["Name"]] = val["Name"];
         end
         for key, val in pairs(keyPlayerList) do
-            tinsert(numPlayerList, val);
+            tinsert(numPlayerList, mrt:FormatPlayerName(val, realm));
         end
         table.sort(numPlayerList);
         -- Add export data
@@ -1283,7 +1297,11 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
         -- Set up vars, create sorted playerList
         local bossData = "<div class=\"bossData\">";
         local isFirstItem = true;
-        local playerList = MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"];
+        local realm = MRT_RaidLog[raidID]["Realm"];
+        local playerList = {}
+        for i, val in pairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
+            table.insert(playerList, mrt:FormatPlayerName(val, realm))
+        end
         table.sort(playerList);
         -- Create data
         -- Begin boss headline formatting
@@ -1354,6 +1372,7 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
     export = export.."</div>";
     -- If boss events are present, create a list of boss events
     local bossDataExist = nil;
+    local realm = MRT_RaidLog[raidID]["Realm"];
     if (MRT_RaidLog[raidID]["Bosskills"] and #MRT_RaidLog[raidID]["Bosskills"] > 0) then
         if ((bossID == nil) and (difficulty == nil)) then
             for idx, val in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
@@ -1382,7 +1401,7 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
             keyPlayerList[val["Name"]] = val["Name"];
         end
         for key, val in pairs(keyPlayerList) do
-            tinsert(numPlayerList, val);
+            tinsert(numPlayerList, mrt:FormatPlayerName(val, realm));
         end
         table.sort(numPlayerList);
         -- Add export data
