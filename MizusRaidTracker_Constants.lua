@@ -104,6 +104,7 @@ MRT_RaidZones = {
 	[1712] = true,		-- Antorus
     -- Battle for Azeroth
     [1861] = true,      -- Uldir
+    [2070] = true,      -- Battle of Dazar'alor
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -582,6 +583,19 @@ MRT_EncounterIDList = {
     [2145] = 138967,            -- Zul, Reborn
     [2135] = 134546,            -- Mythrax the Unraveler
     [2122] = 132998,            -- G'huun
+    
+    -- Battle of Dazar'alor
+    [2265] = 144683,            -- Champion of Light (both factions)
+    [2263] = 144638,            -- Grong the Revenant (Alliance)
+    [2284] = 147268,            -- King Grong (Horde)
+    [2266] = 144691,            -- Grimfang and Firecaller (Alliance)
+    [2285] = 144690,            -- Flamefist and Mestrah (Horde)
+    [2271] = 145261,            -- Opulence
+    [2268] = 144747,            -- Conclave of the Chosen
+    [2272] = 145616,            -- King Rastakhan
+    [2276] = 144796,            -- High Tinker Mekkatorque
+    [2280] = 146251,            -- Stormwall Blockade
+    [2281] = 146409,            -- Lady Jaina Proudmoore
     
 }
 
