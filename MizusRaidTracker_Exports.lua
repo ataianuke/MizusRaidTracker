@@ -222,7 +222,7 @@ function MRT_CreateCTRTClassicDKPString(raidID, bossID, difficulty)
         return joinXml;
     end
     local function createLeaveString(index, name, realm, leaveTimeStamp)
-        local leaveString = leaveString.."<key"..index..">";
+        local leaveString = "<key"..index..">";
         leaveString = leaveString.."<player>"..mrt:FormatPlayerName(name, realm).."</player>";
         leaveString = leaveString.."<time>"..MRT_MakeEQDKP_Time(leaveTimeStamp).."</time>";
         leaveString = leaveString.."</key"..index..">";
