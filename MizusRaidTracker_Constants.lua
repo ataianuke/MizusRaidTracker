@@ -105,6 +105,7 @@ MRT_RaidZones = {
     -- Battle for Azeroth
     [1861] = true,      -- Uldir
     [2070] = true,      -- Battle of Dazar'alor
+    [2096] = true,      -- Crucible of Storms
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -596,6 +597,10 @@ MRT_EncounterIDList = {
     [2276] = 144796,            -- High Tinker Mekkatorque
     [2280] = 146251,            -- Stormwall Blockade
     [2281] = 146409,            -- Lady Jaina Proudmoore
+    
+    -- Crucible of Storms
+    [2269] = 146497,            -- Restless Cabal
+    [2273] = 145371,            -- Uunat
     
 }
 
