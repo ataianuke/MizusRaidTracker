@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2018)
+--    * Mîzukichan @ EU-Antonidas (2010-2019)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -40,7 +40,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v0.81.1-alpha1"
+MRT_ADDON_VERSION = "v0.82.0"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
