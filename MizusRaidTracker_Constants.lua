@@ -106,6 +106,7 @@ MRT_RaidZones = {
     [1861] = true,      -- Uldir
     [2070] = true,      -- Battle of Dazar'alor
     [2096] = true,      -- Crucible of Storms
+    [2164] = true,      -- Eternal Palace
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -601,6 +602,16 @@ MRT_EncounterIDList = {
     -- Crucible of Storms
     [2269] = 146497,            -- Restless Cabal
     [2273] = 145371,            -- Uunat
+    
+    -- Eternal Palace
+    [2289] = 150653,            -- Blackwater Behemoth
+    [2293] = 151586,            -- Za'qul, Harbinger of Ny'alotha
+    [2303] = 152128,            -- Orgozoa
+    [2298] = 151881,            -- Abyssal Commander Sivara
+    [2305] = 152364,            -- Radiance of Azshara
+    [2304] = 152236,            -- Lady Ashvane
+    [2311] = 152852,            -- The Queen's Court
+    [2299] = 152910,            -- Queen Azshara
     
 }
 
