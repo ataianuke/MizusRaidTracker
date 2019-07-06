@@ -757,6 +757,7 @@ MRT_IgnoredItemIDList = {
     
     -- BfA Crafting
     [162461] = true,    -- Sanguicell
+    [165703] = true,    -- Breath of Bwonsamdi
     
 }
 
