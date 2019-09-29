@@ -748,14 +748,22 @@ function MRT_CreateMLDKP15ExportString(raidID, bossID, difficulty)
         ["Dwarf"] = 3,
         ["NightElf"] = 4,
         ["Troll"] = 5,
-        ["Scourge"] = 6,        -- Unlocalized name for race 'Undead'
+        ["Scourge"] = 6,                -- Unlocalized name for race 'Undead'
         ["Orc"] = 7,
         ["Tauren"] = 8,
-        ["Draenei"] = 9,        -- The Burning Crusade
-        ["BloodElf"] = 10,      -- The Burning Crusade
-        ["Worgen"] = 11,        -- Cataclysm
-        ["Goblin"] = 12,        -- Cataclysm
-        ["Pandaren"] = 13,      -- Mists of Pandaria
+        ["Draenei"] = 9,                -- The Burning Crusade
+        ["BloodElf"] = 10,              -- The Burning Crusade
+        ["Worgen"] = 11,                -- Cataclysm
+        ["Goblin"] = 12,                -- Cataclysm
+        ["Pandaren"] = 13,              -- Mists of Pandaria
+        ["VoidElf"] = 14,               -- Battle for Azeroth
+        ["LightforgedDraenei"] = 15,    -- Battle for Azeroth
+        ["Nightborne"] = 16,            -- Battle for Azeroth
+        ["HighmountainTauren"] = 17,    -- Battle for Azeroth
+        ["DarkIronDwarf"] = 18,         -- Battle for Azeroth
+        ["MagharOrc"] = 19,             -- Battle for Azeroth
+        ["KulTiran"] = 20,              -- Battle for Azeroth
+        ["ZandalariTroll"] = 21,        -- Battle for Azeroth
     };
     local LBBR = LBB:GetReverseLookupTable();
     -- start to create generic functions for repeated blocks
