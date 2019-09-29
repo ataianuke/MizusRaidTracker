@@ -265,15 +265,24 @@ function mrt:UI_CreateTwoRowDDM()
         MRT_GUI_TwoRowDialog_DDM:CreateFontString("MRT_GUI_TwoRowDialog_DDM_Text", "OVERLAY", "ChatFontNormal")
     end
     -- List of DropDownMenuItems
-    local items = {
-        { [16] = select(1, GetDifficultyInfo(16)).." (20)" },
-        { [15] = select(1, GetDifficultyInfo(15)).." (30)" },
-        { [14] = select(1, GetDifficultyInfo(14)).." (30)" },
-        { [17] = select(1, GetDifficultyInfo(17)).." (30)" },
-        { [9] = select(1, GetDifficultyInfo(9)) },
-        { [4] = select(1, GetDifficultyInfo(4)) },
-        { [3] = select(1, GetDifficultyInfo(3)) },
-    }
+    local items = {}
+    if mrt.isClassic then
+        items = {
+            { [9] = RAID_DIFFICULTY_40PLAYER },
+            { [4] = RAID_DIFFICULTY_20PLAYER },
+            { [3] = RAID_DIFFICULTY_10PLAYER }
+        }
+    else
+        items = {
+            { [16] = select(1, GetDifficultyInfo(16)).." (20)" },
+            { [15] = select(1, GetDifficultyInfo(15)).." (30)" },
+            { [14] = select(1, GetDifficultyInfo(14)).." (30)" },
+            { [17] = select(1, GetDifficultyInfo(17)).." (30)" },
+            { [9] = select(1, GetDifficultyInfo(9)) },                          -- 40 Player
+            { [4] = select(1, GetDifficultyInfo(4)) },                          -- 25 Player
+            { [3] = select(1, GetDifficultyInfo(3)) },                          -- 10 Player
+        }
+    end
     -- Anchor DropDownFrame
     MRT_GUI_TwoRowDialog_DDM:ClearAllPoints();
     MRT_GUI_TwoRowDialog_DDM:SetPoint("TOP", MRT_GUI_TwoRowDialog_EB1, "TOP", -4, -64);

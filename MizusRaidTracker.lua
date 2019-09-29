@@ -40,7 +40,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v0.82.2"
+MRT_ADDON_VERSION = "v0.82.4-alpha"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
@@ -451,6 +451,8 @@ ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", MRT_ChatHandler.CHAT_
 --  Initialize  --
 ------------------
 function MRT_Initialize(frame)
+    -- Detect game version
+    mrt.isClassic = tonumber(string.sub(GetBuildInfo(), 1, 1)) == 1;
     -- Update settings and DB
     MRT_UpdateSavedOptions();
     MRT_VersionUpdate();
