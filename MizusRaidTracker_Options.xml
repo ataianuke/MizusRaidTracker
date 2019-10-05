@@ -250,7 +250,7 @@
       </CheckButton>
       <CheckButton name="$parent_Log10MenRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_CreateNewRaidOnNewZone_CB" relativePoint="BOTTOMLEFT" y="-5"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_CreateNewRaidOnNewZone_CB" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -275,7 +275,7 @@
       </CheckButton>
       <CheckButton name="$parent_LogLFRRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_Log10MenRaids_CB" relativePoint="BOTTOMLEFT" y="-5"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent_Log10MenRaids_CB" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -300,7 +300,7 @@
       </CheckButton>
       <CheckButton name="$parent_LogAVRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent_LogLFRRaids_CB" relativePoint="BOTTOMLEFT" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_LogLFRRaids_CB" x="300"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -325,7 +325,7 @@
       </CheckButton>
       <CheckButton name="$parent_LogClassicRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogAVRaids_CB" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogLFRRaids_CB" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -400,7 +400,7 @@
       </CheckButton>
       <CheckButton name="$parent_LogCataclysmRaids_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWotLKRaids_CB" y="-5"/>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_LogClassicRaids_CB" x="300"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
@@ -475,7 +475,7 @@
       </CheckButton>      
       <CheckButton name="$parent_LogLootModePersonal_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWarlordsRaids_CB" y="-25"/>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWotLKRaids_CB" y="-25"/>
         </Anchors>
         <Layers>
           <Layer level="OVERLAY">
