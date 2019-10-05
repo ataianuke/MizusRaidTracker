@@ -10,6 +10,7 @@
 --    * Kevin (HTML-Export) (2010)
 --    * Knoxa (various MoP fixes) (2013)
 --    * Kravval (various MoP fixes, enhancements to boss kill detection) (2013)
+--    * kjellt77 (base for tracking support while being solo or in a group) (2019)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -70,6 +71,8 @@ local MRT_Defaults = {
         ["Attendance_GuildAttendanceCustomText"] = MRT_GA_TEXT_CHARNAME_BOSS,
         ["Attendance_GroupRestriction"] = false,                                    -- if true, track only first 2/5 groups in 10/25 player raids
         ["Attendance_TrackOffline"] = true,                                         -- if true, track offline players
+        ["Tracking_LogWhileSolo"] = false,                                          -- Track raids while being solo: true / nil 
+        ["Tracking_LogWhileGroup"] = false,                                         -- Track raids while being in a group (and not in a raid): true / nil
         ["Tracking_Log10MenRaids"] = true,                                          -- Track 10 player raids: true / nil (pre WoD-Raids)
         ["Tracking_Log25MenRaids"] = true,                                          -- Track 25 player raids: true / nil (pre WoD-Raids)
         ["Tracking_LogLFRRaids"] = true,                                            -- Track LFR raids: true / nil (any)
@@ -995,14 +998,17 @@ function MRT_CreateNewRaid(zoneName, raidSize, diffID)
     if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
     local numRaidMembers = MRT_GetNumRaidMembers();
     local realm = GetRealmName();
-    if (numRaidMembers == 0) then return; end
+    if (numRaidMembers == 0) then 
+        MRT_Debug("Abort creating a new raid - Player is not in a raid and tracking options for solo/group are disabled.");
+        return; 
+    end
     MRT_Debug("Creating new raid... - RaidZone is "..zoneName..", RaidSize is "..tostring(raidSize).. " and diffID is "..tostring(diffID));
     local currentTime = MRT_GetCurrentTime();
     local MRT_RaidInfo = {["Players"] = {}, ["Bosskills"] = {}, ["Loot"] = {}, ["DiffID"] = diffID, ["RaidZone"] = zoneName, ["RaidSize"] = raidSize, ["Realm"] = GetRealmName(), ["StartTime"] = currentTime};
     MRT_Debug(tostring(numRaidMembers).." raidmembers found. Processing RaidRoster...");
     for i = 1, numRaidMembers do
-        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        local UnitID = "raid"..tostring(i);
+        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = mrt:GetRaidRosterInfo(i);
+        local UnitID = mrt:UnitID(i);
         local playerRaceL, playerRace = UnitRace(UnitID);
         local playerSex = UnitSex(UnitID);
         local playerGuild = GetGuildInfo(UnitID);
@@ -1058,8 +1064,8 @@ function MRT_ResumeLastRaid()
     -- also, update PlayerDB
     local currentAttendeesList = {};
     for i = 1, numRaidMembers do
-        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
-        local UnitID = "raid"..tostring(i);
+        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = mrt:GetRaidRosterInfo(i);
+        local UnitID = mrt:UnitID(i);
         local playerRaceL, playerRace = UnitRace(UnitID);
         local playerSex = UnitSex(UnitID);
         local playerGuild = GetGuildInfo(UnitID);
@@ -1137,7 +1143,7 @@ function MRT_RaidRosterUpdate(frame)
     --MRT_Debug("RaidRosterUpdate: Processing RaidRoster");
     --MRT_Debug(tostring(numRaidMembers).." raidmembers found.");
     for i = 1, numRaidMembers do
-        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = GetRaidRosterInfo(i);
+        local playerName, _, playerSubGroup, playerLvl, playerClassL, playerClass, _, playerOnline = mrt:GetRaidRosterInfo(i);
         -- seems like there is a slight possibility, that playerName is not available - so check it
         if playerName then
             if (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= (raidSize / 5))) then
@@ -1151,7 +1157,7 @@ function MRT_RaidRosterUpdate(frame)
             end
             if ((playerInRaid == nil) and (playerOnline or MRT_Options["Attendance_TrackOffline"]) and (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= (raidSize / 5)))) then
                 MRT_Debug("New player found: "..playerName);
-                local UnitID = "raid"..tostring(i);
+                local UnitID = mrt:UnitID(i);
                 local playerRaceL, playerRace = UnitRace(UnitID);
                 local playerSex = UnitSex(UnitID);
                 local playerInfo = {
@@ -1163,7 +1169,7 @@ function MRT_RaidRosterUpdate(frame)
             end
             -- PlayerDB is being renewed when creating a new raid, so only update unknown players here
             if (not MRT_PlayerDB[realm][playerName]) then
-                local UnitID = "raid"..tostring(i);
+                local UnitID = mrt:UnitID(i);
                 local playerRaceL, playerRace = UnitRace(UnitID);
                 local playerSex = UnitSex(UnitID);
                 local playerGuild = GetGuildInfo(UnitID);
@@ -1214,7 +1220,7 @@ function MRT_AddBosskill(bossname, man_diff, bossID)
     local trackedPlayers = {};
     local numRaidMembers = MRT_GetNumRaidMembers();
     for i = 1, numRaidMembers do
-        local playerName, _, playerSubGroup, _, _, _, _, playerOnline = GetRaidRosterInfo(i);
+        local playerName, _, playerSubGroup, _, _, _, _, playerOnline = mrt:GetRaidRosterInfo(i);
         -- check group number and group related tracking options
         if (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= (maxPlayers / 5))) then
             -- check online status and online status related tracking options
@@ -1861,14 +1867,30 @@ end
 function MRT_GetNumRaidMembers()
     if (IsInRaid()) then
         return GetNumGroupMembers();
+    elseif (IsInGroup() and MRT_Options["Tracking_LogWhileGroup"]) then
+        return GetNumGroupMembers();
+    elseif (not IsInGroup() and MRT_Options["Tracking_LogWhileSolo"]) then
+        return 1;
     else
         return 0;
     end
 end
 
 -- Adding generic function in order to deal with WoW MoP changes (to ensure backwards compatibility)
+-- Updated for solo/group tracking: Also returns true if player is in a raid zone, if corresponding options are enabled
 function MRT_IsInRaid()
-    return IsInRaid();
+    if (IsInRaid()) then
+        return true;
+    elseif ((IsInGroup() and MRT_Options["Tracking_LogWhileGroup"]) or (not IsInGroup() and MRT_Options["Tracking_LogWhileSolo"])) then
+        local _, instanceType, _, _, _, _, _, _, _ = MRT_GetInstanceInfo();
+        if (instanceType == "raid") then
+            return true;
+        else
+            return false;
+        end
+    else
+        return false;
+    end
 end
 
 function MRT_GetInstanceDifficulty()
@@ -1879,11 +1901,45 @@ function MRT_GetInstanceDifficulty()
 end
 
 function MRT_GetInstanceInfo()
-    local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceMapID, instanceGroupSize = GetInstanceInfo()
+    local name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceMapID, instanceGroupSize = GetInstanceInfo();
     -- handle non instanced territories as 40 player raids
     if (difficultyID == 0) then 
         difficultyID = 9;
         maxPlayers = 40;
     end
     return name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceMapID, instanceGroupSize
+end
+
+-- helper function to handle solo/group support with reduced code chances above
+function mrt:GetRaidRosterInfo(index)
+	if (IsInRaid()) then
+		return GetRaidRosterInfo(index);
+	end
+	-- rebuild result set if being in a group or alone
+	local UnitID = mrt:UnitID(index);
+	
+	local name = GetUnitName(UnitID);
+	local rank = 0;
+	local subgroup = 1;
+	local level = UnitLevel(UnitID);
+	local class,fileName = UnitClass(UnitID);
+	local zone = GetRealZoneText();
+	local online = UnitIsConnected(UnitID);
+	local isDead = UnitIsDead(UnitID);
+	local role = nil;
+	local isML = nil;
+	local combatRole = nil;             -- UnitGroupRolesAssigned(UnitID) not available in classic - and we don't use this return value anyway
+	
+	return name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole;
+end
+
+-- helper function to handle solo/group support with reduced code chances above
+function mrt:UnitID(index)
+    if IsInRaid() then
+        return "raid"..tostring(index);
+    elseif (IsInGroup() and index < GetNumGroupMembers()) then
+		return "party"..tostring(index);
+	else
+		return "player";
+	end
 end

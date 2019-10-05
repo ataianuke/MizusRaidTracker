@@ -86,6 +86,9 @@ function MRT_Options_ParseValues()
     -- TrackingPanel
     MRT_Options_TrackingPanel_Title:SetText(MRT_L.Options["TP_TitleText"]);
     MRT_Options_TrackingPanel_Description:SetText("");
+    MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
+    MRT_Options_TrackingPanel_LogWhileSolo_CB_Text:SetText(MRT_L.Options["TP_LogWhileSolo"]);
+    MRT_Options_TrackingPanel_LogWhileGroup_CB_Text:SetText(MRT_L.Options["TP_LogWhileGroup"]);
     MRT_Options_TrackingPanel_Log10MenRaids_CB_Text:SetText(MRT_L.Options["TP_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogLFRRaids_CB_Text:SetText(MRT_L.Options["TP_LogLFRRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB_Text:SetText(MRT_L.Options["TP_LogAVRaids"]);
@@ -96,7 +99,6 @@ function MRT_Options_ParseValues()
     MRT_Options_TrackingPanel_LogPandariaRaids_CB_Text:SetText(MRT_L.Options["TP_LogMoPRaids"]);
     MRT_Options_TrackingPanel_LogWarlordsRaids_CB_Text:SetText(MRT_L.Options["TP_LogWarlordsRaids"]);
     MRT_Options_TrackingPanel_LogLootModePersonal_CB_Text:SetText(MRT_L.Options["TP_LogLootModePersonal"]);
-    MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB_Text:SetText(MRT_L.Options["TP_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_UseServerTime_CB_Text:SetText(MRT_L.Options["TP_UseServerTime"]);
     -- ItemsTrackingPanel
     MRT_Options_ItemsTrackingPanel_Title:SetText(MRT_L.Options["ITP_TitleText"]);
@@ -163,6 +165,7 @@ function MRT_Options_OnOkay(panel)
         LDBIcon:Hide("Mizus RaidTracker");
     end
     -- TrackingPanel
+    MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
     MRT_Options["Tracking_Log10MenRaids"] = MRT_Options_TrackingPanel_Log10MenRaids_CB:GetChecked();
     MRT_Options["Tracking_LogLFRRaids"] = MRT_Options_TrackingPanel_LogLFRRaids_CB:GetChecked();
     MRT_Options["Tracking_LogAVRaids"] = MRT_Options_TrackingPanel_LogAVRaids_CB:GetChecked();
@@ -173,7 +176,8 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_LogMoPRaids"] = MRT_Options_TrackingPanel_LogPandariaRaids_CB:GetChecked();
     MRT_Options["Tracking_LogWarlordsRaids"] = MRT_Options_TrackingPanel_LogWarlordsRaids_CB:GetChecked();
     MRT_Options["Tracking_LogLootModePersonal"] = MRT_Options_TrackingPanel_LogLootModePersonal_CB:GetChecked();
-    MRT_Options["Tracking_CreateNewRaidOnNewZone"] = MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:GetChecked();
+    MRT_Options["Tracking_LogWhileSolo"] = MRT_Options_TrackingPanel_LogWhileSolo_CB:GetChecked();
+    MRT_Options["Tracking_LogWhileGroup"] = MRT_Options_TrackingPanel_LogWhileGroup_CB:GetChecked();
     MRT_Options["Tracking_UseServerTime"] = MRT_Options_TrackingPanel_UseServerTime_CB:GetChecked();
     -- ItemsTrackingPanel
     MRT_Options["Tracking_MinItemQualityToLog"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:GetValue();
@@ -239,6 +243,7 @@ function MRT_Options_RestoreValues()
     MRT_Options_MainPanel_Prunning_Slider:SetValue(MRT_Options["General_PrunningTime"])
     MRT_Options_MainPanel_Prunning_SliderValue:SetText(tostring(MRT_Options["General_PrunningTime"]).." "..MRT_L.Options["MP_Days"]);
     -- TrackingPanel
+    MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);
     MRT_Options_TrackingPanel_Log10MenRaids_CB:SetChecked(MRT_Options["Tracking_Log10MenRaids"]);
     MRT_Options_TrackingPanel_LogLFRRaids_CB:SetChecked(MRT_Options["Tracking_LogLFRRaids"]);
     MRT_Options_TrackingPanel_LogAVRaids_CB:SetChecked(MRT_Options["Tracking_LogAVRaids"]);
@@ -249,7 +254,8 @@ function MRT_Options_RestoreValues()
     MRT_Options_TrackingPanel_LogPandariaRaids_CB:SetChecked(MRT_Options["Tracking_LogMoPRaids"]);
     MRT_Options_TrackingPanel_LogWarlordsRaids_CB:SetChecked(MRT_Options["Tracking_LogWarlordsRaids"]);
     MRT_Options_TrackingPanel_LogLootModePersonal_CB:SetChecked(MRT_Options["Tracking_LogLootModePersonal"]);
-    MRT_Options_TrackingPanel_CreateNewRaidOnNewZone_CB:SetChecked(MRT_Options["Tracking_CreateNewRaidOnNewZone"]);
+    MRT_Options_TrackingPanel_LogWhileSolo_CB:SetChecked(MRT_Options["Tracking_LogWhileSolo"]);
+    MRT_Options_TrackingPanel_LogWhileGroup_CB:SetChecked(MRT_Options["Tracking_LogWhileGroup"]);
     MRT_Options_TrackingPanel_UseServerTime_CB:SetChecked(MRT_Options["Tracking_UseServerTime"]);
     -- ItemsTrackingPanel
     MRT_Options_ItemsTrackingPanel_MinItemQualityToLog_Slider:SetValue(MRT_Options["Tracking_MinItemQualityToLog"]);
