@@ -238,6 +238,10 @@ function MRT_OnEvent(frame, event, ...)
         MRT_Debug("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         MRT_EncounterEndHandler(encounterID, name, difficulty, size, success);
+        
+    elseif (event == "ENCOUNTER_START") then
+        local encounterID, name, difficulty, size = ...
+        MRT_Debug("ENCOUNTER_START fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size)
     
     elseif (event == "GUILD_ROSTER_UPDATE") then 
         MRT_GuildRosterUpdate(frame, event, ...);
