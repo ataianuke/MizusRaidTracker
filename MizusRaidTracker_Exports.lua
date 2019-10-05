@@ -1200,6 +1200,8 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
                     diffDesc = RAID_DIFFICULTY_20PLAYER
                 elseif (tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 9)) then
                     diffDesc = RAID_DIFFICULTY_40PLAYER
+                else
+                    diffDesc = "INVALID_DIFF_ID_IN_CLASSIC"
                 end
             else 
                 diffDesc = GetDifficultyInfo(tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]))
