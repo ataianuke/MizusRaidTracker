@@ -480,6 +480,13 @@
           <OnLeave>MRT_GUI_HideTT();</OnLeave>
         </Scripts>
       </Button>
+      <Button name="$parent_RaidBosskills_Rename_Button" inherits="MRT_GUI_Button_Template">
+        <Scripts>
+          <OnClick>MRT_GUI_BossRename();</OnClick>
+          <OnEnter>MRT_GUI_SetTT(self, "Boss_Rename");</OnEnter>
+          <OnLeave>MRT_GUI_HideTT();</OnLeave>
+        </Scripts>
+      </Button>
       <Button name="$parent_RaidAttendees_Add_Button" inherits="MRT_GUI_Button_Template">
         <Scripts>
           <OnClick>MRT_GUI_RaidAttendeeAdd();</OnClick>

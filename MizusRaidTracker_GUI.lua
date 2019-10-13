@@ -215,6 +215,8 @@ function MRT_GUI_ParseValues()
     MRT_GUIFrame_RaidBosskills_Delete_Button:SetPoint("LEFT", MRT_GUIFrame_RaidBosskills_Add_Button, "RIGHT", 10, 0);
     MRT_GUIFrame_RaidBosskills_Export_Button:SetText(MRT_L.GUI["Button_Export"]);
     MRT_GUIFrame_RaidBosskills_Export_Button:SetPoint("TOP", MRT_GUIFrame_RaidBosskills_Add_Button, "BOTTOM", 0, -5);
+    MRT_GUIFrame_RaidBosskills_Rename_Button:SetText(MRT_L.GUI["Button_Rename"]);
+    MRT_GUIFrame_RaidBosskills_Rename_Button:SetPoint("LEFT", MRT_GUIFrame_RaidBosskills_Export_Button, "RIGHT", 10, 0);
     MRT_GUIFrame_RaidAttendees_Add_Button:SetText(MRT_L.GUI["Button_Add"]);
     MRT_GUIFrame_RaidAttendees_Add_Button:SetPoint("TOPLEFT", MRT_GUI_RaidAttendeesTable.frame, "BOTTOMLEFT", 0, -5);
     MRT_GUIFrame_RaidAttendees_Delete_Button:SetText(MRT_L.GUI["Button_Delete"]);
@@ -611,6 +613,47 @@ function MRT_GUI_BossExport()
     local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
     local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
     MRT_CreateRaidExport(raidnum, bossnum, nil);
+end
+
+function MRT_GUI_BossRename()
+    MRT_GUI_HideDialogs();
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then
+        MRT_Print(MRT_L.GUI["No raid selected"]);
+        return;
+    end
+    local boss_select = MRT_GUI_RaidBosskillsTable:GetSelection();
+    if (boss_select == nil) then
+        MRT_Print(MRT_L.GUI["No boss selected"]);
+        return;
+    end
+    local raidnum = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    local bossnum = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 1);
+    local bossname = MRT_GUI_RaidBosskillsTable:GetCell(boss_select, 3);
+    MRT_GUI_OneRowDialog_Title:SetText(MRT_L.GUI["Rename boss"]);
+    MRT_GUI_OneRowDialog_EB1_Text:SetText(MRT_L.GUI["Col_Name"]);
+    MRT_GUI_OneRowDialog_EB1:SetText(bossname);
+    MRT_GUI_OneRowDialog_OKButton:SetText(MRT_L.GUI["Button_Rename"]);
+    MRT_GUI_OneRowDialog_OKButton:SetScript("OnClick", function() MRT_GUI_BossRenameAccept(raidnum, bossnum); end);
+    MRT_GUI_OneRowDialog_CancelButton:SetText(MRT_L.Core["MB_Cancel"]);
+    MRT_GUI_OneRowDialog:Show();
+end
+
+function MRT_GUI_BossRenameAccept(raidnum, bossnum)
+    MRT_GUI_HideDialogs();
+    local bossname = MRT_GUI_OneRowDialog_EB1:GetText();
+    if (bossname == "") then
+        MRT_Print(MRT_L.GUI["No boss name entered"]);
+        return;
+    end
+    MRT_RaidLog[raidnum]["Bosskills"][bossnum]["Name"] = bossname;
+    -- Do a table update, if the displayed raid was modified
+    local raid_select = MRT_GUI_RaidLogTable:GetSelection();
+    if (raid_select == nil) then return; end
+    local raidnum_selected = MRT_GUI_RaidLogTable:GetCell(raid_select, 1);
+    if (raidnum_selected == raidnum) then
+        MRT_GUI_RaidDetailsTableUpdate(raidnum);
+    end
 end
 
 function MRT_GUI_RaidAttendeeAdd()
