@@ -268,7 +268,7 @@ function mrt:UI_CreateTwoRowDDM()
     local items = {}
     if mrt.isClassic then
         items = {
-            { [9] = RAID_DIFFICULTY_40PLAYER },
+            { [16] = RAID_DIFFICULTY_40PLAYER },
             { [4] = RAID_DIFFICULTY_20PLAYER },
             { [3] = RAID_DIFFICULTY_10PLAYER }
         }
@@ -416,7 +416,7 @@ function MRT_GUI_BossAdd()
     if (not mrt.isClassic) then
         raidDiff = GetRaidDifficultyID();
     else
-        raidDiff = 1;
+        raidDiff = 16;
     end
     MRT_GUI_ThreeRowDialog_Title:SetText(MRT_L.GUI["Add bosskill"]);
     MRT_GUI_ThreeRowDialog_EB1_Text:SetText(MRT_L.GUI["Bossname"]);

@@ -1192,20 +1192,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
             bossData = bossData..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]
         end
         if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
-            local diffDesc 
-            if mrt.isClassic then 
-                if (tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 3)) then
-                    diffDesc = RAID_DIFFICULTY_10PLAYER
-                elseif (tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 4)) then
-                    diffDesc = RAID_DIFFICULTY_20PLAYER
-                elseif (tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 9)) then
-                    diffDesc = RAID_DIFFICULTY_40PLAYER
-                else
-                    diffDesc = "INVALID_DIFF_ID_IN_CLASSIC"
-                end
-            else 
-                diffDesc = GetDifficultyInfo(tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]))
-            end
+            local diffDesc = mrt:GetDifficultyInfo(tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]))
             bossData = bossData.." - "..diffDesc
         end
         -- End boss headline formatting
@@ -1336,19 +1323,8 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
         end
         bossData = bossData.."</span><span class=\"difficulty\">";
         if (MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]) then
-            local diffDesc 
-            if mrt.isClassic then 
-                if (tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 3)) then
-                    diffDesc = RAID_DIFFICULTY_10PLAYER
-                elseif (tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 4)) then
-                    diffDesc = RAID_DIFFICULTY_20PLAYER
-                elseif (tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"] == 9)) then
-                    diffDesc = RAID_DIFFICULTY_40PLAYER
-                end
-            else 
-                diffDesc = GetDifficultyInfo(tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]))
-            end
-            bossData = bossData..diffDesc
+            local diffDesc = mrt:GetDifficultyInfo(tonumber(MRT_RaidLog[raidID]["Bosskills"][bossID]["Difficulty"]));
+            bossData = bossData..diffDesc;
         end
         -- End boss headline formatting
         bossData = bossData.."</span></div>";

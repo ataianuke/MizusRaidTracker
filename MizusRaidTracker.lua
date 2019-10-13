@@ -1943,3 +1943,20 @@ function mrt:UnitID(index)
 		return "player";
 	end
 end
+
+-- helper function to handle non-available classic function
+function mrt:GetDifficultyInfo(index)
+    if not mrt.isClassic then
+        return GetDifficultyInfo(index);
+    else
+        if (index == 3) then
+            return RAID_DIFFICULTY_10PLAYER;
+        elseif (index == 4) then
+            return RAID_DIFFICULTY_20PLAYER;
+        elseif ( (index == 9) or (index == 16) then
+            return RAID_DIFFICULTY_40PLAYER;
+        else
+            return "INVALID_DIFF_ID_IN_CLASSIC";
+        end
+    end
+end
