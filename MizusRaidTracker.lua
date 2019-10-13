@@ -173,6 +173,7 @@ end
 ----------------------
 function MRT_MainFrame_OnLoad(frame)
     frame:RegisterEvent("ADDON_LOADED");
+    frame:RegisterEvent("BOSS_KILL");
     frame:RegisterEvent("CHAT_MSG_LOOT");
     frame:RegisterEvent("CHAT_MSG_WHISPER");
     --frame:RegisterEvent("CHAT_MSG_MONSTER_YELL");
@@ -240,7 +241,13 @@ function MRT_OnEvent(frame, event, ...)
         local encounterID, name, difficulty, size, success = ...
         MRT_Debug("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
         if (not MRT_Options["General_MasterEnable"]) then return end;
-        MRT_EncounterEndHandler(encounterID, name, difficulty, size, success);
+        -- MRT_EncounterEndHandler(encounterID, name, difficulty, size, success);
+    
+    elseif (event == "BOSS_KILL") then
+        local encounterID, name = ...
+        MRT_Debug("BOSS_KILL fired! encounterID="..encounterID..", name="..name);
+        if (not MRT_Options["General_MasterEnable"]) then return end;
+        mrt:BossKillHandler(encounterID, name);
         
     elseif (event == "ENCOUNTER_START") then
         local encounterID, name, difficulty, size = ...
@@ -373,6 +380,14 @@ end
 function MRT_EncounterEndHandler(encounterID, name, difficulty, size, success)
     if (not MRT_NumOfCurrentRaid) then return; end
     if ((success == 1) and (MRT_EncounterIDList[encounterID])) then
+        MRT_Debug("Valid encounterID found... - Match on "..MRT_EncounterIDList[encounterID]);
+        MRT_AddBosskill(name, nil, MRT_EncounterIDList[encounterID]);
+    end
+end
+
+function mrt:BossKillHandler(encounterID, name)
+    if (not MRT_NumOfCurrentRaid) then return; end
+    if (MRT_EncounterIDList[encounterID]) then
         MRT_Debug("Valid encounterID found... - Match on "..MRT_EncounterIDList[encounterID]);
         MRT_AddBosskill(name, nil, MRT_EncounterIDList[encounterID]);
     end
@@ -1953,7 +1968,7 @@ function mrt:GetDifficultyInfo(index)
             return RAID_DIFFICULTY_10PLAYER;
         elseif (index == 4) then
             return RAID_DIFFICULTY_20PLAYER;
-        elseif ( (index == 9) or (index == 16) then
+        elseif ( (index == 9) or (index == 16) ) then
             return RAID_DIFFICULTY_40PLAYER;
         else
             return "INVALID_DIFF_ID_IN_CLASSIC";
