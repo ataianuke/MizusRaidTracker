@@ -60,6 +60,11 @@ MRT_ItemValues = {
 --  Zone name list  --
 ----------------------
 MRT_RaidZones = {
+    -- Classic
+    [469] = true,       -- Blackwing Lair
+    [409] = true,       -- Molten Core
+    [509] = true,       -- Ruins of Ahn'Qiraj
+    [531] = true,       -- Temple of Ahn'Qiraj
     -- Burning Crusade
     [532] = true,       -- Karazhan
     [565] = true,       -- Gruul's Lair
