@@ -54,9 +54,9 @@ MRT_ArrayBosslast = nil;
 
 local MRT_Defaults = {
     ["Options"] = {
-        ["DB_Version"] = 2,
+        ["DB_Version"] = 3,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
-        ["General_OptionsVersion"] = 13,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
+        ["General_OptionsVersion"] = 20,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
         ["General_SlashCmdHandler"] = "mrt",                                        --
         ["General_PrunnRaidLog"] = false,                                           -- Prunning - shall old be deleted after a certain amount of time
@@ -555,6 +555,10 @@ function MRT_UpdateSavedOptions()
                 MRT_Options[key] = value;
             end
         end
+        -- Default Options for WoW Classic - changes from retail default
+        if (mrt.isClassic) then
+            MRT_Options["Tracking_LogClassicRaids"] = true;
+        end
     end
     if MRT_Options["General_OptionsVersion"] == 1 then
         MRT_Options["Tracking_CreateNewRaidOnNewZone"] = true;
@@ -648,6 +652,13 @@ function MRT_UpdateSavedOptions()
         -- BfA transition - reset logging of personal loot to true - it is the only loot mode available now
         MRT_Options["Tracking_LogLootModePersonal"] = true;
         MRT_Options["General_OptionsVersion"] = 19;
+    end
+    if MRT_Options["General_OptionsVersion"] == 19 then
+        -- Update for existing installations on WoW Classic: Force enable 
+        if (mrt.isClassic) then
+            MRT_Options["Tracking_LogClassicRaids"] = true;
+        end
+        MRT_Options["General_OptionsVersion"] = 20;
     end
 end
 
