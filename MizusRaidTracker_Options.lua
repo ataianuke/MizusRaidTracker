@@ -4,7 +4,7 @@
 -- *******************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2018)
+--    * Mîzukichan @ EU-Antonidas (2010-2019)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -141,6 +141,16 @@ function MRT_Options_ParseValues()
     MRT_Options_ExportPanel_Currency_EB_Text:SetText(MRT_L.Options["EP_Currency"]);
     -- restore saved options
     MRT_Options_RestoreValues();
+    -- WoW Classic: Hide settings which are not applicable
+    if (mrt.isClassic) then
+        MRT_Options_TrackingPanel_LogAVRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogBCRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogWotLKRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogCataclysmRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogPandariaRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogWarlordsRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogLootModePersonal_CB:Hide();
+    end
 end
 
 
