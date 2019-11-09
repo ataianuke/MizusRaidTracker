@@ -60,7 +60,9 @@ MRT_ItemValues = {
 --  Zone name list  --
 ----------------------
 MRT_RaidZones = {
-    -- Classic
+    -- Classic - Classic only
+    [309] = true,       -- Zul'Gurub
+    -- Classic - Retail & Classic
     [469] = true,       -- Blackwing Lair
     [409] = true,       -- Molten Core
     [509] = true,       -- Ruins of Ahn'Qiraj
@@ -78,10 +80,10 @@ MRT_RaidZones = {
     [616] = true,       -- The Eye of Eternity
     [615] = true,       -- The Obsidian Sanctum
     [624] = true,       -- Vault of Archavon
-    [533] = true,       -- Naxxramas
+    [533] = true,       -- Naxxramas (also in Classic)
     [603] = true,       -- Ulduar
     [649] = true,       -- Trial of the Crusader
-    [249] = true,       -- Onyxia's Lair
+    [249] = true,       -- Onyxia's Lair (also in Classic)
     [631] = true,       -- Icecrown Citadel
     [724] = true,       -- The Ruby Sanctum
     -- Cataclysm
@@ -175,6 +177,16 @@ MRT_LegacyRaidZonesClassic = {
     [531] = true,       -- Temple of Ahn'Qiraj
 }
 
+mrt.raidZonesClassic = {
+    [469] = true,       -- Blackwing Lair
+    [409] = true,       -- Molten Core
+    [533] = true,       -- Naxxramas
+    [249] = true,       -- Onyxia's Lair
+    [509] = true,       -- Ruins of Ahn'Qiraj
+    [531] = true,       -- Temple of Ahn'Qiraj
+    [309] = true,       -- Zul'Gurub
+}
+
 MRT_PvPRaids = {
     [757] = true,       -- Baradin Hold
     [624] = true,       -- Vault of Archavon
@@ -198,9 +210,24 @@ MRT_BossIDList = {
 }
 
 MRT_EncounterIDList = {
-    ---------------
-    --  Classic  --
-    ---------------
+    -----------------------------
+    --  Classic - Classic only --
+    -----------------------------
+    -- Zul'Gurub
+    [785] = 14517,              -- High Priestess Jeklik
+    [784] = 14507,              -- High Priest Venoxis
+    [786] = 14510,              -- High Priestess Mar'li    
+    [789] = 14509,              -- High Priest Thekal
+    [791] = 14515,              -- High Priestess Arlokk
+    [787] = 14988,              -- Bloodlord Mandokir
+    [792] = 11380,              -- Jin'do the Hexxer
+    [790] = 15114,              -- Gahz'ranka
+    [788] = 15083,              -- Edge of Madness
+    [793] = 14834,              -- Hakkar
+    
+    -----------------------
+    --  Classic - Retail --
+    -----------------------
     -- Molten Core
     [663] = 12118,              -- Lucifron
     [664] = 11982,              -- Magmadar

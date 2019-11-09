@@ -940,8 +940,13 @@ function MRT_CheckZoneAndSizeStatus()
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
-            MRT_Debug("This instance is a Classic-Raid and tracking of those is disabled.");
+        if (not mrt.isClassic and MRT_LegacyRaidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
+            MRT_Debug("Retail: This instance is a Classic-Raid and tracking of those is disabled.");
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        if (mrt.isClassic and mrt.raidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
+            MRT_Debug("Classic: This instance is a Classic-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
