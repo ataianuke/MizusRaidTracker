@@ -41,7 +41,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v0.84.0-classic"
+MRT_ADDON_VERSION = "v0.84.1-classic"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
@@ -921,32 +921,32 @@ function MRT_CheckZoneAndSizeStatus()
     if (diffID == 6) then diffID = 4; end
     if (MRT_RaidZones[areaID]) then
         -- Check if the current raidZone is a zone which should be tracked
-        if (MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
+        if (not mrt.isClassic and MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
             MRT_Debug("This instance is a PvP-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesWarlords[areaID] and not MRT_Options["Tracking_LogWarlordsRaids"]) then
+        if (not mrt.isClassic and MRT_LegacyRaidZonesWarlords[areaID] and not MRT_Options["Tracking_LogWarlordsRaids"]) then
             MRT_Debug("This instance is a Draenor-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesPanadria[areaID] and not MRT_Options["Tracking_LogMoPRaids"]) then
+        if (not mrt.isClassic and MRT_LegacyRaidZonesPanadria[areaID] and not MRT_Options["Tracking_LogMoPRaids"]) then
             MRT_Debug("This instance is a Pandaria-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesCataclysm[areaID] and not MRT_Options["Tracking_LogCataclysmRaids"]) then
+        if (not mrt.isClassic and MRT_LegacyRaidZonesCataclysm[areaID] and not MRT_Options["Tracking_LogCataclysmRaids"]) then
             MRT_Debug("This instance is a Cataclysm-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesWotLK[areaID] and not MRT_Options["Tracking_LogWotLKRaids"]) then
+        if (not mrt.isClassic and MRT_LegacyRaidZonesWotLK[areaID] and not MRT_Options["Tracking_LogWotLKRaids"]) then
             MRT_Debug("This instance is a WotLK-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (MRT_LegacyRaidZonesBC[areaID] and not MRT_Options["Tracking_LogBCRaids"]) then
+        if (not mrt.isClassic and MRT_LegacyRaidZonesBC[areaID] and not MRT_Options["Tracking_LogBCRaids"]) then
             MRT_Debug("This instance is a BC-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
@@ -968,32 +968,33 @@ function MRT_CheckZoneAndSizeStatus()
             return;
         end
         -- Check if current raid size should be tracked
-        if (diffID == 3 and not MRT_Options["Tracking_Log10MenRaids"]) then
+        -- diff IDs are completely different on Classic, so skip these checks on Classic realms for now
+        if (not mrt.isClassic and diffID == 3 and not MRT_Options["Tracking_Log10MenRaids"]) then
             MRT_Debug("This instance is a 10 player legacy raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (diffID == 4 and not MRT_Options["Tracking_Log25MenRaids"]) then
+        if (not mrt.isClassic and diffID == 4 and not MRT_Options["Tracking_Log25MenRaids"]) then
             MRT_Debug("This instance is a 25 player legacy raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if ((diffID == 7 or diffID == 17) and not MRT_Options["Tracking_LogLFRRaids"]) then
+        if (not mrt.isClassic and (diffID == 7 or diffID == 17) and not MRT_Options["Tracking_LogLFRRaids"]) then
             MRT_Debug("This instance is a LFR-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (diffID == 14 and not MRT_Options["Tracking_LogNormalRaids"]) then
+        if (not mrt.isClassic and diffID == 14 and not MRT_Options["Tracking_LogNormalRaids"]) then
             MRT_Debug("This instance is a WoD or later normal mode raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (diffID == 15 and not MRT_Options["Tracking_LogHeroicRaids"]) then
+        if (not mrt.isClassic and diffID == 15 and not MRT_Options["Tracking_LogHeroicRaids"]) then
             MRT_Debug("This instance is a WoD or later heroic mode raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (diffID == 16 and not MRT_Options["Tracking_LogMythicRaids"]) then
+        if (not mrt.isClassic and diffID == 16 and not MRT_Options["Tracking_LogMythicRaids"]) then
             MRT_Debug("This instance is a WoD or later mythic mode raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
