@@ -247,7 +247,7 @@ mrt.encounterNameList = {
     [610] = "Razorgore the Untamed",
     [611] = "Vaelastrasz the Corrupt",
     [612] = "Broodlord Lashlayer",
-    [613] = "Firemaw"
+    [613] = "Firemaw",
     [614] = "Ebonroc",
     [615] = "Flamegor",
     [616] = "Chromaggus",
@@ -873,6 +873,8 @@ MRT_IgnoredItemIDList = {
     [165703] = true,    -- Breath of Bwonsamdi
     [169694] = true,    -- Aqueous Reliquary (Eternal Palace)
     
+    -- BfA Questitems
+    [169329] = true,    -- Eternal Ornament
 }
 
 
