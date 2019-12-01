@@ -201,6 +201,12 @@ function MRT_OnEvent(frame, event, ...)
             frame:UnregisterEvent("ADDON_LOADED");
             MRT_Initialize(frame);
         end
+        
+    elseif (event == "BOSS_KILL") then
+        local encounterID, name = ...
+        MRT_Debug("BOSS_KILL fired! encounterID="..encounterID..", name="..name);
+        if (not MRT_Options["General_MasterEnable"]) then return end;
+        mrt:BossKillHandler(encounterID, name);
     
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
@@ -242,12 +248,6 @@ function MRT_OnEvent(frame, event, ...)
         MRT_Debug("ENCOUNTER_END fired! encounterID="..encounterID..", name="..name..", difficulty="..difficulty..", size="..size..", success="..success)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         -- MRT_EncounterEndHandler(encounterID, name, difficulty, size, success);
-    
-    elseif (event == "BOSS_KILL") then
-        local encounterID, name = ...
-        MRT_Debug("BOSS_KILL fired! encounterID="..encounterID..", name="..name);
-        if (not MRT_Options["General_MasterEnable"]) then return end;
-        mrt:BossKillHandler(encounterID, name);
         
     elseif (event == "ENCOUNTER_START") then
         local encounterID, name, difficulty, size = ...
@@ -388,6 +388,14 @@ end
 function mrt:BossKillHandler(encounterID, name)
     if (not MRT_NumOfCurrentRaid) then return; end
     if (MRT_EncounterIDList[encounterID]) then
+        -- Looks like classic is missing the localized name (or encounter name in general)
+        if (mrt.isClassic and (not name or name == "" or name == " ")) then
+            if (mrt.encounterNameList[encounterID]) then
+                name = LBBL[mrt.encounterNameList[encounterID]] or mrt.encounterNameList[encounterID];
+            else
+                name = "Unknown encounter";
+            end
+        end
         MRT_Debug("Valid encounterID found... - Match on "..MRT_EncounterIDList[encounterID]);
         MRT_AddBosskill(name, nil, MRT_EncounterIDList[encounterID]);
     end

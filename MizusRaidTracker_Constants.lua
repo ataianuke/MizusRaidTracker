@@ -212,6 +212,84 @@ MRT_BossIDList = {
  
 }
 
+mrt.encounterNameList = {
+    -- Looks like blizz isn't providing localized names for boss encounters (in non english clients only?) in classic
+    -- .... why?!?
+    --
+    -- Zul'Gurub
+    [785] = "High Priestess Jeklik",
+    [784] = "High Priest Venoxis",
+    [786] = "High Priestess Mar'li", 
+    [789] = "High Priest Thekal",
+    [791] = "High Priestess Arlokk",
+    [787] = "Bloodlord Mandokir",
+    [792] = "Jin'do the Hexxer",
+    [790] = "Gahz'ranka",
+    [788] = "Edge of Madness",                  -- This needs changing for something which is listed in LibBabbleBoss
+    [793] = "Hakkar",
+    
+    -- Onyxias Lair
+    [1084] = "Onyxia",
+    
+    -- Molten Core
+    [663] = "Lucifron",
+    [664] = "Magmadar",
+    [665] = "Gehennas",
+    [666] = "Garr",
+    [667] = "Shazzrah",
+    [668] = "Baron Geddon",
+    [670] = "Golemagg the Incinerator",
+    [669] = "Sulfuron Harbinger",
+    [671] = "Majordomo Executus",
+    [672] = "Ragnaros",
+    
+    -- Blackwing Lair
+    [610] = "Razorgore the Untamed",
+    [611] = "Vaelastrasz the Corrupt",
+    [612] = "Broodlord Lashlayer",
+    [613] = "Firemaw"
+    [614] = "Ebonroc",
+    [615] = "Flamegor",
+    [616] = "Chromaggus",
+    [617] = "Nefarian",
+    
+    -- Ruins of Ahn'Qiraj
+    [718] = "Kurinnaxx",
+    [719] = "General Rajaxx",
+    [720] = "Moam",
+    [721] = "Buru the Gorger",
+    [722] = "Ayamiss the Hunter",
+    [723] = "Ossirian the Unscarred",
+    
+    -- Temple of Ahn'Qiraj
+    [709] = "The Prophet Skeram",
+    [711] = "Battleguard Sartura",
+    [712] = "Fankriss the Unyielding",
+    [714] = "Princess Huhuran",
+    [715] = "The Twin Emperors",
+    [717] = "C'Thun",
+    [710] = "The Bug Family",
+    [713] = "Viscidus",
+    [716] = "Ouro",
+
+    -- Naxxramas
+    [1107] = "Anub'Rekhan",
+    [1110] = "Grand Widow Faerlina",
+    [1116] = "Maexxna",
+    [1117] = "Noth the Plaguebringer",
+    [1112] = "Heigan the Unclean",
+    [1115] = "Loatheb",
+    [1113] = "Instructor Razuvious",
+    [1109] = "Gothik the Harvester",
+    [1121] = "The Four Horsemen",
+    [1118] = "Patchwerk",
+    [1111] = "Grobbulus",
+    [1108] = "Gluth",
+    [1120] = "Thaddius",
+    [1119] = "Sapphiron",
+    [1114] = "Kel'Thuzad",
+}
+
 MRT_EncounterIDList = {
     -----------------------------
     --  Classic - Classic only --
