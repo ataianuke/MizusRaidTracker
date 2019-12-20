@@ -54,7 +54,7 @@ MRT_ArrayBosslast = nil;
 
 local MRT_Defaults = {
     ["Options"] = {
-        ["DB_Version"] = 3,
+        ["DB_Version"] = 4,
         ["General_MasterEnable"] = true,                                            -- AddonEnable: true / nil
         ["General_OptionsVersion"] = 20,                                            -- OptionsVersion - Counter, which increases after a new option has been added - if new option is added, then increase counter and add to update options function
         ["General_DebugEnabled"] = false,                                           --
@@ -769,6 +769,28 @@ function MRT_VersionUpdate()
             end
         end
         MRT_Options["DB_Version"] = 3;
+    end
+    -- DB change from v3 to v4:
+    -- * Fix missing boss encounter names on classic clients before boss name detection on non-EN clients was fixed
+    if (MRT_Options["DB_Version"] == 3) then
+        if (#MRT_RaidLog > 0 and mrt.isClassic) then
+            local bossIdToEncId = {};
+            for encId, bossId in pairs(MRT_EncounterIDList) do
+                bossIdToEncId[bossId] = encId;
+            end
+            for i, raidInfoTable in ipairs(MRT_RaidLog) do
+                for j, bossInfo in ipairs(raidInfoTable["Bosskills"]) do
+                    if ((bossInfo["Name"] == "") or (bossInfo["Name"] == " ") or (not bossInfo["Name"])) then
+                        if (bossInfo["BossId"] and bossIdToEncId[bossInfo["BossId"]] and mrt.encounterNameList[bossIdToEncId[bossInfo["BossId"]]]) then
+                            bossInfo["Name"] = LBBL[mrt.encounterNameList[bossIdToEncId[bossInfo["BossId"]]]];
+                        else
+                            bossInfo["Name"] = "Unknown Encounter";
+                        end
+                    end
+                end
+            end
+        end
+        MRT_Options["DB_Version"] = 4;
     end
 end
 
