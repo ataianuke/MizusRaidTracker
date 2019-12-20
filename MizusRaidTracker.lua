@@ -41,7 +41,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v0.84.1-classic"
+MRT_ADDON_VERSION = "0.84.3-classic"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
@@ -223,10 +223,14 @@ function MRT_OnEvent(frame, event, ...)
         if (not MRT_TimerFrame.GARunning) then return false; end
         local msg, from = ...;
         if ( MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"] and (MRT_Options["Attendance_GuildAttendanceCheckTrigger"] == msg) ) then
+            MRT_Debug("Received valid trigger message from '"..from.."'");
             MRT_GuildAttendanceWhisper(from, from);
         elseif (not MRT_Options["Attendance_GuildAttendanceCheckUseTrigger"]) then
             local player = MRT_GuildRoster[string.lower(msg)];
-            if (not player) then return; end
+            if (not player) then 
+                MRT_Debug("Message does not match to a player name in MRT_GuildRoster. - Message from: "..from.." - Message: "..msg);
+                return; 
+            end
             MRT_GuildAttendanceWhisper(player, from);
         end
     
@@ -234,7 +238,6 @@ function MRT_OnEvent(frame, event, ...)
         if (not MRT_Options["General_MasterEnable"]) then return end;
         if (not MRT_NumOfCurrentRaid) then return; end
         local monsteryell, sourceName = ...;
-		-- local localInstanceInfoName, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, areaID, iniGroupSize = MRT_GetInstanceInfo();
 		-- local localInstanceInfoName, instanceInfoType, diffID, diffDesc, maxPlayers, _, _, areaID, iniGroupSize = MRT_GetInstanceInfo();
         local areaID = GetCurrentMapAreaID();
         if (not areaID) then return; end
@@ -456,6 +459,8 @@ function MRT_SlashCmdHandler(msg)
 end
 
 -- Chat handler
+-- These will filter out incoming messages handled by MRT for the user in order to avoid message spam
+-- This should probably be optional.
 local MRT_ChatHandler = {};
 function MRT_ChatHandler:CHAT_MSG_WHISPER_Filter(event, msg, from, ...)
     if (not MRT_TimerFrame.GARunning) then return false; end
@@ -1753,9 +1758,13 @@ function MRT_GuildRosterUpdate(frame, event, ...)
     local numGuildMembers = GetNumGuildMembers();
     local guildRoster = {};
     for i = 1, numGuildMembers do
-        local charName = GetGuildRosterInfo(i);
-        if (charName) then
-            guildRoster[string.lower(charName)] = charName;
+        local fullName = GetGuildRosterInfo(i);
+        local playerName, playerRealm = strsplit("-", fullName)
+        if (fullName) then
+            guildRoster[string.lower(fullName)] = fullName;
+        end
+        if (playerName) then
+            guildRoster[string.lower(playerName)] = playerName;
         end
     end
     MRT_GuildRoster = guildRoster;
@@ -1828,6 +1837,7 @@ end
 
 function MRT_GuildAttendanceSendAnnouncement(unformattedText, boss, timer)
     -- format text
+    -- ToDo: Needs a delay of one frame per line (as well as any other multi line message)
     local announcement = unformattedText;
     if (boss) then 
         announcement = string.gsub(announcement, "<<BOSS>>", boss); 
@@ -1854,6 +1864,11 @@ function MRT_GuildAttendanceWhisper(player, source)
     if (MRT_NumOfCurrentRaid ~= nil) then
         local sendMsg = nil;
         local player_exist = nil;
+        local realm = GetRealmName();
+        local playerName, playerRealm = strsplit("-", player);
+        if (playerRealm == realm) then
+            player = playerName;
+        end
         if (MRT_NumOfLastBoss) then
             for i, v in ipairs(MRT_RaidLog[MRT_NumOfCurrentRaid]["Bosskills"][MRT_NumOfLastBoss]["Players"]) do
                 if (v == player) then player_exist = true; end;
