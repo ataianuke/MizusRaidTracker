@@ -1866,7 +1866,7 @@ function MRT_GuildAttendanceWhisper(player, source)
         local player_exist = nil;
         local realm = GetRealmName();
         local playerName, playerRealm = strsplit("-", player);
-        if (playerRealm == realm) then
+        if (playerRealm and realm == playerRealm) then
             player = playerName;
         end
         if (MRT_NumOfLastBoss) then
