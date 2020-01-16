@@ -117,6 +117,7 @@ MRT_RaidZones = {
     [2070] = true,      -- Battle of Dazar'alor
     [2096] = true,      -- Crucible of Storms
     [2164] = true,      -- Eternal Palace
+    [2217] = true,      -- Ny'alotha, the Waking City
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -725,6 +726,20 @@ MRT_EncounterIDList = {
     [2304] = 152236,            -- Lady Ashvane
     [2311] = 152852,            -- The Queen's Court
     [2299] = 152910,            -- Queen Azshara
+    
+    -- Ny'alotha, the Waking City
+    [2329] = 156818,            -- Wrathion, the Black Emperor
+    [2327] = 156523,            -- Maut
+    [2334] = 157620,            -- The Prophet Skitra
+    [2328] = 160229,            -- Dark Inquisitor Xanesh
+    [2336] = 151798,            -- Vexiona
+    [2333] = 157253,            -- The Hivemind
+    [2331] = 156866,            -- Ra-den the Despoiled
+    [2335] = 157231,            -- Shad'har the Insatiable
+    [2343] = 157602,            -- Drest'agath
+    [2345] = 158328,            -- Il'gynoth, Corruption Reborn
+    [2337] = 157439,            -- Carapace of N'Zoth
+    [2344] = 158041,            -- N'Zoth, the Corruptor
     
 }
 
