@@ -887,6 +887,7 @@ MRT_IgnoredItemIDList = {
     [162461] = true,    -- Sanguicell
     [165703] = true,    -- Breath of Bwonsamdi
     [169694] = true,    -- Aqueous Reliquary (Eternal Palace)
+    [174279] = true,    -- Encrypted Ny'alothan Text (Ny'alotha)
     
     -- BfA Questitems
     [169329] = true,    -- Eternal Ornament
