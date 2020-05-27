@@ -1327,7 +1327,7 @@ function MRT_AddBosskill(bossname, man_diff, bossID)
         -- check group number and group related tracking options
         if (not MRT_Options["Attendance_GroupRestriction"] or (playerSubGroup <= (maxPlayers / 5))) then
             -- check online status and online status related tracking options
-            if (MRT_Options["Attendance_TrackOffline"] or playerOnline == 1) then
+            if (MRT_Options["Attendance_TrackOffline"] or playerOnline == true) then
                 tinsert(trackedPlayers, playerName);
             end
         end
