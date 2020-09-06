@@ -2064,7 +2064,7 @@ function mrt:GetDifficultyInfo(index)
     else
         if (index == 3) then
             return RAID_DIFFICULTY_10PLAYER;
-        elseif (index == 4) then
+        elseif ( (index == 4) or (index == 148) ) then
             return RAID_DIFFICULTY_20PLAYER;
         elseif ( (index == 9) or (index == 16) ) then
             return RAID_DIFFICULTY_40PLAYER;
