@@ -41,7 +41,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "0.84.3-classic"
+MRT_ADDON_VERSION = "v0.84.3-classic"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
@@ -210,12 +210,6 @@ function MRT_OnEvent(frame, event, ...)
     
     elseif (event == "CHAT_MSG_LOOT") then 
         if (MRT_NumOfCurrentRaid) then
-            -- Check if player is master looter - if yes, don't track chat messages 
-			-- ToDo: This will ignore some items, like personal BoE in Legion... - needs a proper item duplication detection... somehow...
-			if (mrt.isClassic and IsMasterLooter()) then 
-				MRT_Debug("Current player is master looter. Stopping chat message processing...");
-				return;
-			end
             MRT_AutoAddLoot(...);
         end
         
@@ -1429,6 +1423,15 @@ function MRT_AutoAddLoot(chatmsg)
     end
 	-- if code reaches this point, we should have a valid looter and a valid itemLink
     MRT_Debug("Item looted - Looter is "..playerName.." and loot is "..itemLink);
+    -- Check if player is master looter - if yes, don't track chat messages
+    --   (unless the item in question is otherwise not tracked by the master looter hook (currently AQ40 Idols))
+    -- ToDo: This will ignore some items, like personal BoE in Legion... - needs a proper item duplication detection... somehow...
+    local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemLink);
+    if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLoot()"); return; end
+    if (mrt.isClassic and IsMasterLooter() and not mrt.DBAQIdolIDs[itemId]) then 
+        MRT_Debug("Current player is master looter. Stopping chat message processing...");
+        return;
+    end
 	MRT_AutoAddLootItem(playerName, itemLink, itemCount);
 end	
 
@@ -1893,7 +1896,7 @@ end
 ------------------------
 function MRT_Debug(text)
     if (MRT_Options["General_DebugEnabled"]) then
-        DEFAULT_CHAT_FRAME:AddMessage("MRT v."..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
+        DEFAULT_CHAT_FRAME:AddMessage("MRT "..MRT_ADDON_VERSION.." Debug: "..text, 1, 0.5, 0);
     end
 end
 

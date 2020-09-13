@@ -944,3 +944,18 @@ mrt.DBConvertMapToInstanceList = {
     [1147] = 1676,      -- Tomb of Sargeras
 	[1188] = 1712,		-- Antorus
 }
+
+
+--------------------------------------
+--  List of itemIDs for AQ40 idols  --
+--------------------------------------
+mrt.DBAQIdolIDs = { 
+    20876,              -- Idol of Death
+    20879,              -- Idol of Life 
+    20875,              -- Idol of Night 
+    20878,              -- Idol of Rebirth
+    20881,              -- Idol of Strife
+    20882,              -- Idol of War
+    20877,              -- Idol of the Sage
+    20874               -- Idol of the Sun
+}
