@@ -195,7 +195,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Tracking_AskForDKPValuePersonal"] = MRT_Options_ItemsTrackingPanel_AskForDKPValuePersonal_CB:GetChecked();
     MRT_Options["Tracking_MinItemQualityToGetDKPValue"] = MRT_Options_ItemsTrackingPanel_MinItemQualityToGetCost_Slider:GetValue();
     MRT_Options["ItemTracking_UseEPGPValues"] = MRT_Options_ItemsTrackingPanel_UseEPGPValues_CB:GetChecked();
-    MRT_Options["Tracking_AskCostAutoFocus"] = MRT_Lib_UIDropDownMenu_GetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu);
+    MRT_Options["Tracking_AskCostAutoFocus"] = UIDropDownMenu_GetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu);
     MRT_Options["ItemTracking_IgnoreEnchantingMats"] = MRT_Options_ItemsTrackingPanel_IgnoreEnchantingMats_CB:GetChecked();
     MRT_Options["ItemTracking_IgnoreGems"] = MRT_Options_ItemsTrackingPanel_IgnoreGems_CB:GetChecked();
     -- sanity check min item level
@@ -217,7 +217,7 @@ function MRT_Options_OnOkay(panel)
     MRT_Options["Attendance_GuildAttendanceUseCustomText"] = MRT_Options_AttendancePanel_GA_UseCustomText_CB:GetChecked();
     MRT_Options["Attendance_GuildAttendanceCustomText"] = MRT_Options_AttendancePanel_GA_CustomText_EB:GetText();
     -- ExportPanel
-    MRT_Options["Export_ExportFormat"] = MRT_Lib_UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
+    MRT_Options["Export_ExportFormat"] = UIDropDownMenu_GetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu);
     MRT_Options["Export_ExportEnglish"] = MRT_Options_ExportPanel_EnglishExport_CB:GetChecked();
     MRT_Options["Export_CTRT_IgnorePerBossAttendance"] = MRT_Options_ExportPanel_IgnorePerBossAttendance_CB:GetChecked();
     MRT_Options["Export_CTRT_AddPoorItem"] = MRT_Options_ExportPanel_AddPoorItemToEachBoss_CB:GetChecked();
@@ -348,7 +348,7 @@ end
 function MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu()
     -- Create DropDownFrame
     if (not MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu) then
-        CreateFrame("Frame", "MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu", MRT_Options_ItemsTrackingPanel, "MRT_Lib_UIDropDownMenuTemplate");
+        CreateFrame("Frame", "MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu", MRT_Options_ItemsTrackingPanel, "UIDropDownMenuTemplate");
     end
     -- Anchor DropDownFrame
     MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu:ClearAllPoints();
@@ -362,31 +362,31 @@ function MRT_Options_ItemsTrackingPanel_Create_ChooseAutoFocus_DropDownMenu()
     }
     -- Click handler function
     local function OnClick(self)
-       MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, self:GetID())
+       UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, self:GetID())
     end
     -- DropDownMenu initialize function
     local function initialize(self, level)
-        local info = MRT_Lib_UIDropDownMenu_CreateInfo()
+        local info = UIDropDownMenu_CreateInfo()
         for k,v in pairs(items) do
-            info = MRT_Lib_UIDropDownMenu_CreateInfo()
+            info = UIDropDownMenu_CreateInfo()
             info.text = v
             info.value = v
             info.func = OnClick
-            MRT_Lib_UIDropDownMenu_AddButton(info, level)
+            UIDropDownMenu_AddButton(info, level)
         end
     end
     -- Setup DropDownMenu
-    MRT_Lib_UIDropDownMenu_Initialize(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, initialize);
-    MRT_Lib_UIDropDownMenu_SetWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 200);
-    MRT_Lib_UIDropDownMenu_SetButtonWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 224);
-    MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, MRT_Options["Tracking_AskCostAutoFocus"]);
-    MRT_Lib_UIDropDownMenu_JustifyText(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, "LEFT");
+    UIDropDownMenu_Initialize(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, initialize);
+    UIDropDownMenu_SetWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 200);
+    UIDropDownMenu_SetButtonWidth(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, 224);
+    UIDropDownMenu_SetSelectedID(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, MRT_Options["Tracking_AskCostAutoFocus"]);
+    UIDropDownMenu_JustifyText(MRT_Options_ItemsTrackingPanel_ChooseAutoFocus_DropDownMenu, "LEFT");
 end
 
 function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
     -- Create DropDownFrame
     if (not MRT_Options_ExportPanel_ChooseExport_DropDownMenu) then
-        CreateFrame("Frame", "MRT_Options_ExportPanel_ChooseExport_DropDownMenu", MRT_Options_ExportPanel, "MRT_Lib_UIDropDownMenuTemplate");
+        CreateFrame("Frame", "MRT_Options_ExportPanel_ChooseExport_DropDownMenu", MRT_Options_ExportPanel, "UIDropDownMenuTemplate");
     end
     -- Anchor DropDownFrame
     MRT_Options_ExportPanel_ChooseExport_DropDownMenu:ClearAllPoints();
@@ -405,25 +405,25 @@ function MRT_Options_ExportPanel_Create_ChooseExport_DropDownMenu()
     }
     -- Click handler function
     local function OnClick(self)
-       MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, self:GetID())
+       UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, self:GetID())
     end
     -- DropDownMenu initialize function
     local function initialize(self, level)
-        local info = MRT_Lib_UIDropDownMenu_CreateInfo()
+        local info = UIDropDownMenu_CreateInfo()
         for k,v in pairs(items) do
-            info = MRT_Lib_UIDropDownMenu_CreateInfo()
+            info = UIDropDownMenu_CreateInfo()
             info.text = v
             info.value = v
             info.func = OnClick
-            MRT_Lib_UIDropDownMenu_AddButton(info, level)
+            UIDropDownMenu_AddButton(info, level)
         end
     end
     -- Setup DropDownMenu
-    MRT_Lib_UIDropDownMenu_Initialize(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, initialize);
-    MRT_Lib_UIDropDownMenu_SetWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 250);
-    MRT_Lib_UIDropDownMenu_SetButtonWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 224);
-    MRT_Lib_UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
-    MRT_Lib_UIDropDownMenu_JustifyText(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, "LEFT");
+    UIDropDownMenu_Initialize(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, initialize);
+    UIDropDownMenu_SetWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 250);
+    UIDropDownMenu_SetButtonWidth(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, 224);
+    UIDropDownMenu_SetSelectedID(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, MRT_Options["Export_ExportFormat"]);
+    UIDropDownMenu_JustifyText(MRT_Options_ExportPanel_ChooseExport_DropDownMenu, "LEFT");
 end
 
 

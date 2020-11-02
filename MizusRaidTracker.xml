@@ -8,16 +8,14 @@
       <OnEvent>MRT_OnEvent(self, event, ...);</OnEvent>
     </Scripts>
   </Frame>
-  <Frame name="MRT_GetDKPValueFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableMouse="true" parent="UIParent">
+  <Frame name="MRT_GetDKPValueFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableMouse="true" parent="UIParent" inherits="BackdropTemplate">
+    <KeyValues>
+      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+    </KeyValues>
     <Size x="365" y="285"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
     </Anchors>
-    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-      <TileSize val="32"/>
-      <EdgeSize val="32"/>
-      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
-    </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
@@ -194,16 +192,14 @@
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
-  <Frame name="MRT_ExportFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableKeyboard="true" enableMouse="true" parent="UIParent">
+  <Frame name="MRT_ExportFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableKeyboard="true" enableMouse="true" parent="UIParent" inherits="BackdropTemplate">
+    <KeyValues>
+      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+    </KeyValues>
     <Size x="450" y="348"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
-    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-      <TileSize val="32"/>
-      <EdgeSize val="32"/>
-      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
-    </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">

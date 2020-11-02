@@ -46,16 +46,14 @@
       </Anchors>
     </HighlightTexture>
   </Button>
-  <Frame name="MRT_GUI_OneRowDialog" toplevel="true" hidden="true" enableMouse="true" enableKeyboard="true" movable="true" parent="UIParent">
+  <Frame name="MRT_GUI_OneRowDialog" toplevel="true" hidden="true" enableMouse="true" enableKeyboard="true" movable="true" parent="UIParent" inherits="BackdropTemplate">
+    <KeyValues>
+      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+    </KeyValues>
     <Size x="366" y="154"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
-    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-      <TileSize val="32"/>
-      <EdgeSize val="32"/>
-      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
-    </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
@@ -107,16 +105,14 @@
       </EditBox>
     </Frames>
   </Frame>
-  <Frame name="MRT_GUI_TwoRowDialog" toplevel="true" hidden="true" enableMouse="true" enableKeyboard="true" movable="true" parent="UIParent">
+  <Frame name="MRT_GUI_TwoRowDialog" toplevel="true" hidden="true" enableMouse="true" enableKeyboard="true" movable="true" parent="UIParent" inherits="BackdropTemplate">
+    <KeyValues>
+      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+    </KeyValues>
     <Size x="366" y="218"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
-    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-      <TileSize val="32"/>
-      <EdgeSize val="32"/>
-      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
-    </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
@@ -180,16 +176,14 @@
       </EditBox>
     </Frames>
   </Frame>
-  <Frame name="MRT_GUI_ThreeRowDialog" toplevel="true" hidden="true" enableMouse="true" movable="true" enableKeyboard="true" parent="UIParent">
+  <Frame name="MRT_GUI_ThreeRowDialog" toplevel="true" hidden="true" enableMouse="true" movable="true" enableKeyboard="true" parent="UIParent" inherits="BackdropTemplate">
+    <KeyValues>
+      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+    </KeyValues>
     <Size x="366" y="282"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
-    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-      <TileSize val="32"/>
-      <EdgeSize val="32"/>
-      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
-    </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
@@ -264,16 +258,14 @@
       </EditBox>
     </Frames>
   </Frame>
-  <Frame name="MRT_GUI_FourRowDialog" toplevel="true" hidden="true" enableMouse="true" movable="true" enableKeyboard="true" parent="UIParent">
+  <Frame name="MRT_GUI_FourRowDialog" toplevel="true" hidden="true" enableMouse="true" movable="true" enableKeyboard="true" parent="UIParent" inherits="BackdropTemplate">
+    <KeyValues>
+      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+    </KeyValues>
     <Size x="366" y="346"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
-    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-      <TileSize val="32"/>
-      <EdgeSize val="32"/>
-      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
-    </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
@@ -364,16 +356,14 @@
       </Button>
     </Frames>
   </Frame>
-  <Frame name="MRT_GUIFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true">
+  <Frame name="MRT_GUIFrame" toplevel="true" enableMouse="true" movable="true" parent="UIParent" hidden="true" inherits="BackdropTemplate">
+    <KeyValues>
+      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
+    </KeyValues>
     <Size x="800" y="606"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
     </Anchors>
-    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-      <BackgroundInsets left="11" right="12" top="12" bottom="11"/>
-      <TileSize val="32"/>
-      <EdgeSize val="32"/>
-    </Backdrop>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parent_HeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
@@ -593,9 +583,9 @@
       </Button>
     </Frames>
     <Scripts>
-      <!--<OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>-->
-      <!--<OnDragStart>self:StartMoving();</OnDragStart>-->
-      <!--<OnDragStop>self:StopMovingOrSizing();</OnDragStop>-->
+      <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
+      <OnDragStart>self:StartMoving();</OnDragStart>
+      <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
   <GameTooltip name="MRT_GUI_ItemTT" inherits="GameTooltipTemplate" parent="UIParent" hidden="false"/>

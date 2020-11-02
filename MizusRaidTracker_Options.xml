@@ -149,22 +149,14 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <Slider name="$parent_Prunning_Slider" enableMouse="true" valueStep="1" orientation="HORIZONTAL" defaultValue="90" minValue="30" maxValue="120">
+      <Slider name="$parent_Prunning_Slider" enableMouse="true" valueStep="1" orientation="HORIZONTAL" defaultValue="90" minValue="30" maxValue="120" inherits="BackdropTemplate">
+        <KeyValues>
+          <KeyValue key="backdropInfo" value="BACKDROP_SLIDER_8_8" type="global"/>
+        </KeyValues>
         <Size x="200" y="20"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Prunning_CB" relativePoint="BOTTOMLEFT" y="-5"/>
         </Anchors>
-        <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
-          <EdgeSize>
-            <AbsValue val="8"/>
-          </EdgeSize>
-          <TileSize>
-            <AbsValue val="8"/>
-          </TileSize>
-          <BackgroundInsets>
-            <AbsInset left="3" right="3" top="6" bottom="6"/>
-          </BackgroundInsets>
-        </Backdrop>
         <Layers>
           <Layer level="ARTWORK">
             <FontString name="$parentValue" inherits="GameFontWhite" text="xx days (L)">
@@ -523,7 +515,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-            <CheckButton name="$parent_LogWhileGroup_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogWhileGroup_CB" inherits="OptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_LogWhileSolo_CB" x="300"/>
         </Anchors>
@@ -606,22 +598,14 @@
       </Layer>
     </Layers>
     <Frames>
-      <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" valueStep="1" orientation="HORIZONTAL" defaultValue="0" minValue="0" maxValue="6">
+      <Slider name="$parent_MinItemQualityToLog_Slider" enableMouse="true" valueStep="1" orientation="HORIZONTAL" defaultValue="0" minValue="0" maxValue="6" inherits="BackdropTemplate">
+        <KeyValues>
+          <KeyValue key="backdropInfo" value="BACKDROP_SLIDER_8_8" type="global"/>
+        </KeyValues>
         <Size x="200" y="20"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Title" relativePoint="BOTTOMLEFT" y="-50"/>
         </Anchors>
-        <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
-          <EdgeSize>
-            <AbsValue val="8"/>
-          </EdgeSize>
-          <TileSize>
-            <AbsValue val="8"/>
-          </TileSize>
-          <BackgroundInsets>
-            <AbsInset left="3" right="3" top="6" bottom="6"/>
-          </BackgroundInsets>
-        </Backdrop>
         <Layers>
           <Layer level="ARTWORK">
             <FontString name="$parentText" inherits="GameFontWhite">
@@ -705,22 +689,14 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <Slider name="$parent_MinItemQualityToGetCost_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL">
+      <Slider name="$parent_MinItemQualityToGetCost_Slider" enableMouse="true" defaultValue="0" minValue="0" maxValue="6" valueStep="1" orientation="HORIZONTAL" inherits="BackdropTemplate">
+        <KeyValues>
+          <KeyValue key="backdropInfo" value="BACKDROP_SLIDER_8_8" type="global"/>
+        </KeyValues>
         <Size x="200" y="20"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValuePersonal_CB" relativePoint="BOTTOMLEFT" x="-16" y="-16"/>
         </Anchors>
-        <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
-          <EdgeSize>
-            <AbsValue val="8"/>
-          </EdgeSize>
-          <TileSize>
-            <AbsValue val="8"/>
-          </TileSize>
-          <BackgroundInsets>
-            <AbsInset left="3" right="3" top="6" bottom="6"/>
-          </BackgroundInsets>
-        </Backdrop>
         <Layers>
           <Layer level="ARTWORK">
             <FontString name="$parentText" inherits="GameFontWhite">
@@ -1014,24 +990,16 @@
                 </Layers>
                 <FontString inherits="ChatFontNormal"/>
               </EditBox>
-              <Slider name="$parent_GADuration_Slider" enableMouse="true" defaultValue="0" minValue="1" maxValue="5" valueStep="1" orientation="HORIZONTAL">
+              <Slider name="$parent_GADuration_Slider" enableMouse="true" defaultValue="0" minValue="1" maxValue="5" valueStep="1" orientation="HORIZONTAL" inherits="BackdropTemplate">
+                <KeyValues>
+                  <KeyValue key="backdropInfo" value="BACKDROP_SLIDER_8_8" type="global"/>
+                </KeyValues>
                 <Size x="200" y="20"/>
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent_GA_Trigger_EB" relativePoint="BOTTOMLEFT">
                     <Offset x="-21" y="-20"/>
                   </Anchor>
                 </Anchors>
-                <Backdrop bgFile="Interface\Buttons\UI-SliderBar-Background" edgeFile="Interface\Buttons\UI-SliderBar-Border" tile="true">
-                  <EdgeSize>
-                    <AbsValue val="8"/>
-                  </EdgeSize>
-                  <TileSize>
-                    <AbsValue val="8"/>
-                  </TileSize>
-                  <BackgroundInsets>
-                    <AbsInset left="3" right="3" top="6" bottom="6"/>
-                  </BackgroundInsets>
-                </Backdrop>
                 <Layers>
                   <Layer level="ARTWORK">
                     <FontString name="$parentText" inherits="GameFontWhite">
