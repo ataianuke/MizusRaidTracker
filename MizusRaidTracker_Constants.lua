@@ -118,6 +118,8 @@ MRT_RaidZones = {
     [2096] = true,      -- Crucible of Storms
     [2164] = true,      -- Eternal Palace
     [2217] = true,      -- Ny'alotha, the Waking City
+    -- Shadowlands
+    [2296] = true,      -- Castle Nathria
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -740,6 +742,22 @@ MRT_EncounterIDList = {
     [2345] = 158328,            -- Il'gynoth, Corruption Reborn
     [2337] = 157439,            -- Carapace of N'Zoth
     [2344] = 158041,            -- N'Zoth, the Corruptor
+    
+    
+    -------------------
+    --  Shadowlands  --
+    -------------------
+    -- Castle Nathria
+    [2398] = 164406,            -- Shriekwing
+    [2418] = 165066,            -- Huntsman Altimor
+    [2383] = 164261,            -- Hungering Destroyer
+    [2405] = 166644,            -- Artificer Xy'mox
+    [2402] = 165759,            -- Sun King's Salvation
+    [2406] = 165521,            -- Lady Inerva Darkvein
+    [2412] = 166969,            -- The Council of Blood -- Id Baroness Frieda
+    [2399] = 164407,            -- Sludgefist
+    [2417] = 168112,            -- Stone Legion Generals -- Id General Kaal
+    [2407] = 167406,            -- Sire Denathrius
     
 }
 
