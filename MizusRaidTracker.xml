@@ -257,18 +257,16 @@
           <OnClick>MRT_ExportFrame_Hide();</OnClick>
         </Scripts>
       </Button>
-      <Frame name="$parent_EB_Background">
+      <Frame name="$parent_EB_Background" inherits="BackdropTemplate">
+        <KeyValues>
+          <KeyValue key="backdropInfo" value="BACKDROP_TOOLTIP_0_16_5555" type="global"/>
+        </KeyValues>
         <Size x="386" y="160"/>
         <Anchors>
           <Anchor point="TOP" relativePoint="TOP" relativeTo="$parent">
             <Offset x="0" y="-35"/>
           </Anchor>
         </Anchors>
-        <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
-          <EdgeSize val="16"/>
-          <TileSize val="16"/>
-          <BackgroundInsets left="5" right="5" top="5" bottom="5"/>
-        </Backdrop>
       </Frame>
     </Frames>
     <Scripts>
