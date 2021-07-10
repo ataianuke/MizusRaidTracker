@@ -409,7 +409,7 @@ end
 
 -- Slashcommand handler
 function MRT_SlashCmdHandler(msg)
-    msg_lower = string.lower(msg);
+    local msg_lower = string.lower(msg);
     if (msg_lower == 'options' or msg_lower == 'o') then
         InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
         return;
