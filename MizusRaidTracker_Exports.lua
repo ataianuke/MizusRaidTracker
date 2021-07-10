@@ -26,6 +26,10 @@
 -- Check for addon table
 if (not MizusRaidTracker) then MizusRaidTracker = {}; end
 local mrt = MizusRaidTracker
+local wowhead_prefix = "https://www.wowhead.com/item="
+if mrt.isClassic then
+    wowhead_prefix = "https://classic.wowhead.com/item="
+end
 
 
 --------------
@@ -1216,7 +1220,7 @@ function MRT_CreateTextExport(raidID, bossID, difficulty, addFormat)
                 if (isFirstItem) then bossData = bossData..MRT_L.Core["Export_Loot"]..":\n"; isFirstItem = false; end
                 bossData = bossData.."- ";
                 if (addFormat == 2) then 
-                    bossData = bossData.."[url=http://www.wowhead.com/?item="..val["ItemId"];
+                    bossData = bossData.."[url="..wowhead_prefix..val["ItemId"];
                     local bonusIDs = mrt:GetBonusIDs(deformat(val["ItemString"], "item:%s"))
                     if bonusIDs then
                         bossData = bossData.."&bonus="
@@ -1344,7 +1348,7 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
             if (val["BossNumber"] == bossID and val["Looter"] ~= "_deleted_") then
                 if (isFirstItem) then bossData = bossData.."<span class=\"label\">"..MRT_L.Core["Export_Loot"].."</span><ul>"; isFirstItem = false; end
                 bossData = bossData.."<li>";
-                bossData = bossData.."<a class=\"item\" href=\"http://www.wowhead.com/?item="..val["ItemId"]
+                bossData = bossData.."<a class=\"item\" href=\""..wowhead_prefix..val["ItemId"]
                 local bonusIDs = mrt:GetBonusIDs(deformat(val["ItemString"], "item:%s"))
                 if bonusIDs then
                     bossData = bossData.."&bonus="
