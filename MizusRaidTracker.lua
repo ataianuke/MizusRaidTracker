@@ -11,6 +11,9 @@
 --    * Knoxa (various MoP fixes) (2013)
 --    * Kravval (various MoP fixes, enhancements to boss kill detection) (2013)
 --    * kjellt77 (base for tracking support while being solo or in a group) (2019)
+--    * MrFIXIT (various fixes for Classic and TBC-classic) (2021)
+--    * saberboi (JSON-Export) (2021)
+--    * sbaydush (Onslaught Loot List Export) (2021)
 --
 --    This file is part of Mizus RaidTracker.
 --
