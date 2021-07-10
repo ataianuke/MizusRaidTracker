@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2019)
+--    * Mîzukichan @ EU-Antonidas (2010-2021)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
