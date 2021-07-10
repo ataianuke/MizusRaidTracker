@@ -4,7 +4,7 @@
 -- ********************************************************
 --
 -- This addon is written and copyrighted by:
---    * Mîzukichan @ EU-Antonidas (2010-2018)
+--    * Mîzukichan @ EU-Antonidas (2010-2021)
 --
 --    This file is part of Mizus RaidTracker.
 --
@@ -122,6 +122,12 @@ function MRT_CreateRaidExport(raidID, bossID, difficulty)
     -- 8: CSS based HTML with wowhead links
     elseif (MRT_Options["Export_ExportFormat"] == 8) then
         dkpstring = MRT_CreateHTMLExport(raidID, bossID, difficulty)
+    -- 9: Onslaught Loot List Format, contributed by sbaydush
+    elseif (MRT_Options["Export_ExportFormat"] == 9) then
+        dkpstring = MRT_CreateLootSheetExport(raidID, bossID, difficulty)
+    -- 10: JSON export, contributed by saberboi
+    elseif (MRT_Options["Export_ExportFormat"] == 10) then
+        dkpstring = MRT_CreateJSONExportString(raidID, bossID, difficulty)
     end
     -- Prepare possible explanation test
     if ( (MRT_Options["Export_ExportFormat"] == 1 and MRT_Options["Export_CTRT_RLIPerBossAttendanceFix"]) or (MRT_Options["Export_ExportFormat"] == 2 and MRT_Options["Export_EQDKP_RLIPerBossAttendanceFix"]) ) then
@@ -1420,4 +1426,240 @@ function MRT_CreateHTMLExport(raidID, bossID, difficulty)
     end
     export = export.."</div>";
     return export;
+end
+
+-- Onslaught Loot List Format
+function MRT_CreateLootSheetExport(raidID, bossID, difficulty)
+	local export="";
+    local keyPlayerList = {};
+    local numPlayerList = {};
+        for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+            keyPlayerList[val["Name"]] = val["Name"];
+        end
+        for key, val in pairs(keyPlayerList) do
+            tinsert(numPlayerList, mrt:FormatPlayerName(val, realm));
+        end
+        table.sort(numPlayerList);
+
+    local function createItemInfoString(raidID, itemID, realm)
+        local bossID = MRT_RaidLog[raidID]["Loot"][itemID]["BossNumber"];
+        local itemString = "";
+        itemString = itemString.."MRT_RaidLog[raidID]["Loot"][itemID]["ItemName"]";
+
+
+        return itemString;
+    end
+
+	raiddate = date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]);
+    export = export.."Attendees:\n\n";    
+    export = export..table.concat(numPlayerList, ";");
+    export = export.."\n\n Loot:\n\n";
+
+    local lootoutput = "";
+	for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
+         export = export..raiddate..";["..val["ItemName"].."];"..val["Looter"].."\n"
+	end
+
+
+    return export;
+end 
+
+-- Json export format, contributed by saberboi
+function MRT_CreateJSONExportString(raidID, bossID, difficulty)
+    -- get reverse lookup table, if exports should be in english
+    local LBBR = LBB:GetReverseLookupTable();
+    -- start to create generic functions for repeated blocks
+    local function createBossInfoString(raidID, bossID, realm)
+        local bossJson = "{";
+        if (MRT_Options["Export_ExportEnglish"]) then
+            bossJson = bossJson.."\"name\" : \""..(LBBR[MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]] or MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"]).."\" ,";
+        else
+            bossJson = bossJson.."\"name\" : \""..MRT_RaidLog[raidID]["Bosskills"][bossID]["Name"].."\" ,";
+        end
+        bossJson = bossJson.."\"kill_time\" : \""..MRT_MakeEQDKP_Time(MRT_RaidLog[raidID]["Bosskills"][bossID]["Date"]).."\" ,";
+        bossJson = bossJson.."\"participants\" : [";
+        for i, playerName in ipairs(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"]) do
+            local isLastElement = next(MRT_RaidLog[raidID]["Bosskills"][bossID]["Players"],i) == nil
+            local separator = isLastElement and "" or ","
+            bossJson = bossJson.."\""..mrt:FormatPlayerName(playerName, realm).."\""..separator;
+        end
+        bossJson = bossJson.."]";
+        bossJson = bossJson.."}";
+        return bossJson;
+    end
+    -- joinLeaveTable is a set of joinLeave Timestamps - example: joinLeaveTable = { {["Join"] = timestamp, ["Leave"] = timestamp}, {["Join"] = timestamp, ["Leave"] = timestamp} }
+    local function createPlayerInfoString(name, realm, joinLeaveTable)
+        if (#joinLeaveTable == 0) then return ""; end
+        -- calculate onlinetime and offlinetime - waittime is not supported, because of lack of an extra wait list
+        local firstJoinTimestamp = 0;
+        local lastLeaveTimestamp = 0;
+        local onlineTimeInSec = 0;
+        for i, joinLeavePair in ipairs(joinLeaveTable) do
+            onlineTimeInSec = onlineTimeInSec + joinLeavePair.Leave - joinLeavePair.Join;
+            if (firstJoinTimestamp == 0 or firstJoinTimestamp > joinLeavePair.Join) then
+                firstJoinTimestamp = joinLeavePair.Join;
+            end
+            if (lastLeaveTimestamp < joinLeavePair.Leave) then
+                lastLeaveTimestamp = joinLeavePair.Leave;
+            end
+        end
+        local offlineTimeInSec = lastLeaveTimestamp - firstJoinTimestamp - onlineTimeInSec;
+        -- check for negative offline times - just in case something is fucked up
+        if (offlineTimeInSec < 0) then
+            offlineTimeInSec = 0;
+        end
+        local playerJson = "{";
+        playerJson = playerJson.."\"name\" : \""..mrt:FormatPlayerName(name, realm).."\" ,";
+        if (MRT_PlayerDB[realm][name]) then
+            if (MRT_PlayerDB[realm][name]["Race"]) then
+                playerJson = playerJson.."\"race\" : \""..MRT_PlayerDB[realm][name]["Race"].."\" ,";
+            end
+            if (MRT_PlayerDB[realm][name]["Guild"]) then
+                playerJson = playerJson.."\"guild\" : \""..MRT_PlayerDB[realm][name]["Guild"].."\" ,";
+            end
+            if (MRT_PlayerDB[realm][name]["Sex"]) then
+                playerJson = playerJson.."\"sex\" : "..MRT_PlayerDB[realm][name]["Sex"].." ,";
+            end
+            if (MRT_PlayerDB[realm][name]["Class"]) then
+                playerJson = playerJson.."\"class\" : \""..MRT_PlayerDB[realm][name]["Class"].."\" ,";
+            end
+            if (MRT_PlayerDB[realm][name]["Level"]) then
+                playerJson = playerJson.."\"level\" : "..MRT_PlayerDB[realm][name]["Level"].." ,";
+            end
+        end
+        playerJson = playerJson.."\"join\" : \""..MRT_MakeEQDKP_Time(firstJoinTimestamp).."\" ,";
+        playerJson = playerJson.."\"leave\" : \""..MRT_MakeEQDKP_Time(lastLeaveTimestamp).."\" ,";
+        playerJson = playerJson.."\"offline_time\" : "..offlineTimeInSec.." ,";
+        playerJson = playerJson.."\"online_time\" : "..onlineTimeInSec;
+        playerJson = playerJson.."}";
+        return playerJson;
+    end
+    local function createItemInfoString(itemInfo, realm)
+        local bossInfo = MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber];
+        local itemJson = "{";
+        itemJson = itemJson.."\"name\" : \""..itemInfo.ItemName.."\" ,";
+        itemJson = itemJson.."\"color\" : \""..itemInfo.ItemColor.."\",";
+        itemJson = itemJson.."\"item_id\" : "..itemInfo.ItemId..",";
+        itemJson = itemJson.."\"count\" : "..itemInfo.ItemCount..", ";
+        if (itemInfo.Looter == "disenchanted") then
+            itemJson = itemJson.."\"buyer\" : \"Disenchanted\",";
+        else
+            itemJson = itemJson.."\"buyer\" : \""..mrt:FormatPlayerName(itemInfo.Looter, realm).."\",";
+        end
+        itemJson = itemJson.."\"cost\" : "..itemInfo.DKPValue..",";
+        itemJson = itemJson.."\"time\" : \""..MRT_MakeEQDKP_Time(bossInfo.Date).."\",";
+        itemJson = itemJson.."\"drop\" : \""..bossInfo.Name.."\"";
+        itemJson = itemJson.."}";
+        return itemJson;
+    end
+    -- set up a few locals
+    local now = MRT_GetCurrentTime();
+    local raidStart = MRT_RaidLog[raidID]["StartTime"];
+    if (bossID and bossID > 1) then raidStart = MRT_RaidLog[raidID]["Bosskills"][bossID - 1]["Date"] or MRT_RaidLog[raidID]["StartTime"]; end
+    local raidStop = MRT_RaidLog[raidID]["StopTime"] or now;
+    local realm = MRT_RaidLog[raidID]["Realm"];
+    local playerList = {};
+    -- prepare player information
+    if (MRT_Options["Export_CTRT_IgnorePerBossAttendance"]) then
+        -- use raidstart/raidstop for everyone, so gather all players:
+        for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
+            if (not playerList[playerTimes.Name]) then
+                playerList[playerTimes.Name] = { { Join = raidStart, Leave = raidStop, }, };
+            end
+        end
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            for j, attendeeName in ipairs(bossInfo["Players"]) do
+                if (not playerList[attendeeName]) then
+                    playerList[attendeeName] = { { Join = raidStart, Leave = raidStop, }, };
+                end
+            end
+        end
+    else
+        -- use join/leave times - add a short join/leave-pair, if a player is only tracked as a boss attendee
+        local joinLeavePair = nil;
+        for key, playerTimes in pairs(MRT_RaidLog[raidID]["Players"]) do
+            if (not playerList[playerTimes.Name]) then playerList[playerTimes.Name] = {}; end
+            if (raidStart <= playerTimes.Join) then
+                joinLeavePair = { Join = playerTimes.Join, Leave = (playerTimes.Leave or now), };
+                tinsert(playerList[playerTimes.Name], joinLeavePair);
+            elseif (raidStart < (playerTimes.Leave or now) ) then
+                joinLeavePair = { Join = raidStart, Leave = (playerTimes.Leave or now), };
+                tinsert(playerList[playerTimes.Name], joinLeavePair);
+            end
+        end
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            local attendee;
+            for j, attendeeName in ipairs(bossInfo["Players"]) do
+                attendee = false;
+                if (not playerList[attendeeName]) then
+                    playerList[attendeeName] = {};
+                    joinLeavePair = { Join = (bossInfo.Date - 10), Leave = (bossInfo.Date + 10), };
+                else
+                    for k, joinLeaveTable in ipairs(playerList[attendeeName]) do
+                        if (joinLeaveTable.Join < bossInfo.Date and bossInfo.Date < joinLeaveTable.Leave) then
+                            attendee = true;
+                        end
+                    end
+                end
+                if (not attendee and raidStart <= bossInfo.Date) then
+                    tinsert(playerList[attendeeName], joinLeavePair);
+                end
+            end
+        end
+    end
+    -- prepare a list with sorted player names to fill the boss info
+    local sortedPlayerList = {};
+    for name, joinLeaveTable in pairs(playerList) do
+        tinsert(sortedPlayerList, name);
+    end
+    table.sort(sortedPlayerList);
+    -- start creating head
+    local json = "{";
+    json = json.."\"key\" : \""..MRT_MakeEQDKP_Time(raidStart).."\",";
+    json = json.."\"start\" : \""..MRT_MakeEQDKP_Time(raidStart).."\",";
+    json = json.."\"end\" : \""..MRT_MakeEQDKP_Time(raidStop).."\",";
+    json = json.."\"raiders\" : [";
+    for i, name in ipairs(sortedPlayerList) do
+        local isLastElement = next(sortedPlayerList,i) == nil
+        local separator = isLastElement and "" or ","
+        json = json..createPlayerInfoString(name, realm, playerList[name])..separator;
+    end
+    json = json.."],";
+    json = json.."\"boss_kills\" : [";
+    if (not bossID) then
+        -- if no bossID is given, export complete raid or all boss of a specific difficulty
+        for i, bossInfo in ipairs(MRT_RaidLog[raidID]["Bosskills"]) do
+            local isLastElement = next(MRT_RaidLog[raidID]["Bosskills"],i) == nil
+            local separator = isLastElement and "" or ","
+            if (not difficulty) then
+                json = json..createBossInfoString(raidID, i, realm)..separator;
+            elseif (tContains(mrt.diffIDsNormal, bossInfo["Difficulty"]) and difficulty == "N") then
+                json = json..createBossInfoString(raidID, i, realm)..separator;
+            elseif (tContains(mrt.diffIDsHeroic, bossInfo["Difficulty"]) and difficulty == "H") then
+                json = json..createBossInfoString(raidID, i, realm)..separator;
+            end
+        end
+    else
+        -- export a specific boss
+        json = json..createBossInfoString(raidID, bossID, realm);
+    end
+    json = json.."],";
+    -- and last, add items
+    json = json.."\"loot\" : [";
+    for i, itemInfo in ipairs(MRT_RaidLog[raidID]["Loot"]) do
+        local isLastElement = next(MRT_RaidLog[raidID]["Loot"],i) == nil
+        local separator = isLastElement and "" or ","
+        if (itemInfo.Looter ~= "_deleted_") then
+            if (not bossID and not difficulty) then
+                json = json..createItemInfoString(itemInfo, realm)..separator;
+            elseif (bossID and itemInfo["BossNumber"] == bossID) then
+                json = json..createItemInfoString(itemInfo, realm)..separator;
+            elseif (tContains(mrt.diffIDsNormal, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "N") or (tContains(mrt.diffIDsHeroic, MRT_RaidLog[raidID]["Bosskills"][itemInfo.BossNumber]["Difficulty"]) and difficulty == "H") then
+                json = json..createItemInfoString(itemInfo, realm)..separator;
+            end
+        end
+    end
+    -- finish
+    json = json.."]}";
+    return json;
 end
