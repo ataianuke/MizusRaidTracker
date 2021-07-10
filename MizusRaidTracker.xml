@@ -9,9 +9,6 @@
     </Scripts>
   </Frame>
   <Frame name="MRT_GetDKPValueFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableMouse="true" parent="UIParent" inherits="BackdropTemplate">
-    <KeyValues>
-      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
-    </KeyValues>
     <Size x="365" y="285"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"></Anchor>
@@ -187,15 +184,15 @@
       </Frame>
     </Frames>
     <Scripts>
-      <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
+      <OnLoad>
+        self:RegisterForDrag("LeftButton");
+        self:SetBackdrop(BACKDROP_DIALOG_32_32);
+      </OnLoad>
       <OnDragStart>self:StartMoving();</OnDragStart>
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
   </Frame>
   <Frame name="MRT_ExportFrame" toplevel="true" frameStrata="DIALOG" movable="true" hidden="true" enableKeyboard="true" enableMouse="true" parent="UIParent" inherits="BackdropTemplate">
-    <KeyValues>
-      <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
-    </KeyValues>
     <Size x="450" y="348"/>
     <Anchors>
       <Anchor point="CENTER" relativePoint="CENTER" relativeTo="$parent"/>
@@ -270,7 +267,10 @@
       </Frame>
     </Frames>
     <Scripts>
-      <OnLoad>self:RegisterForDrag("LeftButton");</OnLoad>
+      <OnLoad>
+        self:RegisterForDrag("LeftButton");
+        self:SetBackdrop(BACKDROP_DIALOG_32_32);
+      </OnLoad>
       <OnDragStart>self:StartMoving();</OnDragStart>
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
     </Scripts>
