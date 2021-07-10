@@ -1438,11 +1438,32 @@ function MRT_AutoAddLoot(chatmsg)
 	MRT_AutoAddLootItem(playerName, itemLink, itemCount);
 end	
 
+-- filter out duplicate loot tracking (fix ML hook + chat processing)
+local lastEntry
+function MRT_LootItemDupe(playerName, itemLink, itemCount)
+    local now = GetTime()
+    local key, entry = string.format("%s%s%s",playerName,itemLink,itemCount),
+        string.format("%s%s%s{%s}",playerName,itemLink,itemCount,now)
+    if not lastEntry then
+        lastEntry = entry
+        return false
+    end
+    local lastKey, before = string.match(lastEntry,"^(.+){(.+)}$")
+    before = tonumber(before) or 0
+    if lastKey == key and (now - before) < 2 then
+        lastEntry = entry
+        return true
+    end
+    lastEntry = entry
+    return false
+end
+
 -- track loot for a given player and item
 function MRT_AutoAddLootItem(playerName, itemLink, itemCount)
 	if (not playerName) then return; end
 	if (not itemLink) then return; end
 	if (not itemCount) then return; end
+    if MRT_LootItemDupe(playerName, itemLink, itemCount) then return end
 	MRT_Debug("MRT_AutoAddLootItem called - playerName: "..playerName.." - itemLink: "..itemLink.." - itemCount: "..itemCount);
     -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r (outdated!)
     local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemLink);
