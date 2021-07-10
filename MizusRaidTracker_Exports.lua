@@ -1437,13 +1437,14 @@ function MRT_CreateLootSheetExport(raidID, bossID, difficulty)
 	local export="";
     local keyPlayerList = {};
     local numPlayerList = {};
-        for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
-            keyPlayerList[val["Name"]] = val["Name"];
-        end
-        for key, val in pairs(keyPlayerList) do
-            tinsert(numPlayerList, mrt:FormatPlayerName(val, realm));
-        end
-        table.sort(numPlayerList);
+    
+    for key, val in pairs(MRT_RaidLog[raidID]["Players"]) do
+        keyPlayerList[val["Name"]] = val["Name"];
+    end
+    for key, val in pairs(keyPlayerList) do
+        tinsert(numPlayerList, mrt:FormatPlayerName(val, realm));
+    end
+    table.sort(numPlayerList);
 
     local function createItemInfoString(raidID, itemID, realm)
         local bossID = MRT_RaidLog[raidID]["Loot"][itemID]["BossNumber"];
@@ -1454,7 +1455,7 @@ function MRT_CreateLootSheetExport(raidID, bossID, difficulty)
         return itemString;
     end
 
-	raiddate = date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]);
+	local raiddate = date(MRT_Options["Export_DateTimeFormat"], MRT_RaidLog[raidID]["StartTime"]);
     export = export.."Attendees:\n\n";    
     export = export..table.concat(numPlayerList, ";");
     export = export.."\n\n Loot:\n\n";
@@ -1463,7 +1464,6 @@ function MRT_CreateLootSheetExport(raidID, bossID, difficulty)
 	for idx, val in ipairs(MRT_RaidLog[raidID]["Loot"]) do
          export = export..raiddate..";["..val["ItemName"].."];"..val["Looter"].."\n"
 	end
-
 
     return export;
 end 
