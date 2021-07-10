@@ -369,6 +369,7 @@ MRT_EncounterIDList = {
     [662] = 17225,              -- Nightbane
     
     -- Gruul's Lair
+    [649] = 18831,              -- Maulgar
     [650] = 19044,              -- Gruul
     
     -- Magtheridon's Lair
