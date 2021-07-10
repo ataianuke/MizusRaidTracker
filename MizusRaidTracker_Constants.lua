@@ -120,6 +120,7 @@ MRT_RaidZones = {
     [2217] = true,      -- Ny'alotha, the Waking City
     -- Shadowlands
     [2296] = true,      -- Castle Nathria
+    [2435] = true,      -- Sanctum of Domination
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -758,6 +759,18 @@ MRT_EncounterIDList = {
     [2399] = 164407,            -- Sludgefist
     [2417] = 168112,            -- Stone Legion Generals -- Id General Kaal
     [2407] = 167406,            -- Sire Denathrius
+    
+    -- Sanctum of Domination
+    [2423] = 175611,            -- The Tarragrue
+    [2433] = 175725,            -- The Eye of the Jailer
+    [2429] = 175726,            -- The Nine
+    [2432] = 175729,            -- Remnant of Nerzhul
+    [2434] = 175727,            -- Soulrender Dormazain
+    [2430] = 176523,            -- Painsmith Raznal
+    [2436] = 175731,            -- Guardian of the First Ones
+    [2431] = 175730,            -- Fatescribe Roh Kalo
+    [2422] = 175559,            -- Kel Thuzad
+    [2435] = 178423,            -- Sylvanas Windrunner
     
 }
 
