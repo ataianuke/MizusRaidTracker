@@ -1,4 +1,4 @@
-## Interface: 20501
+## Interface: 90100
 ## Title: Mizus RaidTracker
 ## Version: @project-version@
 ## Notes: Tracks raid, loot and attendance
