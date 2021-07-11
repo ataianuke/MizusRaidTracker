@@ -548,6 +548,7 @@ function MRT_Initialize(frame)
                 MRT_GUI_Toggle();
             elseif (button == "RightButton") then
                 InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
+                C_Timer.After(2, function() InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker"); end)
             end
         end,
         OnTooltipShow = function(tooltip)
@@ -1446,7 +1447,7 @@ function MRT_AutoAddLoot(chatmsg)
     -- ToDo: This will ignore some items, like personal BoE in Legion... - needs a proper item duplication detection... somehow...
     local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemLink);
     if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLoot()"); return; end
-    if (mrt.isClassic and IsMasterLooter() and not mrt.DBAQIdolIDs[itemId]) then 
+    if (not mrt.isRetail and IsMasterLooter() and not mrt.DBAQIdolIDs[itemId]) then 
         MRT_Debug("Current player is master looter. Stopping chat message processing...");
         return;
     end
