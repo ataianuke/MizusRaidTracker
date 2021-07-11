@@ -14,7 +14,9 @@ mrt.diffIDsHeroic = { 2, 5, 6, 11, 15 }
 mrt.raidSizes = { 5, 5, 10, 25, 10, 25, 25, 5, 40, 40, 3, 3, 40, 30, 30, 20, 30, 5, 5, 5 }
 
 -- Detect game version
-mrt.isClassic = tonumber(string.sub(GetBuildInfo(), 1, 1)) == 1;
+mrt.isRetail = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE);
+mrt.isClassic = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC);
+mrt.isBCC = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC);
 
 -- these are probably not needed anymore
 MRT_ItemColorValues = {
@@ -70,7 +72,9 @@ MRT_RaidZones = {
     [409] = true,       -- Molten Core
     [509] = true,       -- Ruins of Ahn'Qiraj
     [531] = true,       -- Temple of Ahn'Qiraj
-    -- Burning Crusade
+    -- Burning Crusade - Classic only
+    [568] = true,       -- Zul'Aman
+    -- Burning Crusade - Retail & Classic
     [532] = true,       -- Karazhan
     [565] = true,       -- Gruul's Lair
     [544] = true,       -- Magtheridon's Lair
@@ -174,6 +178,7 @@ MRT_LegacyRaidZonesBC = {
     [550] = true,       -- Tempest Keep
     [534] = true,       -- Hyjal Summit
     [564] = true,       -- Black Temple
+    [568] = true,       -- Zul'Aman
     [580] = true,       -- Sunwell Plateau
 }
 
@@ -192,6 +197,18 @@ mrt.raidZonesClassic = {
     [509] = true,       -- Ruins of Ahn'Qiraj
     [531] = true,       -- Temple of Ahn'Qiraj
     [309] = true,       -- Zul'Gurub
+}
+
+mrt.raidZonesBCC = {
+    [532] = true,       -- Karazhan
+    [565] = true,       -- Gruul's Lair
+    [544] = true,       -- Magtheridon's Lair
+    [550] = true,       -- Tempest Keep (The Eye)
+    [548] = true,       -- Coilfang: Serpentshrine Cavern
+    [564] = true,       -- Black Temple
+    [534] = true,       -- The Battle for Mount Hyjal
+    [568] = true,       -- Zul'Aman
+    [580] = true,       -- The Sunwell
 }
 
 MRT_PvPRaids = {
@@ -355,9 +372,21 @@ MRT_EncounterIDList = {
     [716] = 15517,              -- Ouro
     
     
-    -----------------------
-    --  Burning Crusade  --
-    -----------------------
+    --------------------------------------
+    --  Burning Crusade - Classic only  --
+    --------------------------------------
+    -- Zul Aman
+    [1189] = 23574,             -- Akil'zon
+    [1190] = 23576,             -- Nalorakk
+    [1191] = 23578,             -- Jan'alai
+    [1192] = 23577,             -- Halazzi
+    [1193] = 24239,             -- Malacrass
+    [1194] = 23863,             -- Zul'jin
+    
+    
+    -------------------------------
+    --  Burning Crusade - Retail --
+    -------------------------------
     -- Karazhan
     [652] = 16151,              -- Attumen the Huntsman
     [653] = 15687,              -- Moroes

@@ -150,6 +150,15 @@ function MRT_Options_ParseValues()
         MRT_Options_TrackingPanel_LogPandariaRaids_CB:Hide();
         MRT_Options_TrackingPanel_LogWarlordsRaids_CB:Hide();
         MRT_Options_TrackingPanel_LogLootModePersonal_CB:Hide();
+        MRT_Options_TrackingPanel_LogLFRRaids_CB:Hide();
+    elseif (mrt.isBCC) then
+        MRT_Options_TrackingPanel_LogAVRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogWotLKRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogCataclysmRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogPandariaRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogWarlordsRaids_CB:Hide();
+        MRT_Options_TrackingPanel_LogLootModePersonal_CB:Hide();
+        MRT_Options_TrackingPanel_LogLFRRaids_CB:Hide();
     end
 end
 

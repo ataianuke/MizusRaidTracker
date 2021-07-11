@@ -280,6 +280,13 @@ function mrt:UI_CreateTwoRowDDM()
             { [4] = RAID_DIFFICULTY_20PLAYER },
             { [3] = RAID_DIFFICULTY_10PLAYER }
         }
+    elseif mrt.isBCC then
+        items = {
+            { [4] = RAID_DIFFICULTY_25PLAYER },                          -- 25 Player
+            { [3] = RAID_DIFFICULTY_10PLAYER },                          -- 10 Player
+            { [9] = RAID_DIFFICULTY_40PLAYER },                          -- 40 Player
+            { [148] = RAID_DIFFICULTY_20PLAYER },                        -- 20 Player
+        }
     else
         items = {
             { [16] = select(1, GetDifficultyInfo(16)).." (20)" },

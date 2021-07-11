@@ -520,7 +520,9 @@ hooksecurefunc("GiveMasterLoot", MRT_Hook_GiveMasterLoot);
 ------------------
 function MRT_Initialize(frame)
     -- Detect game version
-    mrt.isClassic = tonumber(string.sub(GetBuildInfo(), 1, 1)) == 1;
+    mrt.isRetail = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE);
+    mrt.isClassic = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC);
+    mrt.isBCC = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC);
     -- Update settings and DB
     MRT_UpdateSavedOptions();
     MRT_VersionUpdate();
@@ -604,6 +606,8 @@ function MRT_UpdateSavedOptions()
         -- Default Options for WoW Classic - changes from retail default
         if (mrt.isClassic) then
             MRT_Options["Tracking_LogClassicRaids"] = true;
+        elseif (mrt.isBCC) then
+            MRT_Options["Tracking_LogBCRaids"] = true;
         end
     end
     if MRT_Options["General_OptionsVersion"] == 1 then
@@ -700,11 +704,18 @@ function MRT_UpdateSavedOptions()
         MRT_Options["General_OptionsVersion"] = 19;
     end
     if MRT_Options["General_OptionsVersion"] == 19 then
-        -- Update for existing installations on WoW Classic: Force enable 
+        -- Update for existing installations on WoW Classic: Force enable on first load
         if (mrt.isClassic) then
             MRT_Options["Tracking_LogClassicRaids"] = true;
         end
         MRT_Options["General_OptionsVersion"] = 20;
+    end
+    if MRT_Options["General_OptionsVersion"] == 20 then
+        -- Update for existing installations on WoW BC Classic: Force enable on first load
+        if (mrt.isBCC) then
+            MRT_Options["Tracking_LogBCRaids"] = true;
+        end
+        MRT_Options["General_OptionsVersion"] = 21;
     end
 end
 
@@ -989,43 +1000,48 @@ function MRT_CheckZoneAndSizeStatus()
     if (diffID == 6) then diffID = 4; end
     if (MRT_RaidZones[areaID]) then
         -- Check if the current raidZone is a zone which should be tracked
-        if (not mrt.isClassic and MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
+        if (mrt.isRetail and MRT_PvPRaids[areaID] and not MRT_Options["Tracking_LogAVRaids"]) then 
             MRT_Debug("This instance is a PvP-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (not mrt.isClassic and MRT_LegacyRaidZonesWarlords[areaID] and not MRT_Options["Tracking_LogWarlordsRaids"]) then
+        if (mrt.isRetail and MRT_LegacyRaidZonesWarlords[areaID] and not MRT_Options["Tracking_LogWarlordsRaids"]) then
             MRT_Debug("This instance is a Draenor-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (not mrt.isClassic and MRT_LegacyRaidZonesPanadria[areaID] and not MRT_Options["Tracking_LogMoPRaids"]) then
+        if (mrt.isRetail and MRT_LegacyRaidZonesPanadria[areaID] and not MRT_Options["Tracking_LogMoPRaids"]) then
             MRT_Debug("This instance is a Pandaria-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (not mrt.isClassic and MRT_LegacyRaidZonesCataclysm[areaID] and not MRT_Options["Tracking_LogCataclysmRaids"]) then
+        if (mrt.isRetail and MRT_LegacyRaidZonesCataclysm[areaID] and not MRT_Options["Tracking_LogCataclysmRaids"]) then
             MRT_Debug("This instance is a Cataclysm-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (not mrt.isClassic and MRT_LegacyRaidZonesWotLK[areaID] and not MRT_Options["Tracking_LogWotLKRaids"]) then
+        if (mrt.isRetail and MRT_LegacyRaidZonesWotLK[areaID] and not MRT_Options["Tracking_LogWotLKRaids"]) then
             MRT_Debug("This instance is a WotLK-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (not mrt.isClassic and MRT_LegacyRaidZonesBC[areaID] and not MRT_Options["Tracking_LogBCRaids"]) then
+        if (mrt.isRetail and MRT_LegacyRaidZonesBC[areaID] and not MRT_Options["Tracking_LogBCRaids"]) then
             MRT_Debug("This instance is a BC-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (not mrt.isClassic and MRT_LegacyRaidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
+        if (mrt.isRetail and MRT_LegacyRaidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
             MRT_Debug("Retail: This instance is a Classic-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
-        if (mrt.isClassic and mrt.raidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
+        if ((mrt.isClassic or mrt.isClassic) and mrt.raidZonesClassic[areaID] and not MRT_Options["Tracking_LogClassicRaids"]) then
             MRT_Debug("Classic: This instance is a Classic-Raid and tracking of those is disabled.");
+            if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
+            return;
+        end
+        if (mrt.isBCC and mrt.raidZonesBCC[areaID] and not MRT_Options["Tracking_LogBCRaids"]) then
+            MRT_Debug("BC Classic: This instance is a BC Classic-Raid and tracking of those is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
         end
@@ -1438,11 +1454,32 @@ function MRT_AutoAddLoot(chatmsg)
 	MRT_AutoAddLootItem(playerName, itemLink, itemCount);
 end	
 
+-- filter out duplicate loot tracking (fix ML hook + chat processing)
+local lastEntry
+function MRT_LootItemDupe(playerName, itemLink, itemCount)
+    local now = GetTime()
+    local key, entry = string.format("%s%s%s",playerName,itemLink,itemCount),
+        string.format("%s%s%s{%s}",playerName,itemLink,itemCount,now)
+    if not lastEntry then
+        lastEntry = entry
+        return false
+    end
+    local lastKey, before = string.match(lastEntry,"^(.+){(.+)}$")
+    before = tonumber(before) or 0
+    if lastKey == key and (now - before) < 2 then
+        lastEntry = entry
+        return true
+    end
+    lastEntry = entry
+    return false
+end
+
 -- track loot for a given player and item
 function MRT_AutoAddLootItem(playerName, itemLink, itemCount)
 	if (not playerName) then return; end
 	if (not itemLink) then return; end
 	if (not itemCount) then return; end
+    if ((mrt.isClassic or mrt.isBCC) and MRT_LootItemDupe(playerName, itemLink, itemCount)) then return; end
 	MRT_Debug("MRT_AutoAddLootItem called - playerName: "..playerName.." - itemLink: "..itemLink.." - itemCount: "..itemCount);
     -- example itemLink: |cff9d9d9d|Hitem:7073:0:0:0:0:0:0:0|h[Broken Fang]|h|r (outdated!)
     local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemLink);
@@ -2016,6 +2053,12 @@ function MRT_GetInstanceDifficulty()
     local _, _, iniDiff = GetInstanceInfo();
     -- handle non instanced territories as 40 player raids
     if (iniDiff == 0) then iniDiff = 9; end
+    if (mrt.isBCC) then
+        if (iniDiff == 173) then iniDiff = 1; end
+        if (iniDiff == 174) then iniDiff = 2; end
+        if (iniDiff == 175) then iniDiff = 3; end
+        if (iniDiff == 176) then iniDiff = 4; end
+    end
     return iniDiff
 end
 
@@ -2025,6 +2068,12 @@ function MRT_GetInstanceInfo()
     if (difficultyID == 0) then 
         difficultyID = 9;
         maxPlayers = 40;
+    end
+    if (mrt.isBCC) then
+        if (difficultyID == 173) then difficultyID = 1; end
+        if (difficultyID == 174) then difficultyID = 2; end
+        if (difficultyID == 175) then difficultyID = 3; end
+        if (difficultyID == 176) then difficultyID = 4; end
     end
     return name, instanceType, difficultyID, difficultyName, maxPlayers, dynamicDifficulty, isDynamic, instanceMapID, instanceGroupSize
 end
