@@ -1087,7 +1087,10 @@
                   </EditBox>
                 </ScrollChild>
               </ScrollFrame>
-              <Frame name="$parent_GA_CustomText_EB_Scrollframe_Background">
+              <Frame name="$parent_GA_CustomText_EB_Scrollframe_Background" inherits="BackdropTemplate">
+                <KeyValues>
+                  <KeyValue key="backdropInfo" value="BACKDROP_TOOLTIP_16_16_5555" type="global"/>
+                </KeyValues>
                 <Size x="336" y="90"/>
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_GA_CustomText_EB_Scrollframe" x="-8" y="5"/>
