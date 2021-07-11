@@ -1447,14 +1447,16 @@ function MRT_AutoAddLoot(chatmsg)
     -- ToDo: This will ignore some items, like personal BoE in Legion... - needs a proper item duplication detection... somehow...
     local itemName, _, itemId, itemString, itemRarity, itemColor, itemLevel, _, itemType, itemSubType, _, _, _, _, itemClassID, itemSubClassID = MRT_GetDetailedItemInformation(itemLink);
     if (not itemName == nil) then MRT_Debug("Panic! Item information lookup failed horribly. Source: MRT_AutoAddLoot()"); return; end
-    if (not mrt.isRetail and IsMasterLooter() and not mrt.DBAQIdolIDs[itemId]) then 
-        MRT_Debug("Current player is master looter. Stopping chat message processing...");
-        return;
-    end
+    -- Master looter check replaced with duplication check. This should now track both and remove duplicates. Hopefully.
+    -- if (not mrt.isRetail and IsMasterLooter() and not mrt.DBAQIdolIDs[itemId]) then 
+    --    MRT_Debug("Current player is master looter. Stopping chat message processing...");
+    --    return;
+    -- end
 	MRT_AutoAddLootItem(playerName, itemLink, itemCount);
 end	
 
--- filter out duplicate loot tracking (fix ML hook + chat processing)
+-- filter out duplicate loot tracking (fix ML hook + chat processing) (taken from MrFIXIT fixes)
+-- The main issue was that chat processing wasn't being canceled in BCC, but this might actually fix issue #85
 local lastEntry
 function MRT_LootItemDupe(playerName, itemLink, itemCount)
     local now = GetTime()
