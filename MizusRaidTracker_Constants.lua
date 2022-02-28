@@ -125,6 +125,7 @@ MRT_RaidZones = {
     -- Shadowlands
     [2296] = true,      -- Castle Nathria
     [2435] = true,      -- Sanctum of Domination
+    [2481] = true,      -- Sepulcher of the First Ones
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -802,6 +803,19 @@ MRT_EncounterIDList = {
     [2422] = 175559,            -- Kel Thuzad
     [2435] = 178423,            -- Sylvanas Windrunner
     
+    -- Sepulcher of the First Ones
+    [2512] = 180773,            -- Vigilant Guardian
+    [2542] = 181395,            -- Skolex, the Insatiable Ravener
+    [2553] = 183501,            -- Artificer Xy'mox
+    [2540] = 181224,            -- Dausegne, the Fallen Oracle
+    [2544] = 181546,            -- Prototype Pantheon
+    [2539] = 184901,            -- Lihuvim, Principal Architech
+    [2529] = 180906,            -- Halondrus the Reclaimer
+    [2546] = 181954,            -- Anduin Wrynn
+    [2543] = 181334,            -- Lords of Dread
+    [2549] = 182777,            -- Rygelon
+    [2537] = 180990,            -- The Jailer, Zovaal
+    
 }
 
 -- ARRAY 
@@ -875,6 +889,16 @@ MRT_ReverseBossIDList = {
 --  ID-List of ignored Items  --
 --------------------------------
 MRT_IgnoredItemIDList = {
+    -- Kael'thas Legendary Weapons
+    [30311] = true,     -- Warp Slicer
+    [30312] = true,     -- Infinity Blade
+    [30313] = true,     -- Staff of Disentegration
+    [30314] = true,     -- Phaseshift Bulwark
+    [30316] = true,     -- Devastation
+    [30317] = true,     -- Cosmic Infuser
+    [30318] = true,     -- Netherstrand Longbow
+    [30319] = true,     -- Netherspike
+
     -- Emblems of...
     [40752] = true,     -- ...Heroism
     [40753] = true,     -- ...Valor
