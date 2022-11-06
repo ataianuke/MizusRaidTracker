@@ -21,7 +21,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <CheckButton name="$parent_Enabled_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_Enabled_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT">
             <Offset y="-20"></Offset>
@@ -48,7 +48,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_Debug_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_Debug_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Enabled_CB" relativePoint="BOTTOMLEFT">
             <Offset y="-5"></Offset>
@@ -99,7 +99,7 @@
         </Scripts>
         <FontString inherits="ChatFontNormal"/>
       </EditBox>
-      <CheckButton name="$parent_MinimapIcon_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_MinimapIcon_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_SlashCmd_EB" x="-5" y="-30"/>
         </Anchors>
@@ -124,7 +124,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_Prunning_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_Prunning_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_MinimapIcon_CB" x="0" y="-20"/>
         </Anchors>
@@ -185,7 +185,7 @@
           </Size>
         </ThumbTexture>
       </Slider>
-      <Button name="$parent_Reset_GUI_Button" inherits="GameMenuButtonTemplate" hidden="false" test="FIXME!">
+      <Button name="$parent_Reset_GUI_Button" inherits="GameMenuButtonTemplate" hidden="false" > <!-- test="FIXME!"-->
         <Size x="200" y="22"/>
         <Anchors>
             <Anchor point="TOPLEFT" relativeTo="$parent_Prunning_Slider" relativePoint="BOTTOMLEFT" y="-10"/>
@@ -215,7 +215,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <CheckButton name="$parent_CreateNewRaidOnNewZone_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_CreateNewRaidOnNewZone_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT" y="-20"/>
         </Anchors>
@@ -240,7 +240,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_Log10MenRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_Log10MenRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_CreateNewRaidOnNewZone_CB" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
@@ -265,7 +265,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogLFRRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogLFRRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_Log10MenRaids_CB" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
@@ -290,7 +290,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogAVRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogAVRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_LogLFRRaids_CB" x="300"/>
         </Anchors>
@@ -315,7 +315,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogClassicRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogClassicRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogLFRRaids_CB" y="-25"/>
         </Anchors>
@@ -340,7 +340,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogBCRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogBCRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogClassicRaids_CB" y="-5"/>
         </Anchors>
@@ -365,7 +365,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogWotLKRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogWotLKRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogBCRaids_CB" y="-5"/>
         </Anchors>
@@ -390,7 +390,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogCataclysmRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogCataclysmRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_LogClassicRaids_CB" x="300"/>
         </Anchors>
@@ -415,7 +415,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogPandariaRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogPandariaRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogCataclysmRaids_CB" y="-5"/>
         </Anchors>
@@ -440,7 +440,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogWarlordsRaids_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogWarlordsRaids_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogPandariaRaids_CB" y="-5"/>
         </Anchors>
@@ -465,7 +465,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>      
-      <CheckButton name="$parent_LogLootModePersonal_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogLootModePersonal_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogWotLKRaids_CB" y="-25"/>
         </Anchors>
@@ -490,7 +490,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogWhileSolo_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogWhileSolo_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_LogLootModePersonal_CB" y="-25"/>
         </Anchors>
@@ -515,7 +515,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_LogWhileGroup_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_LogWhileGroup_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_LogWhileSolo_CB" x="300"/>
         </Anchors>
@@ -540,7 +540,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_UseServerTime_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_UseServerTime_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_LogWhileSolo_CB" relativePoint="BOTTOMLEFT" y="-25"/>
         </Anchors>
@@ -639,7 +639,7 @@
           </Size>
         </ThumbTexture>
       </Slider>
-      <CheckButton name="$parent_AskForDKPValue_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_AskForDKPValue_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_MinItemQualityToLog_Slider" relativePoint="BOTTOMLEFT" y="-5"/>
         </Anchors>
@@ -664,7 +664,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_AskForDKPValuePersonal_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_AskForDKPValuePersonal_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parent_AskForDKPValue_CB" relativePoint="BOTTOMLEFT" x="16" y="-5"/>
         </Anchors>
@@ -737,7 +737,7 @@
         </Anchors>
         <FontString inherits="GameFontWhite"/>
       </EditBox>
-      <CheckButton name="$parent_UseEPGPValues_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_UseEPGPValues_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_OnlyTrackItemsAbove_Text" x="0" y="-10"/>
         </Anchors>
@@ -762,7 +762,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_IgnoreEnchantingMats_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_IgnoreEnchantingMats_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseAutoFocus_Title" x="0" y="-52"/>
         </Anchors>
@@ -787,7 +787,7 @@
             </OnClick>
         </Scripts>
       </CheckButton>
-      <CheckButton name="$parent_IgnoreGems_CB" inherits="OptionsCheckButtonTemplate">
+      <CheckButton name="$parent_IgnoreGems_CB" inherits="UICheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_IgnoreEnchantingMats_CB" x="0" y="-5"/>
         </Anchors>
@@ -847,7 +847,7 @@
               </Layer>
             </Layers>
             <Frames>
-              <CheckButton name="$parent_GroupRestriction" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_GroupRestriction" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent_Description" relativePoint="BOTTOMLEFT" x="0" y="-20"/>
                 </Anchors>
@@ -872,7 +872,7 @@
                     </OnClick>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_OfflinePlayers" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_OfflinePlayers" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent_GroupRestriction" relativePoint="BOTTOMLEFT">
                     <Offset x="0" y="-5"/>
@@ -899,7 +899,7 @@
                     </OnClick>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_GA_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_GA_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent_OfflinePlayers" relativePoint="BOTTOMLEFT" y="-20"/>
                 </Anchors>
@@ -924,7 +924,7 @@
                     </OnClick>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_GA_NoAuto_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_GA_NoAuto_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GA_CB" x="16" y="-5"/>
                 </Anchors>
@@ -949,7 +949,7 @@
                     </OnClick>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_GA_UseTrigger_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_GA_UseTrigger_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GA_NoAuto_CB" x="0" y="-5"/>
                 </Anchors>
@@ -1033,7 +1033,7 @@
                   </Size>
                 </ThumbTexture>
               </Slider>
-              <CheckButton name="$parent_GA_UseCustomText_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_GA_UseCustomText_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GADuration_Slider" x="0" y="-10"/>
                 </Anchors>
@@ -1063,10 +1063,6 @@
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_GA_UseCustomText_CB" x="5" y="-25"/>
                 </Anchors>
-                <Backdrop bgFile="Interface\Common\Common-Input-Border-M" tile="true">
-                  <Color r="0.0" b="0.0" g="0.0" a="1.0"/>
-                  <BackgroundInsets left="-5" right="-26" top="-5" bottom="-5"/>
-                </Backdrop>
                 <Layers>
                   <Layer level="OVERLAY">
                     <FontString name="MRT_Options_AttendancePanel_GA_CustomText_EB_Title" inherits="GameFontWhite" justifyH="LEFT" text="Custom guild attendance text: (L)">
@@ -1095,11 +1091,6 @@
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent_GA_CustomText_EB_Scrollframe" x="-8" y="5"/>
                 </Anchors>
-                <Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
-                  <EdgeSize val="16"/>
-                  <TileSize val="16"/>
-                  <BackgroundInsets left="5" right="5" top="5" bottom="5"/>
-                </Backdrop>
               </Frame>
             </Frames>
           </Frame>
@@ -1156,7 +1147,7 @@
               </Layer>
             </Layers>
             <Frames>
-              <CheckButton name="$parent_EnglishExport_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_EnglishExport_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_ChooseExport_Title" x="0" y="-40"/>
                 </Anchors>
@@ -1181,7 +1172,7 @@
                     </OnClick>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_IgnorePerBossAttendance_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent_XMLExport_Title" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
                 </Anchors>
@@ -1198,7 +1189,7 @@
                   <OnClick>MRT_Options_ExportPanel_RLIPerBossAttendanceFix_CB:SetChecked(false);MRT_Options_ExportPanel_EQDKP_RLIPerBossAttendanceFix_CB:SetChecked(false);</OnClick>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_RLIPerBossAttendanceFix_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_CTRTExport_Title" x="0" y="-5"/>
                 </Anchors>
@@ -1217,7 +1208,7 @@
                   <OnLeave>MRT_Options_HideTT();</OnLeave>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_AddPoorItemToEachBoss_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_AddPoorItemToEachBoss_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent_RLIPerBossAttendanceFix_CB" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
                 </Anchors>
@@ -1244,7 +1235,7 @@
                   <OnLeave>MRT_Options_HideTT();</OnLeave>
                 </Scripts>
               </CheckButton>
-              <CheckButton name="$parent_EQDKP_RLIPerBossAttendanceFix_CB" inherits="OptionsCheckButtonTemplate">
+              <CheckButton name="$parent_EQDKP_RLIPerBossAttendanceFix_CB" inherits="UICheckButtonTemplate">
                 <Anchors>
                   <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeTo="$parent_EQDKPExport_Title" x="0" y="-5"/>
                 </Anchors>
