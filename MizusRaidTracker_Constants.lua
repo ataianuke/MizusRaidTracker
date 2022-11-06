@@ -124,8 +124,10 @@ MRT_RaidZones = {
     [2217] = true,      -- Ny'alotha, the Waking City
     -- Shadowlands
     [2296] = true,      -- Castle Nathria
-    [2435] = true,      -- Sanctum of Domination
+    [2450] = true,      -- Sanctum of Domination
     [2481] = true,      -- Sepulcher of the First Ones
+	-- Dragonflight
+    [2522] = true,      -- Vault of the Incarnates
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -816,6 +818,15 @@ MRT_EncounterIDList = {
     [2549] = 182777,            -- Rygelon
     [2537] = 180990,            -- The Jailer, Zovaal
     
+	-- Vault of the Incarnates
+	[2587] = 184972,            -- Eranog
+	[2639] = 190496,            -- Terros
+	[2590] = 187771,            -- The Primal Council
+	[2592] = 187967,            -- Sennarth, the Cold Breath
+	[2635] = 189813,            -- Dathea, Ascended
+	[2605] = 181378,            -- Kurog Grimtotem
+	[2614] = 190245,            -- Broodkeeper Diurna
+	[2607] = 193909,            -- Raszageth the Storm-Eater
 }
 
 -- ARRAY 
