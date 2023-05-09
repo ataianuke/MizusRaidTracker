@@ -128,6 +128,7 @@ MRT_RaidZones = {
     [2481] = true,      -- Sepulcher of the First Ones
 	-- Dragonflight
     [2522] = true,      -- Vault of the Incarnates
+    [2569] = true,      -- Aberrus, the Shadowed Crucible
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -822,6 +823,7 @@ MRT_EncounterIDList = {
 	--------------------
     --  Dragonflight  --
     --------------------
+	-- This maps DungeonEncounterID to NPCId
 	-- Vault of the Incarnates
 	[2587] = 184972,            -- Eranog
 	[2639] = 190496,            -- Terros
@@ -831,6 +833,17 @@ MRT_EncounterIDList = {
 	[2605] = 181378,            -- Kurog Grimtotem
 	[2614] = 190245,            -- Broodkeeper Diurna
 	[2607] = 193909,            -- Raszageth the Storm-Eater
+	
+	-- Aberrus, the Shadowed Crucible
+	[2688] = 201261,            -- Kazzara
+	[2687] = 201774,            -- Amalgamation Chamber
+	[2693] = 200912,            -- Forgotten Experiments
+	[2680] = 201320,            -- Rashok
+	[2682] = 199659,            -- Assault of the Zaqali
+	[2689] = 202375,            -- Vigilant Steward Zskarn
+	[2683] = 201579,            -- Magmorax
+	[2684] = 203133,            -- Echo of Neltharion
+	[2685] = 203284,            -- Scalecommander Sarkareth
 }
 
 -- ARRAY 
