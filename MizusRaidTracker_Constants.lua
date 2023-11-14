@@ -129,6 +129,7 @@ MRT_RaidZones = {
 	-- Dragonflight
     [2522] = true,      -- Vault of the Incarnates
     [2569] = true,      -- Aberrus, the Shadowed Crucible
+	[2549] = true,      -- Amirdrassil
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -844,6 +845,17 @@ MRT_EncounterIDList = {
 	[2683] = 201579,            -- Magmorax
 	[2684] = 203133,            -- Echo of Neltharion
 	[2685] = 203284,            -- Scalecommander Sarkareth
+	
+	-- Amirdrassil
+	[2820] = [209333],          -- Gnarlroot
+	[2709] = [200926],          -- Igira
+	[2737] = [208478],          -- Volcoross
+	[2731] = [208445],          -- Larodar
+	[2728] = [208363],          -- Council of Dreams
+	[2708] = [206172],          -- Nymue
+	[2824] = [200927],          -- Smolderon
+	[2786] = [209090],          -- Tindral
+	[2677] = [165066],          -- Fyrakk TODO: this ID may be wrong yet, there are many listed!
 }
 
 -- ARRAY 
