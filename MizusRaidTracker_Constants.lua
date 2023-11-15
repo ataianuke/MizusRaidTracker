@@ -847,15 +847,15 @@ MRT_EncounterIDList = {
 	[2685] = 203284,            -- Scalecommander Sarkareth
 	
 	-- Amirdrassil
-	[2820] = [209333],          -- Gnarlroot
-	[2709] = [200926],          -- Igira
-	[2737] = [208478],          -- Volcoross
-	[2731] = [208445],          -- Larodar
-	[2728] = [208363],          -- Council of Dreams
-	[2708] = [206172],          -- Nymue
-	[2824] = [200927],          -- Smolderon
-	[2786] = [209090],          -- Tindral
-	[2677] = [204931],          -- Fyrakk
+	[2820] = 209333,          -- Gnarlroot
+	[2709] = 200926,          -- Igira
+	[2737] = 208478,          -- Volcoross
+	[2731] = 208445,          -- Larodar
+	[2728] = 208363,          -- Council of Dreams
+	[2708] = 206172,          -- Nymue
+	[2824] = 200927,          -- Smolderon
+	[2786] = 209090,          -- Tindral
+	[2677] = 204931,          -- Fyrakk
 }
 
 -- ARRAY 
