@@ -855,7 +855,7 @@ MRT_EncounterIDList = {
 	[2708] = [206172],          -- Nymue
 	[2824] = [200927],          -- Smolderon
 	[2786] = [209090],          -- Tindral
-	[2677] = [165066],          -- Fyrakk TODO: this ID may be wrong yet, there are many listed!
+	[2677] = [204931],          -- Fyrakk
 }
 
 -- ARRAY 
