@@ -130,6 +130,8 @@ MRT_RaidZones = {
     [2522] = true,      -- Vault of the Incarnates
     [2569] = true,      -- Aberrus, the Shadowed Crucible
 	[2549] = true,      -- Amirdrassil
+	-- The War Within
+	[2657] = true,      -- Nerub-ar Palace
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -856,6 +858,23 @@ MRT_EncounterIDList = {
 	[2824] = 200927,          -- Smolderon
 	[2786] = 209090,          -- Tindral
 	[2677] = 204931,          -- Fyrakk
+
+
+	--------------------
+    --  The War Within  --
+    --------------------
+    -- This maps DungeonEncounterID to NPCId
+
+	-- Nerub-ar Palace
+
+	[2902] = 215657,          -- Ulgrax the Devourer
+	[2917] = 214502,          -- The Bloodbound Horro
+	[2898] = 214503,          -- Sikran, Captain of the Sureki
+	[2918] = 214504,          -- Rasha'nan
+	[2919] = 214506,          -- Broodtwister Ovi'nax
+	[2920] = 217748,          -- Nexus-Princess Ky'veza
+	[2921] = 217489,          -- The Silken Court
+	[2922] = 218370,          -- Queen Ansurek
 }
 
 -- ARRAY 
