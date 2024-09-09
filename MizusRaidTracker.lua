@@ -41,8 +41,8 @@ local _O = MRT_Options
 -------------------------------
 --  Globals/Default Options  --
 -------------------------------
-MRT_ADDON_TITLE = GetAddOnMetadata("MizusRaidTracker", "Title");
-MRT_ADDON_VERSION = GetAddOnMetadata("MizusRaidTracker", "Version");
+MRT_ADDON_TITLE = C_AddOns.GetAddOnMetadata("MizusRaidTracker", "Title");
+MRT_ADDON_VERSION = C_AddOns.GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
 MRT_ADDON_VERSION = "v0.95.2"
 --@end-debug@
@@ -547,8 +547,8 @@ function MRT_Initialize(frame)
             if (button == "LeftButton") then
                 MRT_GUI_Toggle();
             elseif (button == "RightButton") then
-                InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
-                C_Timer.After(0.5, function() InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker"); end)
+				Settings.OpenToCategory(mrt.optionspanelparent:GetID())
+                C_Timer.After(0.5, function() Settings.OpenToCategory(mrt.optionspanelparent:GetID()); end)
             end
         end,
         OnTooltipShow = function(tooltip)
