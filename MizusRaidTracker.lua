@@ -5,6 +5,7 @@
 --
 -- This addon is written and copyrighted by:
 --    * Mîzukichan @ EU-Antonidas (2010-2021)
+--    * Eurybia @ EU-Alexstrasza (2022-2024)
 --
 -- Contributors:
 --    * Kevin (HTML-Export) (2010)
@@ -44,7 +45,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = C_AddOns.GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = C_AddOns.GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v0.95.2"
+MRT_ADDON_VERSION = "v0.96"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;
@@ -411,7 +412,7 @@ end
 function MRT_SlashCmdHandler(msg)
     local msg_lower = string.lower(msg);
     if (msg_lower == 'options' or msg_lower == 'o') then
-        InterfaceOptionsFrame_OpenToCategory("Mizus RaidTracker");
+        Settings.OpenToCategory(mrt.optionspanelparent:GetID());
         return;
     elseif (msg_lower == 'dkpcheck') then
         MRT_AddBosskill(MRT_L.Core["GuildAttendanceBossEntry"]);
