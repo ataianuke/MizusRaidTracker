@@ -132,6 +132,7 @@ MRT_RaidZones = {
 	[2549] = true,      -- Amirdrassil
 	-- The War Within
 	[2657] = true,      -- Nerub-ar Palace
+	[2769] = true,      -- Liberation of Undermine
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -875,6 +876,16 @@ MRT_EncounterIDList = {
 	[2920] = 217748,          -- Nexus-Princess Ky'veza
 	[2921] = 217489,          -- The Silken Court
 	[2922] = 218370,          -- Queen Ansurek
+
+	-- Liberation of Undermine
+	[3009] = 225821,          -- Vexie and the Geargrinders
+	[3010] = 229181,          -- Cauldron of Carnage - ID of Flarendo (Torque is 229177)
+	[3012] = 230322,          -- Stix Bunkjunker
+	[3011] = 228648,          -- Rik Reverb
+	[3013] = 230583,          -- Sprocketmonger Lockenstock
+	[3014] = 228458,          -- The One-Armed Bandit
+	[3015] = 229953,          -- Mug'Zee, Heads of Security
+	[3016] = 237194,          -- Chrome King Gallywix (Mob-ID might be wrong)
 }
 
 -- ARRAY 
