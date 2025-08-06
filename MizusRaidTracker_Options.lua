@@ -40,42 +40,37 @@ local LDBIcon = LibStub("LibDBIcon-1.0");
 --  Register panels  --
 -----------------------
 function MRT_Options_MainPanel_OnLoad(panel)
-    panel.name = "Mizus RaidTracker";
-    panel.okay = function(self) MRT_Options_OnOkay(self); end;
+    panel.name = "Mizus RaidTracker"
+    panel.OnCommit = function(self) MRT_Options_OnOkay(self); end;
     panel.cancel = function(self) MRT_Options_OnCancel(self); end;
-	local mrt_options_panel = Settings.RegisterCanvasLayoutCategory(panel, panel.name)
-	mrt.optionspanelparent = mrt_options_panel
-	Settings.RegisterAddOnCategory(mrt_options_panel)
+    local mainCategory = Settings.RegisterCanvasLayoutCategory(panel, panel.name)
+    mrt.optionspanelparent = mainCategory
+    Settings.RegisterAddOnCategory(mainCategory)
 end
 
 function MRT_Options_TrackingPanel_OnLoad(panel)
-    panel.name = MRT_L.Options["TP_Title"];
-    panel.parent = "Mizus RaidTracker";
-	local mrt_TP_Title_panel = Settings.RegisterCanvasLayoutCategory(panel, panel.name)
-	Settings.RegisterAddOnCategory(mrt_TP_Title_panel)
+    panel.name = "Tracking"
+    local subCat = Settings.RegisterCanvasLayoutSubcategory(mrt.optionspanelparent, panel, panel.name)
+    Settings.RegisterAddOnCategory(subCat)
 end
 
 function MRT_Options_ItemsTrackingPanel_OnLoad(panel)
-    panel.name = MRT_L.Options["ITP_Title"];
-    panel.parent = "Mizus RaidTracker";
-	local mrt_ITP_Title_panel = Settings.RegisterCanvasLayoutCategory(panel, panel.name)
-	Settings.RegisterAddOnCategory(mrt_ITP_Title_panel)
+    panel.name = "Items Tracking"
+    local subCat = Settings.RegisterCanvasLayoutSubcategory(mrt.optionspanelparent, panel, panel.name)
+    Settings.RegisterAddOnCategory(subCat)
 end
 
 function MRT_Options_AttendancePanel_OnLoad(panel)
-    panel.name = MRT_L.Options["AP_Title"];
-    panel.parent = "Mizus RaidTracker";
-	local mrt_AP_Title_panel = Settings.RegisterCanvasLayoutCategory(panel, panel.name)
-	Settings.RegisterAddOnCategory(mrt_AP_Title_panel)
+    panel.name = "Attendance"
+    local subCat = Settings.RegisterCanvasLayoutSubcategory(mrt.optionspanelparent, panel, panel.name)
+    Settings.RegisterAddOnCategory(subCat)
 end
 
 function MRT_Options_ExportPanel_OnLoad(panel)
-    panel.name = MRT_L.Options["EP_Title"];
-    panel.parent = "Mizus RaidTracker";
-	local mrt_EP_Title_panel = Settings.RegisterCanvasLayoutCategory(panel, panel.name)
-	Settings.RegisterAddOnCategory(mrt_EP_Title_panel)
-end    
-
+    panel.name = "Export"
+    local subCat = Settings.RegisterCanvasLayoutSubcategory(mrt.optionspanelparent, panel, panel.name)
+    Settings.RegisterAddOnCategory(subCat)
+end
 
 --------------------------------------------------------
 --  parse values and localization after ADDON_LOADED  --
