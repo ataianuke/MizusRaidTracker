@@ -133,6 +133,7 @@ MRT_RaidZones = {
 	-- The War Within
 	[2657] = true,      -- Nerub-ar Palace
 	[2769] = true,      -- Liberation of Undermine
+	[2810] = true,      -- Manaforge Omega
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -886,6 +887,17 @@ MRT_EncounterIDList = {
 	[3014] = 228458,          -- The One-Armed Bandit
 	[3015] = 229953,          -- Mug'Zee, Heads of Security
 	[3016] = 237194,          -- Chrome King Gallywix (Mob-ID might be wrong)
+
+	-- Manaforge Omega
+	[3129] = 233814,          -- Plexus Sentinel
+	[3131] = 233815,          -- Loom'ithar
+	[3130] = 233816,          -- Soulbinder Naazindhri
+	[3132] = 247989,          -- Forgeweaver Araz
+	[3122] = 237660,          -- The Soul Hunters (also 237661 and 237662)
+	[3133] = 237861,          -- Fractillus
+	[3134] = 237763,          -- Nexus-King Salhadaar
+	[3135] = 214503,          -- Dimensius (creature-ID might be wrong)
+
 }
 
 -- ARRAY 
