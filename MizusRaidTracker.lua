@@ -1047,7 +1047,9 @@ function MRT_CheckZoneAndSizeStatus()
             return;
         end
         -- Check if the current loot mode should be tracked
-        if (select(1, GetLootMethod()) == "personalloot" and not MRT_Options["Tracking_LogLootModePersonal"]) then
+   		local method, masterLootPartyID, masterLooterRaidID = C_PartyInfo.GetLootMethod();
+   		local isPersonal = method == 5;
+        if (isPersonal and not MRT_Options["Tracking_LogLootModePersonal"]) then
             MRT_Debug("Loot method is personal loot and tracking of this loot method is disabled.");
             if (MRT_NumOfCurrentRaid) then MRT_EndActiveRaid(); end
             return;
@@ -1561,7 +1563,8 @@ function MRT_AutoAddLootItem(playerName, itemLink, itemCount)
     };
     tinsert(MRT_RaidLog[MRT_NumOfCurrentRaid]["Loot"], MRT_LootInfo);
     -- get current loot mode
-    local isPersonal = select(1, GetLootMethod()) == "personalloot"
+    local method, masterLootPartyID, masterLooterRaidID = C_PartyInfo.GetLootMethod();
+    local isPersonal = method == 5;
     -- check if we should ask the player for item cost
     if (supressCostDialog or (not MRT_Options["Tracking_AskForDKPValue"]) or (isPersonal and not MRT_Options["Tracking_AskForDKPValuePersonal"])) then 
         -- notify registered, external functions
