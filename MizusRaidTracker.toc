@@ -1,6 +1,6 @@
 ## Interface: 120000, 120001
 ## Title: Mizus RaidTracker
-## Version: v1.00
+## Version: v2.00
 ## Notes: Tracks raid, loot and attendance
 ## Author: Eurybia@EU-Alexstrasza (original Author: Mîzukichan@EU-Antonidas)
 ## LoadOnDemand: 0

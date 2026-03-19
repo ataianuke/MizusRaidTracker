@@ -134,6 +134,10 @@ MRT_RaidZones = {
 	[2657] = true,      -- Nerub-ar Palace
 	[2769] = true,      -- Liberation of Undermine
 	[2810] = true,      -- Manaforge Omega
+	--- Midnight
+	[2912] = true,		-- Voidspire
+	[2939] = true,		-- The Dreamrift
+	[2913] = true,		-- March on Quel’Danas
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -898,6 +902,27 @@ MRT_EncounterIDList = {
 	[3134] = 237763,          -- Nexus-King Salhadaar
 	[3135] = 214503,          -- Dimensius (creature-ID might be wrong)
 
+
+	--------------
+	-- Midnight --
+	--------------
+    -- This maps DungeonEncounterID to NPCId/CreatureID
+
+	-- Voidspire
+	[3176] = 240435,		  -- Imperator Averzian
+	[3177] = 240434, 		  -- Vorasius
+	[3179] = 240432,		  -- Fallen-King Salhadaar
+	[3178] = 250892,		  -- Vaelgor & Ezzorak (254109)
+	[3180] = 250589,		  -- Lightblinded Vanguard War Chaplain Senn main boss, 
+							  -- 250588 Commander Venel Lightblood, 250587 general Amias Bellamy
+	[3181] = 244761,		  -- Crown of the Cosmos
+	
+	-- The Dreamrift
+	[3306] = 256116,		  -- Chimaerus the Undreamt God
+	
+	-- March on Quel’Danas
+	-- [3182] = 0,			  -- Belo'ren, Child of Al'ar (CreatureID unsure)
+	-- [3183] = 0,			  -- Midnight Falls (CreatureID unsure)
 }
 
 -- ARRAY 
