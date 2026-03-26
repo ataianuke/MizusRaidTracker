@@ -45,7 +45,7 @@ local _O = MRT_Options
 MRT_ADDON_TITLE = C_AddOns.GetAddOnMetadata("MizusRaidTracker", "Title");
 MRT_ADDON_VERSION = C_AddOns.GetAddOnMetadata("MizusRaidTracker", "Version");
 --@debug@
-MRT_ADDON_VERSION = "v1.00"
+MRT_ADDON_VERSION = "v2.1"
 --@end-debug@
 MRT_NumOfCurrentRaid = nil;
 MRT_NumOfLastBoss = nil;

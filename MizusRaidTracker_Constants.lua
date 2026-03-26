@@ -921,8 +921,8 @@ MRT_EncounterIDList = {
 	[3306] = 256116,		  -- Chimaerus the Undreamt God
 	
 	-- March on Quel’Danas
-	-- [3182] = 0,			  -- Belo'ren, Child of Al'ar (CreatureID unsure)
-	-- [3183] = 0,			  -- Midnight Falls (CreatureID unsure)
+	[3182] = 240387,	      -- Belo'ren, Child of Al'ar
+	[3183] = 240391,		  -- Midnight Falls 
 }
 
 -- ARRAY 
