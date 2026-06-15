@@ -138,6 +138,7 @@ MRT_RaidZones = {
 	[2912] = true,		-- Voidspire
 	[2939] = true,		-- The Dreamrift
 	[2913] = true,		-- March on Quel’Danas
+	[1592] = true,		-- Sporefall
 }
 
 MRT_LegacyRaidZonesLegion = {
@@ -923,6 +924,9 @@ MRT_EncounterIDList = {
 	-- March on Quel’Danas
 	[3182] = 240387,	      -- Belo'ren, Child of Al'ar
 	[3183] = 240391,		  -- Midnight Falls 
+	
+	-- Sporefall
+	[3159] = 254176,		  -- Rotmire
 }
 
 -- ARRAY 
